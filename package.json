@@ -23,7 +23,8 @@
     "test-watch-debug": "NODE_ENV=test NODE_LOG_LEVEL=debug mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000 -w -b --ignore './server/repositories/**/*.spec.js'  './server/setup.js' './server/**/*.spec.js' './__tests__/seed.spec.js' './__tests__/supertest.js'",
     "prettier-fix": "prettier ./ --write",
     "db-migrate-ci": "cd database; db-migrate up",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "mock-server": "prism mock ./docs/api/spec/query-api.yaml"
   },
   "keywords": [
     "ecology"
@@ -32,6 +33,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@sentry/node": "^5.1.0",
+    "@stoplight/prism-cli": "^4.6.1",
     "body-parser": "^1.18.2",
     "dotenv": "^8.2.0",
     "expect": "^26.4.2",
