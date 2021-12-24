@@ -3,9 +3,12 @@ import log from 'loglevel'
 
 const connection = process.env.DATABASE_URL
 
+log.warn("DATABASE_URL:", connection);
+
 const knexConfig: Knex.Config = {
   client: 'pg',
-  debug: process.env.NODE_LOG_LEVEL === 'debug',
+  // debug: process.env.NODE_LOG_LEVEL === 'debug',
+  debug: true,
   connection,
   pool: { min: 0, max: 10 },
 }

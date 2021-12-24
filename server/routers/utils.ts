@@ -21,7 +21,7 @@ import Session from "../infra/database/session";
  *  Then, add the errorHandler below to the express global error handler.
  *
  */
-exports.handlerWrapper = fn =>
+const handlerWrapper = fn =>
   function wrap(...args) {
     const fnReturn = fn(...args)
     const next = args[args.length-1]
@@ -30,8 +30,12 @@ exports.handlerWrapper = fn =>
     })
   }
 
-exports.errorHandler = (err, req, res, next) => {
-  log.debug("catch error:", err);
+const errorHandler = (err, req, res, next) => {
+  if(process.env.NODE_LOG_LEVEL === "debug"){
+    log.warn("catch error:", err);
+  }else{
+    log.debug("catch error:", err);
+  }
   if(err instanceof HttpError){
     res.status(err.code).send({
       code: err.code,
@@ -50,3 +54,4 @@ exports.errorHandler = (err, req, res, next) => {
   }
 };
 
+export { handlerWrapper, errorHandler };

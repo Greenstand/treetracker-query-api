@@ -4,14 +4,12 @@ import bodyParser from 'body-parser';
 import HttpError from "./utils/HttpError";
 import { errorHandler, handlerWrapper } from "./routers/utils";
 import log from "loglevel";
-import helper from "./routers/utils";
-import router from './routes.js';
+import countriesRouter from './routers/countriesRouter';
 
 const app = express();
 const config = require('../config/config.js');
-const {registerEventHandlers} = require('./services/event-handlers');
 
-Sentry.init({ dsn: config.sentry_dsn });
+//Sentry.init({ dsn: config.sentry_dsn });
 
 /*
  * Check request
@@ -29,16 +27,13 @@ app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-
 app.use(bodyParser.json()); // parse application/json
 
 //routers
-app.use('/', router);
+app.use('/countries', countriesRouter);
 // Global error handler
 app.use(errorHandler);
 
 const version = require('../package.json').version
 app.get('*',function (req, res) {
-  res.status(200).send(version)
+  res.status(404).send(version)
 });
 
-registerEventHandlers();
-
-
-module.exports = app; 
+export default app;

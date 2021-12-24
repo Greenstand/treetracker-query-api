@@ -16,6 +16,7 @@
     "eslint:fix": "npm run eslint -- --fix",
     "test": "npm run test-unit; npm run test-integration;npm run test-repository",
     "test-unit": "jest ./server/models/",
+    "test-e2e": "jest ./__tests__/e2e/",
     "test-repository": "jest ./server/infra/database/",
     "server-test": "DEBUG=express:* NODE_LOG_LEVEL=debug nodemon server/serverTest.js",
     "test-seedDB": "NODE_ENV=test mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000 './**/*.spec.js'",
