@@ -7,4 +7,11 @@ export default class CountryRepository extends BaseRepository<Country> {
     const sessionInstance = session || new Session();
     super("region", sessionInstance);
   }
+
+  async getById(id: string | number) {
+    const object = await super.getById(id);
+    // @ts-ignore
+    delete object.geom;
+    return object;
+  }
 }
