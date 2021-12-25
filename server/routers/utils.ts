@@ -1,12 +1,10 @@
 /*
  * Some utils for router/express
  */
-const log = require("loglevel");
-const HttpError = require("../utils/HttpError");
-const ApiKeyService = require("../services/ApiKeyService");
-const JWTService = require("../services/JWTService.js");
-const {ValidationError} = require("joi");
-const Session = require("../models/Session");
+import log from "loglevel";
+import HttpError from "../utils/HttpError";
+import { ValidationError } from "joi";
+import Session from "../infra/database/Session";
 
 /*
  * This is from the library https://github.com/Abazhenov/express-async-handler
@@ -23,7 +21,7 @@ const Session = require("../models/Session");
  *  Then, add the errorHandler below to the express global error handler.
  *
  */
-exports.handlerWrapper = fn =>
+const handlerWrapper = fn =>
   function wrap(...args) {
     const fnReturn = fn(...args)
     const next = args[args.length-1]
@@ -32,8 +30,12 @@ exports.handlerWrapper = fn =>
     })
   }
 
-exports.errorHandler = (err, req, res, next) => {
-  log.debug("catch error:", err);
+const errorHandler = (err, req, res, next) => {
+  if(process.env.NODE_LOG_LEVEL === "debug"){
+    log.warn("catch error:", err);
+  }else{
+    log.debug("catch error:", err);
+  }
   if(err instanceof HttpError){
     res.status(err.code).send({
       code: err.code,
@@ -52,18 +54,4 @@ exports.errorHandler = (err, req, res, next) => {
   }
 };
 
-exports.apiKeyHandler = exports.handlerWrapper(async (req, res, next) => {
-  const session = new Session();
-  const apiKey = new ApiKeyService(session);
-  await apiKey.check(req.headers['treetracker-api-key']);
-  log.debug('Valid Access');
-  next();
-});
-
-exports.verifyJWTHandler = exports.handlerWrapper(async (req, res, next) => {
-  const jwtService = new JWTService();
-  const decode = jwtService.verify(req.headers.authorization);
-  res.locals.wallet_id = decode.id;
-  next();
-});
-
+export { handlerWrapper, errorHandler };

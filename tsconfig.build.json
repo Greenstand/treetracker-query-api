@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.base.json",
+  "files": ["./server/server.ts"],
+  "include": ["server/**/*.ts"],
+  "exclude": ["**/*.spec.*", "**/*.test.*"]
+}
