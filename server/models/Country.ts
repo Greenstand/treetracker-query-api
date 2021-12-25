@@ -21,8 +21,8 @@ function getCountries(countryRepository: CountryRepository): (filter: any) => Pr
 //    };
 //  }
 
-function repositoryDelegate<Type>(Repo, method): (r: any) => any {
-  return function (repo ) {
+function repositoryDelegate<Type>(Type, method): (r: any) => any {
+  return function (repo: Type) {
     return async function (...args) {
       const result = await repo[method](...args);
       return result; 
@@ -35,11 +35,10 @@ function repositoryDelegate<Type>(Repo, method): (r: any) => any {
 //   }
 // }
 
-const getById  = repositoryDelegate(CountryRepository, "getById");
+;
 
 export default {
   getCountries,
-  // @ts-ignore
-  getById,
-  // getById,
+  getById: repositoryDelegate(CountryRepository, "getById"),
+  getByFilter: repositoryDelegate(CountryRepository, "getByFilter"),
 }

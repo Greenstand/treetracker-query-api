@@ -15,5 +15,18 @@ router.get('/:id', handlerWrapper(async (req, res, next) => {
   res.end();
 }));
 
+router.get('/', handlerWrapper(async (req, res, next) => {
+  Joi.assert(req.query, Joi.object().keys({
+    limit: Joi.number().integer().min(1).max(1000),
+    offset: Joi.number().integer().min(0),
+    lat: Joi.number(),
+    lon: Joi.number(),
+  }));
+  const repo = new CountryRepository();
+  const result = await CountryModel.getByFilter(repo)(req.query);
+  res.send(result);
+  res.end();
+}));
+
 
 export default router;
