@@ -10,11 +10,10 @@ describe("", () => {
       id: 6632544,
       name: "China",
     });
-    throw response.body;
   });
 
   //103.819073145824,36.5617653792527
-  it.only("countries?lat=36.5617653792527&lon=103.819073145824", async () => {
+  it("countries?lat=36.5617653792527&lon=103.819073145824", async () => {
     const response = await supertest(app).get("/countries?lat=36.5617653792527&lon=103.819073145824");
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({

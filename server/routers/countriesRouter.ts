@@ -3,12 +3,13 @@ import CountryRepository from 'infra/database/CountryRepository';
 import { handlerWrapper } from './utils';
 import CountryModel, {Country} from '../models/Country';
 import Joi from 'joi';
+import Session from 'infra/database/Session';
 
 const router = express.Router();
 
 router.get('/:id', handlerWrapper(async (req, res, next) => {
   Joi.assert(req.params.id, Joi.number().required());
-  const repo = new CountryRepository();
+  const repo = new CountryRepository(new Session());
   const exe = CountryModel.getById(repo);
   const result = await exe(req.params.id);
   res.send(result);
@@ -22,7 +23,7 @@ router.get('/', handlerWrapper(async (req, res, next) => {
     lat: Joi.number(),
     lon: Joi.number(),
   }));
-  const repo = new CountryRepository();
+  const repo = new CountryRepository(new Session());
   const result = await CountryModel.getByFilter(repo)(req.query);
   res.send(result);
   res.end();

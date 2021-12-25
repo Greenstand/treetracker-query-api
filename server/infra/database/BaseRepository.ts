@@ -1,4 +1,4 @@
-import Session from 'infra/database/session'
+import Session from 'infra/database/Session'
 import { Knex } from 'knex'
 import HttpError from 'utils/HttpError'
 

@@ -4,7 +4,7 @@
 import log from "loglevel";
 import HttpError from "../utils/HttpError";
 import { ValidationError } from "joi";
-import Session from "../infra/database/session";
+import Session from "../infra/database/Session";
 
 /*
  * This is from the library https://github.com/Abazhenov/express-async-handler

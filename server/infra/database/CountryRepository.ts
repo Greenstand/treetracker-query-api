@@ -1,12 +1,11 @@
 import { Country } from "models/Country";
 import HttpError from "utils/HttpError";
 import BaseRepository from "./BaseRepository";
-import Session from "./session";
+import Session from "./Session";
 
 export default class CountryRepository extends BaseRepository<Country> {
-  constructor(session?: Session) {
-    const sessionInstance = session || new Session();
-    super("region", sessionInstance);
+  constructor(session: Session) {
+    super("region", session);
   }
 
   async getById(id: string | number) {
@@ -29,19 +28,6 @@ export default class CountryRepository extends BaseRepository<Country> {
 
   async getByFilter(filter: any, options?: { limit?: number | undefined; } | undefined): Promise<any[]> {
     const {lat, lon} = filter;
-    // // SQL to get countries in 'region' table that are within a radius of 10km of the given lat/lon
-    // const sql = `
-    //   SELECT
-    //     id,
-    //     name,
-    //     St_asgeojson(centroid) as centroid
-    //   FROM
-    //     region
-    //   WHERE
-    //     ST_DWithin(centroid, ST_GeomFromText('POINT(${lon} ${lat})', 4326), 10) = true    
-    // `;
-    // SQL to get countries in 'region' table
-    // that the given lat/lon is within MultiPolygon column 'geom'
     const sql = `
       SELECT
         id,
