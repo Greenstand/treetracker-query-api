@@ -71,6 +71,12 @@ The business model, most of the business logic is here. We are considering put m
 
     For example, the Message Queue.
 
+# About the documentation/specification
+
+We use OpenAPI 3.0 to document the API.
+
+You can copy the yaml file and import to swagger-ui to see the API.
+
 # How to test
 
 ## Unit test
