@@ -6,12 +6,12 @@ This API exposes a RESTful interface to query the treetracker data, capture, pla
 
 This repository was created from Greenstand's template for microservice projects.  This means it comes with many development tools that we use for development and deployment.  As a contributor to this repository, you should learn and use these tools.  They are outlined below.
 
-## Conventional Commits
-## husky
-## prettier / lint
-## github actions
-## mocha
-
+* Conventional Commits
+* husky
+* prettier / lint
+* github actions
+* Jest
+* TypeScript
 
 # Getting Started
   
@@ -26,7 +26,7 @@ git clone https://github.com/Greenstand/treetracker-repository-name.git
 Install all necessary dependencies: 
 
 ```
-npm install
+npm ci
 ```
 
 Run the server with database settings:
@@ -43,32 +43,37 @@ Please join our slack channel to get help with setting up the database.
 
 # Architecture of this project
 
-This project use multiple layer structure to build the whole system. Similar with MVC structure:
+This project use multiple layer structure to build the whole system. The architecture follows some principles of [Domain Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design). And inspired by this article: https://medium.com/spotlight-on-javascript/domain-driven-design-for-javascript-developers-9fc3f681931a
 
-![layers](/layers.png "layers")
-
+Some explanation of the layers:
 
 * **Protocol layer**
 
-Wallet API offers RESTFul API interface based on HTTP protocol. We use Express to handle all HTTP requests.
+I think we can also call it the Application Layer, a term in the DDD, the entry of this project.
 
-The Express-routers work like the controller role in MVC, they receive the requests and parameters from client, and translate it and dispatch tasks to appropriate business objects. Then receive the result from them, translate to the 'view', the JSON response, to client.
+This microservice offers RESTFul API interface based on HTTP protocol. We use Express to handle all HTTP requests.
+
+The Express-routers work like the controller role in MVC, they receive the requests and parameters from client, and translate it and dispatch tasks to appropriate business models. Then receive the result from them, translate to the 'view', the JSON response, to client.
 
 * **Model layer**
 
-The business model, most of the business logic is here. They are real object.
+The business model, most of the business logic is here. We are considering put most of the business logic in the model layer. So it should be the thickest layer, including all the business logic, and build up the relationship between models(business).
 
 * **Service layer**
 
-Both service layer and model layer are where all the business logic is located. Comparing to the Model , `service` object don't have state (stateless).  
+Some utils, and business logic that is not related to the business model or hard to categorize to models.
 
-Please put business logic code into service object when it is hard to put them into the `Model` file.
+* **Infrastructure layer**
 
-* **Repository layer**
+  * **Repository layer**
 
-Repository is responsible for communicate with the real database, this isolation brings flexibility for us, for example, we can consider replace the implementation of the storage infrastructure in the future.
+    Repository is responsible for communicating with the real database.
 
-All the SQL statements should be here.
+    All the SQL statements should be here.
+
+  * **Others**
+
+    For example, the Message Queue.
 
 # How to test
 
@@ -91,4 +96,3 @@ Run tests:
 ```
 npm run test-e2e
 ```
-
