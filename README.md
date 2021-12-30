@@ -41,11 +41,23 @@ Please join our slack channel to get help with setting up the database.
 
 [check out here](https://github.com/Greenstand/treetracker-web-map-client#workflow-with-github)
 
+# Development Specification
+
+* Every endpoint should have a e2e test to cover the main use cases.
+
+* For edge cases, we can use unit tests to test the edge cases, don't need to use e2e test to cover all cases, e2e just cover main workflow.
+
+* Class name should be capitalized.
+
+* Do not write SQL directly in `router` and `model` files, there is a function called `delegateRepository` can help to simplify some simple cases;
+
+* Please use `loglevel` to replace `console.log`, and always use appropriate log level to log.
+
 # Architecture of this project
 
 This project use multiple layer structure to build the whole system. The architecture follows some principles of [Domain Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design). And inspired by this article: https://medium.com/spotlight-on-javascript/domain-driven-design-for-javascript-developers-9fc3f681931a
 
-Some explanation of the layers:
+We compose/build the model instance in a functional style, then execute the business.
 
 * **Protocol layer**
 
