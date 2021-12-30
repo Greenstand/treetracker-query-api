@@ -59,10 +59,6 @@ The Express-routers work like the controller role in MVC, they receive the reque
 
 The business model, most of the business logic is here. We are considering put most of the business logic in the model layer. So it should be the thickest layer, including all the business logic, and build up the relationship between models(business).
 
-* **Service layer**
-
-Some utils, and business logic that is not related to the business model or hard to categorize to models.
-
 * **Infrastructure layer**
 
   * **Repository layer**
