@@ -21,7 +21,7 @@ describe("trees", () => {
     });
   });
 
-  it.only("trees?limit=1&planter_id=1", async () => {
+  it("trees?limit=1&planter_id=1", async () => {
     const response = await supertest(app).get("/trees?limit=1&planter_id=1");
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
