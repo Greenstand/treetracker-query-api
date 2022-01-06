@@ -13,11 +13,22 @@ describe("trees", () => {
     });
   })
 
-  it.only("trees?limit=0&offset=0", async () => {
+  it("trees?limit=0&offset=0", async () => {
     const response = await supertest(app).get("/trees?limit=1&offset=0");
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
       trees: expect.anything(),
+    });
+  });
+
+  it.only("trees?limit=1&planter_id=1", async () => {
+    const response = await supertest(app).get("/trees?limit=1&planter_id=1");
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      trees: expect.anything(),
+    });
+    expect(response.body.trees[0]).toMatchObject({
+      planter_id: 1,
     });
   });
 
