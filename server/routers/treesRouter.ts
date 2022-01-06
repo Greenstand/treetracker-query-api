@@ -26,10 +26,12 @@ router.get('/', handlerWrapper(async (req, res, next) => {
   limit = limit || 20;
   offset = offset || 0;
   const repo = new TreeRepository(new Session());
+  const filter = {};
+  if(planter_id) {
+    filter['planter_id'] = planter_id;
+  }
   const result = await TreeModel.getByFilter(repo)(
-    {
-      planter_id: planter_id || undefined,
-    },
+    filter,
     {
       limit,
     }

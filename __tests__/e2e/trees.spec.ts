@@ -13,7 +13,7 @@ describe("trees", () => {
     });
   })
 
-  it("trees?limit=0&offset=0", async () => {
+  it("trees?limit=1&offset=0", async () => {
     const response = await supertest(app).get("/trees?limit=1&offset=0");
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
