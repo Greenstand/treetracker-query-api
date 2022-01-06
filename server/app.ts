@@ -5,6 +5,7 @@ import HttpError from "./utils/HttpError";
 import { errorHandler, handlerWrapper } from "./routers/utils";
 import log from "loglevel";
 import countriesRouter from './routers/countriesRouter';
+import treesRouter from 'routers/treesRouter';
 
 const app = express();
 const config = require('../config/config.js');
@@ -28,6 +29,7 @@ app.use(bodyParser.json()); // parse application/json
 
 //routers
 app.use('/countries', countriesRouter);
+app.use('/trees', treesRouter);
 // Global error handler
 app.use(errorHandler);
 
