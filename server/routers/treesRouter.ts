@@ -19,6 +19,7 @@ router.get('/:id', handlerWrapper(async (req, res, next) => {
 router.get('/', handlerWrapper(async (req, res, next) => {
   Joi.assert(req.query, Joi.object().keys({
     planter_id: Joi.number().integer().min(0),
+    organization_id: Joi.number().integer().min(0),
     limit: Joi.number().integer().min(1).max(1000),
     offset: Joi.number().integer().min(0),
   }));

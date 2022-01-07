@@ -21,15 +21,15 @@ describe("trees", () => {
     });
   });
 
-  it("trees?limit=1&planter_id=1", async () => {
-    const response = await supertest(app).get("/trees?limit=1&planter_id=1");
+  it.only("trees?limit=1&organization_id=11", async () => {
+    const response = await supertest(app).get("/trees?limit=1&organization_id=11");
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
       trees: expect.anything(),
     });
     expect(response.body.trees[0]).toMatchObject({
-      planter_id: 1,
+      organization_id: 1,
     });
-  });
+  }, 1000*60);
 
 })

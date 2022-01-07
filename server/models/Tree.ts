@@ -7,7 +7,14 @@ export type Tree = {
   lon: number,
 }
 
+function getByFilter(treeRepository: TreeRepository): (filter: any, options: any) => Promise<Tree[]> {
+  return async function(filter: any, options: any) {
+    const trees = await treeRepository.getByFilter(filter, options);
+    return trees;
+  };
+}
+
 export default {
   getById: delegateRepository(TreeRepository, "getById"),
-  getByFilter: delegateRepository(TreeRepository, "getByFilter"),
+  getByFilter,
 }
