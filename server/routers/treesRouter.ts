@@ -23,18 +23,21 @@ router.get('/', handlerWrapper(async (req, res, next) => {
     limit: Joi.number().integer().min(1).max(1000),
     offset: Joi.number().integer().min(0),
   }));
-  let {limit, offset, planter_id} = req.query;
+  let {limit, offset, planter_id, organization_id} = req.query;
   limit = limit || 20;
   offset = offset || 0;
   const repo = new TreeRepository(new Session());
   const filter = {};
   if(planter_id) {
     filter['planter_id'] = planter_id;
+  }else if(organization_id){
+    filter['organization_id'] = organization_id;
   }
   const result = await TreeModel.getByFilter(repo)(
     filter,
     {
       limit,
+      offset,
     }
   );
   res.send({

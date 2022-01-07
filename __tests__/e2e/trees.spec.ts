@@ -28,7 +28,7 @@ describe("trees", () => {
       trees: expect.anything(),
     });
     expect(response.body.trees[0]).toMatchObject({
-      organization_id: 1,
+      organization_id: 11,
     });
   }, 1000*60);
 

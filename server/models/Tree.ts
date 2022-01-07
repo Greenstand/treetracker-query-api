@@ -1,4 +1,5 @@
 import TreeRepository from "infra/database/TreeRepository";
+import log from "loglevel";
 import { delegateRepository } from "../infra/database/delegateRepository";
 
 export type Tree = {
@@ -9,8 +10,14 @@ export type Tree = {
 
 function getByFilter(treeRepository: TreeRepository): (filter: any, options: any) => Promise<Tree[]> {
   return async function(filter: any, options: any) {
-    const trees = await treeRepository.getByFilter(filter, options);
-    return trees;
+    if(filter.organization_id){
+      log.warn("using org filter...");
+      const trees = await treeRepository.getByOrganization(filter.organization_id,options);
+      return trees;
+    }else{
+      const trees = await treeRepository.getByFilter(filter, options);
+      return trees;
+    }
   };
 }
 
