@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.0.2...v1.0.3) (2022-01-08)
+
+
+### Bug Fixes
+
+* cmd to run docker ([11aa1f0](https://github.com/Greenstand/treetracker-query-api/commit/11aa1f07fec95d5b8e70e3f2a9135ef14772ed5d))
+
 ## [1.0.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.0.1...v1.0.2) (2022-01-08)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "treetracker-query-api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "engines": {
     "node": "^16",
