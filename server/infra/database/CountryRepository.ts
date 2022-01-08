@@ -48,7 +48,32 @@ export default class CountryRepository extends BaseRepository<Country> {
     }
     return object.rows[0];
   }
+
+  async getLeaderBoard(top : number = 10){
+    const sql = `
+      select r.*, region.name, centroid  from (
+      select count(region.id) as total, region.id
+      from trees
+      LEFT JOIN region
+      on ST_WITHIN(trees.estimated_geometric_location, region.geom)
+      left join region_type
+      on region.type_id = region_type.id
+      where 
+      region_type.type = 'country'
+      group by region.id
+      order by count(region.id) desc
+      limit ${top}
+      ) r left join region
+      on r.id = region.id
+      ;
+    `;
+    const object = await this.session
+      .getDB()
+      .raw(sql);
+    return object.rows;
+  }
 }
+
 
 
 

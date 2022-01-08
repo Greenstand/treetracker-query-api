@@ -21,4 +21,13 @@ describe("", () => {
       name: "China",
     });
   });
+
+  it.only("countries/leaderboard", async () => {
+    const response = await supertest(app).get("/countries/leaderboard");
+    expect(response.status).toBe(200);
+    expect(response.body.countries[0]).toMatchObject({
+      id: expect.any(Number),
+      name: expect.any(String),
+    });
+  }, 1000 * 60);
 })

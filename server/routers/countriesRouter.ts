@@ -7,6 +7,16 @@ import Session from 'infra/database/Session';
 
 const router = express.Router();
 
+router.get('/leaderboard', handlerWrapper(async (req, res, next) => {
+  const repo = new CountryRepository(new Session());
+  const exe = CountryModel.getLeaderBoard(repo);
+  const result = await exe(req.params.id);
+  res.send({
+    countries: result,
+  });
+  res.end();
+}));
+
 router.get('/:id', handlerWrapper(async (req, res, next) => {
   Joi.assert(req.params.id, Joi.number().required());
   const repo = new CountryRepository(new Session());
