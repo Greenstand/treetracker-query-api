@@ -1,4 +1,4 @@
-import TreeRepository from "infra/database/TreeRepository";
+import TreeRepository from "../infra/database/TreeRepository";
 import log from "loglevel";
 import { delegateRepository } from "../infra/database/delegateRepository";
 

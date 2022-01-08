@@ -5,7 +5,7 @@ import HttpError from "./utils/HttpError";
 import { errorHandler, handlerWrapper } from "./routers/utils";
 import log from "loglevel";
 import countriesRouter from './routers/countriesRouter';
-import treesRouter from 'routers/treesRouter';
+import treesRouter from './routers/treesRouter';
 
 const app = express();
 const config = require('../config/config.js');

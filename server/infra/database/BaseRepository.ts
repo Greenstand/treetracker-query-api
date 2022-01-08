@@ -1,6 +1,6 @@
-import Session from 'infra/database/Session'
+import Session from './Session'
 import { Knex } from 'knex'
-import HttpError from 'utils/HttpError'
+import HttpError from '../../utils/HttpError'
 
 export default class BaseRepository<T> {
   tableName: string

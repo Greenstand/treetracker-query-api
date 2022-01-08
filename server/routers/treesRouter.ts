@@ -2,8 +2,8 @@ import express from 'express';
 import { handlerWrapper } from './utils';
 import TreeModel, {Tree} from '../models/Tree';
 import Joi from 'joi';
-import Session from 'infra/database/Session';
-import TreeRepository from 'infra/database/TreeRepository';
+import Session from '../infra/database/Session';
+import TreeRepository from '../infra/database/TreeRepository';
 
 const router = express.Router();
 
