@@ -6,4 +6,4 @@ COPY package-lock.json ./
 RUN npm ci --silent
 COPY . ./
 # TODO replace to command for prod
-CMD [ "npm", "dev" ]
+CMD [ "ls" ]
