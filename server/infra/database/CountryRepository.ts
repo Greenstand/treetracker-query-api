@@ -1,5 +1,5 @@
-import { Country } from "models/Country";
-import HttpError from "utils/HttpError";
+import { Country } from "../../models/Country";
+import HttpError from "../../utils/HttpError";
 import BaseRepository from "./BaseRepository";
 import Session from "./Session";
 

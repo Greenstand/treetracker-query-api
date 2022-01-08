@@ -1,12 +1,12 @@
 require('dotenv').config()
 import log from "loglevel";
+import app from "./app";
 //setup log level
 require("./setup");
-const app = require("./app");
 const port = process.env.NODE_PORT || 3006;
 const { knex, knexMainDB } = require("./infra/database/knex")
 const server = app.listen(port, () => {
-  log.info('listening on port:' + port);
+  log.warn('listening on port:' + port);
   log.debug("debug log level!");
 });
 

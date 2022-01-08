@@ -1,4 +1,4 @@
-import CountryRepository from "infra/database/CountryRepository";
+import CountryRepository from "../infra/database/CountryRepository";
 import { delegateRepository } from "../infra/database/delegateRepository";
 
 export type Country = {
