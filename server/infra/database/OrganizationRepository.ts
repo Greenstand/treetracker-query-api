@@ -1,5 +1,5 @@
-import { Organization } from "models/Organization";
-import HttpError from "utils/HttpError";
+import { Organization } from "../../models/Organization";
+import HttpError from "../../utils/HttpError";
 import BaseRepository from "./BaseRepository";
 import Session from "./Session";
 
