@@ -1,4 +1,4 @@
-import PlanterRepository from "infra/database/PlanterRepository";
+import PlanterRepository from "../infra/database/PlanterRepository";
 import log from "loglevel";
 import { delegateRepository } from "../infra/database/delegateRepository";
 

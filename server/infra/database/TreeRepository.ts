@@ -1,5 +1,5 @@
 import { Tree } from "models/Tree";
-import HttpError from "utils/HttpError";
+import HttpError from "../../utils/HttpError";
 import BaseRepository from "./BaseRepository";
 import Session from "./Session";
 

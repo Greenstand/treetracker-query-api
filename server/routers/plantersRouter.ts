@@ -3,7 +3,7 @@ import { handlerWrapper } from './utils';
 import PlanterModel, {Planter} from '../models/Planter';
 import Joi from 'joi';
 import Session from '../infra/database/Session';
-import PlanterRepository from 'infra/database/PlanterRepository';
+import PlanterRepository from '../infra/database/PlanterRepository';
 
 const router = express.Router();
 
