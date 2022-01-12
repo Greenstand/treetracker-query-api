@@ -1,4 +1,4 @@
-import OrganizationRepository from "infra/database/OrganizationRepository";
+import OrganizationRepository from "../infra/database/OrganizationRepository";
 import log from "loglevel";
 import { delegateRepository } from "../infra/database/delegateRepository";
 
