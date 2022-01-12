@@ -7,6 +7,7 @@ import log from "loglevel";
 import countriesRouter from './routers/countriesRouter';
 import treesRouter from './routers/treesRouter';
 import plantersRouter from './routers/plantersRouter';
+import organizationsRouter from './routers/organizationsRouter';
 
 const app = express();
 const config = require('../config/config.js');
@@ -32,6 +33,7 @@ app.use(bodyParser.json()); // parse application/json
 app.use('/countries', countriesRouter);
 app.use('/trees', treesRouter);
 app.use('/planters', plantersRouter);
+app.use('/organizations', organizationsRouter);
 // Global error handler
 app.use(errorHandler);
 
