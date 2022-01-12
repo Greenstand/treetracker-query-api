@@ -32,9 +32,9 @@ const handlerWrapper = fn =>
 
 const errorHandler = (err, req, res, next) => {
   if(process.env.NODE_LOG_LEVEL === "debug"){
-    log.warn("catch error:", err);
+    log.error("catch error:", err);
   }else{
-    log.debug("catch error:", err);
+    log.error("catch error:", err);
   }
   if(err instanceof HttpError){
     res.status(err.code).send({
