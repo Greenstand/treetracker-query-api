@@ -21,7 +21,7 @@ describe("trees", () => {
     });
   });
 
-  it.only("trees?limit=1&organization_id=11", async () => {
+  it("trees?limit=1&organization_id=11", async () => {
     const response = await supertest(app).get("/trees?limit=1&organization_id=11");
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
@@ -31,5 +31,16 @@ describe("trees", () => {
       organization_id: 11,
     });
   }, 1000*60);
+
+  it("trees/featured", async () => {
+    const response = await supertest(app).get("/trees/featured");
+    expect(response.status).toBe(200);
+    // expect(response.body).toMatchObject({
+    //   trees: expect.anything(),
+    // });
+    expect(response.body.trees[0]).toMatchObject({
+      id: expect.any(Number),
+    });
+  }, 1000*10);
 
 })

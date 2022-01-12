@@ -21,7 +21,23 @@ function getByFilter(treeRepository: TreeRepository): (filter: any, options: any
   };
 }
 
+/*
+ featured tree, some highlighted tree, for a tempororily solution
+ we just put the newest, verified tree
+ */
+function getFeaturedTree(treeRepository: TreeRepository){
+  return async function(){
+    const trees = await treeRepository.getByFilter(
+      {
+        approved: true, 
+      }, {limit: 10});
+    return trees;
+  };
+
+}
+
 export default {
   getById: delegateRepository(TreeRepository, "getById"),
   getByFilter,
+  getFeaturedTree,
 }

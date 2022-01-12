@@ -7,6 +7,16 @@ import TreeRepository from '../infra/database/TreeRepository';
 
 const router = express.Router();
 
+router.get('/featured', handlerWrapper(async (req, res, next) => {
+  const repo = new TreeRepository(new Session());
+  const exe = TreeModel.getFeaturedTree(repo);
+  const result = await exe();
+  res.send({
+    trees: result,
+  });
+  res.end();
+}));
+
 router.get('/:id', handlerWrapper(async (req, res, next) => {
   Joi.assert(req.params.id, Joi.number().required());
   const repo = new TreeRepository(new Session());
