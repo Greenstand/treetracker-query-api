@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.2.0...v1.2.1) (2022-01-12)
+
+
+### Bug Fixes
+
+* wrong path ([4d12b0b](https://github.com/Greenstand/treetracker-query-api/commit/4d12b0bad778cfb3cdbdda25dcaefdff26bfe31f))
+
 # [1.2.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.1.0...v1.2.0) (2022-01-12)
 
 
