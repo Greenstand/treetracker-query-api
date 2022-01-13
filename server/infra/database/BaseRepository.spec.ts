@@ -7,7 +7,7 @@ import Session from './Session'
 const tracker = mockKnex.getTracker()
 
 describe('BaseRepository', () => {
-  let baseRepository: BaseRepository
+  let baseRepository: BaseRepository<any>
 
   beforeEach(() => {
     mockKnex.mock(knex)
