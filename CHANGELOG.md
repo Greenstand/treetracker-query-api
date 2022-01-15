@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.2.3...v1.3.0) (2022-01-15)
+
+
+### Features
+
+* added github actions to run tests for new PR ([f3b53cb](https://github.com/Greenstand/treetracker-query-api/commit/f3b53cb2f5bba0d0802d79bedf8e5f93fa87bb4d))
+
 ## [1.2.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.2.2...v1.2.3) (2022-01-13)
 
 
