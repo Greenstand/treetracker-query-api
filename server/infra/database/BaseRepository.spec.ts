@@ -223,13 +223,13 @@ describe('BaseRepository', () => {
     })
   })
 
-  describe('update', () => {
+  describe.only('update', () => {
     it('update', async () => {
       tracker.uninstall()
       tracker.install()
       tracker.on('query', (query) => {
         expect(query.sql).toMatch(/update.*testTable.*/)
-        query.response({ id: 1 })
+        query.response([{ id: 1 }])
       })
       const result = await baseRepository.update({
         id: 1,
