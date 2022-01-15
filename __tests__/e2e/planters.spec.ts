@@ -11,6 +11,7 @@ describe("planters", () => {
       links: {
         featured_trees: expect.stringMatching(/trees/),
         associated_organizations: expect.stringMatching(/organizations/),
+        species: expect.stringMatching(/species/),
       }
     });
   })
@@ -25,6 +26,7 @@ describe("planters", () => {
       links: {
         featured_trees: expect.stringMatching(/trees/),
         associated_organizations: expect.stringMatching(/organizations/),
+        species: expect.stringMatching(/species/),
       }
     })
   }, 1000 * 30)
