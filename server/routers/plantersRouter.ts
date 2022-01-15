@@ -13,6 +13,8 @@ router.get('/:id', handlerWrapper(async (req, res, next) => {
   const repo = new PlanterRepository(new Session());
   const exe = PlanterModel.getById(repo);
   const result = await exe(req.params.id);
+  
+  result.featured_trees = `/trees?planter_id=${result.id}&limit=20&offset=0`;
   res.send(result);
   res.end();
 }));

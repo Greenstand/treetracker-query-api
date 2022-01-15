@@ -51,8 +51,8 @@ export default class CountryRepository extends BaseRepository<Country> {
 
   async getLeaderBoard(top : number = 10){
     const sql = `
-      select r.*, region.name, centroid  from (
-      select count(region.id) as total, region.id
+      select r.*, region.name, ST_AsGeoJSON(centroid) as centroid  from (
+      select count(region.id) as planted, region.id
       from trees
       LEFT JOIN region
       on ST_WITHIN(trees.estimated_geometric_location, region.geom)
