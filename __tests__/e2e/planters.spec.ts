@@ -8,17 +8,24 @@ describe("planters", () => {
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
       id: 1,
+      links: {
+        featured_trees: expect.stringMatching(/trees/),
+        associated_organizations: expect.stringMatching(/organizations/),
+      }
     });
   })
 
   it("planters?organization_id=1&limit=1", async () => {
     const response = await supertest(app).get("/planters?organization_id=1&limit=1");
     expect(response.status).toBe(200);
-    expect(response.body.trees).toBeInstanceOf(Array);
-    expect(response.body.trees[0]).toMatchObject({
+    expect(response.body.planters).toBeInstanceOf(Array);
+    expect(response.body.planters[0]).toMatchObject({
       id: 1,
       organization_id: 1,
-      featured_trees: expect.stringMatching(/trees/),
+      links: {
+        featured_trees: expect.stringMatching(/trees/),
+        associated_organizations: expect.stringMatching(/organizations/),
+      }
     })
   }, 1000 * 30)
 

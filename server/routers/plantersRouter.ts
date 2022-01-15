@@ -14,7 +14,7 @@ router.get('/:id', handlerWrapper(async (req, res, next) => {
   const exe = PlanterModel.getById(repo);
   const result = await exe(req.params.id);
   
-  result.featured_trees = `/trees?planter_id=${result.id}&limit=20&offset=0`;
+  result.links = PlanterModel.getPlanterLinks(result);
   res.send(result);
   res.end();
 }));
@@ -44,7 +44,7 @@ router.get('/', handlerWrapper(async (req, res, next) => {
     total: null,
     offset,
     limit,
-    trees: result,
+    planters: result.map(planter => ({...planter, links: PlanterModel.getPlanterLinks(planter)})),
   });
   res.end();
 }));

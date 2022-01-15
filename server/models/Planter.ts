@@ -21,7 +21,16 @@ function getByFilter(planterRepository: PlanterRepository): (filter: any, option
   };
 }
 
+function getPlanterLinks(planter){
+  const links = {
+    featured_trees : `/trees?planter_id=${planter.id}&limit=20&offset=0`,
+    associated_organizations: `/organizations?planter_id=${planter.id}&limit=20&offset=0`,
+  }
+  return links;
+}
+
 export default {
   getById: delegateRepository(PlanterRepository, "getById"),
   getByFilter,
+  getPlanterLinks,
 }
