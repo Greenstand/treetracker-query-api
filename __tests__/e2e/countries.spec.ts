@@ -28,6 +28,8 @@ describe("", () => {
     expect(response.body.countries[0]).toMatchObject({
       id: expect.any(Number),
       name: expect.any(String),
+      planted: expect.any(String),
+      centroid: expect.stringMatching(/coordinates/),
     });
   }, 1000 * 60);
 })

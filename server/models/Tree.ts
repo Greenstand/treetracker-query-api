@@ -27,10 +27,15 @@ function getByFilter(treeRepository: TreeRepository): (filter: any, options: any
  */
 function getFeaturedTree(treeRepository: TreeRepository){
   return async function(){
-    const trees = await treeRepository.getByFilter(
-      {
-        approved: true, 
-      }, {limit: 10});
+    // const trees = await treeRepository.getByFilter(
+    //   {
+    //     approved: true, 
+    //   }, {limit: 10});
+    const trees : Array<Tree> = [];
+    for(const id of [186737, 186735, 186736, 186734]){
+      const tree = await treeRepository.getById(id);
+      trees.push(tree);
+    }
     return trees;
   };
 

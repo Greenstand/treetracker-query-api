@@ -13,6 +13,8 @@ router.get('/:id', handlerWrapper(async (req, res, next) => {
   const repo = new PlanterRepository(new Session());
   const exe = PlanterModel.getById(repo);
   const result = await exe(req.params.id);
+  
+  result.links = PlanterModel.getPlanterLinks(result);
   res.send(result);
   res.end();
 }));
@@ -42,7 +44,7 @@ router.get('/', handlerWrapper(async (req, res, next) => {
     total: null,
     offset,
     limit,
-    trees: result,
+    planters: result.map(planter => ({...planter, links: PlanterModel.getPlanterLinks(planter)})),
   });
   res.end();
 }));

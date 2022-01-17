@@ -9,11 +9,16 @@ import treesRouter from './routers/treesRouter';
 import plantersRouter from './routers/plantersRouter';
 import organizationsRouter from './routers/organizationsRouter';
 import speciesRouter from './routers/speciesRouter';
+import cors from 'cors';
+
 
 const app = express();
 const config = require('../config/config.js');
 
 //Sentry.init({ dsn: config.sentry_dsn });
+
+// app allow cors 
+app.use(cors());
 
 /*
  * Check request

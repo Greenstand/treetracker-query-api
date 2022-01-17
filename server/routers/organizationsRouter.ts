@@ -42,7 +42,7 @@ router.get('/', handlerWrapper(async (req, res, next) => {
     total: null,
     offset,
     limit,
-    trees: result,
+    organizations: result,
   });
   res.end();
 }));
