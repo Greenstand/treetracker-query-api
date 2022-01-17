@@ -13,6 +13,7 @@ router.get('/:id', handlerWrapper(async (req, res, next) => {
   const repo = new OrganizationRepository(new Session());
   const exe = OrganizationModel.getById(repo);
   const result = await exe(req.params.id);
+  result.links = OrganizationModel.getOrganizationLinks(result);
   res.send(result);
   res.end();
 }));
@@ -42,7 +43,8 @@ router.get('/', handlerWrapper(async (req, res, next) => {
     total: null,
     offset,
     limit,
-    organizations: result,
+    organizations: result.map(organization => ({...organization, links: OrganizationModel.getOrganizationLinks(organization)})),
+
   });
   res.end();
 }));
