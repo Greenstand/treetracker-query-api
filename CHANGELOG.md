@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.4.0...v1.4.1) (2022-01-17)
+
+
+### Bug Fixes
+
+* org return links ([c12f754](https://github.com/Greenstand/treetracker-query-api/commit/c12f7542c3448d44f645bbc3fd3c9603b9f0a2b6))
+* turn the response value into an array object ([db5bb23](https://github.com/Greenstand/treetracker-query-api/commit/db5bb234149caaed6652634cee59371ca6df5965))
+
 # [1.4.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.3.0...v1.4.0) (2022-01-17)
 
 
