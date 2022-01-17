@@ -21,7 +21,17 @@ function getByFilter(organizationRepository: OrganizationRepository): (filter: a
   };
 }
 
+function getOrganizationLinks(organization){
+  const links = {
+    featured_trees : `/trees?organization_id=${organization.id}&limit=20&offset=0`,
+    associated_planters: `/planters?organization_id=${organization.id}&limit=20&offset=0`,
+    species: `/species?organization_id=${organization.id}&limit=20&offset=0`,
+  }
+  return links;
+}
+
 export default {
   getById: delegateRepository(OrganizationRepository, "getById"),
   getByFilter,
+  getOrganizationLinks,
 }

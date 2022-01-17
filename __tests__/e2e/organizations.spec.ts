@@ -8,6 +8,11 @@ describe("organizations", () => {
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
       id: 1,
+      links: {
+        featured_trees: expect.stringMatching(/trees/),
+        associated_planters: expect.stringMatching(/planters/),
+        species: expect.stringMatching(/species/),
+      }
     });
   })
 
@@ -17,6 +22,11 @@ describe("organizations", () => {
     expect(response.body.organizations).toBeInstanceOf(Array);
     expect(response.body.organizations[0]).toMatchObject({
       id: expect.any(Number),
+      links: {
+        featured_trees: expect.stringMatching(/trees/),
+        associated_planters: expect.stringMatching(/planters/),
+        species: expect.stringMatching(/species/),
+      }
     })
   }, 1000 * 30)
 
