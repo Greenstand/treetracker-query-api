@@ -1,3 +1,18 @@
+# [1.4.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.3.0...v1.4.0) (2022-01-17)
+
+
+### Bug Fixes
+
+* parseCentroid.js ([3a053b6](https://github.com/Greenstand/treetracker-query-api/commit/3a053b69b7e6b1b15a34f3ce8269a4c48f448e64))
+* planter return specis link ([50ef353](https://github.com/Greenstand/treetracker-query-api/commit/50ef353bda6f37f8c861d0e5c342bc85c021f375))
+* species return species list ([5d28620](https://github.com/Greenstand/treetracker-query-api/commit/5d28620206aec70f3c441a5c3c0681832ce9e1f4))
+
+
+### Features
+
+* country centroid and so on ([5402145](https://github.com/Greenstand/treetracker-query-api/commit/5402145ab7ad7dd0a21264a32ad3ca600a050e7f))
+* planter retun links ([1800a9b](https://github.com/Greenstand/treetracker-query-api/commit/1800a9b3fc79286df89ffba2145b3ad254e4c54f))
+
 # [1.3.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.2.3...v1.3.0) (2022-01-15)
 
 
