@@ -33,7 +33,7 @@ describe('BaseRepository', () => {
   })
 
   //TODO
-  it.skip('getById can not find result, should throw 404', () => {})
+  it.skip('getById can not find result, should throw 404', () => { })
 
   describe.only('getByFilter', () => {
     it('getByFilter', async () => {
@@ -64,6 +64,25 @@ describe('BaseRepository', () => {
         {
           limit: 1,
         },
+      )
+      expect(result).toHaveLength(1)
+      expect(result[0]).toHaveProperty('id', 1)
+    })
+
+    it('getByFiliter with order', async () => {
+      tracker.uninstall()
+      tracker.install()
+      tracker.on('query', (query) => {
+        expect(query.sql).toMatch(/select.*testTable.*name.*order.*by.*desc.*/)
+        query.response([{ id: 1 }])
+      })
+      const result = await baseRepository.getByFilter(
+        {
+          name: 'testName',
+        },
+        {
+          order: { column: 'id', direction: 'desc' }
+        }
       )
       expect(result).toHaveLength(1)
       expect(result[0]).toHaveProperty('id', 1)
@@ -273,6 +292,6 @@ describe('BaseRepository', () => {
     })
 
     //TODO
-    describe.skip('count support and and or', () => {})
+    describe.skip('count support and and or', () => { })
   })
 })
