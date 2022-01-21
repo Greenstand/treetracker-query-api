@@ -1,6 +1,6 @@
+import Organization from 'interfaces/Organization';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
-import { Organization } from '../../models/Organization';
 import HttpError from '../../utils/HttpError';
 
 export default class OrganizationRepository extends BaseRepository<Organization> {

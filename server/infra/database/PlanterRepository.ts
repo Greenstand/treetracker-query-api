@@ -1,4 +1,4 @@
-import { Planter } from 'models/Planter';
+import Planter from 'interfaces/Planter';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 import HttpError from '../../utils/HttpError';

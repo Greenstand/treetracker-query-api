@@ -25,7 +25,6 @@ module.exports = {
     '@typescript-eslint/require-await': 'warn',
     'no-await-in-loop': 'warn',
     'no-underscore-dangle': 'warn',
-    'import/no-cycle': 'warn',
 
     // naming conventions
     camelcase: 'off',

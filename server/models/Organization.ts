@@ -1,12 +1,8 @@
 import log from 'loglevel';
+import Organization from 'interfaces/Organization';
 import { delegateRepository } from '../infra/database/delegateRepository';
-import OrganizationRepository from '../infra/database/OrganizationRepository';
 
-export type Organization = {
-  id: number;
-  first_name: string;
-  last_name: string;
-};
+import OrganizationRepository from '../infra/database/OrganizationRepository';
 
 function getByFilter(
   organizationRepository: OrganizationRepository,

@@ -1,6 +1,6 @@
+import Country from 'interfaces/Country';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
-import { Country } from '../../models/Country';
 import HttpError from '../../utils/HttpError';
 
 export default class CountryRepository extends BaseRepository<Country> {

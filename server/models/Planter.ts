@@ -1,12 +1,9 @@
 import log from 'loglevel';
-import { delegateRepository } from '../infra/database/delegateRepository';
-import PlanterRepository from '../infra/database/PlanterRepository';
+import Planter from 'interfaces/Planter';
 
-export type Planter = {
-  id: number;
-  first_name: string;
-  last_name: string;
-};
+import { delegateRepository } from '../infra/database/delegateRepository';
+
+import PlanterRepository from '../infra/database/PlanterRepository';
 
 function getByFilter(
   planterRepository: PlanterRepository,

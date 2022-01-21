@@ -1,12 +1,7 @@
+import Country from 'interfaces/Country';
+
 import CountryRepository from '../infra/database/CountryRepository';
 import { delegateRepository } from '../infra/database/delegateRepository';
-
-export type Country = {
-  name: string;
-  code: string;
-  lat: number;
-  lon: number;
-};
 
 function getCountries(
   countryRepository: CountryRepository,

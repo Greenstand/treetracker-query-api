@@ -1,4 +1,4 @@
-import { Species } from 'models/Species';
+import Species from 'interfaces/Species';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 import HttpError from '../../utils/HttpError';

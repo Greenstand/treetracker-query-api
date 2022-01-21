@@ -1,12 +1,7 @@
 import log from 'loglevel';
+import Species from 'interfaces/Species';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import SpeciesRepository from '../infra/database/SpeciesRepository';
-
-export type Species = {
-  id: number;
-  first_name: string;
-  last_name: string;
-};
 
 function getByFilter(
   speciesRepository: SpeciesRepository,
