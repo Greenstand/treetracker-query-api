@@ -20,6 +20,7 @@
     "doc": "docs"
   },
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
     "db-migrate-ci": "cd database; db-migrate up",
     "dev": "NODE_PATH=dist/ nodemon --watch 'server/**/*.ts' --exec 'ts-node --project tsconfig.build.json' server/server.ts",
     "format": "prettier ./ --write",
