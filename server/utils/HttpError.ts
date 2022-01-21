@@ -8,17 +8,17 @@
 export default class HttpError extends Error {
   code: number;
 
-  _toRollback: boolean;
+  toRollback: boolean;
 
   constructor(code: number, message: string, toRollback = true) {
     super(message);
     this.code = code;
     // set rollback flag, so the transaction of db would rollback when catch this error
     // set default to true
-    this._toRollback = toRollback;
+    this.toRollback = toRollback;
   }
 
   shouldRollback() {
-    return this._toRollback;
+    return this.toRollback;
   }
 }

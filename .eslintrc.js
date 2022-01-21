@@ -23,10 +23,6 @@ module.exports = {
     '@typescript-eslint/require-await': 'error',
     '@typescript-eslint/await-thenable': 'error',
 
-    // fix these warnings and change to error
-    // these rules will default to error if removed
-    'no-underscore-dangle': 'warn',
-
     // naming conventions
     camelcase: 'off',
     '@typescript-eslint/naming-convention': [
