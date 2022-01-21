@@ -92,5 +92,9 @@
   "bugs": {
     "url": "https://github.com/Greenstand/treetracker-query-api/issues"
   },
-  "homepage": "https://github.com/Greenstand/treetracker-query-api#readme"
+  "homepage": "https://github.com/Greenstand/treetracker-query-api#readme",
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.--write": "prettier --write"
+  }
 }
