@@ -36,7 +36,7 @@ router.get(
     limit = limit || 20;
     offset = offset || 0;
     const repo = new PlanterRepository(new Session());
-    const filter = {};
+    const filter: any = {};
     if (organization_id) {
       filter.organization_id = organization_id;
     }

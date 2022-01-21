@@ -1,4 +1,4 @@
-import { Tree } from 'models/Tree';
+import Tree from 'interfaces/Tree';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 import HttpError from '../../utils/HttpError';

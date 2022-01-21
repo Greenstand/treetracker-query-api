@@ -20,7 +20,6 @@ describe('/countries', () => {
     const repo: any = {
       getById: jest.fn(() => Promise.resolve(country1)),
     };
-    // @ts-ignore
     const execute = CountryModel.getById(repo);
     const result = await execute(1);
     expect(result).toMatchObject(country1);

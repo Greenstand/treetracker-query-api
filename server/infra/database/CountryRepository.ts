@@ -54,6 +54,7 @@ export default class CountryRepository extends BaseRepository<Country> {
     return object.rows[0];
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async getLeaderBoard(top = 10) {
     // const sql = `
     //   select r.*, region.name, ST_AsGeoJSON(centroid) as centroid  from (

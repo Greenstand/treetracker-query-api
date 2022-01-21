@@ -12,7 +12,6 @@ import { errorHandler, handlerWrapper } from './routers/utils';
 import HttpError from './utils/HttpError';
 
 const app = express();
-const config = require('../config/config.js');
 
 // Sentry.init({ dsn: config.sentry_dsn });
 
@@ -52,7 +51,7 @@ app.use('/species', speciesRouter);
 // Global error handler
 app.use(errorHandler);
 
-const {version} = require('../package.json');
+const { version } = require('../package.json');
 
 app.get('*', (req, res) => {
   res.status(404).send(version);

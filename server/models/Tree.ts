@@ -1,12 +1,7 @@
 import log from 'loglevel';
+import Tree from 'interfaces/Tree';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import TreeRepository from '../infra/database/TreeRepository';
-
-export type Tree = {
-  id: number;
-  lat: number;
-  lon: number;
-};
 
 function getByFilter(
   treeRepository: TreeRepository,
@@ -19,10 +14,9 @@ function getByFilter(
         options,
       );
       return trees;
-    } 
-      const trees = await treeRepository.getByFilter(filter, options);
-      return trees;
-    
+    }
+    const trees = await treeRepository.getByFilter(filter, options);
+    return trees;
   };
 }
 
@@ -37,6 +31,7 @@ function getFeaturedTree(treeRepository: TreeRepository) {
     //     approved: true,
     //   }, {limit: 10});
     const trees: Array<Tree> = [];
+    // eslint-disable-next-line no-restricted-syntax
     for (const id of [186737, 186735, 186736, 186734]) {
       const tree = await treeRepository.getById(id);
       trees.push(tree);
