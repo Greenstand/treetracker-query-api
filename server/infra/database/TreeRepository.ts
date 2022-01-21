@@ -1,15 +1,15 @@
-import { Tree } from "models/Tree";
-import HttpError from "../../utils/HttpError";
-import BaseRepository from "./BaseRepository";
-import Session from "./Session";
+import { Tree } from 'models/Tree';
+import HttpError from '../../utils/HttpError';
+import BaseRepository from './BaseRepository';
+import Session from './Session';
 
 export default class TreeRepository extends BaseRepository<Tree> {
   constructor(session: Session) {
-    super("trees", session);
+    super('trees', session);
   }
 
-  async getByOrganization(organization_id: number, options: any){
-    const {limit, offset} = options;
+  async getByOrganization(organization_id: number, options: any) {
+    const { limit, offset } = options;
     const sql = `
       SELECT
         *
@@ -20,13 +20,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
       LIMIT ${limit}
       OFFSET ${offset}
     `;
-    const object = await this.session
-      .getDB()
-      .raw(sql);
+    const object = await this.session.getDB().raw(sql);
     return object.rows;
   }
-
 }
-
-
-

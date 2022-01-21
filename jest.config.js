@@ -6,4 +6,4 @@ module.exports = {
   modulePaths: ['server/'],
   maxConcurrency: 1,
   forceExit: true,
-}
+};

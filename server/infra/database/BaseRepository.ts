@@ -1,27 +1,27 @@
-import Session from './Session'
-import { Knex } from 'knex'
-import HttpError from '../../utils/HttpError'
+import Session from './Session';
+import { Knex } from 'knex';
+import HttpError from '../../utils/HttpError';
 
 export default class BaseRepository<T> {
-  tableName: string
-  session: Session
+  tableName: string;
+  session: Session;
 
   constructor(tableName: string, session: Session) {
-    this.tableName = tableName
-    this.session = session
+    this.tableName = tableName;
+    this.session = session;
   }
 
-  async getById(id: string | number) : Promise<T> {
+  async getById(id: string | number): Promise<T> {
     const object = await this.session
       .getDB()
       .select()
       .table(this.tableName)
       .where('id', id)
-      .first()
+      .first();
     if (!object) {
-      throw new HttpError(404, `Can not found ${this.tableName} by id:${id}`)
+      throw new HttpError(404, `Can not found ${this.tableName} by id:${id}`);
     }
-    return object
+    return object;
   }
 
   /*
@@ -35,18 +35,18 @@ export default class BaseRepository<T> {
     options: { limit?: number } | undefined = undefined,
   ) {
     const whereBuilder = function (object: any, builder: Knex.QueryBuilder) {
-      let result = builder
+      let result = builder;
       if (object.and) {
         for (const one of object.and) {
           if (one.or) {
             result = result.andWhere((subBuilder) =>
               whereBuilder(one, subBuilder),
-            )
+            );
           } else {
             result = result.andWhere(
               Object.keys(one)[0],
               Object.values(one)[0] as any,
-            )
+            );
           }
         }
       } else if (object.or) {
@@ -54,30 +54,30 @@ export default class BaseRepository<T> {
           if (one.and) {
             result = result.orWhere((subBuilder) =>
               whereBuilder(one, subBuilder),
-            )
+            );
           } else {
             result = result.orWhere(
               Object.keys(one)[0],
               Object.values(one)[0] as any,
-            )
+            );
           }
         }
       } else {
-        result.where(object)
+        result.where(object);
       }
-      return result
-    }
+      return result;
+    };
 
     let promise = this.session
       .getDB()
       .select()
       .table(this.tableName)
-      .where((builder) => whereBuilder(filter, builder))
+      .where((builder) => whereBuilder(filter, builder));
     if (options && options.limit) {
-      promise = promise.limit(options && options.limit)
+      promise = promise.limit(options && options.limit);
     }
-    const result = await promise
-    return result
+    const result = await promise;
+    return result;
   }
 
   async countByFilter<T>(filter: T) {
@@ -85,8 +85,8 @@ export default class BaseRepository<T> {
       .getDB()
       .count()
       .table(this.tableName)
-      .where(filter)
-    return parseInt(result[0].count.toString())
+      .where(filter);
+    return parseInt(result[0].count.toString());
   }
 
   async update<T>(object: T & { id: string | number }) {
@@ -94,15 +94,15 @@ export default class BaseRepository<T> {
       .getDB()(this.tableName)
       .update(object)
       .where('id', object.id)
-      .returning('*')
-    return result[0]
+      .returning('*');
+    return result[0];
   }
 
   async create<T>(object: T) {
     const result = await this.session
       .getDB()(this.tableName)
       .insert(object)
-      .returning('*')
-    return result[0]
+      .returning('*');
+    return result[0];
   }
 }
