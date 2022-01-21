@@ -17,13 +17,15 @@ module.exports = {
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'no-promise-executor-return': 'off',
     'consistent-return': 'off',
-    '@typescript-eslint/await-thenable': 'error',
     radix: 'off',
+
+    // non-default errors
+    '@typescript-eslint/require-await': 'error',
+    '@typescript-eslint/await-thenable': 'error',
 
     // fix these warnings and change to error
     // these rules will default to error if removed
     '@typescript-eslint/no-unused-vars': 'warn',
-    '@typescript-eslint/require-await': 'warn',
     'no-await-in-loop': 'warn',
     'no-underscore-dangle': 'warn',
 

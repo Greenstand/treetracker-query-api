@@ -23,7 +23,7 @@ app.use(cors());
  * Check request
  */
 app.use(
-  handlerWrapper(async (req, _res, next) => {
+  handlerWrapper((req, _res, next) => {
     if (
       req.method === 'POST' ||
       req.method === 'PATCH' ||
