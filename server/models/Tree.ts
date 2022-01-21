@@ -33,6 +33,7 @@ function getFeaturedTree(treeRepository: TreeRepository) {
     const trees: Array<Tree> = [];
     // eslint-disable-next-line no-restricted-syntax
     for (const id of [186737, 186735, 186736, 186734]) {
+      // eslint-disable-next-line no-await-in-loop
       const tree = await treeRepository.getById(id);
       trees.push(tree);
     }

@@ -26,7 +26,6 @@ module.exports = {
     // fix these warnings and change to error
     // these rules will default to error if removed
     '@typescript-eslint/no-unused-vars': 'warn',
-    'no-await-in-loop': 'warn',
     'no-underscore-dangle': 'warn',
 
     // naming conventions
