@@ -1,5 +1,4 @@
 import { Knex } from 'knex';
-
 import knex from './knex';
 
 export default class Session {

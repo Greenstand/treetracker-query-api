@@ -1,5 +1,4 @@
 import Country from 'interfaces/Country';
-
 import CountryRepository from '../infra/database/CountryRepository';
 import { delegateRepository } from '../infra/database/delegateRepository';
 

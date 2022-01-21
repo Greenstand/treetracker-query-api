@@ -1,8 +1,6 @@
 import log from 'loglevel';
 import Planter from 'interfaces/Planter';
-
 import { delegateRepository } from '../infra/database/delegateRepository';
-
 import PlanterRepository from '../infra/database/PlanterRepository';
 
 function getByFilter(
