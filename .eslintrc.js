@@ -11,6 +11,7 @@ module.exports = {
   plugins: [],
 
   rules: {
+    // disabled or modified because too strict
     'no-console': ['warn', { allow: ['info', 'error'] }],
     'import/prefer-default-export': 'off',
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
