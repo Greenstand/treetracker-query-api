@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get(
   '/featured',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     const repo = new TreeRepository(new Session());
     const exe = TreeModel.getFeaturedTree(repo);
     const result = await exe();
@@ -22,7 +22,7 @@ router.get(
 
 router.get(
   '/:id',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.number().required());
     const repo = new TreeRepository(new Session());
     const exe = TreeModel.getById(repo);
@@ -34,7 +34,7 @@ router.get(
 
 router.get(
   '/',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     Joi.assert(
       req.query,
       Joi.object().keys({

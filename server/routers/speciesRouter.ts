@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get(
   '/:id',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.number().required());
     const repo = new SpeciesRepository(new Session());
     const exe = SpeciesModel.getById(repo);
@@ -21,7 +21,7 @@ router.get(
 
 router.get(
   '/',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     Joi.assert(
       req.query,
       Joi.object().keys({

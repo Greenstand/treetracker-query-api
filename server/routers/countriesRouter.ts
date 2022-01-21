@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get(
   '/leaderboard',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     const repo = new CountryRepository(new Session());
     const exe = CountryModel.getLeaderBoard(repo);
     const result = await exe(req.params.id);
@@ -22,7 +22,7 @@ router.get(
 
 router.get(
   '/:id',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.number().required());
     const repo = new CountryRepository(new Session());
     const exe = CountryModel.getById(repo);
@@ -34,7 +34,7 @@ router.get(
 
 router.get(
   '/',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     Joi.assert(
       req.query,
       Joi.object().keys({

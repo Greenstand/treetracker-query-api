@@ -1,7 +1,6 @@
 import Tree from 'interfaces/Tree';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
-import HttpError from '../../utils/HttpError';
 
 export default class TreeRepository extends BaseRepository<Tree> {
   constructor(session: Session) {

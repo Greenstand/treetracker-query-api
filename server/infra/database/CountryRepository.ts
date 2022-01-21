@@ -1,7 +1,7 @@
 import Country from 'interfaces/Country';
+import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
-import HttpError from '../../utils/HttpError';
 
 export default class CountryRepository extends BaseRepository<Country> {
   constructor(session: Session) {
@@ -29,7 +29,7 @@ export default class CountryRepository extends BaseRepository<Country> {
 
   async getByFilter(
     filter: any,
-    options?: { limit?: number | undefined } | undefined,
+    // options?: { limit?: number | undefined } | undefined,
   ): Promise<any[]> {
     const { lat, lon } = filter;
     const sql = `
@@ -55,7 +55,7 @@ export default class CountryRepository extends BaseRepository<Country> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  getLeaderBoard(top = 10) {
+  getLeaderBoard(/* top = 10 */) {
     // const sql = `
     //   select r.*, region.name, ST_AsGeoJSON(centroid) as centroid  from (
     //   select count(region.id) as planted, region.id

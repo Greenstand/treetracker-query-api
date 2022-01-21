@@ -3,7 +3,6 @@
  */
 import { ValidationError } from 'joi';
 import log from 'loglevel';
-import Session from '../infra/database/Session';
 import HttpError from '../utils/HttpError';
 
 /*
@@ -14,7 +13,7 @@ import HttpError from '../utils/HttpError';
  *
  * USAGE: wrap the express handler with this function:
  *
- *  router.get("/xxx", handlerWrap(async (res, rep, next) => {
+ *  router.get("/xxx", handlerWrap(async (res, rep) => {
  *    ...
  *  }));
  *
@@ -30,7 +29,7 @@ const handlerWrapper = (fn) =>
     });
   };
 
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res) => {
   if (process.env.NODE_LOG_LEVEL === 'debug') {
     log.error('catch error:', err);
   } else {

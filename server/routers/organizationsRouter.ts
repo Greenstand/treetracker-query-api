@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get(
   '/:id',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.number().required());
     const repo = new OrganizationRepository(new Session());
     const exe = OrganizationModel.getById(repo);
@@ -22,7 +22,7 @@ router.get(
 
 router.get(
   '/',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     Joi.assert(
       req.query,
       Joi.object().keys({

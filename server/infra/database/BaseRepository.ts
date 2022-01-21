@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { Knex } from 'knex';
+import HttpError from 'utils/HttpError';
 import Session from './Session';
-import HttpError from '../../utils/HttpError';
 
 export default class BaseRepository<T> {
   tableName: string;

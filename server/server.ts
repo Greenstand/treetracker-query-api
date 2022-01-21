@@ -14,7 +14,7 @@ const server = app.listen(port, () => {
   log.debug('debug log level!');
 });
 
-process.once('SIGINT', (code) => {
+process.once('SIGINT', () => {
   console.log('Terminate request received...');
   knex.destroy();
   server.close();
