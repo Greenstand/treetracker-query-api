@@ -22,7 +22,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "db-migrate-ci": "cd database; db-migrate up",
-    "dev": "NODE_PATH=dist/ nodemon --watch 'server/**/*.ts' --exec 'ts-node --project tsconfig.build.json' server/server.ts",
+    "dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec \"npm run start:dev\"",
     "format": "prettier ./ --write",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",
@@ -30,6 +30,7 @@
     "prepare": "husky install",
     "server-test": "DEBUG=express:* NODE_LOG_LEVEL=debug nodemon server/serverTest.js",
     "start": "NODE_PATH=dist/ node dist/server.js",
+    "start:dev": "NODE_PATH=server/ ts-node -r dotenv/config --project tsconfig.build.json server/server.ts",
     "test": "npm run test-unit; npm run test-integration;npm run test-repository",
     "test-e2e": "jest ./__tests__/e2e/",
     "test-integration": "NODE_ENV=test mocha -r dotenv/config dotenv_config_path=.env.test --exit --timeout 20000 './__tests__/supertest.js'",
