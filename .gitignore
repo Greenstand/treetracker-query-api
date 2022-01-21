@@ -2,3 +2,4 @@ node_modules/
 database.json
 .env*
 .eslintcache
+dist/
