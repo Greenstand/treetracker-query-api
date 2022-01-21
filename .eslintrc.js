@@ -21,7 +21,6 @@ module.exports = {
 
     // fix these warnings and change to error
     '@typescript-eslint/no-unused-vars': 'warn',
-    'prefer-const': 'warn',
     '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/no-shadow': 'warn',
     'no-await-in-loop': 'warn',

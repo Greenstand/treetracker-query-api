@@ -32,9 +32,7 @@ router.get(
         offset: Joi.number().integer().min(0),
       }),
     );
-    let { limit, offset, planter_id, organization_id } = req.query;
-    limit = limit || 20;
-    offset = offset || 0;
+    const { limit = 20, offset = 0, organization_id } = req.query;
     const repo = new PlanterRepository(new Session());
     const filter: any = {};
     if (organization_id) {

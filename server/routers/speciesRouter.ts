@@ -31,9 +31,7 @@ router.get(
         offset: Joi.number().integer().min(0),
       }),
     );
-    let { limit, offset, planter_id, organization_id } = req.query;
-    limit = limit || 20;
-    offset = offset || 0;
+    const { limit = 20, offset = 0, planter_id, organization_id } = req.query;
     const repo = new SpeciesRepository(new Session());
     const filter = {};
     if (organization_id) {
