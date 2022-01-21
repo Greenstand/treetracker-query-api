@@ -20,9 +20,9 @@ module.exports = {
     radix: 'off',
 
     // fix these warnings and change to error
+    // these rules will default to error if removed
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/require-await': 'warn',
-    '@typescript-eslint/no-shadow': 'warn',
     'no-await-in-loop': 'warn',
     'no-underscore-dangle': 'warn',
     'import/no-cycle': 'warn',

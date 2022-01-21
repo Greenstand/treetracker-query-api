@@ -32,7 +32,7 @@ export default class BaseRepository<T> {
    * options:
    *  limit: number
    */
-  async getByFilter<T>(
+  async getByFilter(
     filter: T,
     options: { limit?: number } | undefined = undefined,
   ) {
@@ -82,7 +82,7 @@ export default class BaseRepository<T> {
     return result;
   }
 
-  async countByFilter<T>(filter: T) {
+  async countByFilter(filter: T) {
     const result = await this.session
       .getDB()
       .count()
@@ -91,7 +91,7 @@ export default class BaseRepository<T> {
     return parseInt(result[0].count.toString());
   }
 
-  async update<T>(object: T & { id: string | number }) {
+  async update(object: T & { id: string | number }) {
     const result = await this.session
       .getDB()(this.tableName)
       .update(object)
@@ -100,7 +100,7 @@ export default class BaseRepository<T> {
     return result[0];
   }
 
-  async create<T>(object: T) {
+  async create(object: T) {
     const result = await this.session
       .getDB()(this.tableName)
       .insert(object)
