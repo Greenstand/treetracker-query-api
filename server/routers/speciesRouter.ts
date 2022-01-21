@@ -3,7 +3,7 @@ import Joi from 'joi';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import SpeciesRepository from '../infra/database/SpeciesRepository';
-import SpeciesModel, { Species } from '../models/Species';
+import SpeciesModel from '../models/Species';
 
 const router = express.Router();
 

@@ -3,7 +3,7 @@ import Joi from 'joi';
 import { handlerWrapper } from './utils';
 import OrganizationRepository from '../infra/database/OrganizationRepository';
 import Session from '../infra/database/Session';
-import OrganizationModel, { Organization } from '../models/Organization';
+import OrganizationModel from '../models/Organization';
 
 const router = express.Router();
 
