@@ -2,37 +2,44 @@
   "name": "treetracker-query-api",
   "version": "1.4.1",
   "private": false,
-  "engines": {
-    "node": "^16",
-    "npm": ">=6.0.0"
-  },
-  "main": "server/server.js",
-  "scripts": {
-    "start": "NODE_PATH=dist/ node dist/server.js",
-    "dev": "NODE_PATH=dist/ nodemon --watch 'server/**/*.ts' --exec 'ts-node --project tsconfig.build.json' server/server.ts",
-    "lint": "npm run eslint",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-    "eslint": "eslint --report-unused-disable-directives .",
-    "eslint:fix": "npm run eslint -- --fix",
-    "test": "npm run test-unit; npm run test-integration;npm run test-repository",
-    "test-unit": "jest ./server/models/",
-    "test-e2e": "jest ./__tests__/e2e/",
-    "test-repository": "jest ./server/infra/database/",
-    "server-test": "DEBUG=express:* NODE_LOG_LEVEL=debug nodemon server/serverTest.js",
-    "test-seedDB": "NODE_ENV=test mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000 './**/*.spec.js'",
-    "test-integration": "NODE_ENV=test mocha -r dotenv/config dotenv_config_path=.env.test --exit --timeout 20000 './__tests__/supertest.js'",
-    "test-watch": "NODE_ENV=test NODE_LOG_LEVEL=info mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000 -w -b --ignore './server/repositories/**/*.spec.js'  './server/setup.js' './server/**/*.spec.js' './__tests__/seed.spec.js' './__tests__/supertest.js'",
-    "test-watch-debug": "NODE_ENV=test NODE_LOG_LEVEL=debug mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000 -w -b --ignore './server/repositories/**/*.spec.js'  './server/setup.js' './server/**/*.spec.js' './__tests__/seed.spec.js' './__tests__/supertest.js'",
-    "format": "prettier ./ --write",
-    "db-migrate-ci": "cd database; db-migrate up",
-    "prepare": "husky install",
-    "mock-server": "prism mock ./docs/api/spec/query-api.yaml"
-  },
   "keywords": [
     "ecology"
   ],
-  "author": "Greenstand Engineers",
+  "homepage": "https://github.com/Greenstand/treetracker-query-api#readme",
+  "bugs": {
+    "url": "https://github.com/Greenstand/treetracker-query-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Greenstand/treetracker-query-api"
+  },
   "license": "GPL-3.0-or-later",
+  "author": "Greenstand Engineers",
+  "main": "server/server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "db-migrate-ci": "cd database; db-migrate up",
+    "dev": "NODE_PATH=dist/ nodemon --watch 'server/**/*.ts' --exec 'ts-node --project tsconfig.build.json' server/server.ts",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "format": "prettier ./ --write",
+    "lint": "npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "mock-server": "prism mock ./docs/api/spec/query-api.yaml",
+    "prepare": "husky install",
+    "server-test": "DEBUG=express:* NODE_LOG_LEVEL=debug nodemon server/serverTest.js",
+    "start": "NODE_PATH=dist/ node dist/server.js",
+    "test": "npm run test-unit; npm run test-integration;npm run test-repository",
+    "test-e2e": "jest ./__tests__/e2e/",
+    "test-integration": "NODE_ENV=test mocha -r dotenv/config dotenv_config_path=.env.test --exit --timeout 20000 './__tests__/supertest.js'",
+    "test-repository": "jest ./server/infra/database/",
+    "test-seedDB": "NODE_ENV=test mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000 './**/*.spec.js'",
+    "test-unit": "jest ./server/models/",
+    "test-watch": "NODE_ENV=test NODE_LOG_LEVEL=info mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000 -w -b --ignore './server/repositories/**/*.spec.js'  './server/setup.js' './server/**/*.spec.js' './__tests__/seed.spec.js' './__tests__/supertest.js'",
+    "test-watch-debug": "NODE_ENV=test NODE_LOG_LEVEL=debug mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000 -w -b --ignore './server/repositories/**/*.spec.js'  './server/setup.js' './server/**/*.spec.js' './__tests__/seed.spec.js' './__tests__/supertest.js'"
+  },
   "dependencies": {
     "@sentry/node": "^5.1.0",
     "body-parser": "^1.18.2",
@@ -77,24 +84,14 @@
     "node-cipher": "^6.3.3",
     "nodemon": "^2.0.14",
     "prettier": "^2.4.1",
+    "sort-package-json": "^1.53.1",
     "supertest": "^4.0.2",
     "ts-jest": "^27.0.7",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
   },
-  "directories": {
-    "doc": "docs"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Greenstand/treetracker-query-api"
-  },
-  "bugs": {
-    "url": "https://github.com/Greenstand/treetracker-query-api/issues"
-  },
-  "homepage": "https://github.com/Greenstand/treetracker-query-api#readme",
-  "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.--write": "prettier --write"
+  "engines": {
+    "node": "^16",
+    "npm": ">=6.0.0"
   }
 }
