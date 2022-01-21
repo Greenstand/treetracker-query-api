@@ -22,11 +22,9 @@
   "scripts": {
     "db-migrate-ci": "cd database; db-migrate up",
     "dev": "NODE_PATH=dist/ nodemon --watch 'server/**/*.ts' --exec 'ts-node --project tsconfig.build.json' server/server.ts",
-    "eslint": "eslint --report-unused-disable-directives .",
-    "eslint:fix": "npm run eslint -- --fix",
     "format": "prettier ./ --write",
-    "lint": "npm run eslint",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint . --cache --fix",
     "mock-server": "prism mock ./docs/api/spec/query-api.yaml",
     "prepare": "husky install",
     "server-test": "DEBUG=express:* NODE_LOG_LEVEL=debug nodemon server/serverTest.js",
