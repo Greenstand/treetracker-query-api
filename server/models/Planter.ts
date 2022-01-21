@@ -1,6 +1,6 @@
-import PlanterRepository from '../infra/database/PlanterRepository';
 import log from 'loglevel';
 import { delegateRepository } from '../infra/database/delegateRepository';
+import PlanterRepository from '../infra/database/PlanterRepository';
 
 export type Planter = {
   id: number;
@@ -19,10 +19,10 @@ function getByFilter(
         options,
       );
       return trees;
-    } else {
+    } 
       const trees = await planterRepository.getByFilter(filter, options);
       return trees;
-    }
+    
   };
 }
 

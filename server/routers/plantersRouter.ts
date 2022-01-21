@@ -1,9 +1,9 @@
 import express from 'express';
-import { handlerWrapper } from './utils';
-import PlanterModel, { Planter } from '../models/Planter';
 import Joi from 'joi';
-import Session from '../infra/database/Session';
+import { handlerWrapper } from './utils';
 import PlanterRepository from '../infra/database/PlanterRepository';
+import Session from '../infra/database/Session';
+import PlanterModel, { Planter } from '../models/Planter';
 
 const router = express.Router();
 
@@ -38,7 +38,7 @@ router.get(
     const repo = new PlanterRepository(new Session());
     const filter = {};
     if (organization_id) {
-      filter['organization_id'] = organization_id;
+      filter.organization_id = organization_id;
     }
     const result = await PlanterModel.getByFilter(repo)(filter, {
       limit,

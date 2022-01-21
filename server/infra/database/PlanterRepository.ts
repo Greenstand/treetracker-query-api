@@ -1,7 +1,7 @@
 import { Planter } from 'models/Planter';
-import HttpError from '../../utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
+import HttpError from '../../utils/HttpError';
 
 export default class PlanterRepository extends BaseRepository<Planter> {
   constructor(session: Session) {

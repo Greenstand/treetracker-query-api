@@ -10,7 +10,7 @@ export default class HttpError extends Error {
 
   _toRollback: boolean;
 
-  constructor(code: number, message: string, toRollback: boolean = true) {
+  constructor(code: number, message: string, toRollback = true) {
     super(message);
     this.code = code;
     // set rollback flag, so the transaction of db would rollback when catch this error

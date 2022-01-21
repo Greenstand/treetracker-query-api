@@ -1,10 +1,10 @@
 /*
  * Some utils for router/express
  */
-import log from 'loglevel';
-import HttpError from '../utils/HttpError';
 import { ValidationError } from 'joi';
+import log from 'loglevel';
 import Session from '../infra/database/Session';
+import HttpError from '../utils/HttpError';
 
 /*
  * This is from the library https://github.com/Abazhenov/express-async-handler

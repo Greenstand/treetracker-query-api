@@ -1,6 +1,6 @@
-import OrganizationRepository from '../infra/database/OrganizationRepository';
 import log from 'loglevel';
 import { delegateRepository } from '../infra/database/delegateRepository';
+import OrganizationRepository from '../infra/database/OrganizationRepository';
 
 export type Organization = {
   id: number;
@@ -19,10 +19,10 @@ function getByFilter(
         options,
       );
       return trees;
-    } else {
+    } 
       const trees = await organizationRepository.getByFilter(filter, options);
       return trees;
-    }
+    
   };
 }
 

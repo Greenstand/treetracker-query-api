@@ -1,9 +1,9 @@
 import express from 'express';
-import { handlerWrapper } from './utils';
-import TreeModel, { Tree } from '../models/Tree';
 import Joi from 'joi';
+import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import TreeRepository from '../infra/database/TreeRepository';
+import TreeModel, { Tree } from '../models/Tree';
 
 const router = express.Router();
 
@@ -50,9 +50,9 @@ router.get(
     const repo = new TreeRepository(new Session());
     const filter = {};
     if (planter_id) {
-      filter['planter_id'] = planter_id;
+      filter.planter_id = planter_id;
     } else if (organization_id) {
-      filter['organization_id'] = organization_id;
+      filter.organization_id = organization_id;
     }
     const result = await TreeModel.getByFilter(repo)(filter, {
       limit,

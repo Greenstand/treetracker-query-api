@@ -1,6 +1,6 @@
-import TreeRepository from '../infra/database/TreeRepository';
 import log from 'loglevel';
 import { delegateRepository } from '../infra/database/delegateRepository';
+import TreeRepository from '../infra/database/TreeRepository';
 
 export type Tree = {
   id: number;
@@ -19,10 +19,10 @@ function getByFilter(
         options,
       );
       return trees;
-    } else {
+    } 
       const trees = await treeRepository.getByFilter(filter, options);
       return trees;
-    }
+    
   };
 }
 

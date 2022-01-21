@@ -1,9 +1,9 @@
 import express from 'express';
-import CountryRepository from '../infra/database/CountryRepository';
-import { handlerWrapper } from './utils';
-import CountryModel, { Country } from '../models/Country';
 import Joi from 'joi';
+import { handlerWrapper } from './utils';
+import CountryRepository from '../infra/database/CountryRepository';
 import Session from '../infra/database/Session';
+import CountryModel, { Country } from '../models/Country';
 
 const router = express.Router();
 

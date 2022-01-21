@@ -1,6 +1,6 @@
-import SpeciesRepository from '../infra/database/SpeciesRepository';
 import log from 'loglevel';
 import { delegateRepository } from '../infra/database/delegateRepository';
+import SpeciesRepository from '../infra/database/SpeciesRepository';
 
 export type Species = {
   id: number;
@@ -19,17 +19,17 @@ function getByFilter(
         options,
       );
       return trees;
-    } else if (filter.planter_id) {
+    } if (filter.planter_id) {
       log.warn('using planter filter...');
       const trees = await speciesRepository.getByPlanter(
         filter.planter_id,
         options,
       );
       return trees;
-    } else {
+    } 
       const trees = await speciesRepository.getByFilter(filter, options);
       return trees;
-    }
+    
   };
 }
 

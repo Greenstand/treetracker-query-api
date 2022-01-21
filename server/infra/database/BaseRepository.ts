@@ -1,9 +1,10 @@
-import Session from './Session';
 import { Knex } from 'knex';
+import Session from './Session';
 import HttpError from '../../utils/HttpError';
 
 export default class BaseRepository<T> {
   tableName: string;
+
   session: Session;
 
   constructor(tableName: string, session: Session) {

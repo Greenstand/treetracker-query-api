@@ -1,20 +1,20 @@
-import express from 'express';
 import Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
-import HttpError from './utils/HttpError';
-import { errorHandler, handlerWrapper } from './routers/utils';
+import cors from 'cors';
+import express from 'express';
 import log from 'loglevel';
 import countriesRouter from './routers/countriesRouter';
-import treesRouter from './routers/treesRouter';
-import plantersRouter from './routers/plantersRouter';
 import organizationsRouter from './routers/organizationsRouter';
+import plantersRouter from './routers/plantersRouter';
 import speciesRouter from './routers/speciesRouter';
-import cors from 'cors';
+import treesRouter from './routers/treesRouter';
+import { errorHandler, handlerWrapper } from './routers/utils';
+import HttpError from './utils/HttpError';
 
 const app = express();
 const config = require('../config/config.js');
 
-//Sentry.init({ dsn: config.sentry_dsn });
+// Sentry.init({ dsn: config.sentry_dsn });
 
 // app allow cors
 app.use(cors());
@@ -43,7 +43,7 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
 
-//routers
+// routers
 app.use('/countries', countriesRouter);
 app.use('/trees', treesRouter);
 app.use('/planters', plantersRouter);
@@ -52,8 +52,9 @@ app.use('/species', speciesRouter);
 // Global error handler
 app.use(errorHandler);
 
-const version = require('../package.json').version;
-app.get('*', function (req, res) {
+const {version} = require('../package.json');
+
+app.get('*', (req, res) => {
   res.status(404).send(version);
 });
 

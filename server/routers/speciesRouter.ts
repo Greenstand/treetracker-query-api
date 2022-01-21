@@ -1,9 +1,9 @@
 import express from 'express';
-import { handlerWrapper } from './utils';
-import SpeciesModel, { Species } from '../models/Species';
 import Joi from 'joi';
+import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import SpeciesRepository from '../infra/database/SpeciesRepository';
+import SpeciesModel, { Species } from '../models/Species';
 
 const router = express.Router();
 
@@ -37,9 +37,9 @@ router.get(
     const repo = new SpeciesRepository(new Session());
     const filter = {};
     if (organization_id) {
-      filter['organization_id'] = organization_id;
+      filter.organization_id = organization_id;
     } else if (planter_id) {
-      filter['planter_id'] = planter_id;
+      filter.planter_id = planter_id;
     }
     const result = await SpeciesModel.getByFilter(repo)(filter, {
       limit,

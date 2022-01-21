@@ -1,9 +1,9 @@
 import express from 'express';
-import { handlerWrapper } from './utils';
-import OrganizationModel, { Organization } from '../models/Organization';
 import Joi from 'joi';
-import Session from '../infra/database/Session';
+import { handlerWrapper } from './utils';
 import OrganizationRepository from '../infra/database/OrganizationRepository';
+import Session from '../infra/database/Session';
+import OrganizationModel, { Organization } from '../models/Organization';
 
 const router = express.Router();
 
@@ -37,7 +37,7 @@ router.get(
     const repo = new OrganizationRepository(new Session());
     const filter = {};
     if (planter_id) {
-      filter['planter_id'] = planter_id;
+      filter.planter_id = planter_id;
     }
     const result = await OrganizationModel.getByFilter(repo)(filter, {
       limit,

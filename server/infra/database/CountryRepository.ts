@@ -1,7 +1,7 @@
-import { Country } from '../../models/Country';
-import HttpError from '../../utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
+import { Country } from '../../models/Country';
+import HttpError from '../../utils/HttpError';
 
 export default class CountryRepository extends BaseRepository<Country> {
   constructor(session: Session) {
@@ -54,7 +54,7 @@ export default class CountryRepository extends BaseRepository<Country> {
     return object.rows[0];
   }
 
-  async getLeaderBoard(top: number = 10) {
+  async getLeaderBoard(top = 10) {
     // const sql = `
     //   select r.*, region.name, ST_AsGeoJSON(centroid) as centroid  from (
     //   select count(region.id) as planted, region.id
