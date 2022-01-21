@@ -19,7 +19,7 @@ function getCountries(
 
 export default {
   getCountries,
-  getById: delegateRepository(CountryRepository, 'getById'),
-  getByFilter: delegateRepository(CountryRepository, 'getByFilter'),
-  getLeaderBoard: delegateRepository(CountryRepository, 'getLeaderBoard'),
+  getById: delegateRepository<CountryRepository>('getById'),
+  getByFilter: delegateRepository<CountryRepository>('getByFilter'),
+  getLeaderBoard: delegateRepository<CountryRepository>('getLeaderBoard'),
 };
