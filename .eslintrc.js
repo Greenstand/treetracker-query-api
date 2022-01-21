@@ -17,12 +17,11 @@ module.exports = {
     'no-promise-executor-return': 'off',
     'consistent-return': 'off',
     '@typescript-eslint/await-thenable': 'error',
-    'radix': 'off',
+    radix: 'off',
 
     // fix these warnings and change to error
     '@typescript-eslint/no-unused-vars': 'warn',
     'prefer-const': 'warn',
-    '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/no-shadow': 'warn',
     'no-await-in-loop': 'warn',

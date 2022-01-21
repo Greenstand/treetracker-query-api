@@ -1,5 +1,5 @@
-const request = require('supertest');
-const server = require('./app');
+import request from 'supertest';
+import server from 'app';
 
 describe('', () => {
   it('Test header: content-type: application/json', async () => {

@@ -10,6 +10,7 @@ import speciesRouter from './routers/speciesRouter';
 import treesRouter from './routers/treesRouter';
 import { errorHandler, handlerWrapper } from './routers/utils';
 import HttpError from './utils/HttpError';
+import { version } from '../package.json';
 
 const app = express();
 
@@ -50,8 +51,6 @@ app.use('/organizations', organizationsRouter);
 app.use('/species', speciesRouter);
 // Global error handler
 app.use(errorHandler);
-
-const { version } = require('../package.json');
 
 app.get('*', (req, res) => {
   res.status(404).send(version);

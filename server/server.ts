@@ -1,21 +1,21 @@
+import * as dotenv from 'dotenv';
 import log from 'loglevel';
-import app from './app';
+import app from 'app';
+import knex from 'infra/database/knex';
 
-require('dotenv').config();
+dotenv.config();
 // setup log level
 require('./setup');
 
 const port = process.env.NODE_PORT || 3006;
-const { knex, knexMainDB } = require('./infra/database/knex');
 
 const server = app.listen(port, () => {
-  log.warn(`listening on port:${  port}`);
+  log.warn(`listening on port:${port}`);
   log.debug('debug log level!');
 });
 
 process.once('SIGINT', (code) => {
   console.log('Terminate request received...');
   knex.destroy();
-  knexMainDB.destroy();
   server.close();
 });
