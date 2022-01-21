@@ -41,7 +41,7 @@ function getFeaturedTree(treeRepository: TreeRepository) {
 }
 
 export default {
-  getById: delegateRepository(TreeRepository, 'getById'),
+  getById: delegateRepository<TreeRepository>('getById'),
   getByFilter,
   getFeaturedTree,
 };

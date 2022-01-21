@@ -3,7 +3,7 @@ import Joi from 'joi';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import TreeRepository from '../infra/database/TreeRepository';
-import TreeModel, { Tree } from '../models/Tree';
+import TreeModel from '../models/Tree';
 
 const router = express.Router();
 
@@ -46,7 +46,7 @@ router.get(
     );
     const { limit = 20, offset = 0, planter_id, organization_id } = req.query;
     const repo = new TreeRepository(new Session());
-    const filter = {};
+    const filter: any = {};
     if (planter_id) {
       filter.planter_id = planter_id;
     } else if (organization_id) {

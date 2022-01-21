@@ -19,10 +19,9 @@ function getByFilter(
         options,
       );
       return trees;
-    } 
-      const trees = await organizationRepository.getByFilter(filter, options);
-      return trees;
-    
+    }
+    const trees = await organizationRepository.getByFilter(filter, options);
+    return trees;
   };
 }
 
@@ -36,7 +35,7 @@ function getOrganizationLinks(organization) {
 }
 
 export default {
-  getById: delegateRepository(OrganizationRepository, 'getById'),
+  getById: delegateRepository<OrganizationRepository>('getById'),
   getByFilter,
   getOrganizationLinks,
 };

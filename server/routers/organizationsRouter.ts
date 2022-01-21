@@ -33,7 +33,7 @@ router.get(
     );
     const { limit = 20, offset = 0, planter_id } = req.query;
     const repo = new OrganizationRepository(new Session());
-    const filter = {};
+    const filter: any = {};
     if (planter_id) {
       filter.planter_id = planter_id;
     }

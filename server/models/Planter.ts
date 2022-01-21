@@ -19,10 +19,9 @@ function getByFilter(
         options,
       );
       return trees;
-    } 
-      const trees = await planterRepository.getByFilter(filter, options);
-      return trees;
-    
+    }
+    const trees = await planterRepository.getByFilter(filter, options);
+    return trees;
   };
 }
 
@@ -36,7 +35,7 @@ function getPlanterLinks(planter) {
 }
 
 export default {
-  getById: delegateRepository(PlanterRepository, 'getById'),
+  getById: delegateRepository<PlanterRepository>('getById'),
   getByFilter,
   getPlanterLinks,
 };
