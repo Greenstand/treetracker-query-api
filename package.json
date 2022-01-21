@@ -23,7 +23,7 @@
     "test-integration": "NODE_ENV=test mocha -r dotenv/config dotenv_config_path=.env.test --exit --timeout 20000 './__tests__/supertest.js'",
     "test-watch": "NODE_ENV=test NODE_LOG_LEVEL=info mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000 -w -b --ignore './server/repositories/**/*.spec.js'  './server/setup.js' './server/**/*.spec.js' './__tests__/seed.spec.js' './__tests__/supertest.js'",
     "test-watch-debug": "NODE_ENV=test NODE_LOG_LEVEL=debug mocha -r dotenv/config dotenv_config_path=.env.test --timeout 10000 -w -b --ignore './server/repositories/**/*.spec.js'  './server/setup.js' './server/**/*.spec.js' './__tests__/seed.spec.js' './__tests__/supertest.js'",
-    "prettier-fix": "prettier ./ --write",
+    "format": "prettier ./ --write",
     "db-migrate-ci": "cd database; db-migrate up",
     "prepare": "husky install",
     "mock-server": "prism mock ./docs/api/spec/query-api.yaml"
