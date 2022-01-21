@@ -24,8 +24,11 @@ jobs:
       - name: npm clean install
         run: npm ci
 
-      - name: Transplile Typescript
+      - name: Typescript compiles
         run: npm run build
+
+      - name: Eslint
+        run: npm run lint
 
       - name: run tests
         run: npm test
