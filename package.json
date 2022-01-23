@@ -22,7 +22,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "db-migrate-ci": "cd database; db-migrate up",
-    "dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec \"npm run start:dev\"",
+    "dev": "nodemon --watch 'server/**' --ext 'ts,json' --ignore 'server/**/*.spec.ts' --exec \"npm run start:dev\"",
     "format": "prettier ./ --write",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",
