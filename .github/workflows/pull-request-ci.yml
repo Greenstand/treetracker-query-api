@@ -9,6 +9,7 @@ on:
       - main
 env:
   project-directory: ./
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
 jobs:
   test:
@@ -32,3 +33,6 @@ jobs:
 
       - name: run tests
         run: npm test
+
+      - name: run e2e tests
+        run: npm run test-e2e
