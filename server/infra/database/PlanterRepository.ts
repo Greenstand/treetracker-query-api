@@ -1,3 +1,4 @@
+import FilterOptions from 'interfaces/FilterOptions';
 import Planter from 'interfaces/Planter';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
@@ -7,7 +8,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     super('planter', session);
   }
 
-  async getByOrganization(organization_id: number, options: any) {
+  async getByOrganization(organization_id: number, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
       SELECT

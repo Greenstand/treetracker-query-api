@@ -1,13 +1,14 @@
 import log from 'loglevel';
 import Filter from 'interfaces/Filter';
+import FilterOptions from 'interfaces/FilterOptions';
 import Planter from 'interfaces/Planter';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import PlanterRepository from '../infra/database/PlanterRepository';
 
 function getByFilter(
   planterRepository: PlanterRepository,
-): (filter: Filter, options: any) => Promise<Planter[]> {
-  return async function (filter: Filter, options: any) {
+): (filter: Filter, options: FilterOptions) => Promise<Planter[]> {
+  return async function (filter: Filter, options: FilterOptions) {
     if (filter.organization_id) {
       log.warn('using org filter...');
       const trees = await planterRepository.getByOrganization(

@@ -1,13 +1,14 @@
 import log from 'loglevel';
 import Filter from 'interfaces/Filter';
+import FilterOptions from 'interfaces/FilterOptions';
 import Species from 'interfaces/Species';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import SpeciesRepository from '../infra/database/SpeciesRepository';
 
 function getByFilter(
   speciesRepository: SpeciesRepository,
-): (filter: Filter, options: any) => Promise<Species[]> {
-  return async function (filter: Filter, options: any) {
+): (filter: Filter, options: FilterOptions) => Promise<Species[]> {
+  return async function (filter: Filter, options: FilterOptions) {
     if (filter.organization_id) {
       log.warn('using org filter...');
       const trees = await speciesRepository.getByOrganization(

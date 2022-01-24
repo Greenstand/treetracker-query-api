@@ -1,3 +1,4 @@
+import FilterOptions from 'interfaces/FilterOptions';
 import Tree from 'interfaces/Tree';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
@@ -7,7 +8,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
     super('trees', session);
   }
 
-  async getByOrganization(organization_id: number, options: any) {
+  async getByOrganization(organization_id: number, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
       SELECT
