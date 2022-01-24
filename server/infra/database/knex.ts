@@ -3,7 +3,7 @@ import log from 'loglevel';
 
 const connection = process.env.DATABASE_URL;
 
-log.warn('DATABASE_URL:', connection);
+!connection && log.warn('env var DATABASE_URL not set');
 
 const knexConfig: Knex.Config = {
   client: 'pg',
