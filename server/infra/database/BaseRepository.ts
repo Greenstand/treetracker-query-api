@@ -1,7 +1,13 @@
 /* eslint-disable no-restricted-syntax */
 import { Knex } from 'knex';
+import Filter from 'interfaces/Filter';
 import HttpError from 'utils/HttpError';
 import Session from './Session';
+
+type FilterOptions = {
+  limit?: number;
+  orderBy?: { column: string; direction?: 'asc' | 'desc' };
+};
 
 export default class BaseRepository<T> {
   tableName: string;
@@ -32,10 +38,8 @@ export default class BaseRepository<T> {
    * options:
    *  limit: number
    */
-  async getByFilter(
-    filter: T,
-    options: { limit?: number, orderBy?: { column: string, direction?: 'asc' | 'desc' } } | undefined = undefined,
-  ) {
+
+  async getByFilter<FilterType>(filter: Filter<FilterType>, options?: FilterOptions) {
     const whereBuilder = function (object: any, builder: Knex.QueryBuilder) {
       let result = builder;
       if (object.and) {
@@ -79,8 +83,11 @@ export default class BaseRepository<T> {
       promise = promise.limit(options && options.limit);
     }
     if (options && options.orderBy) {
-      const direction = (options.orderBy.direction !== undefined) ? options.orderBy.direction : 'asc';
-      promise = promise.orderBy(options.orderBy.column, direction)
+      const direction =
+        options.orderBy.direction !== undefined
+          ? options.orderBy.direction
+          : 'asc';
+      promise = promise.orderBy(options.orderBy.column, direction);
     }
     const result = await promise;
     return result;
