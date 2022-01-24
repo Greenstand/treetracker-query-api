@@ -29,9 +29,9 @@ export default class CountryRepository extends BaseRepository<Country> {
   }
 
   async getByFilter(
-    filter: Filter,
+    filter: Filter = {},
     // options?: { limit?: number | undefined } | undefined,
-  ): Promise<any[]> {
+  ): Promise<Country[]> {
     const { lat, lon } = filter;
     const sql = `
       SELECT

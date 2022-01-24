@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-restricted-syntax */
 import { Knex } from 'knex';
 import Filter from 'interfaces/Filter';
