@@ -32,7 +32,7 @@ function getOrganizationLinks(organization) {
 }
 
 export default {
-  getById: delegateRepository<OrganizationRepository>('getById'),
+  getById: delegateRepository<OrganizationRepository, Organization>('getById'),
   getByFilter,
   getOrganizationLinks,
 };

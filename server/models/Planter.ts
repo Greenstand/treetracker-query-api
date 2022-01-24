@@ -32,7 +32,7 @@ function getPlanterLinks(planter) {
 }
 
 export default {
-  getById: delegateRepository<PlanterRepository>('getById'),
+  getById: delegateRepository<PlanterRepository, Planter>('getById'),
   getByFilter,
   getPlanterLinks,
 };

@@ -15,7 +15,6 @@ router.get(
     const repo = new PlanterRepository(new Session());
     const exe = PlanterModel.getById(repo);
     const result = await exe(req.params.id);
-
     result.links = PlanterModel.getPlanterLinks(result);
     res.send(result);
     res.end();

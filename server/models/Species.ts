@@ -31,6 +31,6 @@ function getByFilter(
 }
 
 export default {
-  getById: delegateRepository<SpeciesRepository>('getById'),
+  getById: delegateRepository<SpeciesRepository, Species>('getById'),
   getByFilter,
 };
