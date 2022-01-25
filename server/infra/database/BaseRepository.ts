@@ -80,8 +80,8 @@ export default class BaseRepository<T> {
       let direction = (options.orderBy.direction !== undefined) ? options.orderBy.direction : 'asc';
       promise = promise.orderBy(options.orderBy.column, direction)
     }
-    const result = await promise
-    return result
+    const result = await promise;
+    return result;
   }
 
   async countByFilter<T>(filter: T) {
