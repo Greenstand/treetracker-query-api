@@ -1,9 +1,9 @@
-import { Knex, knex } from 'knex'
-import log from 'loglevel'
+import { Knex, knex } from 'knex';
+import log from 'loglevel';
 
-const connection = process.env.DATABASE_URL
+const connection = process.env.DATABASE_URL;
 
-log.warn("DATABASE_URL:", connection);
+log.warn('DATABASE_URL:', connection);
 
 const knexConfig: Knex.Config = {
   client: 'pg',
@@ -11,13 +11,13 @@ const knexConfig: Knex.Config = {
   debug: true,
   connection,
   pool: { min: 0, max: 10 },
-}
+};
 
-log.debug(process.env.DATABASE_SCHEMA)
+log.debug(process.env.DATABASE_SCHEMA);
 if (process.env.DATABASE_SCHEMA) {
-  log.info('setting a schema')
-  knexConfig.searchPath = [process.env.DATABASE_SCHEMA, 'public']
+  log.info('setting a schema');
+  knexConfig.searchPath = [process.env.DATABASE_SCHEMA, 'public'];
 }
-log.debug(knexConfig.searchPath)
+log.debug(knexConfig.searchPath);
 
-export default knex(knexConfig)
+export default knex(knexConfig);

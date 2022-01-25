@@ -4,13 +4,12 @@ about: To implement an API for the micro-service
 title: 'Implement API: GET '
 labels: Express, medium, Node.js, postgresql
 assignees: ''
-
 ---
 
 To implement an endpoint:
 
-* Please write an e2e test to cover it.
-* Please follow the guide in the 'readme' to follow our architecture on the server-side.
+- Please write an e2e test to cover it.
+- Please follow the guide in the 'readme' to follow our architecture on the server-side.
 
 ---
 
