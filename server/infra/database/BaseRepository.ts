@@ -77,7 +77,7 @@ export default class BaseRepository<T> {
       promise = promise.limit(options && options.limit)
     }
     if (options && options.orderBy) {
-      let direction = (options.orderBy.direction !== undefined) ? options.orderBy.direction : 'asc';
+      const direction = (options.orderBy.direction !== undefined) ? options.orderBy.direction : 'asc';
       promise = promise.orderBy(options.orderBy.column, direction)
     }
     const result = await promise;

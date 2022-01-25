@@ -32,7 +32,7 @@ describe('BaseRepository', () => {
     expect(entity).toHaveProperty('id', 1)
   })
 
-  //TODO
+  // TODO
   it.skip('getById can not find result, should throw 404', () => {});
 
   describe.only('getByFilter', () => {
@@ -73,7 +73,7 @@ describe('BaseRepository', () => {
       tracker.uninstall()
       tracker.install()
       tracker.on('query', (query) => {
-        expect(query.sql).toMatch('select * from "testTable" where \("name" \= $1\) order by "id" desc'
+        expect(query.sql).toMatch('select * from "testTable" where ("name" = $1) order by "id" desc'
 )
         query.response([{ id: 1 }])
       })
@@ -93,7 +93,7 @@ describe('BaseRepository', () => {
       tracker.uninstall()
       tracker.install()
       tracker.on('query', (query) => {
-        expect(query.sql).toMatch('select * from "testTable" where \("name" \= $1\)'
+        expect(query.sql).toMatch('select * from "testTable" where ("name" = $1)'
 )
         query.response([{ id: 1 }])
       })
@@ -309,7 +309,7 @@ describe('BaseRepository', () => {
       expect(result).toBe(1)
     })
 
-    //TODO
+    // TODO
     describe.skip('count support and and or', () => {});
   });
 });
