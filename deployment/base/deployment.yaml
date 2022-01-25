@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: treetracker-query-api
   labels:
-    app: treetracker-query-api 
+    app: treetracker-query-api
 spec:
   replicas: 1
   selector:
@@ -18,19 +18,19 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: doks.digitalocean.com/node-pool
-                operator: In
-                values:
-                - microservices-node-pool
+              - matchExpressions:
+                  - key: doks.digitalocean.com/node-pool
+                    operator: In
+                    values:
+                      - microservices-node-pool
       containers:
-      - name: treetracker-query-api
-        image: greenstand/treetracker-query-api:TAG
-        ports:
-        - containerPort: 80
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: dbconnection
-              key: database
+        - name: treetracker-query-api
+          image: greenstand/treetracker-query-api:TAG
+          ports:
+            - containerPort: 80
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: dbconnection
+                  key: database
