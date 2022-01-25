@@ -22,6 +22,7 @@ module.exports = {
       'error',
       { allowShortCircuit: true },
     ],
+
     // non-default errors
     '@typescript-eslint/require-await': 'error',
     '@typescript-eslint/await-thenable': 'error',
