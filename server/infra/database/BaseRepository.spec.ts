@@ -73,7 +73,8 @@ describe('BaseRepository', () => {
       tracker.uninstall()
       tracker.install()
       tracker.on('query', (query) => {
-        expect(query.sql).toMatch(/select.*testTable.*name.*order.*by.*desc.*/)
+        expect(query.sql).toMatch('select \* from "testTable" where \("name" \= $1\) order by "id" desc'
+)
         query.response([{ id: 1 }])
       })
       const result = await baseRepository.getByFilter(
@@ -81,7 +82,24 @@ describe('BaseRepository', () => {
           name: 'testName',
         },
         {
-          order: { column: 'id', direction: 'desc' }
+          orderBy: { column: 'id', direction: 'desc' }
+        }
+      )
+      expect(result).toHaveLength(1)
+      expect(result[0]).toHaveProperty('id', 1)
+    })
+
+    it('getByFiliter without order', async () => {
+      tracker.uninstall()
+      tracker.install()
+      tracker.on('query', (query) => {
+        expect(query.sql).toMatch('select \* from "testTable" where \("name" \= $1\)'
+)
+        query.response([{ id: 1 }])
+      })
+      const result = await baseRepository.getByFilter(
+        {
+          name: 'testName',
         }
       )
       expect(result).toHaveLength(1)
