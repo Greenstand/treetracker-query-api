@@ -1,45 +1,44 @@
-import { Knex } from 'knex'
-
-import knex from './knex'
+import { Knex } from 'knex';
+import knex from './knex';
 
 export default class Session {
-  transaction: Knex.Transaction | undefined
+  transaction: Knex.Transaction | undefined;
 
   constructor() {
-    this.transaction = undefined
+    this.transaction = undefined;
   }
 
   getDB() {
     if (this.transaction) {
-      return this.transaction
+      return this.transaction;
     }
-    return knex
+    return knex;
   }
 
   isTransactionInProgress() {
-    return this.transaction !== undefined
+    return this.transaction !== undefined;
   }
 
   async beginTransaction() {
     if (this.transaction) {
-      throw new Error('Can not start transaction in transaction')
+      throw new Error('Can not start transaction in transaction');
     }
-    this.transaction = await knex.transaction()
+    this.transaction = await knex.transaction();
   }
 
   async commitTransaction() {
     if (!this.transaction) {
-      throw new Error('Can not commit transaction before start it!')
+      throw new Error('Can not commit transaction before start it!');
     }
-    await this.transaction.commit()
-    this.transaction = undefined
+    await this.transaction.commit();
+    this.transaction = undefined;
   }
 
   async rollbackTransaction() {
     if (!this.transaction) {
-      throw new Error('Can not rollback transaction before start it!')
+      throw new Error('Can not rollback transaction before start it!');
     }
-    await this.transaction.rollback()
-    this.transaction = undefined
+    await this.transaction.rollback();
+    this.transaction = undefined;
   }
 }

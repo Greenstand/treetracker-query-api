@@ -4,7 +4,6 @@ about: basic common issue
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 ---

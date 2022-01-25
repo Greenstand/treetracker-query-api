@@ -1,9 +1,13 @@
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
-  preset: 'ts-jest',
+  transform: {
+    '^.+\\.(t|j)sx?$': ['@swc/jest'],
+  },
   testEnvironment: 'node',
-  globalSetup: '<rootDir>/.jest/globalSetup.ts',
   modulePaths: ['server/'],
+  moduleNameMapper: {
+    '@test/(.*)': ['<rootDir>/.jest/$1', '<rootDir>/__tests__/$1'],
+  },
+  globalSetup: '<rootDir>/.jest/globalSetup.ts',
+  setupFilesAfterEnv: ['<rootDir>/.jest/setupFile.ts'],
   maxConcurrency: 1,
-  forceExit: true,
-}
+};
