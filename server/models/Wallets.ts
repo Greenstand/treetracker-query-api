@@ -9,5 +9,8 @@ export type Wallet = {
 };
 
 export default {
-  getByIdOrName: delegateRepository(WalletsRepository, 'getByIdOrName'),
+  getWalletByIdOrName: delegateRepository(
+    WalletsRepository,
+    'getWalletByIdOrName',
+  ),
 };

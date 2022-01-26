@@ -17,6 +17,6 @@ describe('/wallet', () => {
     const execute = WalletsModel.getByIdOrName(repo);
     const result = await execute(1);
     expect(result).toMatchObject(wallets);
-    expect(repo.getByIdOrName).toBeCalledWith(1);
+    expect(repo.getWalletByIdOrName).toBeCalledWith(1);
   });
 });

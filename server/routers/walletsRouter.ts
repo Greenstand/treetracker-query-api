@@ -11,7 +11,7 @@ router.get(
   handlerWrapper(async (req, res, next) => {
     Joi.assert(req.params.walletIdOrName, Joi.string().required());
     const repo = new WalletsRepository(new Session());
-    const exe = WalletModel.getByIdOrName(repo);
+    const exe = WalletModel.getWalletByIdOrName(repo);
     const result = await exe(req.params.walletIdOrName);
     res.send(result);
     res.end();
