@@ -34,7 +34,7 @@ export default class BaseRepository<T> {
    */
   async getByFilter(
     filter: T,
-    options: { limit?: number } | undefined = undefined,
+    options: { limit?: number, orderBy?: { column: string, direction?: 'asc' | 'desc' } } | undefined = undefined,
   ) {
     const whereBuilder = function (object: any, builder: Knex.QueryBuilder) {
       let result = builder;
@@ -77,6 +77,10 @@ export default class BaseRepository<T> {
       .where((builder) => whereBuilder(filter, builder));
     if (options && options.limit) {
       promise = promise.limit(options && options.limit);
+    }
+    if (options && options.orderBy) {
+      const direction = (options.orderBy.direction !== undefined) ? options.orderBy.direction : 'asc';
+      promise = promise.orderBy(options.orderBy.column, direction)
     }
     const result = await promise;
     return result;

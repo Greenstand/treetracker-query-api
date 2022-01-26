@@ -82,7 +82,7 @@
     "jest": "^27.4.7",
     "lint-staged": "^11.2.6",
     "mock-knex": "^0.4.10",
-    "node-cipher": "^6.3.3",
+    "node-cipher": "^5.0.1",
     "nodemon": "^2.0.14",
     "prettier": "^2.4.1",
     "sort-package-json": "^1.53.1",

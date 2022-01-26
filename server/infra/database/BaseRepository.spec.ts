@@ -31,6 +31,7 @@ describe('BaseRepository', () => {
     expect(entity).toHaveProperty('id', 1);
   });
 
+
   // TODO
   it.skip('getById can not find result, should throw 404', () => {});
 
@@ -67,6 +68,43 @@ describe('BaseRepository', () => {
       expect(result).toHaveLength(1);
       expect(result[0]).toHaveProperty('id', 1);
     });
+
+    it('getByFiliter with order', async () => {
+      tracker.uninstall()
+      tracker.install()
+      tracker.on('query', (query) => {
+        expect(query.sql).toMatch('select * from "testTable" where ("name" = $1) order by "id" desc'
+)
+        query.response([{ id: 1 }])
+      })
+      const result = await baseRepository.getByFilter(
+        {
+          name: 'testName',
+        },
+        {
+          orderBy: { column: 'id', direction: 'desc' }
+        }
+      )
+      expect(result).toHaveLength(1)
+      expect(result[0]).toHaveProperty('id', 1)
+    })
+
+    it('getByFiliter without order', async () => {
+      tracker.uninstall()
+      tracker.install()
+      tracker.on('query', (query) => {
+        expect(query.sql).toMatch('select * from "testTable" where ("name" = $1)'
+)
+        query.response([{ id: 1 }])
+      })
+      const result = await baseRepository.getByFilter(
+        {
+          name: 'testName',
+        }
+      )
+      expect(result).toHaveLength(1)
+      expect(result[0]).toHaveProperty('id', 1)
+    })
 
     describe("'and' 'or' phrase", () => {
       it('{and: [{c:1}, {b:2}]}', async () => {
@@ -270,6 +308,7 @@ describe('BaseRepository', () => {
       });
       expect(result).toBe(1);
     });
+
 
     // TODO
     describe.skip('count support and and or', () => {});
