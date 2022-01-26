@@ -6,14 +6,13 @@ import Session from '../infra/database/Session';
 import WalletsRepository from '../infra/database/WalletsRepository';
 
 const router = express.Router();
-
 router.get(
-  '/:id',
+  '/:walletIdOrName',
   handlerWrapper(async (req, res, next) => {
+    Joi.assert(req.params.walletIdOrName, Joi.string().required());
     const repo = new WalletsRepository(new Session());
-    // console.log(repo);
-    const exe = WalletModel.getWallets(repo);
-    const result = await exe(req.params.id);
+    const exe = WalletModel.getByIdOrName(repo);
+    const result = await exe(req.params.walletIdOrName);
     res.send(result);
     res.end();
   }),
