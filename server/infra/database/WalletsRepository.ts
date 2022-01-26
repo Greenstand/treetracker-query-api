@@ -1,46 +1,31 @@
-import { Wallets } from 'models/Wallets';
+import { Wallet } from 'models/Wallets';
 import HttpError from '../../utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 
-export default class WalletsRepository extends BaseRepository<Wallets> {
+export default class WalletsRepository extends BaseRepository<Wallet> {
   constructor(session: Session) {
-    super('wallets', session);
+    super('wallet.wallet', session);
   }
 
-  async getWalletById(id: string) {
-    const object = await this.session
-      .getDB()
-      .select(
-        this.session.getDB().raw(`
-        id,
-        name
-        `),
-      )
-      .table(this.tableName)
-      .where('id', id)
-      .first();
-    if (!object) {
+  async getWalletByIdOrName(walletIdOrName: string) {
+    const sql = `
+    SELECT *
+    FROM
+     wallet.wallet
+    WHERE
+      id = '${walletIdOrName}'
+    OR
+      name = '${walletIdOrName}'`;
+
+    const object = await this.session.getDB().raw(sql);
+
+    if (!object && object.rows.length !== 1) {
       throw new HttpError(
         404,
-        `Can not found ${this.tableName} by id or name:${id}`,
+        `Can not found ${this.tableName} by id:${walletIdOrName} name:${walletIdOrName}`,
       );
     }
-    return object;
+    return object.rows[0];
   }
-
-  // async getByWallets(wallets_id: string, options: any) {
-  //   const { limit, offset } = options;
-  //   const sql = `
-  //     SELECT
-  //       *
-  //     FROM entity
-  //     LEFT JOIN planter ON planter.organization_id = entity.id
-  //     WHERE planter.id = ${wallets_id}
-  //     LIMIT ${limit}
-  //     OFFSET ${offset}
-  //   `;
-  //   const object = await this.session.getDB().raw(sql);
-  //   return object.rows;
-  // }
 }
