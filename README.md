@@ -1,5 +1,5 @@
 # Treetracker Query API
-   
+
 This API exposes a RESTful interface to query the treetracker data, capture, planter and organization and others.
 
 # Development toolkit
@@ -14,7 +14,7 @@ This repository was created from Greenstand's template for microservice projects
 * TypeScript
 
 # Getting Started
-  
+
 ## Project Setup
 
 Open terminal and navigate to a folder to install this project:
@@ -23,7 +23,7 @@ Open terminal and navigate to a folder to install this project:
 git clone https://github.com/Greenstand/treetracker-repository-name.git
 
 ```
-Install all necessary dependencies: 
+Install all necessary dependencies:
 
 ```
 npm ci
@@ -110,3 +110,21 @@ Run tests:
 ```
 npm run test-e2e
 ```
+
+##### If receives  some errors :
+
+`` DATABASE_URL is undefined ``
+ or
+`
+{
+  "code": 500,"message": "Unknown error (self signed certificate in certificate chain)"
+}
+`
+
+Run tests:
+
+``
+DATABASE_URL=postgresql://doadmin:l5al4hwte8qmj6x8@db-postgresql-sfo2-nextgen-do-user-1067699-0.db.ondigitalocean.com:25060/treetracker?ssl=true NODE_TLS_REJECT_UNAUTHORIZED='0'  npm run test-e2e
+``
+
+
