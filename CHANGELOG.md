@@ -1,3 +1,16 @@
+# [1.5.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.4.1...v1.5.0) (2022-01-26)
+
+### Bug Fixes
+
+- remove escape characters ([064b871](https://github.com/Greenstand/treetracker-query-api/commit/064b8717f7a1b15be1d3e07620f4638849d93534))
+- resolve a second conflict with main branch ([0371df4](https://github.com/Greenstand/treetracker-query-api/commit/0371df4fa16dfdb9b50dc563aede930aa13b67fe))
+- resolve conflict with main branch ([d692815](https://github.com/Greenstand/treetracker-query-api/commit/d692815086db45c184a3baf195a292c208989784))
+- update test with complete sql sentence & add a test without orderBy argument ([15377c1](https://github.com/Greenstand/treetracker-query-api/commit/15377c1a9d97b4ddcc7e519bd6e084f05eb0529d))
+
+### Features
+
+- add orderBy functionality to BaseRepository ([05bc1d3](https://github.com/Greenstand/treetracker-query-api/commit/05bc1d389ef85a67103039a7883778f77d289849))
+
 ## [1.4.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.4.0...v1.4.1) (2022-01-17)
 
 ### Bug Fixes
