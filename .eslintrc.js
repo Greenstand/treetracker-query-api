@@ -18,6 +18,10 @@ module.exports = {
     'no-promise-executor-return': 'off',
     'consistent-return': 'off',
     radix: 'off',
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      { allowShortCircuit: true },
+    ],
 
     // non-default errors
     '@typescript-eslint/require-await': 'error',
