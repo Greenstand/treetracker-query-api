@@ -112,12 +112,20 @@ Run tests:
 npm run test-e2e
 ```
 
-##### If receives some errors :
+**If errors:**
 
-`DATABASE_URL is undefined`
+```
+
+DATABASE_URL is undefined
+
 or
-`{ "code": 500,"message": "Unknown error (self signed certificate in certificate chain)" }`
+
+{ "code": 500,"message": "Unknown error (self signed certificate in certificate chain)" }
+```
 
 Run tests:
 
-`DATABASE_URL=postgresql://doadmin:l5al4hwte8qmj6x8@db-postgresql-sfo2-nextgen-do-user-1067699-0.db.ondigitalocean.com:25060/treetracker?ssl=true NODE_TLS_REJECT_UNAUTHORIZED='0' npm run test-e2e`
+```
+
+DATABASE_URL=postgresql://doadmin:l5al4hwte8qmj6x8@db-postgresql-sfo2-nextgen-do-user-1067699-0.db.ondigitalocean.com:25060/treetracker?ssl=true NODE_TLS_REJECT_UNAUTHORIZED='0' npm run test-e2e
+```
