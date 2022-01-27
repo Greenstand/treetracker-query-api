@@ -7,13 +7,12 @@ const log = require('loglevel');
 const assert = require('assert');
 const knex = require('knex')({
   client: 'pg',
-//  debug: true,
+  //  debug: true,
   connection: require('../config/config').connectionString,
 });
 
-
 // Example of a database seed using knex
-// This follows from the wallet microservice 
+// This follows from the wallet microservice
 // New mircroservices will need their own seed story
 
 const capture = {
@@ -29,16 +28,15 @@ const token = {
   uuid: uuid.v4(),
 };
 
-
 const wallet = {
   id: 12,
   name: 'wallet',
   password: 'test1234',
-  passwordHash: '31dd4fe716e1a908f0e9612c1a0e92bfdd9f66e75ae12244b4ee8309d5b869d435182f5848b67177aa17a05f9306e23c10ba41675933e2cb20c66f1b009570c1',
+  passwordHash:
+    '31dd4fe716e1a908f0e9612c1a0e92bfdd9f66e75ae12244b4ee8309d5b869d435182f5848b67177aa17a05f9306e23c10ba41675933e2cb20c66f1b009570c1',
   salt: 'TnDe2LDPS7VaPD9GQWL3fhG4jk194nde',
   type: 'p',
 };
-
 
 const storyOfThisSeed = `
     a capture: #${capture.id}
@@ -55,37 +53,33 @@ const storyOfThisSeed = `
 
 `;
 console.debug(
-'--------------------------story of database ----------------------------------',
-storyOfThisSeed,
-'-----------------------------------------------------------------------------',
+  '--------------------------story of database ----------------------------------',
+  storyOfThisSeed,
+  '-----------------------------------------------------------------------------',
 );
 
 async function seed() {
   log.debug('seed api key');
 
   // wallet
-  await knex('wallet')
-    .insert({
-      id: wallet.id,
-      type: wallet.type,
-      name: wallet.name,
-      password: wallet.passwordHash,
-      salt: wallet.salt,
-    });
-
+  await knex('wallet').insert({
+    id: wallet.id,
+    type: wallet.type,
+    name: wallet.name,
+    password: wallet.passwordHash,
+    salt: wallet.salt,
+  });
 
   // token
   log.log('seed token');
-  await knex('token')
-    .insert({
-      id: token.id,
-      capture_id: capture.id,
-      entity_id: wallet.id,
-      uuid: token.uuid,
-    });
+  await knex('token').insert({
+    id: token.id,
+    capture_id: capture.id,
+    entity_id: wallet.id,
+    uuid: token.uuid,
+  });
 
-  await knex('token')
-    .insert(tokenB);
+  await knex('token').insert(tokenB);
 }
 
 async function clear() {
@@ -95,8 +89,8 @@ async function clear() {
 }
 
 module.exports = {
-  seed, 
-  clear, 
-  wallet, 
-  token
+  seed,
+  clear,
+  wallet,
+  token,
 };

@@ -13,6 +13,7 @@ describe('/wallet', () => {
     const repo: any = {
       getByIdOrName: jest.fn(() => Promise.resolve(wallets)),
     };
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const execute = WalletsModel.getByIdOrName(repo);
     const result = await execute(1);

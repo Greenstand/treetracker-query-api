@@ -4,14 +4,14 @@ This API exposes a RESTful interface to query the treetracker data, capture, pla
 
 # Development toolkit
 
-This repository was created from Greenstand's template for microservice projects.  This means it comes with many development tools that we use for development and deployment.  As a contributor to this repository, you should learn and use these tools.  They are outlined below.
+This repository was created from Greenstand's template for microservice projects. This means it comes with many development tools that we use for development and deployment. As a contributor to this repository, you should learn and use these tools. They are outlined below.
 
-* Conventional Commits
-* husky
-* prettier / lint
-* github actions
-* Jest
-* TypeScript
+- Conventional Commits
+- husky
+- prettier / lint
+- github actions
+- Jest
+- TypeScript
 
 # Getting Started
 
@@ -23,6 +23,7 @@ Open terminal and navigate to a folder to install this project:
 git clone https://github.com/Greenstand/treetracker-repository-name.git
 
 ```
+
 Install all necessary dependencies:
 
 ```
@@ -43,15 +44,15 @@ Please join our slack channel to get help with setting up the database.
 
 # Development Specification
 
-* Every endpoint should have a e2e test to cover the main use cases.
+- Every endpoint should have a e2e test to cover the main use cases.
 
-* For edge cases, we can use unit tests to test the edge cases, don't need to use e2e test to cover all cases, e2e just cover main workflow.
+- For edge cases, we can use unit tests to test the edge cases, don't need to use e2e test to cover all cases, e2e just cover main workflow.
 
-* Class name should be capitalized.
+- Class name should be capitalized.
 
-* Do not write SQL directly in `router` and `model` files, there is a function called `delegateRepository` can help to simplify some simple cases;
+- Do not write SQL directly in `router` and `model` files, there is a function called `delegateRepository` can help to simplify some simple cases;
 
-* Please use `loglevel` to replace `console.log`, and always use appropriate log level to log.
+- Please use `loglevel` to replace `console.log`, and always use appropriate log level to log.
 
 # Architecture of this project
 
@@ -59,7 +60,7 @@ This project use multiple layer structure to build the whole system. The archite
 
 We compose/build the model instance in a functional style, then execute the business.
 
-* **Protocol layer**
+- **Protocol layer**
 
 I think we can also call it the Application Layer, a term in the DDD, the entry of this project.
 
@@ -67,19 +68,19 @@ This microservice offers RESTFul API interface based on HTTP protocol. We use Ex
 
 The Express-routers work like the controller role in MVC, they receive the requests and parameters from client, and translate it and dispatch tasks to appropriate business models. Then receive the result from them, translate to the 'view', the JSON response, to client.
 
-* **Model layer**
+- **Model layer**
 
 The business model, most of the business logic is here. We are considering put most of the business logic in the model layer. So it should be the thickest layer, including all the business logic, and build up the relationship between models(business).
 
-* **Infrastructure layer**
+- **Infrastructure layer**
 
-  * **Repository layer**
+  - **Repository layer**
 
     Repository is responsible for communicating with the real database.
 
     All the SQL statements should be here.
 
-  * **Others**
+  - **Others**
 
     For example, the Message Queue.
 
@@ -111,20 +112,12 @@ Run tests:
 npm run test-e2e
 ```
 
-##### If receives  some errors :
+##### If receives some errors :
 
-`` DATABASE_URL is undefined ``
- or
-`
-{
-  "code": 500,"message": "Unknown error (self signed certificate in certificate chain)"
-}
-`
+`DATABASE_URL is undefined`
+or
+`{ "code": 500,"message": "Unknown error (self signed certificate in certificate chain)" }`
 
 Run tests:
 
-``
-DATABASE_URL=postgresql://doadmin:l5al4hwte8qmj6x8@db-postgresql-sfo2-nextgen-do-user-1067699-0.db.ondigitalocean.com:25060/treetracker?ssl=true NODE_TLS_REJECT_UNAUTHORIZED='0'  npm run test-e2e
-``
-
-
+`DATABASE_URL=postgresql://doadmin:l5al4hwte8qmj6x8@db-postgresql-sfo2-nextgen-do-user-1067699-0.db.ondigitalocean.com:25060/treetracker?ssl=true NODE_TLS_REJECT_UNAUTHORIZED='0' npm run test-e2e`

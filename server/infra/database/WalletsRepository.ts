@@ -1,7 +1,8 @@
+// eslint-disable-next-line import/no-cycle
 import { Wallet } from 'models/Wallets';
-import HttpError from '../../utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
+import HttpError from '../../utils/HttpError';
 
 export default class WalletsRepository extends BaseRepository<Wallet> {
   constructor(session: Session) {

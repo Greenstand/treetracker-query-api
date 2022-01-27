@@ -1,15 +1,14 @@
-import { Organization } from "../../models/Organization";
-import HttpError from "../../utils/HttpError";
-import BaseRepository from "./BaseRepository";
-import Session from "./Session";
+import Organization from 'interfaces/Organization';
+import BaseRepository from './BaseRepository';
+import Session from './Session';
 
 export default class OrganizationRepository extends BaseRepository<Organization> {
   constructor(session: Session) {
-    super("entity", session);
+    super('entity', session);
   }
 
-  async getByPlanter(planter_id: number, options: any){
-    const {limit, offset} = options;
+  async getByPlanter(planter_id: number, options: any) {
+    const { limit, offset } = options;
     const sql = `
       SELECT
         *
@@ -19,13 +18,7 @@ export default class OrganizationRepository extends BaseRepository<Organization>
       LIMIT ${limit}
       OFFSET ${offset}
     `;
-    const object = await this.session
-      .getDB()
-      .raw(sql);
+    const object = await this.session.getDB().raw(sql);
     return object.rows;
   }
-
 }
-
-
-

@@ -1,5 +1,6 @@
-import WalletsRepository from '../infra/database/WalletsRepository';
 import { delegateRepository } from '../infra/database/delegateRepository';
+// eslint-disable-next-line import/no-cycle
+import WalletsRepository from '../infra/database/WalletsRepository';
 
 export type Wallet = {
   id: string;

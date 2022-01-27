@@ -1,20 +1,19 @@
-import express from 'express';
-import Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
-import HttpError from "./utils/HttpError";
-import { errorHandler, handlerWrapper } from "./routers/utils";
-import log from "loglevel";
-import countriesRouter from './routers/countriesRouter';
-import treesRouter from './routers/treesRouter';
-import plantersRouter from './routers/plantersRouter';
-import organizationsRouter from './routers/organizationsRouter';
-import speciesRouter from './routers/speciesRouter';
-import walletsRouter from './routers/walletsRouter';
 import cors from 'cors';
-const app = express();
-const config = require('../config/config.js');
+import express from 'express';
+import countriesRouter from './routers/countriesRouter';
+import organizationsRouter from './routers/organizationsRouter';
+import plantersRouter from './routers/plantersRouter';
+import speciesRouter from './routers/speciesRouter';
+import treesRouter from './routers/treesRouter';
+import { errorHandler, handlerWrapper } from './routers/utils';
+import walletsRouter from './routers/walletsRouter';
+import HttpError from './utils/HttpError';
+import { version } from '../package.json';
 
-//Sentry.init({ dsn: config.sentry_dsn });
+const app = express();
+
+// Sentry.init({ dsn: config.sentry_dsn });
 
 // app allow cors
 app.use(cors());
@@ -23,7 +22,7 @@ app.use(cors());
  * Check request
  */
 app.use(
-  handlerWrapper(async (req, _res, next) => {
+  handlerWrapper((req, _res, next) => {
     if (
       req.method === 'POST' ||
       req.method === 'PATCH' ||
@@ -43,7 +42,7 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
 
-//routers
+// routers
 app.use('/countries', countriesRouter);
 app.use('/trees', treesRouter);
 app.use('/planters', plantersRouter);
@@ -53,8 +52,7 @@ app.use('/wallets', walletsRouter);
 // Global error handler
 app.use(errorHandler);
 
-const version = require('../package.json').version;
-app.get('*', function (req, res) {
+app.get('*', (req, res) => {
   res.status(404).send(version);
 });
 

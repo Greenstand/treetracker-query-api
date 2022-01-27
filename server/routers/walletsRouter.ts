@@ -1,14 +1,14 @@
 import express from 'express';
-import { handlerWrapper } from './utils';
-import WalletModel from '../models/Wallets';
 import Joi from 'joi';
+import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import WalletsRepository from '../infra/database/WalletsRepository';
+import WalletModel from '../models/Wallets';
 
 const router = express.Router();
 router.get(
   '/:walletIdOrName',
-  handlerWrapper(async (req, res, next) => {
+  handlerWrapper(async (req, res) => {
     Joi.assert(req.params.walletIdOrName, Joi.string().required());
     const repo = new WalletsRepository(new Session());
     const exe = WalletModel.getWalletByIdOrName(repo);
