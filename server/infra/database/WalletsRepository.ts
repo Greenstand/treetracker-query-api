@@ -9,6 +9,7 @@ export default class WalletsRepository extends BaseRepository<Wallet> {
     super('wallet.wallet', session);
   }
 
+   
   async getWalletByIdOrName(walletIdOrName: string) {
     const sql = `
     SELECT *

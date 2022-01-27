@@ -10,6 +10,7 @@ describe('/wallet', () => {
       logo_url: null,
       created_at: '2021-10-08T02:33:20.732Z',
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const repo: any = {
       getByIdOrName: jest.fn(() => Promise.resolve(wallets)),
     };
