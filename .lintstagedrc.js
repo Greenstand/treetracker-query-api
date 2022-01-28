@@ -1,6 +1,6 @@
 module.exports = {
   // keep package json sorted
-  'package.json': 'sort-package-json',
+  //'package.json': 'sort-package-json',
 
   // fomat all files recognized by prettier
   '*': 'prettier --ignore-unknown --write',

@@ -40,7 +40,10 @@ export default class BaseRepository<T> {
    *  limit: number
    */
 
-  async getByFilter<FilterType>(filter: Filter<FilterType>, options?: FilterOptions) {
+  async getByFilter<FilterType>(
+    filter: Filter<FilterType>,
+    options?: FilterOptions,
+  ) {
     const whereBuilder = function (object: any, builder: Knex.QueryBuilder) {
       let result = builder;
       if (object.and) {

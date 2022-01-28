@@ -46,13 +46,13 @@ export default class CountryRepository extends BaseRepository<Country> {
         type_id = 6
     `;
     const object = await this.session.getDB().raw(sql);
-    if (!object && object.rows.length !== 1) {
+    if (!object || object.rows.length <= 0) {
       throw new HttpError(
         404,
         `Can not found ${this.tableName} by lat:${lat} lon:${lon}`,
       );
     }
-    return object.rows[0];
+    return object.rows;
   }
 
   // eslint-disable-next-line class-methods-use-this
