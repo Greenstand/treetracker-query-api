@@ -1,15 +1,15 @@
-import { Planter } from "models/Planter";
-import HttpError from "../../utils/HttpError";
-import BaseRepository from "./BaseRepository";
-import Session from "./Session";
+import FilterOptions from 'interfaces/FilterOptions';
+import Planter from 'interfaces/Planter';
+import BaseRepository from './BaseRepository';
+import Session from './Session';
 
 export default class PlanterRepository extends BaseRepository<Planter> {
   constructor(session: Session) {
-    super("planter", session);
+    super('planter', session);
   }
 
-  async getByOrganization(organization_id: number, options: any){
-    const {limit, offset} = options;
+  async getByOrganization(organization_id: number, options: FilterOptions) {
+    const { limit, offset } = options;
     const sql = `
       SELECT
         *
@@ -19,13 +19,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       LIMIT ${limit}
       OFFSET ${offset}
     `;
-    const object = await this.session
-      .getDB()
-      .raw(sql);
+    const object = await this.session.getDB().raw(sql);
     return object.rows;
   }
-
 }
-
-
-
