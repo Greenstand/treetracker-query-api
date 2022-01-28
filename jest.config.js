@@ -10,4 +10,5 @@ module.exports = {
   globalSetup: '<rootDir>/.jest/globalSetup.ts',
   setupFilesAfterEnv: ['<rootDir>/.jest/setupFile.ts'],
   maxConcurrency: 1,
+  testPathIgnorePatterns: ['<rootDir>/dist/', '<rootDir>/node_modules/'],
 };

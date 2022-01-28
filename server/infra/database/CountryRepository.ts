@@ -1,4 +1,5 @@
 import Country from 'interfaces/Country';
+import Filter from 'interfaces/Filter';
 import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
@@ -28,9 +29,9 @@ export default class CountryRepository extends BaseRepository<Country> {
   }
 
   async getByFilter(
-    filter: any,
+    filter: Filter = {},
     // options?: { limit?: number | undefined } | undefined,
-  ): Promise<any[]> {
+  ): Promise<Country[]> {
     const { lat, lon } = filter;
     const sql = `
       SELECT

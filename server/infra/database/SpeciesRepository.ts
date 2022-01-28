@@ -1,3 +1,4 @@
+import FilterOptions from 'interfaces/FilterOptions';
 import Species from 'interfaces/Species';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
@@ -7,7 +8,7 @@ export default class SpeciesRepository extends BaseRepository<Species> {
     super('tree_species', session);
   }
 
-  async getByOrganization(organization_id: number, options: any) {
+  async getByOrganization(organization_id: number, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
       select species_id as id, count(species_id) as total, tree_species.name
@@ -30,7 +31,7 @@ export default class SpeciesRepository extends BaseRepository<Species> {
     return object.rows;
   }
 
-  async getByPlanter(planter_id: number, options: any) {
+  async getByPlanter(planter_id: number, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
       select species_id as id, count(species_id) as total, tree_species.name

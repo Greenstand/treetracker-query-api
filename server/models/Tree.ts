@@ -1,12 +1,14 @@
 import log from 'loglevel';
+import Filter from 'interfaces/Filter';
+import FilterOptions from 'interfaces/FilterOptions';
 import Tree from 'interfaces/Tree';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import TreeRepository from '../infra/database/TreeRepository';
 
 function getByFilter(
   treeRepository: TreeRepository,
-): (filter: any, options: any) => Promise<Tree[]> {
-  return async function (filter: any, options: any) {
+): (filter: Filter, options: FilterOptions) => Promise<Tree[]> {
+  return async function (filter: Filter, options: FilterOptions) {
     if (filter.organization_id) {
       log.warn('using org filter...');
       const trees = await treeRepository.getByOrganization(
@@ -42,7 +44,7 @@ function getFeaturedTree(treeRepository: TreeRepository) {
 }
 
 export default {
-  getById: delegateRepository<TreeRepository>('getById'),
+  getById: delegateRepository<TreeRepository, Tree>('getById'),
   getByFilter,
   getFeaturedTree,
 };

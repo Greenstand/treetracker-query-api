@@ -1,5 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
+import Filter from 'interfaces/Filter';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import SpeciesRepository from '../infra/database/SpeciesRepository';
@@ -33,7 +34,7 @@ router.get(
     );
     const { limit = 20, offset = 0, planter_id, organization_id } = req.query;
     const repo = new SpeciesRepository(new Session());
-    const filter: any = {};
+    const filter: Filter = {};
     if (organization_id) {
       filter.organization_id = organization_id;
     } else if (planter_id) {
