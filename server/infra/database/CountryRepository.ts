@@ -1,4 +1,5 @@
 import Country from 'interfaces/Country';
+import Filter from 'interfaces/Filter';
 import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
@@ -28,9 +29,9 @@ export default class CountryRepository extends BaseRepository<Country> {
   }
 
   async getByFilter(
-    filter: any,
+    filter: Filter = {},
     // options?: { limit?: number | undefined } | undefined,
-  ): Promise<any[]> {
+  ): Promise<Country[]> {
     const { lat, lon } = filter;
     const sql = `
       SELECT
@@ -45,13 +46,13 @@ export default class CountryRepository extends BaseRepository<Country> {
         type_id = 6
     `;
     const object = await this.session.getDB().raw(sql);
-    if (!object && object.rows.length !== 1) {
+    if (!object || object.rows.length <= 0) {
       throw new HttpError(
         404,
         `Can not found ${this.tableName} by lat:${lat} lon:${lon}`,
       );
     }
-    return object.rows[0];
+    return object.rows;
   }
 
   // eslint-disable-next-line class-methods-use-this

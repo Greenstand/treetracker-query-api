@@ -1,5 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
+import Filter from 'interfaces/Filter';
 import { handlerWrapper } from './utils';
 import PlanterRepository from '../infra/database/PlanterRepository';
 import Session from '../infra/database/Session';
@@ -14,7 +15,6 @@ router.get(
     const repo = new PlanterRepository(new Session());
     const exe = PlanterModel.getById(repo);
     const result = await exe(req.params.id);
-
     result.links = PlanterModel.getPlanterLinks(result);
     res.send(result);
     res.end();
@@ -34,7 +34,7 @@ router.get(
     );
     const { limit = 20, offset = 0, organization_id } = req.query;
     const repo = new PlanterRepository(new Session());
-    const filter: any = {};
+    const filter: Filter = {};
     if (organization_id) {
       filter.organization_id = organization_id;
     }
