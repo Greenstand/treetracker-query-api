@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.5.0...v1.5.1) (2022-01-28)
+
+### Bug Fixes
+
+- 404 error returned for unknown trees and countries ([c40f0e2](https://github.com/Greenstand/treetracker-query-api/commit/c40f0e2200989d6f971b922865473e1959a5c2bf))
+- updated eslint config and renamed req and next params of error handler ([9723abc](https://github.com/Greenstand/treetracker-query-api/commit/9723abc0b8719c578418095051f0c0957a488a6d))
+
 # [1.5.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.4.1...v1.5.0) (2022-01-26)
 
 ### Bug Fixes
