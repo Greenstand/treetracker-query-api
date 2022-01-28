@@ -29,7 +29,7 @@ const handlerWrapper = (fn) =>
     });
   };
 
-const errorHandler = (err, req, res) => {
+const errorHandler = (err, _req, res, _next) => {
   if (process.env.NODE_LOG_LEVEL === 'debug') {
     log.error('catch error:', err);
   } else {

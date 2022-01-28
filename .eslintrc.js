@@ -27,6 +27,8 @@ module.exports = {
     '@typescript-eslint/require-await': 'error',
     '@typescript-eslint/await-thenable': 'error',
 
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+
     // naming conventions
     camelcase: 'off',
     '@typescript-eslint/naming-convention': [

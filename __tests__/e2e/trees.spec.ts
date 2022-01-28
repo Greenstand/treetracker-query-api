@@ -12,6 +12,19 @@ describe('trees', () => {
     });
   });
 
+  it('Unknown tree', async () => {
+    const response = await supertest(app).get('/trees/1');
+    expect(response.status).toBe(404);
+  });
+
+  it('trees?limit=1&offset=0', async () => {
+    const response = await supertest(app).get('/trees?limit=1&offset=0');
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      trees: expect.anything(),
+    });
+  });
+
   it('trees?limit=1&offset=0', async () => {
     const response = await supertest(app).get('/trees?limit=1&offset=0');
     expect(response.status).toBe(200);
