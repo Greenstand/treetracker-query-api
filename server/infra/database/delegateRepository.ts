@@ -1,7 +1,13 @@
-export function delegateRepository<Type>(Type, method): (r: any) => any {
-  return function (repo: Type) {
+type RepoFunction<RepoType, ResultType> = (
+  repo: RepoType,
+) => (...args: unknown[]) => Promise<ResultType>;
+
+export function delegateRepository<T, T2>(
+  methodName: string,
+): RepoFunction<T, T2> {
+  return function (repo: T) {
     return async function (...args) {
-      const result = await repo[method](...args);
+      const result = await repo[methodName](...args);
       return result;
     };
   };

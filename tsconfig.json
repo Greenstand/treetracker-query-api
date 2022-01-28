@@ -2,5 +2,5 @@
 // Includes source and test files.
 {
   "extends": "./tsconfig.base.json",
-  "include": ["server/**/*.ts", "__tests__/**/*.ts"]
+  "include": ["server/**/*.ts", "__tests__/**/*.ts", ".jest/**/*.ts"]
 }
