@@ -1,15 +1,13 @@
-// eslint-disable-next-line import/no-cycle
-import { Wallet } from 'models/Wallets';
+import Wallets from 'interfaces/Wallets';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 import HttpError from '../../utils/HttpError';
 
-export default class WalletsRepository extends BaseRepository<Wallet> {
+export default class WalletsRepository extends BaseRepository<Wallets> {
   constructor(session: Session) {
     super('wallet.wallet', session);
   }
 
-   
   async getWalletByIdOrName(walletIdOrName: string) {
     const sql = `
     SELECT *
