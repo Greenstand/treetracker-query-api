@@ -35,7 +35,9 @@ router.get('/', handlerWrapper(async (req, res, next) => {
   }));
   const repo = new CountryRepository(new Session());
   const result = await CountryModel.getByFilter(repo)(req.query);
-  res.send(result);
+  res.send({
+    countries: result,
+  });
   res.end();
 }));
 

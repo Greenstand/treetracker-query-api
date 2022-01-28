@@ -46,7 +46,7 @@ export default class CountryRepository extends BaseRepository<Country> {
     if (!object && object.rows.length !== 1) {
       throw new HttpError(404, `Can not found ${this.tableName} by lat:${lat} lon:${lon}`);
     }
-    return object.rows[0];
+    return object.rows;
   }
 
   async getLeaderBoard(top : number = 10){

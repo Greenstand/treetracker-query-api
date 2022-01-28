@@ -16,7 +16,7 @@ describe("", () => {
   it("countries?lat=36.5617653792527&lon=103.819073145824", async () => {
     const response = await supertest(app).get("/countries?lat=36.5617653792527&lon=103.819073145824");
     expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({
+    expect(response.body.countries[0]).toMatchObject({
       id: 6632544,
       name: "China",
     });
