@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.5.1...v1.5.2) (2022-01-28)
+
+### Bug Fixes
+
+- countries should return a list ([79ebc61](https://github.com/Greenstand/treetracker-query-api/commit/79ebc61be986672ea5df72d3fbc25ab6d2fe17c2))
+- return 404 when countries not found ([4f1cecb](https://github.com/Greenstand/treetracker-query-api/commit/4f1cecbc2c47544447761700c04b3bb033c16ab1))
+
 ## [1.5.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.5.0...v1.5.1) (2022-01-28)
 
 ### Bug Fixes
