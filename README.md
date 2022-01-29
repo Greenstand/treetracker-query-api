@@ -123,7 +123,7 @@ or
 { "code": 500,"message": "Unknown error (self signed certificate in certificate chain)" }
 ```
 
-## Follows those steps:
+**Follows those steps:**
 
 1- Got to the .env file, copy the DATABASE_URL with its value.
 
