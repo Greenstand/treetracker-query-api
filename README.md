@@ -123,9 +123,15 @@ or
 { "code": 500,"message": "Unknown error (self signed certificate in certificate chain)" }
 ```
 
-Run tests:
+## Follows those steps:
+
+1- Got to the .env file, copy the DATABASE_URL with its value.
+
+2- Add it with NODE_TLS_REJECT_UNAUTHORIZED='0' , npm run test-e2e, and run the tests.
+
+For example:
 
 ```
 
-DATABASE_URL=postgresql://doadmin:l5al4hwte8qmj6x8@db-postgresql-sfo2-nextgen-do-user-1067699-0.db.ondigitalocean.com:25060/treetracker?ssl=true NODE_TLS_REJECT_UNAUTHORIZED='0' npm run test-e2e
+DATABASE_URL=[the link provided] NODE_TLS_REJECT_UNAUTHORIZED='0' npm run test-e2e
 ```
