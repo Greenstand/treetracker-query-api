@@ -1,3 +1,25 @@
+# [1.6.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.5.2...v1.6.0) (2022-01-30)
+
+### Bug Fixes
+
+- add eslint-disable-next-line ([7aab7a0](https://github.com/Greenstand/treetracker-query-api/commit/7aab7a022ce1c2f704760cb550e4a6700fe474a0))
+- change getbyidorname to getwalletbyidorname ([bc79d3c](https://github.com/Greenstand/treetracker-query-api/commit/bc79d3cc435400aa702133e1dc0b46356ccbfbd6))
+- change getbyinorname to getwalletbyidname ([c77bdc4](https://github.com/Greenstand/treetracker-query-api/commit/c77bdc4d9836f9751e644701423956214e9ed580))
+
+### Features
+
+- add .history ([bfc78c4](https://github.com/Greenstand/treetracker-query-api/commit/bfc78c4aa505058d83184e7f4dee7e683f4f789e))
+- add getbyidorname ([2d6b75c](https://github.com/Greenstand/treetracker-query-api/commit/2d6b75c3b772e045c9d656f97a64fb433fc2e5c4))
+- add walletrouter ([5558fe2](https://github.com/Greenstand/treetracker-query-api/commit/5558fe25d897f0d955a8d4cc73566fd11caca11a))
+- add wallets ([694f5dc](https://github.com/Greenstand/treetracker-query-api/commit/694f5dcfd79d1004704bab550e35d9cd6c24d5ab))
+- add wallets ([09ab42c](https://github.com/Greenstand/treetracker-query-api/commit/09ab42c2b51847231917f92f51bb61604b51dd43))
+- add wallets repository ([59f6cc5](https://github.com/Greenstand/treetracker-query-api/commit/59f6cc5e7d2cd9ed3a633137438594c202918f3b))
+- add wallets router ([a0edd7f](https://github.com/Greenstand/treetracker-query-api/commit/a0edd7f4c0d3eb04c1ec831d0c0607ea45fa154f))
+- add wallets' interface ([5b284d3](https://github.com/Greenstand/treetracker-query-api/commit/5b284d3576d5e774cf26518f942aecc80a8dd6b9))
+- change id to walletidorname ([3808c84](https://github.com/Greenstand/treetracker-query-api/commit/3808c841fcbbf45d2b5e62f566052fe4ead9e645))
+- create model wallets ([eeff066](https://github.com/Greenstand/treetracker-query-api/commit/eeff0660d7285dc7af5739ae40a9a86f26da0846))
+- get wallet by id or name ([0041a49](https://github.com/Greenstand/treetracker-query-api/commit/0041a49a919f6867db3f32b3cea7e82925f8e850))
+
 ## [1.5.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.5.1...v1.5.2) (2022-01-28)
 
 ### Bug Fixes
