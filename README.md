@@ -111,3 +111,27 @@ Run tests:
 ```
 npm run test-e2e
 ```
+
+**If errors:**
+
+```
+
+DATABASE_URL is undefined
+
+or
+
+{ "code": 500,"message": "Unknown error (self signed certificate in certificate chain)" }
+```
+
+**Follows those steps:**
+
+1- Got to the .env file, copy the DATABASE_URL with its value.
+
+2- Add it with NODE_TLS_REJECT_UNAUTHORIZED='0' , npm run test-e2e, and run the tests.
+
+For example:
+
+```
+
+DATABASE_URL=[the link provided] NODE_TLS_REJECT_UNAUTHORIZED='0' npm run test-e2e
+```

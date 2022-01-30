@@ -7,6 +7,7 @@ import plantersRouter from './routers/plantersRouter';
 import speciesRouter from './routers/speciesRouter';
 import treesRouter from './routers/treesRouter';
 import { errorHandler, handlerWrapper } from './routers/utils';
+import walletsRouter from './routers/walletsRouter';
 import HttpError from './utils/HttpError';
 import { version } from '../package.json';
 
@@ -47,6 +48,7 @@ app.use('/trees', treesRouter);
 app.use('/planters', plantersRouter);
 app.use('/organizations', organizationsRouter);
 app.use('/species', speciesRouter);
+app.use('/wallets', walletsRouter);
 // Global error handler
 app.use(errorHandler);
 
