@@ -1,3 +1,9 @@
+# [1.7.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.6.0...v1.7.0) (2022-02-01)
+
+### Features
+
+- add default order by created_at desc ([69b5e66](https://github.com/Greenstand/treetracker-query-api/commit/69b5e66d12ecb9caab6840dba4fa81546f7aa896))
+
 # [1.6.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.5.2...v1.6.0) (2022-01-30)
 
 ### Bug Fixes
