@@ -28,17 +28,19 @@ function getByFilter(
  */
 function getFeaturedTree(treeRepository: TreeRepository) {
   return async function () {
-    // const trees = await treeRepository.getByFilter(
-    //   {
-    //     approved: true,
-    //   }, {limit: 10});
-    const trees: Array<Tree> = [];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const id of [186737, 186735, 186736, 186734]) {
-      // eslint-disable-next-line no-await-in-loop
-      const tree = await treeRepository.getById(id);
-      trees.push(tree);
-    }
+    const trees = await treeRepository.getByFilter(
+      {
+        approved: true,
+      },
+      { limit: 10, orderBy: { column: 'created_at', direction: 'desc' } },
+    );
+    // const trees: Array<Tree> = [];
+    // // eslint-disable-next-line no-restricted-syntax
+    // for (const id of [186737, 186735, 186736, 186734]) {
+    //   // eslint-disable-next-line no-await-in-loop
+    //   const tree = await treeRepository.getById(id);
+    //   trees.push(tree);
+    // }
     return trees;
   };
 }
