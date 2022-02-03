@@ -1,3 +1,9 @@
+## [1.7.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.0...v1.7.1) (2022-02-03)
+
+### Bug Fixes
+
+- build error caused by package.json import in app ([beaad04](https://github.com/Greenstand/treetracker-query-api/commit/beaad0428694a2b8c889ef2e490600aa46b47797))
+
 # [1.7.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.6.0...v1.7.0) (2022-02-01)
 
 ### Features
