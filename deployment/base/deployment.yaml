@@ -33,4 +33,4 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: query-api-database-connection
-                  key: database
+                  key: db
