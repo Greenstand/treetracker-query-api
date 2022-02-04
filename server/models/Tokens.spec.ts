@@ -1,28 +1,25 @@
-import TokensModel from './tokens';
+import TokensModel from './Tokens';
 
 describe('Tokens', () => {
   it('get token by id ', async () => {
-    const tokens = {
-      id: 1,
-      wallet_id: '0248f77a-1531-11ec-82a8-0242ac130003',
-      capture_id: 186734,
-      capture_photo_url:
-        'https://treetracker-dev-images.s3.eu-central-1.amazonaws.com/2020.10.19.09.50.38_-5.508172399749922_38.98146973686408_6bebe71e-5369-4ae0-8c47-9eeff6599fb0_IMG_20201019_094615_7537040365910944885.jpg',
-      planter_id: 940,
-      planter_first_name: 'Sebastian ',
-      planter_last_name: 'Gaertner',
-      planter_photo_url:
-        'https://treetracker-dev-images.s3.eu-central-1.amazonaws.com/2020.10.19.09.47.53_-5.508107173727935_38.981361706266256_39f0cc9d-0f13-4547-8142-150f15cabb67_IMG_20201019_094513_6614320100195503436.jpg',
-      created_at: '2018-01-01',
+    const token = {
+      id: '24f4f5f7-c29e-4707-961a-3515be5a2f3e',
+      capture_id: 'f6c0e710-d80a-4e93-a9d2-d4edb52856af',
+      wallet_id: 'eecdf253-05b6-419a-8425-416a3e5fc9a0',
+      transfer_pending: false,
+      transfer_pending_id: null,
+      created_at: '2021-02-18T23:53:29.172Z',
+      updated_at: '2021-02-18T23:53:29.172Z',
+      claim: false,
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const repo: any = {
-      getById: jest.fn(() => Promise.resolve(tokens)),
+      getById: jest.fn(() => Promise.resolve(token)),
     };
 
     const execute = TokensModel.getById(repo);
     const result = await execute(1);
-    expect(result).toMatchObject(tokens);
+    expect(result).toMatchObject(token);
     expect(repo.getById).toBeCalledWith(1);
   });
 });
