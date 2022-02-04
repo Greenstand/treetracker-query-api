@@ -5,14 +5,14 @@ import Session from './Session';
 
 export default class TokensRepository extends BaseRepository<Tokens> {
   constructor(session: Session) {
-    super('tokens', session);
+    super('wallet.token', session);
   }
 
-  async getById(tokenId: string | number) {
+  async getById(tokenId: string) {
     const sql = `
     SELECT *
     FROM
-     tokens
+     wallet.token
      WHERE id = '${tokenId}'
 `;
 
