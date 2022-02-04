@@ -32,5 +32,5 @@ spec:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: query-api-db-connection
+                  name: query-api-database-connection
                   key: database
