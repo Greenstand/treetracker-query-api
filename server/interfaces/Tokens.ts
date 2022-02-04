@@ -1,11 +1,10 @@
 export default interface Tokens {
-  id: number | string;
+  id: string;
+  capture_id: string;
   wallet_id: string;
-  capture_id: number;
-  capture_photo_url: string;
-  planter_id: number;
-  planter_first_name: string;
-  planter_last_name: string;
-  planter_photo_url: string;
+  transfer_pending: boolean;
+  transfer_pending_id: string;
   created_at: string;
+  updated_at: string;
+  claim: boolean;
 }
