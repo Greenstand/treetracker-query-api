@@ -1,3 +1,9 @@
+## [1.7.14](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.13...v1.7.14) (2022-02-05)
+
+### Bug Fixes
+
+- add new types ([6288df5](https://github.com/Greenstand/treetracker-query-api/commit/6288df51f2e1a7d991564c4373bbaf56df395fb9))
+
 ## [1.7.13](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.12...v1.7.13) (2022-02-04)
 
 ### Bug Fixes
