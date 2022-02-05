@@ -34,16 +34,19 @@ export default class CountryRepository extends BaseRepository<Country> {
   ): Promise<Country[]> {
     const { lat, lon } = filter;
     const sql = `
-      SELECT
-        id,
-        name,
-        St_asgeojson(centroid) as centroid
-      FROM
-        region
-      WHERE 
-        ST_Contains(geom, ST_GeomFromText('POINT(${lon} ${lat})', 4326)) = true
-        AND 
-        type_id = 6
+        WITH country_id AS (
+          select id from region_type where type = 'country'
+          )
+          SELECT
+            id,
+            name,
+            St_asgeojson(centroid) as centroid
+          FROM
+            region
+          WHERE 
+            ST_Contains(geom, ST_GeomFromText('POINT(${lon} ${lat})', 4326)) = true
+            AND 
+            type_id in (select id from country_id);
     `;
     const object = await this.session.getDB().raw(sql);
     if (!object || object.rows.length <= 0) {
