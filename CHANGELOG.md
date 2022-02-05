@@ -1,3 +1,9 @@
+## [1.7.19](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.18...v1.7.19) (2022-02-05)
+
+### Bug Fixes
+
+- issue 77 ([8e1645c](https://github.com/Greenstand/treetracker-query-api/commit/8e1645c58efff4b8158bcb182ddafa4ab4b29c26))
+
 ## [1.7.18](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.17...v1.7.18) (2022-02-05)
 
 ### Bug Fixes
