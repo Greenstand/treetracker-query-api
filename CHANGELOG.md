@@ -1,3 +1,9 @@
+## [1.7.20](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.19...v1.7.20) (2022-02-07)
+
+### Bug Fixes
+
+- get featured trees uses correct column name ([c2d9484](https://github.com/Greenstand/treetracker-query-api/commit/c2d9484c5f7d433cb567662e88fa81d456bfd572))
+
 ## [1.7.19](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.18...v1.7.19) (2022-02-05)
 
 ### Bug Fixes
