@@ -546,6 +546,62 @@ paths:
               schema:
                 $ref: '#/components/schemas/wallet'
       description: 'about retunning photo_url,it would be great if we can set a wallet avatar and show it on the wallet page, maybe we can create the column, and just pick some good case to manualy fill some photo into'
+  /gis/location/nearest:
+    get:
+      summary: get nearest gis location by filter/parameters
+      operationId: get-gis-location-nearest
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/location'
+      parameters:
+        - schema:
+            type: integer
+            minimum: 1
+            maximum: 18
+          in: query
+          name: zoomlevel
+          description: the map zoomlevel
+        - schema:
+            type: float
+          in: query
+          name: lat
+          description: the latitude
+        - schema:
+            type: float
+          in: query
+          name: lon
+          description: the longitude
+  /gis/bounds:
+    get:
+      summary: get gis bounds by filter/parameters, e.g. give a planter id, get a bounds which contains all the trees in the planter
+      operationId: get-gis-bounds
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bounds'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: planter
+          description: get the bounds by the planter id
+        - schema:
+            type: string
+          in: query
+          name: wallet
+          description: get the bounds by the wallet id or name
+        - schema:
+            type: string
+          in: query
+          name: organization
+          description: get the bounds by the organization id
   /mock/trees/query/planter_id=940&limit=4:
     get:
       responses:
@@ -826,6 +882,29 @@ paths:
                 $ref: examples/wallets/180Earth.json
 components:
   schemas:
+    location:
+      description: A location point
+      type: object
+      properties:
+        centroid:
+          type: GeoJSON
+          description: The center of the location
+        'type':
+          type: enum
+          description: The type of location
+          enum:
+            - tree
+            - cluster
+        count:
+          type: integer
+          description: The number of trees in the location, just available for clusters
+    bounds:
+      description: A bounding box
+      type: object
+      properties:
+        bounds:
+          type: array
+          description: 2 points defining the bounding box
     tree:
       description: a single tree object
       type: object

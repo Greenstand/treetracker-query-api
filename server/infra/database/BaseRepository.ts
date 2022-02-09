@@ -5,9 +5,9 @@ import Filter from 'interfaces/Filter';
 import HttpError from 'utils/HttpError';
 import Session from './Session';
 
-type FilterOptions = {
+type FilterOptions<T> = {
   limit?: number;
-  orderBy?: { column: string; direction?: 'asc' | 'desc' };
+  orderBy?: { column: keyof T; direction?: 'asc' | 'desc' };
 };
 
 export default class BaseRepository<T> {
@@ -42,8 +42,8 @@ export default class BaseRepository<T> {
 
   async getByFilter<FilterType>(
     filter: Filter<FilterType>,
-    options?: FilterOptions,
-  ) {
+    options?: FilterOptions<T>,
+  ): Promise<T[]> {
     const whereBuilder = function (object: any, builder: Knex.QueryBuilder) {
       let result = builder;
       if (object.and) {
@@ -91,10 +91,10 @@ export default class BaseRepository<T> {
         options.orderBy.direction !== undefined
           ? options.orderBy.direction
           : 'asc';
-      promise = promise.orderBy(options.orderBy.column, direction);
+      promise = promise.orderBy(options.orderBy.column as string, direction);
     }
     const result = await promise;
-    return result;
+    return result as T[];
   }
 
   async countByFilter(filter: T) {

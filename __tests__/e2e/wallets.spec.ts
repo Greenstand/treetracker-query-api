@@ -13,7 +13,7 @@ describe('wallets', () => {
       password: null,
       salt: null,
       logo_url: null,
-      created_at: '2021-10-08T02:33:20.732Z',
+      // created_at: '2021-10-08T02:33:20.732Z',
     });
   });
 });

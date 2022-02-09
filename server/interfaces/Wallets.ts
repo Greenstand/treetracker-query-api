@@ -1,6 +1,8 @@
 export default interface Wallets {
   id: string;
   name: string;
-  token_in_wallet: number;
-  photo_url: string;
+  password: string;
+  salt: string;
+  logo_url: string;
+  created_at: string;
 }
