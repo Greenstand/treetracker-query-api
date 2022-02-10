@@ -1,9 +1,9 @@
 import express from 'express';
 import Joi from 'joi';
+import TokensModel from 'models/Tokens';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import TokensRepository from '../infra/database/TokensRepository';
-import TokensModel from '../models/Tokens';
 
 const router = express.Router();
 
