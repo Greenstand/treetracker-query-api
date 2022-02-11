@@ -1,4 +1,4 @@
-import TokensModel from './Tokens';
+import TokensModel from './tokens';
 
 describe('Tokens', () => {
   it('get token by id ', async () => {
