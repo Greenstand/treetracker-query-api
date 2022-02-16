@@ -10,7 +10,8 @@ import treesRouter from './routers/treesRouter';
 import { errorHandler, handlerWrapper } from './routers/utils';
 import walletsRouter from './routers/walletsRouter';
 import HttpError from './utils/HttpError';
-import { version } from '../package.json';
+
+const version = process.env.npm_package_version;
 
 const app = express();
 

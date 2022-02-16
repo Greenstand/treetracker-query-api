@@ -23,7 +23,7 @@ describe('', () => {
     });
   });
 
-  it.only(
+  it(
     'countries/leaderboard',
     async () => {
       const response = await supertest(app).get('/countries/leaderboard');

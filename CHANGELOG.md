@@ -1,3 +1,129 @@
+## [1.7.21](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.20...v1.7.21) (2022-02-16)
+
+### Bug Fixes
+
+- deploy test ([443763d](https://github.com/Greenstand/treetracker-query-api/commit/443763d89da7aaca78694685971556f9f6159c8d))
+
+## [1.7.20](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.19...v1.7.20) (2022-02-07)
+
+### Bug Fixes
+
+- get featured trees uses correct column name ([c2d9484](https://github.com/Greenstand/treetracker-query-api/commit/c2d9484c5f7d433cb567662e88fa81d456bfd572))
+
+## [1.7.19](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.18...v1.7.19) (2022-02-05)
+
+### Bug Fixes
+
+- issue 77 ([8e1645c](https://github.com/Greenstand/treetracker-query-api/commit/8e1645c58efff4b8158bcb182ddafa4ab4b29c26))
+
+## [1.7.18](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.17...v1.7.18) (2022-02-05)
+
+### Bug Fixes
+
+- deploy test ([8b71c24](https://github.com/Greenstand/treetracker-query-api/commit/8b71c246a64a730acd7fd1ed8c37de1dde508ee7))
+
+## [1.7.17](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.16...v1.7.17) (2022-02-05)
+
+### Bug Fixes
+
+- deploy test ([0684bc8](https://github.com/Greenstand/treetracker-query-api/commit/0684bc8654c34eb3ab08e88364dada1e9e943c8b))
+
+## [1.7.16](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.15...v1.7.16) (2022-02-05)
+
+### Bug Fixes
+
+- deploy test ([43c8f5f](https://github.com/Greenstand/treetracker-query-api/commit/43c8f5f55c1a67629110035b17d8cd51e8f9c63a))
+
+## [1.7.15](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.14...v1.7.15) (2022-02-05)
+
+### Bug Fixes
+
+- deploy test ([cd9933a](https://github.com/Greenstand/treetracker-query-api/commit/cd9933a1d227d6b68b9a7cc649cffc70bd75e60d))
+
+## [1.7.14](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.13...v1.7.14) (2022-02-05)
+
+### Bug Fixes
+
+- add new types ([6288df5](https://github.com/Greenstand/treetracker-query-api/commit/6288df51f2e1a7d991564c4373bbaf56df395fb9))
+
+## [1.7.13](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.12...v1.7.13) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([838ca40](https://github.com/Greenstand/treetracker-query-api/commit/838ca40d7c4bdaf49d87668151f987a10a57e739))
+
+## [1.7.12](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.11...v1.7.12) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([756d09c](https://github.com/Greenstand/treetracker-query-api/commit/756d09c0e7a18aba314b3790ab679a40ae51d346))
+
+## [1.7.11](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.10...v1.7.11) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([a05d25a](https://github.com/Greenstand/treetracker-query-api/commit/a05d25a0cae11e9c47ffe5acc694477d2dddefbb))
+
+## [1.7.10](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.9...v1.7.10) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([34217f7](https://github.com/Greenstand/treetracker-query-api/commit/34217f79dc21b7891aa1cfcf74be6580af8afd3c))
+
+## [1.7.9](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.8...v1.7.9) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([fa2aab2](https://github.com/Greenstand/treetracker-query-api/commit/fa2aab206bbc9355c42e962891324cc36261930f))
+
+## [1.7.8](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.7...v1.7.8) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([9cd2dcd](https://github.com/Greenstand/treetracker-query-api/commit/9cd2dcdb8f9dff45dfbf5d5616c683b275b5efc2))
+
+## [1.7.7](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.6...v1.7.7) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([2457230](https://github.com/Greenstand/treetracker-query-api/commit/2457230656a798266412e74f0359dfe17bd0c76f))
+
+## [1.7.6](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.5...v1.7.6) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([002a0bc](https://github.com/Greenstand/treetracker-query-api/commit/002a0bcf15f6d08f7cba68f4c0210217c0deec3d))
+
+## [1.7.5](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.4...v1.7.5) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([b9c7f4d](https://github.com/Greenstand/treetracker-query-api/commit/b9c7f4d6051b93df51fed2ea2a3bad860d115955))
+
+## [1.7.4](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.3...v1.7.4) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([e86080a](https://github.com/Greenstand/treetracker-query-api/commit/e86080a0f81ff8911bdda125a6e2d7115ef5fbcd))
+
+## [1.7.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.2...v1.7.3) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([6ce22e9](https://github.com/Greenstand/treetracker-query-api/commit/6ce22e998882df45f9d8c954a52d8f3996506ae3))
+
+## [1.7.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.1...v1.7.2) (2022-02-04)
+
+### Bug Fixes
+
+- deploy test ([67d449e](https://github.com/Greenstand/treetracker-query-api/commit/67d449eb3b9d6f4838d6aed0f8a3575f230bdd86))
+
+## [1.7.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.0...v1.7.1) (2022-02-03)
+
+### Bug Fixes
+
+- build error caused by package.json import in app ([beaad04](https://github.com/Greenstand/treetracker-query-api/commit/beaad0428694a2b8c889ef2e490600aa46b47797))
+
 # [1.7.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.6.0...v1.7.0) (2022-02-01)
 
 ### Features

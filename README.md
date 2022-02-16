@@ -125,7 +125,7 @@ or
 
 **Follows those steps:**
 
-1- Got to the .env file, copy the DATABASE_URL with its value.
+1- Go to the .env file, copy the DATABASE_URL with its value.
 
 2- Add it with NODE_TLS_REJECT_UNAUTHORIZED='0' , npm run test-e2e, and run the tests.
 
