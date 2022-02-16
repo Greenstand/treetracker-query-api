@@ -3,6 +3,8 @@ type Filter<T = unknown> = {
   organization_id?: number;
   lat?: number;
   lon?: number;
+  token_id?: string;
+  wallet_id?: string;
 } & T;
 
 export default Filter;
