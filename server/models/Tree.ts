@@ -34,6 +34,7 @@ function getFeaturedTree(treeRepository: TreeRepository) {
     //  },
     //  { limit: 10, orderBy: { column: 'time_created', direction: 'desc' } },
     //);
+    // 
      const trees: Array<Tree> = [];
      // eslint-disable-next-line no-restricted-syntax
      for (const id of [186737, 186735, 186736, 186734]) {
