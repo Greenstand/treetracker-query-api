@@ -39,6 +39,7 @@ jobs:
         with:
           commit_message: 'style: format code with eslint and prettier'
           branch: ${{ github.event.pull_request.base.sha }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Typescript compiles
         run: npm run build
