@@ -25,20 +25,20 @@ jobs:
       - name: npm clean install
         run: npm ci
 
+      - name: Eslint
+        run: npm run lint:fix
+
       - name: Format code with Prettier
         run: npm run format
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: 'style: format code with prettier'
+          commit_message: 'style: format code with eslint and prettier'
           branch: ${{ github.head_ref }}
 
       - name: Typescript compiles
         run: npm run build
-
-      - name: Eslint
-        run: npm run lint
 
       - name: run tests
         run: npm test
