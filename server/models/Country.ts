@@ -1,7 +1,8 @@
 import Country from 'interfaces/Country';
-import Filter from 'interfaces/Filter';
 import CountryRepository from '../infra/database/CountryRepository';
 import { delegateRepository } from '../infra/database/delegateRepository';
+
+type Filter = Partial<{ lat: number; lon: number }>;
 
 function getCountries(
   countryRepository: CountryRepository,
