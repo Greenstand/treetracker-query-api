@@ -1,9 +1,10 @@
 import log from 'loglevel';
-import Filter from 'interfaces/Filter';
 import FilterOptions from 'interfaces/FilterOptions';
 import Tree from 'interfaces/Tree';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import TreeRepository from '../infra/database/TreeRepository';
+
+type Filter = Partial<{ organization_id: number }>;
 
 function getByFilter(
   treeRepository: TreeRepository,

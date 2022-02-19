@@ -1,10 +1,11 @@
 import express from 'express';
 import Joi from 'joi';
-import Filter from 'interfaces/Filter';
 import { handlerWrapper } from './utils';
 import OrganizationRepository from '../infra/database/OrganizationRepository';
 import Session from '../infra/database/Session';
 import OrganizationModel from '../models/Organization';
+
+type Filter = Partial<{ planter_id: number; organization_id: number }>;
 
 const router = express.Router();
 
