@@ -1,12 +1,12 @@
 import express from 'express';
 import Joi from 'joi';
-import Filter from 'interfaces/Filter';
 import { handlerWrapper } from './utils';
 import PlanterRepository from '../infra/database/PlanterRepository';
 import Session from '../infra/database/Session';
 import PlanterModel from '../models/Planter';
 
 const router = express.Router();
+type Filter = Partial<{ planter_id: number; organization_id: number }>;
 
 router.get(
   '/:id',

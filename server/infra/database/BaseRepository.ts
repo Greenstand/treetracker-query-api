@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-restricted-syntax */
 import { Knex } from 'knex';
-import Filter from 'interfaces/Filter';
 import HttpError from 'utils/HttpError';
 import Session from './Session';
 
@@ -40,10 +39,7 @@ export default class BaseRepository<T> {
    *  limit: number
    */
 
-  async getByFilter<FilterType>(
-    filter: Filter<FilterType>,
-    options?: FilterOptions<T>,
-  ): Promise<T[]> {
+  async getByFilter(filter: unknown, options?: FilterOptions<T>): Promise<T[]> {
     const whereBuilder = function (object: any, builder: Knex.QueryBuilder) {
       let result = builder;
       if (object.and) {
