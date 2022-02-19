@@ -1,4 +1,3 @@
-import Filter from 'interfaces/Filter';
 import FilterOptions from 'interfaces/FilterOptions';
 import Transaction from 'interfaces/Transaction';
 import BaseRepository from './BaseRepository';
@@ -9,7 +8,10 @@ export default class TransactionRepository extends BaseRepository<Transaction> {
     super('wallet.transaction', session);
   }
 
-  async getByFilter(filter: Filter, options: FilterOptions) {
+  async getByFilter(
+    filter: Partial<{ token_id: string; wallet_id: string }>,
+    options: FilterOptions,
+  ) {
     const { token_id, wallet_id } = filter;
     const { limit, offset } = options;
     let sql = `

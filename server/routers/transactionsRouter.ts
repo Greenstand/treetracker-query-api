@@ -1,7 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
 import TransactionRepository from 'infra/database/TransactionRepository';
-import Filter from 'interfaces/Filter';
 import Transaction from 'models/Transaction';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
@@ -25,7 +24,7 @@ router.get(
     limit = parseInt(limit);
     offset = parseInt(offset);
     const repo = new TransactionRepository(new Session());
-    const filter: Filter = {};
+    const filter: Partial<{ token_id: string; wallet_id: string }> = {};
     if (token_id) {
       filter.token_id = token_id;
     } else if (wallet_id) {
