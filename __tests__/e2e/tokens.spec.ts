@@ -14,8 +14,8 @@ describe('Tokens', () => {
       wallet_id: 'eecdf253-05b6-419a-8425-416a3e5fc9a0',
       transfer_pending: false,
       transfer_pending_id: null,
-      created_at: '2021-02-18T23:53:29.172Z',
-      updated_at: '2021-02-18T23:53:29.172Z',
+      // created_at: '2021-02-18T23:53:29.172Z',
+      // updated_at: '2021-02-18T23:53:29.172Z',
       claim: false,
     });
   });
