@@ -1,3 +1,25 @@
+# [1.8.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.21...v1.8.0) (2022-02-22)
+
+### Bug Fixes
+
+- fix the path tokens ([f10b415](https://github.com/Greenstand/treetracker-query-api/commit/f10b4158a76344580cfcfe8f8b4b8b6107bfc991))
+- rename tokens.ts to Tokens.ts ([6741bac](https://github.com/Greenstand/treetracker-query-api/commit/6741bac6564907d4e80dda58788f8912a373a70a))
+
+### Features
+
+- add model tokens ([a533643](https://github.com/Greenstand/treetracker-query-api/commit/a53364394b74e79990f35a6e4999a79458ab6bb7))
+- add route token by id ([dd73c73](https://github.com/Greenstand/treetracker-query-api/commit/dd73c7323a7dfa923f2dd0c891b74ad90bd4c64d))
+- add tokens interface ([932ec46](https://github.com/Greenstand/treetracker-query-api/commit/932ec465fa6c065d4612bcb8f24cc04221d68905))
+- add tokens router ([26eb257](https://github.com/Greenstand/treetracker-query-api/commit/26eb2571047e7c4eae7e0d3a5fd6ef54cdec59cb))
+- add TokensRepository ([4ce03e6](https://github.com/Greenstand/treetracker-query-api/commit/4ce03e61b49ffcf230283025c3482a97ae7ae533))
+- add updated_at / claim ([7bd8c52](https://github.com/Greenstand/treetracker-query-api/commit/7bd8c5248ef64e693db3ce717d054f329c584917))
+- add wallet.token ([62a79f7](https://github.com/Greenstand/treetracker-query-api/commit/62a79f7a6bb0f62748542734ebaadb7802f50359))
+- export the router ([80c2fe9](https://github.com/Greenstand/treetracker-query-api/commit/80c2fe9f8dd80111e69bc3410728e4d082290184))
+
+### Reverts
+
+- Revert "fix: update server/routers/tokensRouter.ts" ([aa4f5d3](https://github.com/Greenstand/treetracker-query-api/commit/aa4f5d3f8ffe79ca06777d3ff7f7e788d6c9904a))
+
 ## [1.7.21](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.20...v1.7.21) (2022-02-16)
 
 ### Bug Fixes

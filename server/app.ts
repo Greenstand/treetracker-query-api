@@ -5,6 +5,7 @@ import countriesRouter from './routers/countriesRouter';
 import organizationsRouter from './routers/organizationsRouter';
 import plantersRouter from './routers/plantersRouter';
 import speciesRouter from './routers/speciesRouter';
+import tokensRouter from './routers/tokensRouter';
 import transactionsRouter from './routers/transactionsRouter';
 import treesRouter from './routers/treesRouter';
 import { errorHandler, handlerWrapper } from './routers/utils';
@@ -52,6 +53,7 @@ app.use('/organizations', organizationsRouter);
 app.use('/species', speciesRouter);
 app.use('/wallets', walletsRouter);
 app.use('/transactions', transactionsRouter);
+app.use('/tokens', tokensRouter);
 // Global error handler
 app.use(errorHandler);
 
