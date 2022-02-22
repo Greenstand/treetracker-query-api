@@ -22,4 +22,19 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const object = await this.session.getDB().raw(sql);
     return object.rows;
   }
+
+  async getByName(keyword: string, options: FilterOptions) {
+    const { limit, offset } = options;
+    const sql = `
+      SELECT
+        *
+      FROM planter
+      WHERE first_name LIKE '${keyword}%' OR last_name LIKE '${keyword}%'
+      ORDER BY first_name, last_name
+      LIMIT ${limit}
+      OFFSET ${offset}
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
 }
