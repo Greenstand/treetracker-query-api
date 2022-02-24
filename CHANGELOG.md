@@ -1,3 +1,9 @@
+# [1.9.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.8.0...v1.9.0) (2022-02-24)
+
+### Features
+
+- add planter name api endpoint ([a901ba7](https://github.com/Greenstand/treetracker-query-api/commit/a901ba791257a8b33fda70ab69ab59981bceb39e))
+
 # [1.8.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.7.21...v1.8.0) (2022-02-22)
 
 ### Bug Fixes
