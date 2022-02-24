@@ -35,4 +35,15 @@ describe('planters', () => {
     },
     1000 * 30,
   );
+
+  it('planters?keyword=da&limit=1', async () => {
+    const response = await supertest(app).get('/planters?keyword=da&limit=1');
+    expect(response.status).toBe(200);
+    expect(response.body.planters).toBeInstanceOf(Array);
+    expect(response.body.planters.length <= 1).toBe(true);
+    expect(
+      /^da/.test(response.body.planters[0].first_name) ||
+        /^da/.test(response.body.planters[0].last_name),
+    ).toBe(true);
+  });
 });

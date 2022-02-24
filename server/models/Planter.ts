@@ -23,6 +23,16 @@ function getByFilter(
   };
 }
 
+function getByName(
+  planterRepository: PlanterRepository,
+): (keyword: string, options: FilterOptions) => Promise<Planter[]> {
+  return async function (keyword: string, options: FilterOptions) {
+    log.warn('using planter name filter...');
+    const planters = await planterRepository.getByName(keyword, options);
+    return planters;
+  };
+}
+
 function getPlanterLinks(planter) {
   const links = {
     featured_trees: `/trees?planter_id=${planter.id}&limit=20&offset=0`,
@@ -35,5 +45,6 @@ function getPlanterLinks(planter) {
 export default {
   getById: delegateRepository<PlanterRepository, Planter>('getById'),
   getByFilter,
+  getByName,
   getPlanterLinks,
 };
