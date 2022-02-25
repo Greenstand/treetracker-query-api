@@ -5,6 +5,7 @@
 -- Dumped from database version 11.14
 -- Dumped by pg_dump version 11.15 (Ubuntu 11.15-1.pgdg20.04+1)
 
+CREATE USER doadmin WITH PASSWORD 'postgres';
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
