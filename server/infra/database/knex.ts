@@ -21,3 +21,7 @@ if (process.env.DATABASE_SCHEMA) {
 log.debug(knexConfig.searchPath);
 
 export default knex(knexConfig);
+
+export const enum TableNames {
+  Trees = 'trees',
+}
