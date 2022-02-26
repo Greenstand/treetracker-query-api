@@ -1,11 +1,6 @@
 import exampleTree from '@mocks/trees/912681.json';
 import supertest from 'supertest';
-import knex, { TableNames } from 'infra/database/knex';
-import app from '../../server/app';
-
-beforeAll(async () => {
-  await knex(TableNames.Trees).insert(exampleTree);
-});
+import app from 'app';
 
 it('trees/{id}', async () => {
   const response = await supertest(app).get(`/trees/${exampleTree.id}`);
@@ -30,7 +25,7 @@ it('trees?limit=1&offset=0', async () => {
   });
 });
 
-it(
+it.skip(
   'Get tree by organization id',
   async () => {
     const organization_id = exampleTree.planting_organization_id;
@@ -48,7 +43,7 @@ it(
   1000 * 60,
 );
 
-it(
+it.skip(
   'trees/featured',
   async () => {
     const response = await supertest(app).get('/trees/featured');
