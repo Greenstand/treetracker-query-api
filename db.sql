@@ -418,7 +418,8 @@ CREATE TABLE public.planter (
     image_url character varying,
     person_id integer,
     organization_id integer,
-    image_rotation integer
+    image_rotation integer,
+    grower_account_uuid uuid DEFAULT public.uuid_generate_v4() NOT NULL
 );
 
 
