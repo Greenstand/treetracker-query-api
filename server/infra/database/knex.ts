@@ -25,4 +25,8 @@ export default knex(knexConfig);
 export const enum TableNames {
   Trees = 'trees',
   Wallets = 'wallet',
+  Species = 'tree_species',
+  Planters = 'planter',
+  Organizations = 'entity',
+  Countries = 'region',
 }
