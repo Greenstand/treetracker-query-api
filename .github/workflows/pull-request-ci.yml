@@ -66,3 +66,18 @@ jobs:
         run: npx jest __tests__/e2e/trees.spec.ts
         env:
           SEED: true
+
+      - name: wallet tests
+        run: npx jest __tests__/e2e/wallets.spec.ts
+
+      - name: species tests
+        run: npx jest __tests__/e2e/species.spec.ts
+
+      - name: country tests
+        run: npx jest __tests__/e2e/countries.spec.ts
+
+      - name: planter tests
+        run: npx jest __tests__/e2e/planters.spec.ts
+
+      - name: organizations tests
+        run: npx jest __tests__/e2e/organizations.spec.ts
