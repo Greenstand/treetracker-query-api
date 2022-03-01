@@ -1,4 +1,4 @@
-import exampleTree from '@mocks/trees/912681.json';
+import exampleTree from '@mocks/trees/exampleTree.json';
 import supertest from 'supertest';
 import app from 'app';
 

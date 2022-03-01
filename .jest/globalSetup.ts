@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
-import exampleTree from '../docs/api/spec/examples/trees/912681.json';
+import exampleTree from '../docs/api/spec/examples/trees/exampleTree.json';
 import exampleWallet from '../docs/api/spec/examples/wallets/exampleWallet.json';
 import exampleSpecies from '../docs/api/spec/examples/species/exampleSpecies.json';
 import examplePlanter from '../docs/api/spec/examples/planters/examplePlanter.json';
