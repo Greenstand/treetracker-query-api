@@ -10,10 +10,5 @@
   "person_id": null,
   "organization_id": 11,
   "image_rotation": null,
-  "grower_account_uuid": "df42012e-513f-41dc-9599-41a7e0c722f2",
-  "links": {
-    "featured_trees": "/trees?planter_id=1&limit=20&offset=0",
-    "associated_organizations": "/organizations?planter_id=1&limit=20&offset=0",
-    "species": "/species?planter_id=1&limit=20&offset=0"
-  }
+  "grower_account_uuid": "df42012e-513f-41dc-9599-41a7e0c722f2"
 }
