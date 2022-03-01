@@ -39,7 +39,7 @@ CREATE TYPE wallet.entity_trust_request_type AS ENUM (
 );
 
 
-ALTER TYPE wallet.entity_trust_request_type OWNER TO doadmin;
+ALTER TYPE wallet.entity_trust_request_type OWNER TO postgres;
 
 --
 -- Name: entity_trust_state_type; Type: TYPE; Schema: wallet; Owner: doadmin
@@ -54,7 +54,7 @@ CREATE TYPE wallet.entity_trust_state_type AS ENUM (
 );
 
 
-ALTER TYPE wallet.entity_trust_state_type OWNER TO doadmin;
+ALTER TYPE wallet.entity_trust_state_type OWNER TO postgres;
 
 --
 -- Name: entity_trust_type; Type: TYPE; Schema: wallet; Owner: doadmin
@@ -67,7 +67,7 @@ CREATE TYPE wallet.entity_trust_type AS ENUM (
 );
 
 
-ALTER TYPE wallet.entity_trust_type OWNER TO doadmin;
+ALTER TYPE wallet.entity_trust_type OWNER TO postgres;
 
 --
 -- Name: transfer_state; Type: TYPE; Schema: wallet; Owner: doadmin
@@ -82,7 +82,7 @@ CREATE TYPE wallet.transfer_state AS ENUM (
 );
 
 
-ALTER TYPE wallet.transfer_state OWNER TO doadmin;
+ALTER TYPE wallet.transfer_state OWNER TO postgres;
 
 --
 -- Name: transfer_state_change_approval_type; Type: TYPE; Schema: wallet; Owner: doadmin
@@ -95,7 +95,7 @@ CREATE TYPE wallet.transfer_state_change_approval_type AS ENUM (
 );
 
 
-ALTER TYPE wallet.transfer_state_change_approval_type OWNER TO doadmin;
+ALTER TYPE wallet.transfer_state_change_approval_type OWNER TO postgres;
 
 --
 -- Name: transfer_type; Type: TYPE; Schema: wallet; Owner: doadmin
@@ -108,7 +108,7 @@ CREATE TYPE wallet.transfer_type AS ENUM (
 );
 
 
-ALTER TYPE wallet.transfer_type OWNER TO doadmin;
+ALTER TYPE wallet.transfer_type OWNER TO postgres;
 
 --
 -- Name: wallet_event_type; Type: TYPE; Schema: wallet; Owner: doadmin
@@ -132,7 +132,7 @@ CREATE TYPE wallet.wallet_event_type AS ENUM (
 );
 
 
-ALTER TYPE wallet.wallet_event_type OWNER TO doadmin;
+ALTER TYPE wallet.wallet_event_type OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -152,7 +152,7 @@ CREATE TABLE wallet.api_key (
 );
 
 
-ALTER TABLE wallet.api_key OWNER TO doadmin;
+ALTER TABLE wallet.api_key OWNER TO postgres;
 
 --
 -- Name: migrations; Type: TABLE; Schema: wallet; Owner: doadmin
@@ -165,7 +165,7 @@ CREATE TABLE wallet.migrations (
 );
 
 
-ALTER TABLE wallet.migrations OWNER TO doadmin;
+ALTER TABLE wallet.migrations OWNER TO postgres;
 
 --
 -- Name: migrations_id_seq; Type: SEQUENCE; Schema: wallet; Owner: doadmin
@@ -180,7 +180,7 @@ CREATE SEQUENCE wallet.migrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE wallet.migrations_id_seq OWNER TO doadmin;
+ALTER TABLE wallet.migrations_id_seq OWNER TO postgres;
 
 --
 -- Name: migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: wallet; Owner: doadmin
@@ -205,7 +205,7 @@ CREATE TABLE wallet.token (
 );
 
 
-ALTER TABLE wallet.token OWNER TO doadmin;
+ALTER TABLE wallet.token OWNER TO postgres;
 
 --
 -- Name: transaction; Type: TABLE; Schema: wallet; Owner: doadmin
@@ -222,7 +222,7 @@ CREATE TABLE wallet.transaction (
 );
 
 
-ALTER TABLE wallet.transaction OWNER TO doadmin;
+ALTER TABLE wallet.transaction OWNER TO postgres;
 
 --
 -- Name: transfer; Type: TABLE; Schema: wallet; Owner: doadmin
@@ -243,7 +243,7 @@ CREATE TABLE wallet.transfer (
 );
 
 
-ALTER TABLE wallet.transfer OWNER TO doadmin;
+ALTER TABLE wallet.transfer OWNER TO postgres;
 
 --
 -- Name: transfer_audit; Type: TABLE; Schema: wallet; Owner: doadmin
@@ -259,7 +259,7 @@ CREATE TABLE wallet.transfer_audit (
 );
 
 
-ALTER TABLE wallet.transfer_audit OWNER TO doadmin;
+ALTER TABLE wallet.transfer_audit OWNER TO postgres;
 
 --
 -- Name: wallet; Type: TABLE; Schema: wallet; Owner: doadmin
@@ -275,7 +275,7 @@ CREATE TABLE wallet.wallet (
 );
 
 
-ALTER TABLE wallet.wallet OWNER TO doadmin;
+ALTER TABLE wallet.wallet OWNER TO postgres;
 
 --
 -- Name: wallet_event; Type: TABLE; Schema: wallet; Owner: doadmin
@@ -289,7 +289,7 @@ CREATE TABLE wallet.wallet_event (
 );
 
 
-ALTER TABLE wallet.wallet_event OWNER TO doadmin;
+ALTER TABLE wallet.wallet_event OWNER TO postgres;
 
 --
 -- Name: wallet_trust; Type: TABLE; Schema: wallet; Owner: doadmin
@@ -309,7 +309,7 @@ CREATE TABLE wallet.wallet_trust (
 );
 
 
-ALTER TABLE wallet.wallet_trust OWNER TO doadmin;
+ALTER TABLE wallet.wallet_trust OWNER TO postgres;
 
 --
 -- Name: wallet_trust_log; Type: TABLE; Schema: wallet; Owner: doadmin
@@ -331,7 +331,7 @@ CREATE TABLE wallet.wallet_trust_log (
 );
 
 
-ALTER TABLE wallet.wallet_trust_log OWNER TO doadmin;
+ALTER TABLE wallet.wallet_trust_log OWNER TO postgres;
 
 --
 -- Name: migrations id; Type: DEFAULT; Schema: wallet; Owner: doadmin

@@ -43,7 +43,7 @@ CREATE TYPE public.age_type AS ENUM (
 );
 
 
-ALTER TYPE public.age_type OWNER TO doadmin;
+ALTER TYPE public.age_type OWNER TO postgres;
 
 --
 -- Name: capture_approval_type; Type: TYPE; Schema: public; Owner: doadmin
@@ -61,7 +61,7 @@ CREATE TYPE public.capture_approval_type AS ENUM (
 );
 
 
-ALTER TYPE public.capture_approval_type OWNER TO doadmin;
+ALTER TYPE public.capture_approval_type OWNER TO postgres;
 
 --
 -- Name: morphology_type; Type: TYPE; Schema: public; Owner: doadmin
@@ -74,7 +74,7 @@ CREATE TYPE public.morphology_type AS ENUM (
 );
 
 
-ALTER TYPE public.morphology_type OWNER TO doadmin;
+ALTER TYPE public.morphology_type OWNER TO postgres;
 
 --
 -- Name: platform_type; Type: TYPE; Schema: public; Owner: doadmin
@@ -86,7 +86,7 @@ CREATE TYPE public.platform_type AS ENUM (
 );
 
 
-ALTER TYPE public.platform_type OWNER TO doadmin;
+ALTER TYPE public.platform_type OWNER TO postgres;
 
 --
 -- Name: rejection_reason_type; Type: TYPE; Schema: public; Owner: doadmin
@@ -103,7 +103,7 @@ CREATE TYPE public.rejection_reason_type AS ENUM (
 );
 
 
-ALTER TYPE public.rejection_reason_type OWNER TO doadmin;
+ALTER TYPE public.rejection_reason_type OWNER TO postgres;
 
 --
 -- Name: getentityrelationshipchildren(integer); Type: FUNCTION; Schema: public; Owner: doadmin
@@ -128,7 +128,7 @@ FROM children
 $_$;
 
 
-ALTER FUNCTION public.getentityrelationshipchildren(integer) OWNER TO doadmin;
+ALTER FUNCTION public.getentityrelationshipchildren(integer) OWNER TO postgres;
 
 --
 -- Name: getentityrelationshipchildren(integer, text); Type: FUNCTION; Schema: public; Owner: doadmin
@@ -153,7 +153,7 @@ FROM children
 $_$;
 
 
-ALTER FUNCTION public.getentityrelationshipchildren(integer, text) OWNER TO doadmin;
+ALTER FUNCTION public.getentityrelationshipchildren(integer, text) OWNER TO postgres;
 
 --
 -- Name: getentityrelationshipparents(integer, text); Type: FUNCTION; Schema: public; Owner: doadmin
@@ -178,7 +178,7 @@ FROM parents
 $_$;
 
 
-ALTER FUNCTION public.getentityrelationshipparents(integer, text) OWNER TO doadmin;
+ALTER FUNCTION public.getentityrelationshipparents(integer, text) OWNER TO postgres;
 
 --
 -- Name: makegrid_2d(public.geometry, integer, integer); Type: FUNCTION; Schema: public; Owner: doadmin
@@ -247,7 +247,7 @@ END;
 $_$;
 
 
-ALTER FUNCTION public.makegrid_2d(bound_polygon public.geometry, width_step integer, height_step integer) OWNER TO doadmin;
+ALTER FUNCTION public.makegrid_2d(bound_polygon public.geometry, width_step integer, height_step integer) OWNER TO postgres;
 
 --
 -- Name: token_transaction_insert(); Type: FUNCTION; Schema: public; Owner: doadmin
@@ -266,7 +266,7 @@ CREATE FUNCTION public.token_transaction_insert() RETURNS trigger
              $$;
 
 
-ALTER FUNCTION public.token_transaction_insert() OWNER TO doadmin;
+ALTER FUNCTION public.token_transaction_insert() OWNER TO postgres;
 
 --
 -- Name: trigger_set_updated_at(); Type: FUNCTION; Schema: public; Owner: doadmin
@@ -282,7 +282,7 @@ CREATE FUNCTION public.trigger_set_updated_at() RETURNS trigger
     $$;
 
 
-ALTER FUNCTION public.trigger_set_updated_at() OWNER TO doadmin;
+ALTER FUNCTION public.trigger_set_updated_at() OWNER TO postgres;
 
 --
 -- Name: trees_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -296,7 +296,7 @@ CREATE SEQUENCE public.trees_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.trees_id_seq OWNER TO doadmin;
+ALTER TABLE public.trees_id_seq OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -356,7 +356,7 @@ CREATE TABLE public.trees (
 );
 
 
-ALTER TABLE public.trees OWNER TO doadmin;
+ALTER TABLE public.trees OWNER TO postgres;
 
 --
 -- Name: entity; Type: TABLE; Schema: public; Owner: doadmin
@@ -384,7 +384,7 @@ CREATE TABLE public.entity (
 );
 
 
-ALTER TABLE public.entity OWNER TO doadmin;
+ALTER TABLE public.entity OWNER TO postgres;
 
 --
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -398,7 +398,7 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_seq OWNER TO doadmin;
+ALTER TABLE public.users_id_seq OWNER TO postgres;
 
 --
 -- Name: planter; Type: TABLE; Schema: public; Owner: doadmin
@@ -419,7 +419,7 @@ CREATE TABLE public.planter (
 );
 
 
-ALTER TABLE public.planter OWNER TO doadmin;
+ALTER TABLE public.planter OWNER TO postgres;
 
 --
 -- Name: token; Type: TABLE; Schema: public; Owner: doadmin
@@ -434,7 +434,7 @@ CREATE TABLE public.token (
 );
 
 
-ALTER TABLE public.token OWNER TO doadmin;
+ALTER TABLE public.token OWNER TO postgres;
 
 --
 -- Name: ab_permission; Type: TABLE; Schema: public; Owner: doadmin
@@ -446,7 +446,7 @@ CREATE TABLE public.ab_permission (
 );
 
 
-ALTER TABLE public.ab_permission OWNER TO doadmin;
+ALTER TABLE public.ab_permission OWNER TO postgres;
 
 --
 -- Name: ab_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -461,7 +461,7 @@ CREATE SEQUENCE public.ab_permission_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ab_permission_id_seq OWNER TO doadmin;
+ALTER TABLE public.ab_permission_id_seq OWNER TO postgres;
 
 --
 -- Name: ab_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -481,7 +481,7 @@ CREATE TABLE public.ab_permission_view (
 );
 
 
-ALTER TABLE public.ab_permission_view OWNER TO doadmin;
+ALTER TABLE public.ab_permission_view OWNER TO postgres;
 
 --
 -- Name: ab_permission_view_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -496,7 +496,7 @@ CREATE SEQUENCE public.ab_permission_view_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ab_permission_view_id_seq OWNER TO doadmin;
+ALTER TABLE public.ab_permission_view_id_seq OWNER TO postgres;
 
 --
 -- Name: ab_permission_view_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -516,7 +516,7 @@ CREATE TABLE public.ab_permission_view_role (
 );
 
 
-ALTER TABLE public.ab_permission_view_role OWNER TO doadmin;
+ALTER TABLE public.ab_permission_view_role OWNER TO postgres;
 
 --
 -- Name: ab_permission_view_role_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -531,7 +531,7 @@ CREATE SEQUENCE public.ab_permission_view_role_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ab_permission_view_role_id_seq OWNER TO doadmin;
+ALTER TABLE public.ab_permission_view_role_id_seq OWNER TO postgres;
 
 --
 -- Name: ab_permission_view_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -556,7 +556,7 @@ CREATE TABLE public.ab_register_user (
 );
 
 
-ALTER TABLE public.ab_register_user OWNER TO doadmin;
+ALTER TABLE public.ab_register_user OWNER TO postgres;
 
 --
 -- Name: ab_register_user_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -571,7 +571,7 @@ CREATE SEQUENCE public.ab_register_user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ab_register_user_id_seq OWNER TO doadmin;
+ALTER TABLE public.ab_register_user_id_seq OWNER TO postgres;
 
 --
 -- Name: ab_register_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -590,7 +590,7 @@ CREATE TABLE public.ab_role (
 );
 
 
-ALTER TABLE public.ab_role OWNER TO doadmin;
+ALTER TABLE public.ab_role OWNER TO postgres;
 
 --
 -- Name: ab_role_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -605,7 +605,7 @@ CREATE SEQUENCE public.ab_role_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ab_role_id_seq OWNER TO doadmin;
+ALTER TABLE public.ab_role_id_seq OWNER TO postgres;
 
 --
 -- Name: ab_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -636,7 +636,7 @@ CREATE TABLE public.ab_user (
 );
 
 
-ALTER TABLE public.ab_user OWNER TO doadmin;
+ALTER TABLE public.ab_user OWNER TO postgres;
 
 --
 -- Name: ab_user_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -651,7 +651,7 @@ CREATE SEQUENCE public.ab_user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ab_user_id_seq OWNER TO doadmin;
+ALTER TABLE public.ab_user_id_seq OWNER TO postgres;
 
 --
 -- Name: ab_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -671,7 +671,7 @@ CREATE TABLE public.ab_user_role (
 );
 
 
-ALTER TABLE public.ab_user_role OWNER TO doadmin;
+ALTER TABLE public.ab_user_role OWNER TO postgres;
 
 --
 -- Name: ab_user_role_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -686,7 +686,7 @@ CREATE SEQUENCE public.ab_user_role_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ab_user_role_id_seq OWNER TO doadmin;
+ALTER TABLE public.ab_user_role_id_seq OWNER TO postgres;
 
 --
 -- Name: ab_user_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -705,7 +705,7 @@ CREATE TABLE public.ab_view_menu (
 );
 
 
-ALTER TABLE public.ab_view_menu OWNER TO doadmin;
+ALTER TABLE public.ab_view_menu OWNER TO postgres;
 
 --
 -- Name: ab_view_menu_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -720,7 +720,7 @@ CREATE SEQUENCE public.ab_view_menu_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ab_view_menu_id_seq OWNER TO doadmin;
+ALTER TABLE public.ab_view_menu_id_seq OWNER TO postgres;
 
 --
 -- Name: ab_view_menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -743,7 +743,7 @@ CREATE TABLE public.region (
 );
 
 
-ALTER TABLE public.region OWNER TO doadmin;
+ALTER TABLE public.region OWNER TO postgres;
 
 --
 -- Name: tree_region; Type: TABLE; Schema: public; Owner: doadmin
@@ -757,7 +757,7 @@ CREATE TABLE public.tree_region (
 );
 
 
-ALTER TABLE public.tree_region OWNER TO doadmin;
+ALTER TABLE public.tree_region OWNER TO postgres;
 
 --
 -- Name: active_tree_region; Type: MATERIALIZED VIEW; Schema: public; Owner: doadmin
@@ -777,7 +777,7 @@ CREATE MATERIALIZED VIEW public.active_tree_region AS
   WITH NO DATA;
 
 
-ALTER TABLE public.active_tree_region OWNER TO doadmin;
+ALTER TABLE public.active_tree_region OWNER TO postgres;
 
 --
 -- Name: admin_role; Type: TABLE; Schema: public; Owner: doadmin
@@ -794,7 +794,7 @@ CREATE TABLE public.admin_role (
 );
 
 
-ALTER TABLE public.admin_role OWNER TO doadmin;
+ALTER TABLE public.admin_role OWNER TO postgres;
 
 --
 -- Name: admin_role_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -809,7 +809,7 @@ CREATE SEQUENCE public.admin_role_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.admin_role_id_seq OWNER TO doadmin;
+ALTER TABLE public.admin_role_id_seq OWNER TO postgres;
 
 --
 -- Name: admin_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -836,7 +836,7 @@ CREATE TABLE public.admin_user (
 );
 
 
-ALTER TABLE public.admin_user OWNER TO doadmin;
+ALTER TABLE public.admin_user OWNER TO postgres;
 
 --
 -- Name: admin_user_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -851,7 +851,7 @@ CREATE SEQUENCE public.admin_user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.admin_user_id_seq OWNER TO doadmin;
+ALTER TABLE public.admin_user_id_seq OWNER TO postgres;
 
 --
 -- Name: admin_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -873,7 +873,7 @@ CREATE TABLE public.admin_user_role (
 );
 
 
-ALTER TABLE public.admin_user_role OWNER TO doadmin;
+ALTER TABLE public.admin_user_role OWNER TO postgres;
 
 --
 -- Name: admin_user_role_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -888,7 +888,7 @@ CREATE SEQUENCE public.admin_user_role_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.admin_user_role_id_seq OWNER TO doadmin;
+ALTER TABLE public.admin_user_role_id_seq OWNER TO postgres;
 
 --
 -- Name: admin_user_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -906,7 +906,7 @@ CREATE TABLE public.alembic_version (
 );
 
 
-ALTER TABLE public.alembic_version OWNER TO doadmin;
+ALTER TABLE public.alembic_version OWNER TO postgres;
 
 --
 -- Name: anonymous_entities; Type: TABLE; Schema: public; Owner: doadmin
@@ -927,7 +927,7 @@ CREATE TABLE public.anonymous_entities (
 );
 
 
-ALTER TABLE public.anonymous_entities OWNER TO doadmin;
+ALTER TABLE public.anonymous_entities OWNER TO postgres;
 
 --
 -- Name: anonymous_planters; Type: TABLE; Schema: public; Owner: doadmin
@@ -946,7 +946,7 @@ CREATE TABLE public.anonymous_planters (
 );
 
 
-ALTER TABLE public.anonymous_planters OWNER TO doadmin;
+ALTER TABLE public.anonymous_planters OWNER TO postgres;
 
 --
 -- Name: anonymous_trees; Type: TABLE; Schema: public; Owner: doadmin
@@ -989,7 +989,7 @@ CREATE TABLE public.anonymous_trees (
 );
 
 
-ALTER TABLE public.anonymous_trees OWNER TO doadmin;
+ALTER TABLE public.anonymous_trees OWNER TO postgres;
 
 --
 -- Name: api_key; Type: TABLE; Schema: public; Owner: doadmin
@@ -1005,7 +1005,7 @@ CREATE TABLE public.api_key (
 );
 
 
-ALTER TABLE public.api_key OWNER TO doadmin;
+ALTER TABLE public.api_key OWNER TO postgres;
 
 --
 -- Name: api_key_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1020,7 +1020,7 @@ CREATE SEQUENCE public.api_key_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.api_key_id_seq OWNER TO doadmin;
+ALTER TABLE public.api_key_id_seq OWNER TO postgres;
 
 --
 -- Name: api_key_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1045,7 +1045,7 @@ CREATE TABLE public.audit (
 );
 
 
-ALTER TABLE public.audit OWNER TO doadmin;
+ALTER TABLE public.audit OWNER TO postgres;
 
 --
 -- Name: audit_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1060,7 +1060,7 @@ CREATE SEQUENCE public.audit_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.audit_id_seq OWNER TO doadmin;
+ALTER TABLE public.audit_id_seq OWNER TO postgres;
 
 --
 -- Name: audit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1089,7 +1089,7 @@ CREATE TABLE public.celery_taskmeta (
 );
 
 
-ALTER TABLE public.celery_taskmeta OWNER TO doadmin;
+ALTER TABLE public.celery_taskmeta OWNER TO postgres;
 
 --
 -- Name: celery_tasksetmeta; Type: TABLE; Schema: public; Owner: doadmin
@@ -1103,7 +1103,7 @@ CREATE TABLE public.celery_tasksetmeta (
 );
 
 
-ALTER TABLE public.celery_tasksetmeta OWNER TO doadmin;
+ALTER TABLE public.celery_tasksetmeta OWNER TO postgres;
 
 --
 -- Name: certificates; Type: TABLE; Schema: public; Owner: doadmin
@@ -1116,7 +1116,7 @@ CREATE TABLE public.certificates (
 );
 
 
-ALTER TABLE public.certificates OWNER TO doadmin;
+ALTER TABLE public.certificates OWNER TO postgres;
 
 --
 -- Name: certificates_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1130,7 +1130,7 @@ CREATE SEQUENCE public.certificates_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.certificates_id_seq OWNER TO doadmin;
+ALTER TABLE public.certificates_id_seq OWNER TO postgres;
 
 --
 -- Name: certificates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1151,7 +1151,7 @@ CREATE TABLE public.clusters (
 );
 
 
-ALTER TABLE public.clusters OWNER TO doadmin;
+ALTER TABLE public.clusters OWNER TO postgres;
 
 --
 -- Name: clusters_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1165,7 +1165,7 @@ CREATE SEQUENCE public.clusters_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.clusters_id_seq OWNER TO doadmin;
+ALTER TABLE public.clusters_id_seq OWNER TO postgres;
 
 --
 -- Name: clusters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1194,7 +1194,7 @@ CREATE TABLE public.connection (
 );
 
 
-ALTER TABLE public.connection OWNER TO doadmin;
+ALTER TABLE public.connection OWNER TO postgres;
 
 --
 -- Name: connection_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1209,7 +1209,7 @@ CREATE SEQUENCE public.connection_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.connection_id_seq OWNER TO doadmin;
+ALTER TABLE public.connection_id_seq OWNER TO postgres;
 
 --
 -- Name: connection_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1232,7 +1232,7 @@ CREATE TABLE public.contract (
 );
 
 
-ALTER TABLE public.contract OWNER TO doadmin;
+ALTER TABLE public.contract OWNER TO postgres;
 
 --
 -- Name: contract_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1247,7 +1247,7 @@ CREATE SEQUENCE public.contract_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.contract_id_seq OWNER TO doadmin;
+ALTER TABLE public.contract_id_seq OWNER TO postgres;
 
 --
 -- Name: contract_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1283,7 +1283,7 @@ CREATE TABLE public.dag (
 );
 
 
-ALTER TABLE public.dag OWNER TO doadmin;
+ALTER TABLE public.dag OWNER TO postgres;
 
 --
 -- Name: dag_code; Type: TABLE; Schema: public; Owner: doadmin
@@ -1297,7 +1297,7 @@ CREATE TABLE public.dag_code (
 );
 
 
-ALTER TABLE public.dag_code OWNER TO doadmin;
+ALTER TABLE public.dag_code OWNER TO postgres;
 
 --
 -- Name: dag_pickle; Type: TABLE; Schema: public; Owner: doadmin
@@ -1311,7 +1311,7 @@ CREATE TABLE public.dag_pickle (
 );
 
 
-ALTER TABLE public.dag_pickle OWNER TO doadmin;
+ALTER TABLE public.dag_pickle OWNER TO postgres;
 
 --
 -- Name: dag_pickle_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1326,7 +1326,7 @@ CREATE SEQUENCE public.dag_pickle_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.dag_pickle_id_seq OWNER TO doadmin;
+ALTER TABLE public.dag_pickle_id_seq OWNER TO postgres;
 
 --
 -- Name: dag_pickle_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1356,7 +1356,7 @@ CREATE TABLE public.dag_run (
 );
 
 
-ALTER TABLE public.dag_run OWNER TO doadmin;
+ALTER TABLE public.dag_run OWNER TO postgres;
 
 --
 -- Name: dag_run_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1371,7 +1371,7 @@ CREATE SEQUENCE public.dag_run_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.dag_run_id_seq OWNER TO doadmin;
+ALTER TABLE public.dag_run_id_seq OWNER TO postgres;
 
 --
 -- Name: dag_run_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1390,7 +1390,7 @@ CREATE TABLE public.dag_tag (
 );
 
 
-ALTER TABLE public.dag_tag OWNER TO doadmin;
+ALTER TABLE public.dag_tag OWNER TO postgres;
 
 --
 -- Name: devices; Type: TABLE; Schema: public; Owner: doadmin
@@ -1415,7 +1415,7 @@ CREATE TABLE public.devices (
 );
 
 
-ALTER TABLE public.devices OWNER TO doadmin;
+ALTER TABLE public.devices OWNER TO postgres;
 
 --
 -- Name: devices_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1429,7 +1429,7 @@ CREATE SEQUENCE public.devices_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.devices_id_seq OWNER TO doadmin;
+ALTER TABLE public.devices_id_seq OWNER TO postgres;
 
 --
 -- Name: devices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1452,7 +1452,7 @@ CREATE TABLE public.domain_event (
 PARTITION BY LIST (status);
 
 
-ALTER TABLE public.domain_event OWNER TO doadmin;
+ALTER TABLE public.domain_event OWNER TO postgres;
 
 --
 -- Name: domain_event_handled; Type: TABLE; Schema: public; Owner: doadmin
@@ -1469,7 +1469,7 @@ PARTITION BY RANGE (created_at);
 ALTER TABLE ONLY public.domain_event ATTACH PARTITION public.domain_event_handled FOR VALUES IN ('handled');
 
 
-ALTER TABLE public.domain_event_handled OWNER TO doadmin;
+ALTER TABLE public.domain_event_handled OWNER TO postgres;
 
 --
 -- Name: domain_event_handled_2021; Type: TABLE; Schema: public; Owner: doadmin
@@ -1485,7 +1485,7 @@ CREATE TABLE public.domain_event_handled_2021 (
 ALTER TABLE ONLY public.domain_event_handled ATTACH PARTITION public.domain_event_handled_2021 FOR VALUES FROM ('2021-01-01 00:00:00+00') TO ('2022-01-01 00:00:00+00');
 
 
-ALTER TABLE public.domain_event_handled_2021 OWNER TO doadmin;
+ALTER TABLE public.domain_event_handled_2021 OWNER TO postgres;
 
 --
 -- Name: domain_event_handled_2022; Type: TABLE; Schema: public; Owner: doadmin
@@ -1501,7 +1501,7 @@ CREATE TABLE public.domain_event_handled_2022 (
 ALTER TABLE ONLY public.domain_event_handled ATTACH PARTITION public.domain_event_handled_2022 FOR VALUES FROM ('2022-01-01 00:00:00+00') TO ('2023-01-01 00:00:00+00');
 
 
-ALTER TABLE public.domain_event_handled_2022 OWNER TO doadmin;
+ALTER TABLE public.domain_event_handled_2022 OWNER TO postgres;
 
 --
 -- Name: domain_event_handled_2023; Type: TABLE; Schema: public; Owner: doadmin
@@ -1517,7 +1517,7 @@ CREATE TABLE public.domain_event_handled_2023 (
 ALTER TABLE ONLY public.domain_event_handled ATTACH PARTITION public.domain_event_handled_2023 FOR VALUES FROM ('2023-01-01 00:00:00+00') TO ('2024-01-01 00:00:00+00');
 
 
-ALTER TABLE public.domain_event_handled_2023 OWNER TO doadmin;
+ALTER TABLE public.domain_event_handled_2023 OWNER TO postgres;
 
 --
 -- Name: domain_event_raised; Type: TABLE; Schema: public; Owner: doadmin
@@ -1533,7 +1533,7 @@ CREATE TABLE public.domain_event_raised (
 ALTER TABLE ONLY public.domain_event ATTACH PARTITION public.domain_event_raised FOR VALUES IN ('raised');
 
 
-ALTER TABLE public.domain_event_raised OWNER TO doadmin;
+ALTER TABLE public.domain_event_raised OWNER TO postgres;
 
 --
 -- Name: domain_event_received; Type: TABLE; Schema: public; Owner: doadmin
@@ -1549,7 +1549,7 @@ CREATE TABLE public.domain_event_received (
 ALTER TABLE ONLY public.domain_event ATTACH PARTITION public.domain_event_received FOR VALUES IN ('received');
 
 
-ALTER TABLE public.domain_event_received OWNER TO doadmin;
+ALTER TABLE public.domain_event_received OWNER TO postgres;
 
 --
 -- Name: domain_event_sent; Type: TABLE; Schema: public; Owner: doadmin
@@ -1566,7 +1566,7 @@ PARTITION BY RANGE (created_at);
 ALTER TABLE ONLY public.domain_event ATTACH PARTITION public.domain_event_sent FOR VALUES IN ('sent');
 
 
-ALTER TABLE public.domain_event_sent OWNER TO doadmin;
+ALTER TABLE public.domain_event_sent OWNER TO postgres;
 
 --
 -- Name: domain_event_sent_2021; Type: TABLE; Schema: public; Owner: doadmin
@@ -1582,7 +1582,7 @@ CREATE TABLE public.domain_event_sent_2021 (
 ALTER TABLE ONLY public.domain_event_sent ATTACH PARTITION public.domain_event_sent_2021 FOR VALUES FROM ('2021-01-01 00:00:00+00') TO ('2022-01-01 00:00:00+00');
 
 
-ALTER TABLE public.domain_event_sent_2021 OWNER TO doadmin;
+ALTER TABLE public.domain_event_sent_2021 OWNER TO postgres;
 
 --
 -- Name: domain_event_sent_2022; Type: TABLE; Schema: public; Owner: doadmin
@@ -1598,7 +1598,7 @@ CREATE TABLE public.domain_event_sent_2022 (
 ALTER TABLE ONLY public.domain_event_sent ATTACH PARTITION public.domain_event_sent_2022 FOR VALUES FROM ('2022-01-01 00:00:00+00') TO ('2023-01-01 00:00:00+00');
 
 
-ALTER TABLE public.domain_event_sent_2022 OWNER TO doadmin;
+ALTER TABLE public.domain_event_sent_2022 OWNER TO postgres;
 
 --
 -- Name: domain_event_sent_2023; Type: TABLE; Schema: public; Owner: doadmin
@@ -1614,7 +1614,7 @@ CREATE TABLE public.domain_event_sent_2023 (
 ALTER TABLE ONLY public.domain_event_sent ATTACH PARTITION public.domain_event_sent_2023 FOR VALUES FROM ('2023-01-01 00:00:00+00') TO ('2024-01-01 00:00:00+00');
 
 
-ALTER TABLE public.domain_event_sent_2023 OWNER TO doadmin;
+ALTER TABLE public.domain_event_sent_2023 OWNER TO postgres;
 
 --
 -- Name: donors; Type: TABLE; Schema: public; Owner: doadmin
@@ -1629,7 +1629,7 @@ CREATE TABLE public.donors (
 );
 
 
-ALTER TABLE public.donors OWNER TO doadmin;
+ALTER TABLE public.donors OWNER TO postgres;
 
 --
 -- Name: donors_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1643,7 +1643,7 @@ CREATE SEQUENCE public.donors_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.donors_id_seq OWNER TO doadmin;
+ALTER TABLE public.donors_id_seq OWNER TO postgres;
 
 --
 -- Name: donors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1671,7 +1671,7 @@ CREATE TABLE public.entities (
 );
 
 
-ALTER TABLE public.entities OWNER TO doadmin;
+ALTER TABLE public.entities OWNER TO postgres;
 
 --
 -- Name: entity_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1686,7 +1686,7 @@ CREATE SEQUENCE public.entity_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.entity_id_seq OWNER TO doadmin;
+ALTER TABLE public.entity_id_seq OWNER TO postgres;
 
 --
 -- Name: entity_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1707,7 +1707,7 @@ CREATE TABLE public.entity_manager (
 );
 
 
-ALTER TABLE public.entity_manager OWNER TO doadmin;
+ALTER TABLE public.entity_manager OWNER TO postgres;
 
 --
 -- Name: entity_manager_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1722,7 +1722,7 @@ CREATE SEQUENCE public.entity_manager_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.entity_manager_id_seq OWNER TO doadmin;
+ALTER TABLE public.entity_manager_id_seq OWNER TO postgres;
 
 --
 -- Name: entity_manager_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1745,7 +1745,7 @@ CREATE TABLE public.entity_relationship (
 );
 
 
-ALTER TABLE public.entity_relationship OWNER TO doadmin;
+ALTER TABLE public.entity_relationship OWNER TO postgres;
 
 --
 -- Name: entity_relationship_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1760,7 +1760,7 @@ CREATE SEQUENCE public.entity_relationship_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.entity_relationship_id_seq OWNER TO doadmin;
+ALTER TABLE public.entity_relationship_id_seq OWNER TO postgres;
 
 --
 -- Name: entity_relationship_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1781,7 +1781,7 @@ CREATE TABLE public.entity_role (
 );
 
 
-ALTER TABLE public.entity_role OWNER TO doadmin;
+ALTER TABLE public.entity_role OWNER TO postgres;
 
 --
 -- Name: entity_role_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1796,7 +1796,7 @@ CREATE SEQUENCE public.entity_role_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.entity_role_id_seq OWNER TO doadmin;
+ALTER TABLE public.entity_role_id_seq OWNER TO postgres;
 
 --
 -- Name: entity_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1817,7 +1817,7 @@ CREATE TABLE public.import_error (
 );
 
 
-ALTER TABLE public.import_error OWNER TO doadmin;
+ALTER TABLE public.import_error OWNER TO postgres;
 
 --
 -- Name: import_error_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1832,7 +1832,7 @@ CREATE SEQUENCE public.import_error_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.import_error_id_seq OWNER TO doadmin;
+ALTER TABLE public.import_error_id_seq OWNER TO postgres;
 
 --
 -- Name: import_error_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1859,7 +1859,7 @@ CREATE TABLE public.job (
 );
 
 
-ALTER TABLE public.job OWNER TO doadmin;
+ALTER TABLE public.job OWNER TO postgres;
 
 --
 -- Name: job_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1874,7 +1874,7 @@ CREATE SEQUENCE public.job_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.job_id_seq OWNER TO doadmin;
+ALTER TABLE public.job_id_seq OWNER TO postgres;
 
 --
 -- Name: job_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1907,7 +1907,7 @@ CREATE TABLE public.khushi_denormalized (
 );
 
 
-ALTER TABLE public.khushi_denormalized OWNER TO doadmin;
+ALTER TABLE public.khushi_denormalized OWNER TO postgres;
 
 --
 -- Name: knex_migrations; Type: TABLE; Schema: public; Owner: doadmin
@@ -1921,7 +1921,7 @@ CREATE TABLE public.knex_migrations (
 );
 
 
-ALTER TABLE public.knex_migrations OWNER TO doadmin;
+ALTER TABLE public.knex_migrations OWNER TO postgres;
 
 --
 -- Name: knex_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1936,7 +1936,7 @@ CREATE SEQUENCE public.knex_migrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.knex_migrations_id_seq OWNER TO doadmin;
+ALTER TABLE public.knex_migrations_id_seq OWNER TO postgres;
 
 --
 -- Name: knex_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1955,7 +1955,7 @@ CREATE TABLE public.knex_migrations_lock (
 );
 
 
-ALTER TABLE public.knex_migrations_lock OWNER TO doadmin;
+ALTER TABLE public.knex_migrations_lock OWNER TO postgres;
 
 --
 -- Name: knex_migrations_lock_index_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -1970,7 +1970,7 @@ CREATE SEQUENCE public.knex_migrations_lock_index_seq
     CACHE 1;
 
 
-ALTER TABLE public.knex_migrations_lock_index_seq OWNER TO doadmin;
+ALTER TABLE public.knex_migrations_lock_index_seq OWNER TO postgres;
 
 --
 -- Name: knex_migrations_lock_index_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -1991,7 +1991,7 @@ CREATE TABLE public.leaf (
 );
 
 
-ALTER TABLE public.leaf OWNER TO doadmin;
+ALTER TABLE public.leaf OWNER TO postgres;
 
 --
 -- Name: leaf_khushi; Type: TABLE; Schema: public; Owner: doadmin
@@ -2005,7 +2005,7 @@ CREATE TABLE public.leaf_khushi (
 );
 
 
-ALTER TABLE public.leaf_khushi OWNER TO doadmin;
+ALTER TABLE public.leaf_khushi OWNER TO postgres;
 
 --
 -- Name: leaf_khushi_leaf_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2020,7 +2020,7 @@ CREATE SEQUENCE public.leaf_khushi_leaf_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.leaf_khushi_leaf_id_seq OWNER TO doadmin;
+ALTER TABLE public.leaf_khushi_leaf_id_seq OWNER TO postgres;
 
 --
 -- Name: leaf_khushi_leaf_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2042,7 +2042,7 @@ CREATE SEQUENCE public.leaf_leaf_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.leaf_leaf_id_seq OWNER TO doadmin;
+ALTER TABLE public.leaf_leaf_id_seq OWNER TO postgres;
 
 --
 -- Name: leaf_leaf_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2063,7 +2063,7 @@ CREATE SEQUENCE public.locations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.locations_id_seq OWNER TO doadmin;
+ALTER TABLE public.locations_id_seq OWNER TO postgres;
 
 --
 -- Name: locations; Type: TABLE; Schema: public; Owner: doadmin
@@ -2078,7 +2078,7 @@ CREATE TABLE public.locations (
 );
 
 
-ALTER TABLE public.locations OWNER TO doadmin;
+ALTER TABLE public.locations OWNER TO postgres;
 
 --
 -- Name: log; Type: TABLE; Schema: public; Owner: doadmin
@@ -2096,7 +2096,7 @@ CREATE TABLE public.log (
 );
 
 
-ALTER TABLE public.log OWNER TO doadmin;
+ALTER TABLE public.log OWNER TO postgres;
 
 --
 -- Name: log_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2111,7 +2111,7 @@ CREATE SEQUENCE public.log_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.log_id_seq OWNER TO doadmin;
+ALTER TABLE public.log_id_seq OWNER TO postgres;
 
 --
 -- Name: log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2133,7 +2133,7 @@ CREATE VIEW public.long_running AS
   WHERE ((now() - pg_stat_activity.query_start) > '00:05:00'::interval);
 
 
-ALTER TABLE public.long_running OWNER TO doadmin;
+ALTER TABLE public.long_running OWNER TO postgres;
 
 --
 -- Name: migrations; Type: TABLE; Schema: public; Owner: doadmin
@@ -2146,7 +2146,7 @@ CREATE TABLE public.migrations (
 );
 
 
-ALTER TABLE public.migrations OWNER TO doadmin;
+ALTER TABLE public.migrations OWNER TO postgres;
 
 --
 -- Name: migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2160,7 +2160,7 @@ CREATE SEQUENCE public.migrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.migrations_id_seq OWNER TO doadmin;
+ALTER TABLE public.migrations_id_seq OWNER TO postgres;
 
 --
 -- Name: migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2180,7 +2180,7 @@ CREATE TABLE public.migrations_state (
 );
 
 
-ALTER TABLE public.migrations_state OWNER TO doadmin;
+ALTER TABLE public.migrations_state OWNER TO postgres;
 
 --
 -- Name: note_trees; Type: TABLE; Schema: public; Owner: doadmin
@@ -2192,7 +2192,7 @@ CREATE TABLE public.note_trees (
 );
 
 
-ALTER TABLE public.note_trees OWNER TO doadmin;
+ALTER TABLE public.note_trees OWNER TO postgres;
 
 --
 -- Name: notes_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2206,7 +2206,7 @@ CREATE SEQUENCE public.notes_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.notes_id_seq OWNER TO doadmin;
+ALTER TABLE public.notes_id_seq OWNER TO postgres;
 
 --
 -- Name: notes; Type: TABLE; Schema: public; Owner: doadmin
@@ -2220,7 +2220,7 @@ CREATE TABLE public.notes (
 );
 
 
-ALTER TABLE public.notes OWNER TO doadmin;
+ALTER TABLE public.notes OWNER TO postgres;
 
 --
 -- Name: organization_children; Type: MATERIALIZED VIEW; Schema: public; Owner: doadmin
@@ -2236,7 +2236,7 @@ CREATE MATERIALIZED VIEW public.organization_children AS
   WITH NO DATA;
 
 
-ALTER TABLE public.organization_children OWNER TO doadmin;
+ALTER TABLE public.organization_children OWNER TO postgres;
 
 --
 -- Name: organizations; Type: TABLE; Schema: public; Owner: doadmin
@@ -2248,7 +2248,7 @@ CREATE TABLE public.organizations (
 );
 
 
-ALTER TABLE public.organizations OWNER TO doadmin;
+ALTER TABLE public.organizations OWNER TO postgres;
 
 --
 -- Name: organizations_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2262,7 +2262,7 @@ CREATE SEQUENCE public.organizations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.organizations_id_seq OWNER TO doadmin;
+ALTER TABLE public.organizations_id_seq OWNER TO postgres;
 
 --
 -- Name: organizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2285,7 +2285,7 @@ CREATE MATERIALIZED VIEW public.orgnization_children AS
   WITH NO DATA;
 
 
-ALTER TABLE public.orgnization_children OWNER TO doadmin;
+ALTER TABLE public.orgnization_children OWNER TO postgres;
 
 --
 -- Name: payment; Type: TABLE; Schema: public; Owner: doadmin
@@ -2303,7 +2303,7 @@ CREATE TABLE public.payment (
 );
 
 
-ALTER TABLE public.payment OWNER TO doadmin;
+ALTER TABLE public.payment OWNER TO postgres;
 
 --
 -- Name: payment_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2318,7 +2318,7 @@ CREATE SEQUENCE public.payment_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.payment_id_seq OWNER TO doadmin;
+ALTER TABLE public.payment_id_seq OWNER TO postgres;
 
 --
 -- Name: payment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2339,7 +2339,7 @@ CREATE SEQUENCE public.pending_update_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.pending_update_id_seq OWNER TO doadmin;
+ALTER TABLE public.pending_update_id_seq OWNER TO postgres;
 
 --
 -- Name: pending_update; Type: TABLE; Schema: public; Owner: doadmin
@@ -2354,7 +2354,7 @@ CREATE TABLE public.pending_update (
 );
 
 
-ALTER TABLE public.pending_update OWNER TO doadmin;
+ALTER TABLE public.pending_update OWNER TO postgres;
 
 --
 -- Name: photo_trees; Type: TABLE; Schema: public; Owner: doadmin
@@ -2366,7 +2366,7 @@ CREATE TABLE public.photo_trees (
 );
 
 
-ALTER TABLE public.photo_trees OWNER TO doadmin;
+ALTER TABLE public.photo_trees OWNER TO postgres;
 
 --
 -- Name: photos_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2380,7 +2380,7 @@ CREATE SEQUENCE public.photos_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.photos_id_seq OWNER TO doadmin;
+ALTER TABLE public.photos_id_seq OWNER TO postgres;
 
 --
 -- Name: photos; Type: TABLE; Schema: public; Owner: doadmin
@@ -2396,7 +2396,7 @@ CREATE TABLE public.photos (
 );
 
 
-ALTER TABLE public.photos OWNER TO doadmin;
+ALTER TABLE public.photos OWNER TO postgres;
 
 --
 -- Name: planter_registrations; Type: TABLE; Schema: public; Owner: doadmin
@@ -2421,7 +2421,7 @@ CREATE TABLE public.planter_registrations (
 );
 
 
-ALTER TABLE public.planter_registrations OWNER TO doadmin;
+ALTER TABLE public.planter_registrations OWNER TO postgres;
 
 --
 -- Name: planter_registrations_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2435,7 +2435,7 @@ CREATE SEQUENCE public.planter_registrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.planter_registrations_id_seq OWNER TO doadmin;
+ALTER TABLE public.planter_registrations_id_seq OWNER TO postgres;
 
 --
 -- Name: planter_registrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2461,7 +2461,7 @@ CREATE TABLE public.planters (
 );
 
 
-ALTER TABLE public.planters OWNER TO doadmin;
+ALTER TABLE public.planters OWNER TO postgres;
 
 --
 -- Name: region_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2475,7 +2475,7 @@ CREATE SEQUENCE public.region_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.region_id_seq OWNER TO doadmin;
+ALTER TABLE public.region_id_seq OWNER TO postgres;
 
 --
 -- Name: region_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2494,7 +2494,7 @@ CREATE TABLE public.region_type (
 );
 
 
-ALTER TABLE public.region_type OWNER TO doadmin;
+ALTER TABLE public.region_type OWNER TO postgres;
 
 --
 -- Name: region_type_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2508,7 +2508,7 @@ CREATE SEQUENCE public.region_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.region_type_id_seq OWNER TO doadmin;
+ALTER TABLE public.region_type_id_seq OWNER TO postgres;
 
 --
 -- Name: region_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2529,7 +2529,7 @@ CREATE TABLE public.region_zoom (
 );
 
 
-ALTER TABLE public.region_zoom OWNER TO doadmin;
+ALTER TABLE public.region_zoom OWNER TO postgres;
 
 --
 -- Name: region_zoom_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2543,7 +2543,7 @@ CREATE SEQUENCE public.region_zoom_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.region_zoom_id_seq OWNER TO doadmin;
+ALTER TABLE public.region_zoom_id_seq OWNER TO postgres;
 
 --
 -- Name: region_zoom_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2565,7 +2565,7 @@ CREATE TABLE public.rendered_task_instance_fields (
 );
 
 
-ALTER TABLE public.rendered_task_instance_fields OWNER TO doadmin;
+ALTER TABLE public.rendered_task_instance_fields OWNER TO postgres;
 
 --
 -- Name: sensor_instance; Type: TABLE; Schema: public; Owner: doadmin
@@ -2590,7 +2590,7 @@ CREATE TABLE public.sensor_instance (
 );
 
 
-ALTER TABLE public.sensor_instance OWNER TO doadmin;
+ALTER TABLE public.sensor_instance OWNER TO postgres;
 
 --
 -- Name: sensor_instance_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2605,7 +2605,7 @@ CREATE SEQUENCE public.sensor_instance_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.sensor_instance_id_seq OWNER TO doadmin;
+ALTER TABLE public.sensor_instance_id_seq OWNER TO postgres;
 
 --
 -- Name: sensor_instance_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2628,7 +2628,7 @@ CREATE TABLE public.serialized_dag (
 );
 
 
-ALTER TABLE public.serialized_dag OWNER TO doadmin;
+ALTER TABLE public.serialized_dag OWNER TO postgres;
 
 --
 -- Name: settings_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2642,7 +2642,7 @@ CREATE SEQUENCE public.settings_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.settings_id_seq OWNER TO doadmin;
+ALTER TABLE public.settings_id_seq OWNER TO postgres;
 
 --
 -- Name: settings; Type: TABLE; Schema: public; Owner: doadmin
@@ -2655,7 +2655,7 @@ CREATE TABLE public.settings (
 );
 
 
-ALTER TABLE public.settings OWNER TO doadmin;
+ALTER TABLE public.settings OWNER TO postgres;
 
 --
 -- Name: sla_miss; Type: TABLE; Schema: public; Owner: doadmin
@@ -2672,7 +2672,7 @@ CREATE TABLE public.sla_miss (
 );
 
 
-ALTER TABLE public.sla_miss OWNER TO doadmin;
+ALTER TABLE public.sla_miss OWNER TO postgres;
 
 --
 -- Name: slot_pool; Type: TABLE; Schema: public; Owner: doadmin
@@ -2686,7 +2686,7 @@ CREATE TABLE public.slot_pool (
 );
 
 
-ALTER TABLE public.slot_pool OWNER TO doadmin;
+ALTER TABLE public.slot_pool OWNER TO postgres;
 
 --
 -- Name: slot_pool_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2701,7 +2701,7 @@ CREATE SEQUENCE public.slot_pool_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.slot_pool_id_seq OWNER TO doadmin;
+ALTER TABLE public.slot_pool_id_seq OWNER TO postgres;
 
 --
 -- Name: slot_pool_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2722,7 +2722,7 @@ CREATE TABLE public.survey (
 );
 
 
-ALTER TABLE public.survey OWNER TO doadmin;
+ALTER TABLE public.survey OWNER TO postgres;
 
 --
 -- Name: survey_question; Type: TABLE; Schema: public; Owner: doadmin
@@ -2738,7 +2738,7 @@ CREATE TABLE public.survey_question (
 );
 
 
-ALTER TABLE public.survey_question OWNER TO doadmin;
+ALTER TABLE public.survey_question OWNER TO postgres;
 
 --
 -- Name: tag; Type: TABLE; Schema: public; Owner: doadmin
@@ -2752,7 +2752,7 @@ CREATE TABLE public.tag (
 );
 
 
-ALTER TABLE public.tag OWNER TO doadmin;
+ALTER TABLE public.tag OWNER TO postgres;
 
 --
 -- Name: tag_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2767,7 +2767,7 @@ CREATE SEQUENCE public.tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tag_id_seq OWNER TO doadmin;
+ALTER TABLE public.tag_id_seq OWNER TO postgres;
 
 --
 -- Name: tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2791,7 +2791,7 @@ CREATE TABLE public.task_fail (
 );
 
 
-ALTER TABLE public.task_fail OWNER TO doadmin;
+ALTER TABLE public.task_fail OWNER TO postgres;
 
 --
 -- Name: task_fail_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2806,7 +2806,7 @@ CREATE SEQUENCE public.task_fail_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.task_fail_id_seq OWNER TO doadmin;
+ALTER TABLE public.task_fail_id_seq OWNER TO postgres;
 
 --
 -- Name: task_fail_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2827,7 +2827,7 @@ CREATE SEQUENCE public.task_id_sequence
     CACHE 1;
 
 
-ALTER TABLE public.task_id_sequence OWNER TO doadmin;
+ALTER TABLE public.task_id_sequence OWNER TO postgres;
 
 --
 -- Name: task_instance; Type: TABLE; Schema: public; Owner: doadmin
@@ -2859,7 +2859,7 @@ CREATE TABLE public.task_instance (
 );
 
 
-ALTER TABLE public.task_instance OWNER TO doadmin;
+ALTER TABLE public.task_instance OWNER TO postgres;
 
 --
 -- Name: task_reschedule; Type: TABLE; Schema: public; Owner: doadmin
@@ -2878,7 +2878,7 @@ CREATE TABLE public.task_reschedule (
 );
 
 
-ALTER TABLE public.task_reschedule OWNER TO doadmin;
+ALTER TABLE public.task_reschedule OWNER TO postgres;
 
 --
 -- Name: task_reschedule_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2893,7 +2893,7 @@ CREATE SEQUENCE public.task_reschedule_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.task_reschedule_id_seq OWNER TO doadmin;
+ALTER TABLE public.task_reschedule_id_seq OWNER TO postgres;
 
 --
 -- Name: task_reschedule_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2914,7 +2914,7 @@ CREATE SEQUENCE public.taskset_id_sequence
     CACHE 1;
 
 
-ALTER TABLE public.taskset_id_sequence OWNER TO doadmin;
+ALTER TABLE public.taskset_id_sequence OWNER TO postgres;
 
 --
 -- Name: test; Type: TABLE; Schema: public; Owner: doadmin
@@ -2925,7 +2925,7 @@ CREATE TABLE public.test (
 );
 
 
-ALTER TABLE public.test OWNER TO doadmin;
+ALTER TABLE public.test OWNER TO postgres;
 
 --
 -- Name: token_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -2940,7 +2940,7 @@ CREATE SEQUENCE public.token_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.token_id_seq OWNER TO doadmin;
+ALTER TABLE public.token_id_seq OWNER TO postgres;
 
 --
 -- Name: token_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -2961,7 +2961,7 @@ CREATE SEQUENCE public.tokens_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tokens_id_seq OWNER TO doadmin;
+ALTER TABLE public.tokens_id_seq OWNER TO postgres;
 
 --
 -- Name: trading.transaction; Type: TABLE; Schema: public; Owner: doadmin
@@ -2977,7 +2977,7 @@ CREATE TABLE public."trading.transaction" (
 );
 
 
-ALTER TABLE public."trading.transaction" OWNER TO doadmin;
+ALTER TABLE public."trading.transaction" OWNER TO postgres;
 
 --
 -- Name: transaction; Type: TABLE; Schema: public; Owner: doadmin
@@ -2992,7 +2992,7 @@ CREATE TABLE public.transaction (
 );
 
 
-ALTER TABLE public.transaction OWNER TO doadmin;
+ALTER TABLE public.transaction OWNER TO postgres;
 
 --
 -- Name: transaction_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -3007,7 +3007,7 @@ CREATE SEQUENCE public.transaction_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.transaction_id_seq OWNER TO doadmin;
+ALTER TABLE public.transaction_id_seq OWNER TO postgres;
 
 --
 -- Name: transaction_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -3027,7 +3027,7 @@ CREATE TABLE public.transfer (
 );
 
 
-ALTER TABLE public.transfer OWNER TO doadmin;
+ALTER TABLE public.transfer OWNER TO postgres;
 
 --
 -- Name: transfer_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -3042,7 +3042,7 @@ CREATE SEQUENCE public.transfer_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.transfer_id_seq OWNER TO doadmin;
+ALTER TABLE public.transfer_id_seq OWNER TO postgres;
 
 --
 -- Name: transfer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -3063,7 +3063,7 @@ CREATE TABLE public.tree_attributes (
 );
 
 
-ALTER TABLE public.tree_attributes OWNER TO doadmin;
+ALTER TABLE public.tree_attributes OWNER TO postgres;
 
 --
 -- Name: tree_attributes_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -3077,7 +3077,7 @@ CREATE SEQUENCE public.tree_attributes_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tree_attributes_id_seq OWNER TO doadmin;
+ALTER TABLE public.tree_attributes_id_seq OWNER TO postgres;
 
 --
 -- Name: tree_attributes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -3097,7 +3097,7 @@ CREATE TABLE public.tree_name (
 );
 
 
-ALTER TABLE public.tree_name OWNER TO doadmin;
+ALTER TABLE public.tree_name OWNER TO postgres;
 
 --
 -- Name: tree_name_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -3112,7 +3112,7 @@ CREATE SEQUENCE public.tree_name_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tree_name_id_seq OWNER TO doadmin;
+ALTER TABLE public.tree_name_id_seq OWNER TO postgres;
 
 --
 -- Name: tree_name_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -3133,7 +3133,7 @@ CREATE SEQUENCE public.tree_region_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tree_region_id_seq OWNER TO doadmin;
+ALTER TABLE public.tree_region_id_seq OWNER TO postgres;
 
 --
 -- Name: tree_region_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -3154,7 +3154,7 @@ CREATE SEQUENCE public.tree_species_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tree_species_id_seq OWNER TO doadmin;
+ALTER TABLE public.tree_species_id_seq OWNER TO postgres;
 
 --
 -- Name: tree_species; Type: TABLE; Schema: public; Owner: doadmin
@@ -3169,7 +3169,7 @@ CREATE TABLE public.tree_species (
 );
 
 
-ALTER TABLE public.tree_species OWNER TO doadmin;
+ALTER TABLE public.tree_species OWNER TO postgres;
 
 --
 -- Name: tree_tag; Type: TABLE; Schema: public; Owner: doadmin
@@ -3182,7 +3182,7 @@ CREATE TABLE public.tree_tag (
 );
 
 
-ALTER TABLE public.tree_tag OWNER TO doadmin;
+ALTER TABLE public.tree_tag OWNER TO postgres;
 
 --
 -- Name: tree_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -3197,7 +3197,7 @@ CREATE SEQUENCE public.tree_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tree_tag_id_seq OWNER TO doadmin;
+ALTER TABLE public.tree_tag_id_seq OWNER TO postgres;
 
 --
 -- Name: tree_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -3245,7 +3245,7 @@ CREATE MATERIALIZED VIEW public.trees_active AS
   WITH NO DATA;
 
 
-ALTER TABLE public.trees_active OWNER TO doadmin;
+ALTER TABLE public.trees_active OWNER TO postgres;
 
 --
 -- Name: treetracker_capture_backup; Type: TABLE; Schema: public; Owner: doadmin
@@ -3278,7 +3278,7 @@ CREATE TABLE public.treetracker_capture_backup (
 );
 
 
-ALTER TABLE public.treetracker_capture_backup OWNER TO doadmin;
+ALTER TABLE public.treetracker_capture_backup OWNER TO postgres;
 
 --
 -- Name: treetracker_tree_backup; Type: TABLE; Schema: public; Owner: doadmin
@@ -3302,7 +3302,7 @@ CREATE TABLE public.treetracker_tree_backup (
 );
 
 
-ALTER TABLE public.treetracker_tree_backup OWNER TO doadmin;
+ALTER TABLE public.treetracker_tree_backup OWNER TO postgres;
 
 --
 -- Name: variable; Type: TABLE; Schema: public; Owner: doadmin
@@ -3317,7 +3317,7 @@ CREATE TABLE public.variable (
 );
 
 
-ALTER TABLE public.variable OWNER TO doadmin;
+ALTER TABLE public.variable OWNER TO postgres;
 
 --
 -- Name: variable_id_seq; Type: SEQUENCE; Schema: public; Owner: doadmin
@@ -3332,7 +3332,7 @@ CREATE SEQUENCE public.variable_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.variable_id_seq OWNER TO doadmin;
+ALTER TABLE public.variable_id_seq OWNER TO postgres;
 
 --
 -- Name: variable_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: doadmin
@@ -3355,7 +3355,7 @@ CREATE TABLE public.xcom (
 );
 
 
-ALTER TABLE public.xcom OWNER TO doadmin;
+ALTER TABLE public.xcom OWNER TO postgres;
 
 --
 -- Name: ab_permission id; Type: DEFAULT; Schema: public; Owner: doadmin
