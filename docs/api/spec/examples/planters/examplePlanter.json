@@ -1,19 +1,19 @@
 {
-  "id": 3581,
-  "first_name": "Anonymous",
-  "last_name": "Planter",
-  "email": "anonymous@planter.org",
+  "id": 1,
+  "first_name": "Quaid",
+  "last_name": "Bartolomei",
+  "email": "example@gmail.com",
   "organization": "",
-  "phone": "1234567890",
+  "phone": "",
   "pwd_reset_required": false,
-  "image_url": "https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.03.25.12.32.45_-9.342288333333332_34.56734166666667_902b5202-fa3f-4e6b-a26d-d1bf9de5dbda_IMG_20210325_121612_4871689335808390215.jpg",
+  "image_url": null,
   "person_id": null,
-  "organization_id": 1234,
-  "image_rotation": 0,
-  "grower_account_uuid": null,
+  "organization_id": 11,
+  "image_rotation": null,
+  "grower_account_uuid": "df42012e-513f-41dc-9599-41a7e0c722f2",
   "links": {
-    "featured_trees": "/trees?planter_id=3581&limit=20&offset=0",
-    "associated_organizations": "/organizations?planter_id=3581&limit=20&offset=0",
-    "species": "/species?planter_id=3581&limit=20&offset=0"
+    "featured_trees": "/trees?planter_id=1&limit=20&offset=0",
+    "associated_organizations": "/organizations?planter_id=1&limit=20&offset=0",
+    "species": "/species?planter_id=1&limit=20&offset=0"
   }
 }
