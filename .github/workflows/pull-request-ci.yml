@@ -69,15 +69,20 @@ jobs:
 
       - name: wallet tests
         run: npx jest __tests__/e2e/wallets.spec.ts
+        if: always()
 
       - name: species tests
         run: npx jest __tests__/e2e/species.spec.ts
+        if: always()
 
       - name: country tests
         run: npx jest __tests__/e2e/countries.spec.ts
+        if: always()
 
       - name: planter tests
         run: npx jest __tests__/e2e/planters.spec.ts
+        if: always()
 
       - name: organizations tests
         run: npx jest __tests__/e2e/organizations.spec.ts
+        if: always()
