@@ -4,7 +4,7 @@ import exampleTree from '../docs/api/spec/examples/trees/912681.json';
 import exampleWallet from '../docs/api/spec/examples/wallets/exampleWallet.json';
 import exampleSpecies from '../docs/api/spec/examples/species/exampleSpecies.json';
 import examplePlanter from '../docs/api/spec/examples/planters/examplePlanter.json';
-import exampleCountry from '../docs/api/spec/examples/countries/6632357.json';
+import exampleCountry from '../docs/api/spec/examples/countries/exampleCountry.json';
 import exampleOrganization from '../docs/api/spec/examples/organizations/exampleOrganization.json';
 import knex, { TableNames } from '../server/infra/database/knex';
 
