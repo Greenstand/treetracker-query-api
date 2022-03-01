@@ -55,7 +55,9 @@ jobs:
           apt-get install --yes --no-install-recommends postgresql-client
 
       - name: Prepare DB
-        run: psql postgresql://postgres:postgres@postgres/postgres < db.sql
+        run: |
+          psql postgresql://postgres:postgres@postgres/postgres < db.sql
+          psql postgresql://postgres:postgres@postgres/postgres < wallet.sql
 
       - name: run tests
         run: npm test
