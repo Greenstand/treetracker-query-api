@@ -9,7 +9,7 @@ it('organizations/{id}', async () => {
   );
   expect(response.status).toBe(200);
   expect(response.body).toMatchObject({
-    id: 1,
+    id: exampleOrganizations.id,
     links: {
       featured_trees: expect.stringMatching(/trees/),
       associated_planters: expect.stringMatching(/planters/),
