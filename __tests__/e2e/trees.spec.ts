@@ -1,3 +1,4 @@
+import exampleOrganization from '@mocks/organizations/exampleOrganization.json';
 import exampleTree from '@mocks/trees/exampleTree.json';
 import supertest from 'supertest';
 import app from 'app';
@@ -25,10 +26,10 @@ it('trees?limit=1&offset=0', async () => {
   });
 });
 
-it.skip(
+it(
   'Get tree by organization id',
   async () => {
-    const organization_id = exampleTree.planting_organization_id;
+    const organization_id = exampleOrganization.id;
     const response = await supertest(app).get(
       `/trees?limit=1&organization_id=${organization_id}`,
     );
