@@ -62,7 +62,7 @@ jobs:
       - name: run tests
         run: npm test
 
-      - name: run e2e tests
+      - name: tree tests
         run: npx jest __tests__/e2e/trees.spec.ts
         env:
           SEED: true
@@ -85,4 +85,8 @@ jobs:
 
       - name: organizations tests
         run: npx jest __tests__/e2e/organizations.spec.ts
+        if: always()
+
+      - name: token tests
+        run: npx jest __tests__/e2e/tokens.spec.ts
         if: always()
