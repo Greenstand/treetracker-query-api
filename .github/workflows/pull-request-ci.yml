@@ -56,8 +56,8 @@ jobs:
 
       - name: Prepare DB
         run: |
-          psql postgresql://postgres:postgres@postgres/postgres < db.sql
-          psql postgresql://postgres:postgres@postgres/postgres < wallet.sql
+          psql postgresql://postgres:postgres@postgres/postgres < database/schemas/public.sql
+          psql postgresql://postgres:postgres@postgres/postgres < database/schemas/wallet.sql
 
       - name: run tests
         run: npm test
