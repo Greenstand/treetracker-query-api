@@ -6,6 +6,7 @@ import exampleSpecies from '../docs/api/spec/examples/species/exampleSpecies.jso
 import examplePlanter from '../docs/api/spec/examples/planters/examplePlanter.json';
 import exampleCountry from '../docs/api/spec/examples/countries/exampleCountry.json';
 import exampleOrganization from '../docs/api/spec/examples/organizations/exampleOrganization.json';
+import exampleToken from '../docs/api/spec/examples/tokens/exampleToken.json';
 import knex, { TableNames } from '../server/infra/database/knex';
 
 export default async function globalSetup() {
@@ -24,6 +25,7 @@ export default async function globalSetup() {
       ],
     );
 
+    await knex('token').withSchema('wallet').insert(exampleToken);
     await knex(TableNames.Species).insert(exampleSpecies);
     await knex(TableNames.Organizations).insert(exampleOrganization);
     await knex(TableNames.Planters).insert(examplePlanter);
