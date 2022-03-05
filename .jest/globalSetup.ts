@@ -12,19 +12,7 @@ import knex, { TableNames } from '../server/infra/database/knex';
 export default async function globalSetup() {
   if (process.env.SEED === 'true') {
     await knex(TableNames.Trees).insert(exampleTree);
-    // seed wallet data
-    await knex.raw(
-      `insert into wallet.wallet ("created_at", "id", "logo_url", "name", "password", "salt") values (?, ?, ?, ?, ?, ?)`,
-      [
-        exampleWallet.created_at,
-        exampleWallet.id,
-        exampleWallet.logo_url,
-        exampleWallet.name,
-        exampleWallet.password,
-        exampleWallet.salt,
-      ],
-    );
-
+    await knex('wallet').withSchema('wallet').insert(exampleWallet);
     await knex('token').withSchema('wallet').insert(exampleToken);
     await knex(TableNames.Species).insert(exampleSpecies);
     await knex(TableNames.Organizations).insert(exampleOrganization);
@@ -34,6 +22,7 @@ export default async function globalSetup() {
       type: 'country',
     });
     await knex(TableNames.Countries).insert(exampleCountry);
+
   }
   knex.destroy();
 }
