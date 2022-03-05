@@ -1,15 +1,15 @@
-import exampleOrganizations from '@mocks/organizations/exampleOrganization.json';
+import exampleOrganization from '@mocks/organizations/exampleOrganization.json';
 import examplePlanter from '@mocks/planters/examplePlanter.json';
 import supertest from 'supertest';
 import app from 'app';
 
 it('organizations/{id}', async () => {
   const response = await supertest(app).get(
-    `/organizations/${exampleOrganizations.id}`,
+    `/organizations/${exampleOrganization.id}`,
   );
   expect(response.status).toBe(200);
   expect(response.body).toMatchObject({
-    id: exampleOrganizations.id,
+    id: exampleOrganization.id,
     links: {
       featured_trees: expect.stringMatching(/trees/),
       associated_planters: expect.stringMatching(/planters/),
