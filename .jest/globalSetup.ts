@@ -29,6 +29,10 @@ export default async function globalSetup() {
     await knex(TableNames.Species).insert(exampleSpecies);
     await knex(TableNames.Organizations).insert(exampleOrganization);
     await knex(TableNames.Planters).insert(examplePlanter);
+    await knex('region_type').insert({
+      id: 6,
+      type: 'country',
+    });
     await knex(TableNames.Countries).insert(exampleCountry);
   }
   knex.destroy();
