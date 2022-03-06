@@ -7,6 +7,7 @@ module.exports = {
   moduleNameMapper: {
     '@test/(.*)': ['<rootDir>/.jest/$1', '<rootDir>/__tests__/$1'],
     '@mocks/(.*)': ['<rootDir>/docs/api/spec/examples/$1'],
+    '@seeds/(.*)': ['<rootDir>/database/seeds/$1'],
   },
   globalSetup: '<rootDir>/.jest/globalSetup.ts',
   setupFilesAfterEnv: ['<rootDir>/.jest/setupFile.ts'],

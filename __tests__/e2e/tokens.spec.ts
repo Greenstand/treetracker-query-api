@@ -1,4 +1,4 @@
-import exampleToken from '@mocks/tokens/exampleToken.json';
+import exampleToken from '@seeds/data/token.json';
 import supertest from 'supertest';
 import app from 'app';
 

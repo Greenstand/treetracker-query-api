@@ -1,4 +1,4 @@
-import exampleCountry from '@mocks/countries/exampleCountry.json';
+import exampleCountry from '@seeds/data/country.json';
 import supertest from 'supertest';
 import app from 'app';
 

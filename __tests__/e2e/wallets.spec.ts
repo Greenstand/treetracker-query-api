@@ -1,6 +1,6 @@
-import exampleWallet from '@mocks/wallets/exampleWallet.json';
+import exampleWallet from '@seeds/data/wallet.json';
 import supertest from 'supertest';
-import app from '../../server/app';
+import app from 'app';
 
 it('get wallet by id or name', async () => {
   const { id, name } = exampleWallet;

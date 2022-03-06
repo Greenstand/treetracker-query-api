@@ -1,5 +1,5 @@
-import exampleOrganization from '@mocks/organizations/exampleOrganization.json';
-import examplePlanter from '@mocks/planters/examplePlanter.json';
+import exampleOrganization from '@seeds/data/organization.json';
+import examplePlanter from '@seeds/data/planter.json';
 import supertest from 'supertest';
 import app from 'app';
 

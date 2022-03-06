@@ -1,28 +1,28 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
-import exampleTree from '../docs/api/spec/examples/trees/exampleTree.json';
-import exampleWallet from '../docs/api/spec/examples/wallets/exampleWallet.json';
-import exampleSpecies from '../docs/api/spec/examples/species/exampleSpecies.json';
-import examplePlanter from '../docs/api/spec/examples/planters/examplePlanter.json';
-import exampleCountry from '../docs/api/spec/examples/countries/exampleCountry.json';
-import exampleOrganization from '../docs/api/spec/examples/organizations/exampleOrganization.json';
-import exampleToken from '../docs/api/spec/examples/tokens/exampleToken.json';
-import knex, { TableNames } from '../server/infra/database/knex';
+import 'tsconfig-paths/register';
+import tree from '@seeds/data/tree.json';
+import wallet from '@seeds/data/wallet.json';
+import species from '@seeds/data/species.json';
+import planter from '@seeds/data/planter.json';
+import country from '@seeds/data/country.json';
+import organization from '@seeds/data/organization.json';
+import token from '@seeds/data/token.json';
+import knex, { TableNames } from 'infra/database/knex';
 
 export default async function globalSetup() {
   if (process.env.SEED === 'true') {
-    await knex(TableNames.Trees).insert(exampleTree);
-    await knex('wallet').withSchema('wallet').insert(exampleWallet);
-    await knex('token').withSchema('wallet').insert(exampleToken);
-    await knex(TableNames.Species).insert(exampleSpecies);
-    await knex(TableNames.Organizations).insert(exampleOrganization);
-    await knex(TableNames.Planters).insert(examplePlanter);
+    await knex(TableNames.Trees).insert(tree);
+    await knex('wallet').withSchema('wallet').insert(wallet);
+    await knex('token').withSchema('wallet').insert(token);
+    await knex(TableNames.Species).insert(species);
+    await knex(TableNames.Organizations).insert(organization);
+    await knex(TableNames.Planters).insert(planter);
     await knex('region_type').insert({
       id: 6,
       type: 'country',
     });
-    await knex(TableNames.Countries).insert(exampleCountry);
-
+    await knex(TableNames.Countries).insert(country);
   }
   knex.destroy();
 }
