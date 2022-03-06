@@ -22,7 +22,12 @@ log.debug(knexConfig.searchPath);
 
 export default knex(knexConfig);
 
-export const enum TableNames {
+export const enum SchemaNames {
+  Public = 'public',
+  Wallet = 'wallet',
+}
+
+export const enum PublicTables {
   Trees = 'trees',
   Wallets = 'wallet',
   Species = 'tree_species',
@@ -30,4 +35,9 @@ export const enum TableNames {
   Organizations = 'entity',
   Countries = 'region',
   RegionType = 'region_type',
+}
+
+export const enum WalletTables {
+  Wallet = 'wallet',
+  Token = 'token',
 }

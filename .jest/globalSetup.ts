@@ -9,18 +9,24 @@ import country from '@seeds/data/country.json';
 import organization from '@seeds/data/organization.json';
 import token from '@seeds/data/token.json';
 import regionType from '@seeds/data/region_type.json';
-import knex, { TableNames } from 'infra/database/knex';
+import knex, {
+  PublicTables,
+  SchemaNames,
+  WalletTables,
+} from 'infra/database/knex';
 
 export default async function globalSetup() {
   if (process.env.SEED === 'true') {
-    await knex(TableNames.Trees).insert(tree);
-    await knex('wallet').withSchema('wallet').insert(wallet);
-    await knex('token').withSchema('wallet').insert(token);
-    await knex(TableNames.Species).insert(species);
-    await knex(TableNames.Organizations).insert(organization);
-    await knex(TableNames.Planters).insert(planter);
-    await knex(TableNames.RegionType).insert(regionType);
-    await knex(TableNames.Countries).insert(country);
+    await knex(PublicTables.Trees).insert(tree);
+    await knex(WalletTables.Wallet)
+      .withSchema(SchemaNames.Wallet)
+      .insert(wallet);
+    await knex(WalletTables.Token).withSchema(SchemaNames.Wallet).insert(token);
+    await knex(PublicTables.Species).insert(species);
+    await knex(PublicTables.Organizations).insert(organization);
+    await knex(PublicTables.Planters).insert(planter);
+    await knex(PublicTables.RegionType).insert(regionType);
+    await knex(PublicTables.Countries).insert(country);
   }
   knex.destroy();
 }
