@@ -59,34 +59,10 @@ jobs:
           psql postgresql://postgres:postgres@postgres/postgres < database/schemas/public.sql
           psql postgresql://postgres:postgres@postgres/postgres < database/schemas/wallet.sql
 
-      - name: run tests
+      - name: Unit Tests
         run: npm test
 
-      - name: tree tests
-        run: npx jest __tests__/e2e/trees.spec.ts
+      - name: Integration Tests
+        run: npm run test-e2e
         env:
           SEED: true
-
-      - name: wallet tests
-        run: npx jest __tests__/e2e/wallets.spec.ts
-        if: always()
-
-      - name: species tests
-        run: npx jest __tests__/e2e/species.spec.ts
-        if: always()
-
-      - name: country tests
-        run: npx jest __tests__/e2e/countries.spec.ts
-        if: always()
-
-      - name: planter tests
-        run: npx jest __tests__/e2e/planters.spec.ts
-        if: always()
-
-      - name: organizations tests
-        run: npx jest __tests__/e2e/organizations.spec.ts
-        if: always()
-
-      - name: token tests
-        run: npx jest __tests__/e2e/tokens.spec.ts
-        if: always()
