@@ -29,4 +29,5 @@ export const enum TableNames {
   Planters = 'planter',
   Organizations = 'entity',
   Countries = 'region',
+  RegionType = 'region_type',
 }
