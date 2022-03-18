@@ -1,3 +1,9 @@
+# [1.11.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.10.0...v1.11.0) (2022-03-18)
+
+### Features
+
+- implement countries/v2 and countries/v2/[id] ([2067e6f](https://github.com/Greenstand/treetracker-query-api/commit/2067e6f64d3839fd1db835c7c24749e7b2c8314a))
+
 # [1.10.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.9.0...v1.10.0) (2022-03-07)
 
 ### Bug Fixes
