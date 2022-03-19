@@ -10,6 +10,19 @@ import CountryModelV2 from '../models/CountryV2';
 const router = express.Router();
 
 router.get(
+  '/v2/leaderboard',
+  handlerWrapper(async (req, res) => {
+    const repo = new CountryRepositoryV2(new Session());
+    const exe = CountryModelV2.getLeaderBoard(repo);
+    const result = await exe(req.params.id);
+    res.send({
+      countries: result,
+    });
+    res.end();
+  }),
+);
+
+router.get(
   '/v2/:id',
   handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.number().required());
