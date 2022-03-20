@@ -1,0 +1,20 @@
+{
+  "id": 11,
+  "type": "O",
+  "name": "FCC",
+  "first_name": "",
+  "last_name": "",
+  "email": null,
+  "phone": null,
+  "pwd_reset_required": false,
+  "website": null,
+  "wallet": "freetown",
+  "password": null,
+  "salt": null,
+  "active_contract_id": null,
+  "offering_pay_to_plant": false,
+  "tree_validation_contract_id": null,
+  "logo_url": "https://pbs.twimg.com/profile_images/1064495791459450881/_7TkEeaO.jpg",
+  "map_name": "freetown",
+  "stakeholder_uuid": "ae7faf5d-46e2-4944-a6f9-5e65986b2e03"
+}

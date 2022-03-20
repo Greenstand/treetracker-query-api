@@ -1,0 +1,14 @@
+{
+  "id": 1,
+  "first_name": "Quaid",
+  "last_name": "Bartolomei",
+  "email": "example@gmail.com",
+  "organization": "",
+  "phone": "",
+  "pwd_reset_required": false,
+  "image_url": null,
+  "person_id": null,
+  "organization_id": 11,
+  "image_rotation": null,
+  "grower_account_uuid": "df42012e-513f-41dc-9599-41a7e0c722f2"
+}
