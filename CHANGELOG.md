@@ -1,3 +1,19 @@
+# [1.11.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.10.0...v1.11.0) (2022-03-18)
+
+### Features
+
+- implement countries/v2 and countries/v2/[id] ([2067e6f](https://github.com/Greenstand/treetracker-query-api/commit/2067e6f64d3839fd1db835c7c24749e7b2c8314a))
+
+# [1.10.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.9.0...v1.10.0) (2022-03-07)
+
+### Bug Fixes
+
+- replace filter interface with typescript partial interface ([b5f4bdc](https://github.com/Greenstand/treetracker-query-api/commit/b5f4bdc9abea522021d677e50d241cec6edffbe3))
+
+### Features
+
+- transactions router with resolver ([e4d361a](https://github.com/Greenstand/treetracker-query-api/commit/e4d361a6c1f33892db774ee702837198d5001dc3))
+
 # [1.9.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.8.0...v1.9.0) (2022-02-24)
 
 ### Features

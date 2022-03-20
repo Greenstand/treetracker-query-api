@@ -1,6 +1,5 @@
 name: Deploy to Prod Env
 
-
 on:
   workflow_dispatch:
     inputs:
@@ -8,7 +7,7 @@ on:
         description: 'tag'
         required: true
 
-env: 
+env:
   project-directory: ./
 
 jobs:
