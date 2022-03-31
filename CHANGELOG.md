@@ -1,3 +1,9 @@
+# [1.12.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.11.0...v1.12.0) (2022-03-26)
+
+### Features
+
+- deploy to test ([0791c49](https://github.com/Greenstand/treetracker-query-api/commit/0791c49040ac3bd3f427dffe999e18ae8254963f))
+
 # [1.11.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.10.0...v1.11.0) (2022-03-18)
 
 ### Features
