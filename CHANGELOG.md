@@ -1,3 +1,13 @@
+# [1.13.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.12.0...v1.13.0) (2022-04-05)
+
+### Bug Fixes
+
+- add more data points to make test specific ([e73dd06](https://github.com/Greenstand/treetracker-query-api/commit/e73dd06daab3a4ecbc30731ff980965608dec105))
+
+### Features
+
+- implement v2 for get /countries/leaderboard ([1af14ae](https://github.com/Greenstand/treetracker-query-api/commit/1af14ae95c1df37e8d0f6331f24d49d42e24bbac))
+
 # [1.12.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.11.0...v1.12.0) (2022-03-26)
 
 ### Features
