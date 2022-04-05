@@ -1,5 +1,6 @@
 import supertest from 'supertest';
 import app from '../../server/app';
+import seed from '../seed';
 
 describe('', () => {
   it('countries/6632544', async () => {
@@ -58,4 +59,22 @@ describe('', () => {
     },
     1000 * 60,
   );
+
+  it('countries/v2/leaderboard', async () => {
+    const response = await seed
+      .clear()
+      .then(async () =>
+        seed
+          .seed()
+          .then(async () => supertest(app).get('/countries/v2/leaderboard')),
+      );
+    expect(response.status).toBe(200);
+    expect(response.body.countries[0]).toMatchObject({
+      id: 6632357,
+      name: 'United States',
+      planted: '2',
+      centroid: expect.stringMatching(/coordinates/),
+    });
+    await seed.clear();
+  });
 });

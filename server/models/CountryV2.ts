@@ -17,4 +17,7 @@ export default {
   getCountries,
   getById: delegateRepository<CountryRepositoryV2, Country>('getById'),
   getByFilter: delegateRepository<CountryRepositoryV2, Country>('getByFilter'),
+  getLeaderBoard: delegateRepository<CountryRepositoryV2, Country>(
+    'getLeaderBoard',
+  ),
 };
