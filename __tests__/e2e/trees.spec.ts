@@ -51,6 +51,25 @@ describe('trees', () => {
   );
 
   it(
+    'trees?startDate=2021-02-26&endDate=2021-12-22',
+    async () => {
+      const response = await supertest(app).get(
+        '/trees?startDate=2021-02-26&endDate=2021-12-22',
+      );
+      expect(response.status).toBe(200);
+      for (let i = 0; i < response.body.trees.length; i++) {
+        expect(
+          new Date(response.body.trees[i].time_created).getTime(),
+        ).toBeGreaterThanOrEqual(new Date('2021-02-26T00:00:00Z').getTime());
+        expect(
+          new Date(response.body.trees[i].time_created).getTime(),
+        ).toBeLessThan(new Date('2021-12-23T00:00:00Z').getTime());
+      }
+    },
+    1000 * 60,
+  );
+
+  it(
     'trees/featured',
     async () => {
       const response = await supertest(app).get('/trees/featured');
