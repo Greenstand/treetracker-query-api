@@ -82,6 +82,11 @@ paths:
         - schema:
             type: string
           in: query
+          name: startDate & endDate
+          description: Filter by date range
+        - schema:
+            type: string
+          in: query
   /trees/featured:
     get:
       summary: get featured tree list

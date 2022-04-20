@@ -4,7 +4,10 @@ import Tree from 'interfaces/Tree';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import TreeRepository from '../infra/database/TreeRepository';
 
-type Filter = Partial<{ organization_id: number }>;
+type Filter = Partial<{
+  organization_id: number;
+  date_range: { startDate: string; endDate: string };
+}>;
 
 function getByFilter(
   treeRepository: TreeRepository,
@@ -14,6 +17,13 @@ function getByFilter(
       log.warn('using org filter...');
       const trees = await treeRepository.getByOrganization(
         filter.organization_id,
+        options,
+      );
+      return trees;
+    } if (filter.date_range) {
+      log.warn('using date range filter...');
+      const trees = await treeRepository.getByDateRange(
+        filter.date_range,
         options,
       );
       return trees;
