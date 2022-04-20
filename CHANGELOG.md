@@ -1,3 +1,9 @@
+# [1.14.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.13.0...v1.14.0) (2022-04-20)
+
+### Features
+
+- update trees route to support planted date range filter ([ec72fd2](https://github.com/Greenstand/treetracker-query-api/commit/ec72fd2cdfdf4fdf417dba0413052de220784087))
+
 # [1.13.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.12.0...v1.13.0) (2022-04-05)
 
 ### Bug Fixes
