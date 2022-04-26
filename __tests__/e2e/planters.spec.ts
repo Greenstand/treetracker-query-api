@@ -16,16 +16,16 @@ describe('planters', () => {
   });
 
   it(
-    'planters?organization_id=1&limit=1',
+    'planters?organization_id=178&limit=1',
     async () => {
       const response = await supertest(app).get(
-        '/planters?organization_id=1&limit=1',
+        '/planters?organization_id=178&limit=1',
       );
       expect(response.status).toBe(200);
       expect(response.body.planters).toBeInstanceOf(Array);
       expect(response.body.planters[0]).toMatchObject({
-        id: 1,
-        organization_id: 1,
+        id: 2001,
+        organization_id: 178,
         links: {
           featured_trees: expect.stringMatching(/trees/),
           associated_organizations: expect.stringMatching(/organizations/),
