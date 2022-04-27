@@ -7,6 +7,7 @@ import TreeRepository from '../infra/database/TreeRepository';
 type Filter = Partial<{
   organization_id: number;
   date_range: { startDate: string; endDate: string };
+  tag: string;
 }>;
 
 function getByFilter(
@@ -20,12 +21,18 @@ function getByFilter(
         options,
       );
       return trees;
-    } if (filter.date_range) {
+    }
+    if (filter.date_range) {
       log.warn('using date range filter...');
       const trees = await treeRepository.getByDateRange(
         filter.date_range,
         options,
       );
+      return trees;
+    }
+    if (filter.tag) {
+      log.warn('using tag filter...');
+      const trees = await treeRepository.getByTag(filter.tag, options);
       return trees;
     }
     const trees = await treeRepository.getByFilter(filter, options);
