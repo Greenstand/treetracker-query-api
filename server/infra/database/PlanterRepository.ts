@@ -14,8 +14,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       SELECT
         *
       FROM planter
-      LEFT JOIN entity ON entity.id = planter.organization_id
-      WHERE entity.id = ${organization_id}
+      WHERE planter.organization_id = ${organization_id}
       LIMIT ${limit}
       OFFSET ${offset}
     `;
