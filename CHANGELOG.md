@@ -1,3 +1,9 @@
+## [1.14.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.14.0...v1.14.1) (2022-04-27)
+
+### Bug Fixes
+
+- update planter repository to return the right planter objects as per request's organization_id ([63769e7](https://github.com/Greenstand/treetracker-query-api/commit/63769e70b2761378be578e53a709b555f2f460aa))
+
 # [1.14.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.13.0...v1.14.0) (2022-04-20)
 
 ### Features
