@@ -9,6 +9,21 @@ const router = express.Router();
 type Filter = Partial<{ planter_id: number; organization_id: number }>;
 
 router.get(
+  '/featured',
+  handlerWrapper(async (req, res) => {
+    const repo = new PlanterRepository(new Session());
+    const result = await PlanterModel.getFeaturedPlanters(repo)({ limit: 10 });
+    res.send({
+      planters: result.map((planter) => ({
+        ...planter,
+        links: PlanterModel.getPlanterLinks(planter),
+      })),
+    });
+    res.end();
+  }),
+);
+
+router.get(
   '/:id',
   handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.number().required());
