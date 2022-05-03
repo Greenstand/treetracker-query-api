@@ -42,9 +42,20 @@ function getPlanterLinks(planter) {
   return links;
 }
 
+function getFeaturedPlanters(
+  planterRepository: PlanterRepository,
+): (options: FilterOptions) => Promise<Planter[]> {
+  return async function (options: FilterOptions) {
+    log.warn('using featured planters filter...');
+    const planters = await planterRepository.getFeaturedPlanters(options);
+    return planters;
+  };
+}
+
 export default {
   getById: delegateRepository<PlanterRepository, Planter>('getById'),
   getByFilter,
   getByName,
   getPlanterLinks,
+  getFeaturedPlanters,
 };

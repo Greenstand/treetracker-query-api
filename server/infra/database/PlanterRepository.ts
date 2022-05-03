@@ -36,4 +36,17 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const object = await this.session.getDB().raw(sql);
     return object.rows;
   }
+
+  async getFeaturedPlanters(options: FilterOptions) {
+    const { limit } = options;
+    const sql = `
+      SELECT
+      *
+      FROM planter
+      ORDER BY id DESC
+      LIMIT ${limit}
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
 }

@@ -46,4 +46,11 @@ describe('planters', () => {
         /^da/.test(response.body.planters[0].last_name),
     ).toBe(true);
   });
+
+  it('planters/featured', async () => {
+    const response = await supertest(app).get('/planters/featured');
+    expect(response.status).toBe(200);
+    expect(response.body.planters).toBeInstanceOf(Array);
+    expect(response.body.planters.length === 10).toBe(true);
+  });
 });
