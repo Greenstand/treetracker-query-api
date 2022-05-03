@@ -1,3 +1,9 @@
+# [1.15.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.14.1...v1.15.0) (2022-05-03)
+
+### Features
+
+- implement GET/planters/featured ([7bd6492](https://github.com/Greenstand/treetracker-query-api/commit/7bd6492277f79be06f85314ae6dea701d7eed3a4))
+
 ## [1.14.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.14.0...v1.14.1) (2022-04-27)
 
 ### Bug Fixes
