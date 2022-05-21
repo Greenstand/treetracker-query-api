@@ -58,7 +58,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
     INNER JOIN tag 
       on tree_tag.tag_id = tag.id
     WHERE 
-      tag.tag_name in (${tag})
+      tag.tag_name in ('${tag}')
     LIMIT ${limit}
     OFFSET ${offset}
     `;

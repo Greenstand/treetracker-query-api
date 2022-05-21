@@ -87,6 +87,11 @@ paths:
         - schema:
             type: string
           in: query
+          name: tag
+          description: Filter by tag names
+        - schema:
+            type: string
+          in: query
   /trees/featured:
     get:
       summary: get featured tree list
