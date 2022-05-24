@@ -4,6 +4,7 @@ metadata:
   name: treetracker-query-api
   labels:
     app: treetracker-query-api
+  namespace: webmap
 spec:
   replicas: 1
   selector:
