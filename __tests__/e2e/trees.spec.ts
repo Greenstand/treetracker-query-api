@@ -3,12 +3,14 @@ import app from '../../server/app';
 
 describe('trees', () => {
   it('trees/{id}', async () => {
-    const response = await supertest(app).get('/trees/912681');
+    const response = await supertest(app).get('/trees/195785');
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
-      id: 912681,
+      id: 195785,
       lat: expect.anything(),
       lon: expect.anything(),
+      organization_id: 15,
+      organization_name: 'FCCGHI',
     });
   });
 
