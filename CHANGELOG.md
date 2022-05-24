@@ -1,3 +1,9 @@
+# [1.19.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.18.3...v1.19.0) (2022-05-24)
+
+### Features
+
+- implement denormalized API for GET /v2/captures/id ([75d1771](https://github.com/Greenstand/treetracker-query-api/commit/75d1771bffbc51a1947e2df1eb0d1d988da47da7))
+
 ## [1.18.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.18.2...v1.18.3) (2022-05-24)
 
 ### Bug Fixes
