@@ -26,9 +26,6 @@ spec:
                       - microservices-node-pool
       containers:
         - name: treetracker-query-api
-          image: greenstand/treetracker-query-api:TAG
-          ports:
-            - containerPort: 80
           env:
             - name: DATABASE_URL
               valueFrom:
