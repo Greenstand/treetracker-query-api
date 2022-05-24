@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: treetracker-query-api
-  namespace: webmap
   labels:
     app: treetracker-query-api
 spec:
