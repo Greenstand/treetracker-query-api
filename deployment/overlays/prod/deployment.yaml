@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treetracker-query-api
+  namespace: webmap
+  labels:
+    app: treetracker-query-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treetracker-query-api
+  template:
+    metadata:
+      labels:
+        app: treetracker-query-api
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: doks.digitalocean.com/node-pool
+                    operator: In
+                    values:
+                      - microservices-node-pool
+      containers:
+        - name: treetracker-query-api
+          image: greenstand/treetracker-query-api:TAG
+          ports:
+            - containerPort: 80
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: dbconnection
+                  key: database

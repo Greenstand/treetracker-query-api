@@ -1,4 +1,5 @@
 bases:
   - ../../base
 patchesStrategicMerge:
-  - database-connection-sealed-secret.yaml
+  - treetracker-webmap-api-mapping.yaml
+  - deployment.yaml
