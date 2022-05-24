@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
+import capturesRouter from './routers/capturesRouter';
 import countriesRouter from './routers/countriesRouter';
 import organizationsRouter from './routers/organizationsRouter';
 import plantersRouter from './routers/plantersRouter';
@@ -54,6 +55,7 @@ app.use('/species', speciesRouter);
 app.use('/wallets', walletsRouter);
 app.use('/transactions', transactionsRouter);
 app.use('/tokens', tokensRouter);
+app.use('/v2/captures', capturesRouter);
 // Global error handler
 app.use(errorHandler);
 
