@@ -29,9 +29,9 @@ export default class TreeRepository extends BaseRepository<Tree> {
     options: FilterOptions,
   ) {
     const { limit, offset } = options;
-    const startDateISO = `${date_range.startDate  }T00:00:00.000Z`;
+    const startDateISO = `${date_range.startDate}T00:00:00.000Z`;
     const endDateISO = new Date(
-      new Date(`${date_range.endDate  }T00:00:00.000Z`).getTime() + 86400000,
+      new Date(`${date_range.endDate}T00:00:00.000Z`).getTime() + 86400000,
     ).toISOString();
     const sql = `
       SELECT
@@ -41,6 +41,26 @@ export default class TreeRepository extends BaseRepository<Tree> {
       AND time_created < '${endDateISO}'::timestamp
       LIMIT ${limit}
       OFFSET ${offset}
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
+
+  async getByTag(tag: string, options: FilterOptions) {
+    const { limit, offset } = options;
+
+    const sql = `
+    SELECT 
+      trees.*
+    FROM trees
+    INNER JOIN tree_tag 
+      on tree_tag.tree_id = trees.id
+    INNER JOIN tag 
+      on tree_tag.tag_id = tag.id
+    WHERE 
+      tag.tag_name in ('${tag}')
+    LIMIT ${limit}
+    OFFSET ${offset}
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;

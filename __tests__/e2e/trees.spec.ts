@@ -83,4 +83,20 @@ describe('trees', () => {
     },
     1000 * 10,
   );
+
+  it(
+    'trees?tag=photoless',
+    async () => {
+      const response = await supertest(app).get('/trees?tag=photoless');
+      const expectedIds = [186685, 878654];
+      expect(response.status).toBe(200);
+      expect(response.body.total).toBe(2);
+      const returnedIds = [
+        response.body.trees[0].id,
+        response.body.trees[1].id,
+      ];
+      expect(returnedIds).toEqual(expectedIds);
+    },
+    1000 * 30,
+  );
 });
