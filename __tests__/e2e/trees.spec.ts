@@ -3,12 +3,16 @@ import app from '../../server/app';
 
 describe('trees', () => {
   it('trees/{id}', async () => {
-    const response = await supertest(app).get('/trees/912681');
+    const response = await supertest(app).get('/trees/952022');
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
-      id: 912681,
+      id: 952022,
       lat: expect.anything(),
       lon: expect.anything(),
+      species_id: 113,
+      species_name: 'bob',
+      country_name: 'China',
+      country_id: 6632544,
     });
   });
 
