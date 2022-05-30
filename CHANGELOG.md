@@ -1,3 +1,9 @@
+# [1.21.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.20.0...v1.21.0) (2022-05-30)
+
+### Features
+
+- endpoint get/tree/id now returns species and country info ([c46676f](https://github.com/Greenstand/treetracker-query-api/commit/c46676f625c5bc14881f875c4240c71a097d2a6d)), closes [#104](https://github.com/Greenstand/treetracker-query-api/issues/104)
+
 # [1.20.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.19.0...v1.20.0) (2022-05-28)
 
 ### Bug Fixes
