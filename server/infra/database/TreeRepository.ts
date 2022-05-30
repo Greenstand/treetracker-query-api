@@ -1,11 +1,39 @@
 import FilterOptions from 'interfaces/FilterOptions';
 import Tree from 'interfaces/Tree';
+import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 
 export default class TreeRepository extends BaseRepository<Tree> {
   constructor(session: Session) {
     super('trees', session);
+  }
+
+  async getById(id: string | number) {
+    const object = await this.session
+      .getDB()
+      .select(
+        this.session.getDB().raw(`
+          trees.*,
+          tree_species.id as species_id,
+          tree_species.name as species_name,
+          region.name as country_name,
+          region.id as country_id
+            from trees
+              left JOIN tree_species 
+                on trees.species_id = tree_species.id 
+              LEFT JOIN region
+                on ST_WITHIN(trees.estimated_geometric_location, region.geom)
+                and region.type_id in (select id from region_type where type = 'country')
+      `),
+      )
+      .where('trees.id', id)
+      .first();
+
+    if (!object) {
+      throw new HttpError(404, `Can not find ${this.tableName} by id:${id}`);
+    }
+    return object;
   }
 
   async getByOrganization(organization_id: number, options: FilterOptions) {
