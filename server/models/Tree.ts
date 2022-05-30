@@ -10,10 +10,25 @@ type Filter = Partial<{
   tag: string;
 }>;
 
+type BaseFilterOptions<T> = {
+  limit: number;
+  offset: number;
+  orderBy?: {
+    column: keyof T;
+    direction?: 'desc' | 'asc';
+  };
+};
+
 function getByFilter(
   treeRepository: TreeRepository,
-): (filter: Filter, options: FilterOptions) => Promise<Tree[]> {
-  return async function (filter: Filter, options: FilterOptions) {
+): (
+  filter: Filter,
+  options: FilterOptions | BaseFilterOptions<Tree>,
+) => Promise<Tree[]> {
+  return async function (
+    filter: Filter,
+    options: FilterOptions | BaseFilterOptions<Tree>,
+  ) {
     if (filter.organization_id) {
       log.warn('using org filter...');
       const trees = await treeRepository.getByOrganization(
@@ -35,6 +50,7 @@ function getByFilter(
       const trees = await treeRepository.getByTag(filter.tag, options);
       return trees;
     }
+
     const trees = await treeRepository.getByFilter(filter, options);
     return trees;
   };

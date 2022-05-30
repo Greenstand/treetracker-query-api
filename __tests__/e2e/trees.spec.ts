@@ -99,4 +99,34 @@ describe('trees', () => {
     },
     1000 * 30,
   );
+
+  it(
+    'trees?planter_id=3584&desc=true',
+    async () => {
+      const response = await supertest(app).get(
+        '/trees?planter_id=3584&limit=1&order_by=created_at',
+      );
+      expect(response.status).toBe(200);
+      expect(response.body.trees[0]).toMatchObject({
+        id: 938209,
+        planter_id: 3584,
+      });
+    },
+    1000 * 30,
+  );
+
+  it(
+    'trees?planter_id=3584&desc=false',
+    async () => {
+      const response = await supertest(app).get(
+        '/trees?planter_id=3584&order_by=created_at&desc=false&limit=1',
+      );
+      expect(response.status).toBe(200);
+      expect(response.body.trees[0]).toMatchObject({
+        id: 937190,
+        planter_id: 3584,
+      });
+    },
+    1000 * 30,
+  );
 });
