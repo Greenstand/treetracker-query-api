@@ -10,6 +10,7 @@ type Filter = Partial<{
   planter_id: number;
   organization_id: number;
   date_range: { startDate: string; endDate: string };
+  tag: string;
 }>;
 
 router.get(
@@ -45,6 +46,7 @@ router.get(
       Joi.object().keys({
         planter_id: Joi.number().integer().min(0),
         organization_id: Joi.number().integer().min(0),
+        tag: Joi.string(),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
         startDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -58,6 +60,7 @@ router.get(
       organization_id,
       startDate,
       endDate,
+      tag,
     } = req.query;
     const repo = new TreeRepository(new Session());
     const filter: Filter = {};
@@ -67,13 +70,15 @@ router.get(
       filter.organization_id = organization_id;
     } else if (startDate && endDate) {
       filter.date_range = { startDate, endDate };
+    } else if (tag) {
+      filter.tag = tag;
     }
     const result = await TreeModel.getByFilter(repo)(filter, {
       limit,
       offset,
     });
     res.send({
-      total: startDate && endDate ? result.length : null,
+      total: (startDate && endDate) || tag ? result.length : null,
       offset,
       limit,
       trees: result,

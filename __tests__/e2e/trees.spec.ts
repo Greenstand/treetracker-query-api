@@ -3,14 +3,18 @@ import app from '../../server/app';
 
 describe('trees', () => {
   it('trees/{id}', async () => {
-    const response = await supertest(app).get('/trees/195785');
+    const response = await supertest(app).get('/trees/952022');
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
-      id: 195785,
+      id: 952022,
       lat: expect.anything(),
       lon: expect.anything(),
-      organization_id: 15,
-      organization_name: 'FCCGHI',
+      species_id: 113,
+      species_name: 'bob',
+      country_name: 'China',
+      country_id: 6632544,
+      organization_id: 11,
+      organization_name: 'FCC',
     });
   });
 
@@ -84,5 +88,21 @@ describe('trees', () => {
       });
     },
     1000 * 10,
+  );
+
+  it(
+    'trees?tag=photoless',
+    async () => {
+      const response = await supertest(app).get('/trees?tag=photoless');
+      const expectedIds = [186685, 878654];
+      expect(response.status).toBe(200);
+      expect(response.body.total).toBe(2);
+      const returnedIds = [
+        response.body.trees[0].id,
+        response.body.trees[1].id,
+      ];
+      expect(returnedIds).toEqual(expectedIds);
+    },
+    1000 * 30,
   );
 });

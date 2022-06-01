@@ -14,18 +14,30 @@ export default class TreeRepository extends BaseRepository<Tree> {
       .getDB()
       .select(
         this.session.getDB().raw(`
-        trees.*,
-        entity.id as organization_id,
-        entity.name as organization_name
-        from trees
-        left JOIN planter ON trees.planter_id = planter.id
-        left JOIN entity ON entity.id = planter.organization_id
+          trees.*,
+          tree_species.id as species_id,
+          tree_species.name as species_name,
+          region.name as country_name,
+          region.id as country_id,
+          entity.id as organization_id,
+          entity.name as organization_name
+          from trees
+            left JOIN planter 
+              on trees.planter_id = planter.id
+            left JOIN entity 
+              on entity.id = planter.organization_id
+            left JOIN tree_species 
+              on trees.species_id = tree_species.id 
+            left JOIN region
+              on ST_WITHIN(trees.estimated_geometric_location, region.geom)
+              and region.type_id in (select id from region_type where type = 'country')
       `),
       )
       .where('trees.id', id)
       .first();
+
     if (!object) {
-      throw new HttpError(404, `Can not fiund ${this.tableName} by id:${id}`);
+      throw new HttpError(404, `Can not find ${this.tableName} by id:${id}`);
     }
     return object;
   }
@@ -63,6 +75,26 @@ export default class TreeRepository extends BaseRepository<Tree> {
       AND time_created < '${endDateISO}'::timestamp
       LIMIT ${limit}
       OFFSET ${offset}
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
+
+  async getByTag(tag: string, options: FilterOptions) {
+    const { limit, offset } = options;
+
+    const sql = `
+    SELECT 
+      trees.*
+    FROM trees
+    INNER JOIN tree_tag 
+      on tree_tag.tree_id = trees.id
+    INNER JOIN tag 
+      on tree_tag.tag_id = tag.id
+    WHERE 
+      tag.tag_name in ('${tag}')
+    LIMIT ${limit}
+    OFFSET ${offset}
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;
