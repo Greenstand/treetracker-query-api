@@ -13,6 +13,8 @@ describe('trees', () => {
       species_name: 'bob',
       country_name: 'China',
       country_id: 6632544,
+      organization_id: 11,
+      organization_name: 'FCC',
     });
   });
 

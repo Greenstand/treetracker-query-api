@@ -18,13 +18,19 @@ export default class TreeRepository extends BaseRepository<Tree> {
           tree_species.id as species_id,
           tree_species.name as species_name,
           region.name as country_name,
-          region.id as country_id
-            from trees
-              left JOIN tree_species 
-                on trees.species_id = tree_species.id 
-              LEFT JOIN region
-                on ST_WITHIN(trees.estimated_geometric_location, region.geom)
-                and region.type_id in (select id from region_type where type = 'country')
+          region.id as country_id,
+          entity.id as organization_id,
+          entity.name as organization_name
+          from trees
+            left JOIN planter 
+              on trees.planter_id = planter.id
+            left JOIN entity 
+              on entity.id = planter.organization_id
+            left JOIN tree_species 
+              on trees.species_id = tree_species.id 
+            left JOIN region
+              on ST_WITHIN(trees.estimated_geometric_location, region.geom)
+              and region.type_id in (select id from region_type where type = 'country')
       `),
       )
       .where('trees.id', id)
