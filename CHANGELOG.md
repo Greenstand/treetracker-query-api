@@ -1,3 +1,9 @@
+# [1.22.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.21.0...v1.22.0) (2022-06-02)
+
+### Features
+
+- endpoint get/tree/ now returns organization_id and organization_name ([4670031](https://github.com/Greenstand/treetracker-query-api/commit/4670031dd4f4ba645128433efdb5bd5c96a23508)), closes [#105](https://github.com/Greenstand/treetracker-query-api/issues/105)
+
 # [1.21.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.20.0...v1.21.0) (2022-05-30)
 
 ### Features
