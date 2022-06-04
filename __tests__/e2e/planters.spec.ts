@@ -7,8 +7,8 @@ describe('planters', () => {
     expect(response.status).toBe(200);
     expect(response.body).toMatchObject({
       id: 3564,
-      continent: 'North America',
-      country: 'Costa Rica',
+      continent_name: 'North America',
+      country_name: 'Costa Rica',
       links: {
         featured_trees: expect.stringMatching(/trees/),
         associated_organizations: expect.stringMatching(/organizations/),
