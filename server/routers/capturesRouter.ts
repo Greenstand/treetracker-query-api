@@ -19,4 +19,15 @@ router.get(
   }),
 );
 
+router.get(
+  '/',
+  handlerWrapper(async (req, res) => {
+    const repo = new CaptureRepository(new Session());
+    const exe = CaptureModel.getByFilter(repo);
+    const result = await exe(req.query, {});
+    res.send(result);
+    res.end();
+  }),
+);
+
 export default router;
