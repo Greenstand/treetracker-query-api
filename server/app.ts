@@ -43,8 +43,8 @@ app.use(
   }),
 );
 
-app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
-app.use(bodyParser.json()); // parse application/json
+app.use(express.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
+app.use(express.json()); // parse application/json
 
 // routers
 app.use('/countries', countriesRouter);
