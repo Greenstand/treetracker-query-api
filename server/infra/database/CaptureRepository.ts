@@ -21,8 +21,6 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       ...parameters
     } = object;
 
-    console.log('filterWhereBuilder', object);
-
     result.whereNot(`${this.tableName}.status`, 'deleted');
     whereNotNulls.forEach((whereNot) => {
       result.whereNotNull(whereNot);
@@ -57,20 +55,14 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     }
 
     if (filterObject.organization_ids) {
-      console.log('------> ', filterObject.organization_ids.split(','));
       result.where(
         `${this.tableName}.planting_organization_id`,
         'in',
         filterObject.organization_ids.split(','),
       );
-      // organization_ids.forEach((id) => {
-      //   filterObject[`treetracker.capture.planter_organization_id`] =
-      //     filterObject.tag;
-      // })
       delete filterObject.organization_ids;
     }
 
-    console.log('filterObject', filterObject);
     result.where(filterObject);
   }
 
@@ -136,13 +128,43 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     return captures;
   }
 
+  async getCount(filterCriteria: CaptureFilter) {
+    const knex = this.session.getDB();
+    const { ...filter } = filterCriteria;
+
+    const result = await knex
+      .select(
+        knex.raw(
+          `
+            COUNT(*) AS count
+          FROM treetracker.capture
+          ${
+            filter.tag
+              ? `INNER JOIN treetracker.tree_tag
+                  on treetracker.tree_tag.tree_id = treetracker.capture.id
+                 INNER JOIN treetracker.tag
+                  on treetracker.tree_tag.tag_id = treetracker.tag.id`
+              : ''
+          }
+        `,
+        ),
+      )
+      .where((builder) => this.filterWhereBuilder(filter, builder));
+
+    return result[0].count;
+  }
+
   async getById(id: string | number) {
     const object = await this.session
       .getDB()
       .select(
         this.session.getDB().raw(`
           treetracker.capture.*,
-          field_data.device_configuration.*,
+          field_data.device_configuration.device_identifier,
+          field_data.device_configuration.manufacturer AS device_manufacturer,
+          field_data.device_configuration.model AS device_model,
+          field_data.device_configuration.device AS device_type,
+          field_data.device_configuration.os_version AS device_os_version,
           treetracker.grower_account.wallet,
           regions.region.properties AS region_properties
           FROM treetracker.capture
