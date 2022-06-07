@@ -175,6 +175,7 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       .select(
         this.session.getDB().raw(`
           treetracker.capture.*,
+          t.tags,
           field_data.device_configuration.device_identifier,
           field_data.device_configuration.manufacturer AS device_manufacturer,
           field_data.device_configuration.model AS device_model,
