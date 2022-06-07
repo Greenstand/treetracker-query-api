@@ -116,6 +116,136 @@ paths:
         this is some good trees bookmarked by admin, short term we will consider using a static table/file to pick up and store these tree id somewhere.
 
         The use case for this is that on the welcome page of web map site, we want to show a gallery of beautiful trees.
+  '/v2/captures/{treeId}.':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: get capture info
+      tags: []
+      operationId: captures-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/capture'
+      description: get single capture object by id
+  /v2/captures:
+    parameters: []
+    get:
+      summary: get capture list by query parameters
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  captures:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/tree'
+                  query:
+                    count:
+                      type: integer
+                      description: total count of captures satifiying the query condition
+                    offset:
+                      type: integer
+                    limit:
+                      type: integer
+      operationId: captures
+      description: |-
+        query captures by filters like grower_account_id, device_identifier, or species_id, also consider pagination. Filter all captures by `status=active` and exclude deleted
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            maximum: 1000
+            minimum: 0
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 25'
+        - schema:
+            type: integer
+          in: query
+          name: grower_account_id
+          description: Filter by grower_account_id
+        - schema:
+            type: array of integers or uuids
+          in: query
+          name: organization_ids
+          description: Filter by org id(s)
+        - schema:
+            type: string
+          in: query
+          name: startDate
+          description: Filter by date range
+        - schema:
+            type: string
+          in: query
+          name: endDate
+          description: Filter by date range
+        - schema:
+            type: string
+          in: query
+          name: tag
+          description: Filter by tag name
+        - schema:
+            type: string - "true" or "false"
+          in: query
+          name: tree_associated
+          description: Filter by requiring tree_id to have a value or not
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: Filter by id of capture
+        - schema:
+            type: string
+          in: query
+          name: tree_id
+          description: Filter by tree_id
+        - schema:
+            type: string
+          in: query
+          name: species_id
+          description: Filter by species_id
+        - schema:
+            type: string
+          in: query
+          name: device_identifier
+          description: Filter by device_identifier
+        - schema:
+            type: string
+          in: query
+          name: wallet
+          description: Filter by wallet's name value
+        - schema:
+            type: string
+          in: query
+          name: token
+          description: Filter by token's id
+        - schema:
+            type: string
+          in: query
+          name: status
+          description: Filter by status, only 'status=active'
+        - schema:
+            type: string
+          in: query
+          name: sort
+          description: Sort by order and order_by values
   /countries/leaderboard:
     get:
       summary: leader board of country
@@ -151,7 +281,7 @@ paths:
           count(trees.*),region.name
         FROM
           trees
-        RIGHT JOIN region ON 
+        RIGHT JOIN region ON
         st_contains(region.geom,trees.estimated_geometric_location)
         where region.type_id = 10
         group by region.name;
@@ -189,11 +319,11 @@ paths:
       operationId: get-countries
       description: |
         get country by coordinates, currently, we use it to get the country name of a tree/location.
-        if given the 'lat' and 'lon', we can query db by SQL: 
+        if given the 'lat' and 'lon', we can query db by SQL:
         ```
         SELECT region.* FROM region, region_type
         WHERE region.type_id = region_type.id
-        AND ST_Contains(region.geom, ST_GeomFromText('POINT (-13.215865333333333 8.34645033333333)',4326)) 
+        AND ST_Contains(region.geom, ST_GeomFromText('POINT (-13.215865333333333 8.34645033333333)',4326))
         AND  region_type.id = region.type_id AND region_type.type = 'country'
         ```
       parameters:
@@ -345,7 +475,7 @@ paths:
 
         'location?': I don't know if we can provide this infomation, the city/country of the org, could be removed if impossible
 
-        'about':Seba says he might be able to populate this field, may be manually in the early stage 
+        'about':Seba says he might be able to populate this field, may be manually in the early stage
 
         mission: Seba says he might be able to populate this field, may be manually in the early stage
   /organizations:
@@ -367,7 +497,7 @@ paths:
         - schema:
             type: integer
           in: query
-          name: planter_id
+          name: grower_account_id
           description: Filter by planter id
         - schema:
             type: string
@@ -433,7 +563,7 @@ paths:
         - schema:
             type: string
           in: query
-          name: planter_id
+          name: grower_account_id
           description: Filter by planter id
       description: "mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don't know if it is too resource consumming to query DB"
   /transactions:
