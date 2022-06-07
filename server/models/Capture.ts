@@ -1,4 +1,3 @@
-import log from 'loglevel';
 import CaptureRepository from 'infra/database/CaptureRepository';
 import { delegateRepository } from 'infra/database/delegateRepository';
 import Capture from 'interfaces/Capture';
@@ -14,7 +13,17 @@ function getByFilter(
   };
 }
 
+function getCount(
+  captureRepository: CaptureRepository,
+): (filter: CaptureFilter) => Promise<Capture[]> {
+  return async function (filter: CaptureFilter) {
+    const count = await captureRepository.getCount(filter);
+    return count;
+  };
+}
+
 export default {
   getByFilter,
+  getCount,
   getById: delegateRepository<CaptureRepository, Capture>('getById'),
 };

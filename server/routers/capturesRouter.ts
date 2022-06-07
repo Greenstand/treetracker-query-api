@@ -52,11 +52,14 @@ router.get(
     const repo = new CaptureRepository(new Session());
     const exe = CaptureModel.getByFilter(repo);
     const result = await exe({ ...rest, sort }, { limit, offset });
+    const count = await CaptureModel.getCount(repo)({ ...rest });
     res.send({
-      total: result.length,
-      offset,
-      limit,
       captures: result,
+      query: {
+        count: Number(count),
+        offset,
+        limit,
+      },
     });
     res.end();
   }),

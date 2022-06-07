@@ -20,8 +20,6 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       ...parameters
     } = object;
 
-    console.log('filterWhereBuilder', object);
-
     result.whereNot(`${this.tableName}.status`, 'deleted');
     whereNotNulls.forEach((whereNot) => {
       result.whereNotNull(whereNot);
@@ -56,20 +54,14 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     }
 
     if (filterObject.organization_ids) {
-      console.log('------> ', filterObject.organization_ids.split(','));
       result.where(
         `${this.tableName}.planting_organization_id`,
         'in',
         filterObject.organization_ids.split(','),
       );
-      // organization_ids.forEach((id) => {
-      //   filterObject[`treetracker.capture.planter_organization_id`] =
-      //     filterObject.tag;
-      // })
       delete filterObject.organization_ids;
     }
 
-    console.log('filterObject', filterObject);
     result.where(filterObject);
   }
 
@@ -135,13 +127,59 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     return captures;
   }
 
+  async getCount(filterCriteria: CaptureFilter) {
+    const knex = this.session.getDB();
+    const { ...filter } = filterCriteria;
+
+    const result = await knex
+      .select(
+        knex.raw(
+          `
+            COUNT(*) AS count
+          FROM treetracker.capture
+          LEFT JOIN (
+              SELECT ct.capture_id, array_agg(t.name) AS tags
+              FROM treetracker.capture_tag ct
+              JOIN treetracker.tag t ON t.id = ct.tag_id
+              GROUP BY ct.capture_id
+            ) t ON treetracker.capture.id = t.capture_id
+          LEFT JOIN field_data.device_configuration
+              ON field_data.device_configuration.id = treetracker.capture.device_configuration_id
+          LEFT JOIN treetracker.grower_account
+              ON grower_account.id = treetracker.capture.grower_account_id
+          LEFT JOIN (
+              SELECT ga.id, w.name AS wallet_name, t.id AS token_id
+              FROM wallet.wallet w
+              JOIN wallet.token t ON t.wallet_id = w.id
+              JOIN treetracker.grower_account ga ON ga.wallet = w.name
+            ) wt ON treetracker.capture.grower_account_id = wt.id
+          ${
+            filter.tag
+              ? `INNER JOIN treetracker.tree_tag
+                  on treetracker.tree_tag.tree_id = treetracker.capture.id
+                 INNER JOIN treetracker.tag
+                  on treetracker.tree_tag.tag_id = treetracker.tag.id`
+              : ''
+          }
+        `,
+        ),
+      )
+      .where((builder) => this.filterWhereBuilder(filter, builder));
+
+    return result[0].count;
+  }
+
   async getById(id: string | number) {
     const object = await this.session
       .getDB()
       .select(
         this.session.getDB().raw(`
           treetracker.capture.*,
-          field_data.device_configuration.*,
+          field_data.device_configuration.device_identifier,
+          field_data.device_configuration.manufacturer AS device_manufacturer,
+          field_data.device_configuration.model AS device_model,
+          field_data.device_configuration.device AS device_type,
+          field_data.device_configuration.os_version AS device_os_version,
           treetracker.grower_account.wallet,
           regions.region.properties AS region_properties
           FROM treetracker.capture
