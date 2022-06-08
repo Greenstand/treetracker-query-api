@@ -1,3 +1,13 @@
+# [1.23.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.22.0...v1.23.0) (2022-06-08)
+
+### Bug Fixes
+
+- countries are now consistent with continent ([17ab4ad](https://github.com/Greenstand/treetracker-query-api/commit/17ab4ad70101483538b2f417e691ce9cc85ac386))
+
+### Features
+
+- endpoint planters/id now return continent and country name ([4002efb](https://github.com/Greenstand/treetracker-query-api/commit/4002efbca0893398458c322717d50812922f5786))
+
 # [1.22.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.21.0...v1.22.0) (2022-06-02)
 
 ### Features
