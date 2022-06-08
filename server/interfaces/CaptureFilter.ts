@@ -1,6 +1,6 @@
 type CaptureFilter = Partial<{
-  organization_ids: Array<string> | undefined;
-  tree_associated: string | undefined;
+  organization_id: Array<string> | undefined;
+  reference_id: string | undefined;
   grower_account_id: string | undefined;
   startDate: string | undefined;
   endDate: string | undefined;
@@ -10,7 +10,8 @@ type CaptureFilter = Partial<{
   tag: string | undefined;
   device_identifier: string | undefined;
   wallet: string | undefined;
-  token: string | undefined;
+  token_id: string | undefined;
+  tokenized: string | undefined;
   status: string | undefined;
   sort: { order: string; order_by: string };
 }>;

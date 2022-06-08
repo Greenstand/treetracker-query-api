@@ -202,11 +202,6 @@ paths:
           name: tag
           description: Filter by tag name
         - schema:
-            type: string - "true" or "false"
-          in: query
-          name: tree_associated
-          description: Filter by requiring tree_id to have a value or not
-        - schema:
             type: string
           in: query
           name: id

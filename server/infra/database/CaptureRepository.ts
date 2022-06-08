@@ -20,6 +20,13 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       ...parameters
     } = object;
 
+    if (parameters.tokenized === 'true') {
+      whereNotNulls.push('wallet.token.id');
+    } else if (parameters.tokenized === 'false') {
+      whereNulls.push('wallet.token.id');
+    }
+    delete parameters.tokenized;
+
     result.whereNot(`${this.tableName}.status`, 'deleted');
     whereNotNulls.forEach((whereNot) => {
       result.whereNotNull(whereNot);
@@ -51,6 +58,20 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     if (filterObject.tag) {
       filterObject[`treetracker.tag.name`] = filterObject.tag;
       delete filterObject.tag;
+    }
+
+    if (filterObject.id) {
+      result.where(`${this.tableName}.id`, '=', filterObject.id);
+      delete filterObject.id;
+    }
+
+    if (filterObject.reference_id) {
+      result.where(
+        `${this.tableName}.reference_id`,
+        '=',
+        filterObject.reference_id,
+      );
+      delete filterObject.reference_id;
     }
 
     if (filterObject.organization_ids) {
@@ -102,6 +123,15 @@ export default class CaptureRepository extends BaseRepository<Capture> {
                   on treetracker.tree_tag.tree_id = treetracker.capture.id
                  INNER JOIN treetracker.tag
                   on treetracker.tree_tag.tag_id = treetracker.tag.id`
+              : ''
+          }
+          ${
+            filter.tokenized
+              ? `LEFT JOIN wallet.wallet
+                  ON treetracker.grower_account.wallet = wallet.wallet.name
+                 LEFT JOIN wallet.token
+                  ON wallet.token.wallet_id = wallet.wallet.id
+                 `
               : ''
           }
         `,
@@ -159,6 +189,15 @@ export default class CaptureRepository extends BaseRepository<Capture> {
                   on treetracker.tree_tag.tree_id = treetracker.capture.id
                  INNER JOIN treetracker.tag
                   on treetracker.tree_tag.tag_id = treetracker.tag.id`
+              : ''
+          }
+          ${
+            filter.tokenized
+              ? `LEFT JOIN wallet.wallet
+                  ON treetracker.grower_account.wallet = wallet.wallet.name
+                 LEFT JOIN wallet.token
+                  ON wallet.token.wallet_id = wallet.wallet.id
+                 `
               : ''
           }
         `,
