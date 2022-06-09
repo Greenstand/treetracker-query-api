@@ -7,6 +7,7 @@ import Session from './Session';
 type FilterOptions<T> = {
   limit?: number;
   orderBy?: { column: keyof T; direction?: 'asc' | 'desc' };
+  offset?: number;
 };
 
 export default class BaseRepository<T> {
@@ -88,6 +89,9 @@ export default class BaseRepository<T> {
           ? options.orderBy.direction
           : 'asc';
       promise = promise.orderBy(options.orderBy.column as string, direction);
+    }
+    if (options && options.offset) {
+      promise = promise.offset(options && options.offset);
     }
     const result = await promise;
     return result as T[];
