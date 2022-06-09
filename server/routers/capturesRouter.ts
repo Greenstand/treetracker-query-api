@@ -56,11 +56,9 @@ router.get(
     const count = await CaptureModel.getCount(repo)({ ...rest });
     res.send({
       captures: result,
-      query: {
-        count: Number(count),
-        offset,
-        limit,
-      },
+      total: Number(count),
+      offset,
+      limit,
     });
     res.end();
   }),

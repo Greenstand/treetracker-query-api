@@ -152,14 +152,13 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/tree'
-                  query:
-                    count:
-                      type: integer
-                      description: total count of captures satifiying the query condition
-                    offset:
-                      type: integer
-                    limit:
-                      type: integer
+                  total:
+                    type: integer
+                    description: total count of captures satifiying the query condition
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
       operationId: captures
       description: |-
         query captures by filters like grower_account_id, device_identifier, or species_id, also consider pagination. Filter all captures by `status=active` and exclude deleted
