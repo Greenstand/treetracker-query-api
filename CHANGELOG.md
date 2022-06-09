@@ -1,3 +1,9 @@
+# [1.24.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.23.0...v1.24.0) (2022-06-09)
+
+### Features
+
+- extend the BaseRepository to support getByFilter method with offset argument ([fe70b44](https://github.com/Greenstand/treetracker-query-api/commit/fe70b445dda7b540354e79cf5ac0d272620f030f))
+
 # [1.23.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.22.0...v1.23.0) (2022-06-08)
 
 ### Bug Fixes
