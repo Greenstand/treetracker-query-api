@@ -68,6 +68,25 @@ describe('BaseRepository', () => {
       expect(result[0]).toHaveProperty('id', 1);
     });
 
+    it('getByFilter with offset', async () => {
+      tracker.uninstall();
+      tracker.install();
+      tracker.on('query', (query) => {
+        expect(query.sql).toMatch(/select.*testTable.*offset.*/);
+        query.response([{ id: 1 }]);
+      });
+      const result = await baseRepository.getByFilter(
+        {
+          name: 'testName',
+        },
+        {
+          offset: 1,
+        },
+      );
+      expect(result).toHaveLength(1);
+      expect(result[0]).toHaveProperty('id', 1);
+    });
+
     it('getByFiliter with order', async () => {
       tracker.uninstall();
       tracker.install();
