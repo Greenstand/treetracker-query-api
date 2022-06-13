@@ -14,7 +14,7 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
     FROM
      wallet.wallet
     WHERE
-      id = '${walletIdOrName}'
+      id::text = '${walletIdOrName}'
     OR
       name = '${walletIdOrName}'`;
 
