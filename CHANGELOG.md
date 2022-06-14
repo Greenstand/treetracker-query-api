@@ -1,3 +1,9 @@
+## [1.24.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.24.0...v1.24.1) (2022-06-14)
+
+### Bug Fixes
+
+- can send wallet name as a query param to the get walletByIdOrName endpoint ([3d88d29](https://github.com/Greenstand/treetracker-query-api/commit/3d88d297a5fcb9c2412a6db760ab79a4a3c480c0))
+
 # [1.24.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.23.0...v1.24.0) (2022-06-09)
 
 ### Features
