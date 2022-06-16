@@ -39,19 +39,22 @@ router.get(
         device_identifier: Joi.string(),
         wallet: Joi.string(),
         tokenized: Joi.string(),
-        sort: Joi.object(),
+        order_by: Joi.string(),
+        order: Joi.string(),
         token_id: Joi.string().uuid(),
       }),
     );
     const {
       limit = 25,
       offset = 0,
-      sort = { order: 'desc', order_by: 'captured_at' },
+      order = 'desc',
+      order_by = 'captured_at',
       ...rest
     } = req.query;
 
     const repo = new CaptureRepository(new Session());
     const exe = CaptureModel.getByFilter(repo);
+    const sort = { order, order_by };
     const result = await exe({ ...rest, sort }, { limit, offset });
     const count = await CaptureModel.getCount(repo)({ ...rest });
     res.send({

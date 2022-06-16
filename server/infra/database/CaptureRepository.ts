@@ -74,13 +74,15 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       delete filterObject.reference_id;
     }
 
-    if (filterObject.organization_ids) {
+    // how to get all the parent and children ids for the org -- if they exist?
+    // Stakeholder api? or pass the org ids from the frontend?
+    if (filterObject.organization_id) {
       result.where(
         `${this.tableName}.planting_organization_id`,
         'in',
-        filterObject.organization_ids.split(','),
+        filterObject.organization_id.split(','),
       );
-      delete filterObject.organization_ids;
+      delete filterObject.organization_id;
     }
 
     result.where(filterObject);
@@ -90,6 +92,8 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     const knex = this.session.getDB();
     const { sort, ...filter } = filterCriteria;
 
+    // there are two joins to connect the capture to the token and to the wallet right now so that we can double check our data entries
+    // the current data entered in the tables doesn't match up so there are some mismatches
     let promise = knex
       .select(
         knex.raw(
@@ -99,7 +103,8 @@ export default class CaptureRepository extends BaseRepository<Capture> {
             field_data.device_configuration.device_identifier,
             treetracker.grower_account.wallet,
             wt.wallet_name,
-            wt.token_id
+            wt.token_id,
+            tk.id AS wallet_token_id
           FROM treetracker.capture
           LEFT JOIN (
               SELECT ct.capture_id, array_agg(t.name) AS tags
@@ -111,6 +116,8 @@ export default class CaptureRepository extends BaseRepository<Capture> {
               ON field_data.device_configuration.id = treetracker.capture.device_configuration_id
           LEFT JOIN treetracker.grower_account
               ON grower_account.id = treetracker.capture.grower_account_id
+          LEFT JOIN wallet.token tk
+              ON treetracker.capture.id = tk.capture_id
           LEFT JOIN (
               SELECT ga.id, w.name AS wallet_name, t.id AS token_id
               FROM wallet.wallet w
