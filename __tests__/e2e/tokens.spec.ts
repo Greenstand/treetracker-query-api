@@ -26,7 +26,6 @@ describe('Tokens', () => {
     );
 
     expect(response.status).toBe(200);
-    expect(response.body.total).toBe(10);
     expect(response.body).toMatchObject({
       tokens: expect.anything(),
     });
@@ -48,22 +47,15 @@ describe('Tokens', () => {
     const response = await supertest(app).get('/tokens?wallet=Malinda51');
 
     expect(response.status).toBe(200);
-    expect(response.body.total).toBe(12);
     expect(response.body).toMatchObject({
       tokens: expect.anything(),
     });
 
-    expect(response.body.tokens[0]).toMatchObject({
-      wallet_id: 'eecdf253-05b6-419a-8425-416a3e5fc9a0',
-    });
-
-    expect(response.body.tokens[7]).toMatchObject({
-      wallet_id: 'eecdf253-05b6-419a-8425-416a3e5fc9a0',
-    });
-
-    expect(response.body.tokens[11]).toMatchObject({
-      wallet_id: 'eecdf253-05b6-419a-8425-416a3e5fc9a0',
-    });
+    for (let i = 0; i < response.body.tokens.length; i++) {
+      expect(response.body.tokens[i]).toMatchObject({
+        wallet_id: 'eecdf253-05b6-419a-8425-416a3e5fc9a0',
+      });
+    }
   });
 
   it('/tokens?wallet=Dave.Mertz68&withPlanter=true&withCapture=false', async () => {
@@ -72,24 +64,22 @@ describe('Tokens', () => {
     );
 
     expect(response.status).toBe(200);
-    expect(response.body.total).toBe(10);
     expect(response.body).toMatchObject({
       tokens: expect.anything(),
     });
 
-    expect(response.body.tokens[0]).toMatchObject({
-      wallet_id: 'bd60973b-2f08-45c5-afb3-7ec018180f17',
-      planter_first_name: 'Tristin',
-      planter_last_name: 'Hills',
-      planter_id: 5429,
-    });
+    for (let i = 0; i < response.body.tokens.length; i++) {
+      expect(response.body.tokens[i]).toMatchObject({
+        wallet_id: 'bd60973b-2f08-45c5-afb3-7ec018180f17',
+        planter_first_name: 'Tristin',
+        planter_last_name: 'Hills',
+        planter_id: 5429,
+      });
+    }
 
-    expect(response.body.tokens[4]).toMatchObject({
-      wallet_id: 'bd60973b-2f08-45c5-afb3-7ec018180f17',
-      planter_first_name: 'Tristin',
-      planter_last_name: 'Hills',
-      planter_id: 5429,
-    });
+    for (let i = 0; i < response.body.tokens.length; i++) {
+      expect(response.body.tokens[i].capture_photo_url).toBeUndefined();
+    }
   });
 
   it('/tokens?wallet=Dave.Mertz68&withPlanter=true&withCapture=true', async () => {
@@ -98,10 +88,18 @@ describe('Tokens', () => {
     );
 
     expect(response.status).toBe(200);
-    expect(response.body.total).toBe(10);
     expect(response.body).toMatchObject({
       tokens: expect.anything(),
     });
+
+    for (let i = 0; i < response.body.tokens.length; i++) {
+      expect(response.body.tokens[i]).toMatchObject({
+        wallet_id: 'bd60973b-2f08-45c5-afb3-7ec018180f17',
+        planter_first_name: 'Tristin',
+        planter_last_name: 'Hills',
+        planter_id: 5429,
+      });
+    }
 
     expect(response.body.tokens[0]).toMatchObject({
       wallet_id: 'bd60973b-2f08-45c5-afb3-7ec018180f17',
@@ -109,14 +107,6 @@ describe('Tokens', () => {
       planter_last_name: 'Hills',
       planter_id: 5429,
       capture_id: '60f2fa61-03ce-4895-8ae8-2987be0ddccb',
-    });
-
-    expect(response.body.tokens[4]).toMatchObject({
-      wallet_id: 'bd60973b-2f08-45c5-afb3-7ec018180f17',
-      planter_first_name: 'Tristin',
-      planter_last_name: 'Hills',
-      planter_id: 5429,
-      capture_id: 'a11b111f-03e3-4232-94ca-fb4925448ce4',
     });
   });
 });
