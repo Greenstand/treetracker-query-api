@@ -1,3 +1,13 @@
+# [1.25.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.24.1...v1.25.0) (2022-06-17)
+
+### Bug Fixes
+
+- update test file as per review ([30c6a7c](https://github.com/Greenstand/treetracker-query-api/commit/30c6a7c494852187eff537a8d2263bc4bb293bb1))
+
+### Features
+
+- get-token-list-by-filter,-support-pagination ([d7f573f](https://github.com/Greenstand/treetracker-query-api/commit/d7f573fea2ae899aa86cec32ef676fbd9395e8f8))
+
 ## [1.24.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.24.0...v1.24.1) (2022-06-14)
 
 ### Bug Fixes
