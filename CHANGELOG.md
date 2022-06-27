@@ -1,3 +1,9 @@
+# [1.26.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.25.0...v1.26.0) (2022-06-27)
+
+### Features
+
+- added filter by wallet_id for species endpoint ([97bbec8](https://github.com/Greenstand/treetracker-query-api/commit/97bbec8c05612567aaeba5ab6535c29fa0632e6e))
+
 # [1.25.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.24.1...v1.25.0) (2022-06-17)
 
 ### Bug Fixes
