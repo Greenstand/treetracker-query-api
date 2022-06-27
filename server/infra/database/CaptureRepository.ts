@@ -56,7 +56,7 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     }
 
     if (filterObject.tag) {
-      filterObject[`treetracker.tag.name`] = filterObject.tag;
+      filterObject[`treetracker.capture_tag.tag_id`] = filterObject.tag;
       delete filterObject.tag;
     }
 
@@ -77,13 +77,22 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     // how to get all the parent and children ids for the org -- if they exist?
     // Stakeholder api? or pass the org ids from the frontend?
     if (filterObject.organization_id) {
-      result.where(
-        `${this.tableName}.planting_organization_id`,
-        'in',
-        filterObject.organization_id.split(','),
-      );
+      result.where(`${this.tableName}.planting_organization_id`, 'in', [
+        filterObject.organization_id,
+      ]);
       delete filterObject.organization_id;
     }
+
+    // if we want to allow the client to pass more than one org id
+
+    // if (filterObject.organization_ids) {
+    //   result.where(
+    //     `${this.tableName}.planting_organization_id`,
+    //     'in',
+    //     filterObject.organization_ids.split(','),
+    //   );
+    //   delete filterObject.organization_ids;
+    // }
 
     result.where(filterObject);
   }
@@ -126,10 +135,10 @@ export default class CaptureRepository extends BaseRepository<Capture> {
             ) wt ON treetracker.capture.grower_account_id = wt.id
           ${
             filter.tag
-              ? `INNER JOIN treetracker.tree_tag
-                  on treetracker.tree_tag.tree_id = treetracker.capture.id
+              ? `INNER JOIN treetracker.capture_tag
+                  on treetracker.capture_tag.capture_id = treetracker.capture.id
                  INNER JOIN treetracker.tag
-                  on treetracker.tree_tag.tag_id = treetracker.tag.id`
+                  on treetracker.capture_tag.tag_id = treetracker.tag.id`
               : ''
           }
           ${
@@ -192,10 +201,10 @@ export default class CaptureRepository extends BaseRepository<Capture> {
             ) wt ON treetracker.capture.grower_account_id = wt.id
           ${
             filter.tag
-              ? `INNER JOIN treetracker.tree_tag
-                  on treetracker.tree_tag.tree_id = treetracker.capture.id
+              ? `INNER JOIN treetracker.capture_tag
+                  on treetracker.capture_tag.capture_id = treetracker.capture.id
                  INNER JOIN treetracker.tag
-                  on treetracker.tree_tag.tag_id = treetracker.tag.id`
+                  on treetracker.capture_tag.tag_id = treetracker.tag.id`
               : ''
           }
           ${

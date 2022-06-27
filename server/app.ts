@@ -5,6 +5,7 @@ import capturesRouter from './routers/capturesRouter';
 import countriesRouter from './routers/countriesRouter';
 import organizationsRouter from './routers/organizationsRouter';
 import plantersRouter from './routers/plantersRouter';
+import rawCapturesRouter from './routers/rawCapturesRouter';
 import speciesRouter from './routers/speciesRouter';
 import tokensRouter from './routers/tokensRouter';
 import transactionsRouter from './routers/transactionsRouter';
@@ -56,6 +57,7 @@ app.use('/wallets', walletsRouter);
 app.use('/transactions', transactionsRouter);
 app.use('/tokens', tokensRouter);
 app.use('/v2/captures', capturesRouter);
+app.use('/raw-captures', rawCapturesRouter);
 // Global error handler
 app.use(errorHandler);
 

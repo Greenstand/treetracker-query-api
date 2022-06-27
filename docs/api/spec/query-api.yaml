@@ -116,7 +116,7 @@ paths:
         this is some good trees bookmarked by admin, short term we will consider using a static table/file to pick up and store these tree id somewhere.
 
         The use case for this is that on the welcome page of web map site, we want to show a gallery of beautiful trees.
-  '/v2/captures/{treeId}.':
+  '/v2/captures/{captureId}.':
     parameters:
       - schema:
           type: string
@@ -151,7 +151,7 @@ paths:
                   captures:
                     type: array
                     items:
-                      $ref: '#/components/schemas/tree'
+                      $ref: '#/components/schemas/capture'
                   total:
                     type: integer
                     description: total count of captures satifiying the query condition
@@ -176,7 +176,7 @@ paths:
           name: limit
           description: 'The limit length of the return list, if missing, default is 25'
         - schema:
-            type: integer
+            type: string (uuid)
           in: query
           name: grower_account_id
           description: Filter by grower_account_id
@@ -235,6 +235,135 @@ paths:
           in: query
           name: status
           description: Filter by status, only 'status=active'
+        - schema:
+            type: string
+          in: query
+          name: sort
+          description: Sort by order and order_by values
+  '/raw_captures/{rawCaptureId}.':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: get raw-capture info
+      tags: []
+      operationId: raw-captures-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/field_data'
+      description: get single capture object by id
+  /raw_captures:
+    parameters: []
+    get:
+      summary: get capture list by query parameters
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  captures:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/field_data'
+                  total:
+                    type: integer
+                    description: total count of raw-captures satifiying the query condition
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+      operationId: raw-captures
+      description: |-
+        query raw-captures (field_data) by filters like grower_account_id, device_identifier, or species_id, also consider pagination. Filter all raw-captures by `status=unprocessed` and exclude deleted by default
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            maximum: 1000
+            minimum: 0
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 25'
+        - schema:
+            type: string (uuid)
+          in: query
+          name: grower_account_id
+          description: Filter by grower_account_id
+        - schema:
+            type: array of integers or uuids
+          in: query
+          name: organization_ids
+          description: Filter by org id(s)
+        - schema:
+            type: integer
+          in: query
+          name: reference_id
+          description: Filter by legacy tree id
+        - schema:
+            type: string
+          in: query
+          name: startDate
+          description: Filter by date range
+        - schema:
+            type: string
+          in: query
+          name: endDate
+          description: Filter by date range
+        - schema:
+            type: string
+          in: query
+          name: tag
+          description: Filter by tag name
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: Filter by id of capture
+        - schema:
+            type: string
+          in: query
+          name: tree_id
+          description: Filter by tree_id
+        - schema:
+            type: string
+          in: query
+          name: species_id
+          description: Filter by species_id
+        - schema:
+            type: string
+          in: query
+          name: device_identifier
+          description: Filter by device_identifier
+        - schema:
+            type: string
+          in: query
+          name: wallet
+          description: Filter by wallet's name value
+        - schema:
+            type: string
+          in: query
+          name: token
+          description: Filter by token's id
+        - schema:
+            type: string
+          in: query
+          name: status
+          description: Filter by status, only 'unprocessed', 'approved', or 'rejected'
         - schema:
             type: string
           in: query
