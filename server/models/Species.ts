@@ -4,7 +4,11 @@ import Species from 'interfaces/Species';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import SpeciesRepository from '../infra/database/SpeciesRepository';
 
-type Filter = Partial<{ planter_id: number; organization_id: number }>;
+type Filter = Partial<{
+  planter_id: number;
+  organization_id: number;
+  wallet_id: string;
+}>;
 
 function getByFilter(
   speciesRepository: SpeciesRepository,
@@ -26,6 +30,16 @@ function getByFilter(
       );
       return trees;
     }
+
+    if (filter.wallet_id) {
+      log.warn('using wallet filter...');
+      const trees = await speciesRepository.getByWallet(
+        filter.wallet_id,
+        options,
+      );
+      return trees;
+    }
+
     const trees = await speciesRepository.getByFilter(filter, options);
     return trees;
   };

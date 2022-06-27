@@ -51,4 +51,29 @@ export default class SpeciesRepository extends BaseRepository<Species> {
     const object = await this.session.getDB().raw(sql);
     return object.rows;
   }
+
+  async getByWallet(wallet_id: string, options: FilterOptions) {
+    const { limit, offset } = options;
+    const sql = `
+      select species_id as id, count(species_id) as total, tree_species.name
+      from trees
+      LEFT JOIN tree_species 
+      on trees.species_id = tree_species.id
+      INNER JOIN wallet.token
+      on wallet.token.capture_id::text = trees.uuid::text
+      INNER JOIN wallet.wallet  
+      on wallet.token.wallet_id = wallet.wallet.id
+      where 
+      trees.active = true
+      AND wallet.wallet.id::text = '${wallet_id}'
+      AND tree_species.name is not null
+      AND trees.species_id is not null
+      group by species_id, tree_species.name
+      order by total desc
+      LIMIT ${limit}
+      OFFSET ${offset}
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
 }

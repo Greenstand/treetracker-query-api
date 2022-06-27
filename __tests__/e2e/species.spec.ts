@@ -44,4 +44,21 @@ describe('species', () => {
     },
     1000 * 30,
   );
+
+  it(
+    'species?wallet_id=eecdf253-05b6-419a-8425-416a3e5fc9a0&limit=1',
+    async () => {
+      const response = await supertest(app).get(
+        '/species?wallet_id=eecdf253-05b6-419a-8425-416a3e5fc9a0&limit=1',
+      );
+      expect(response.status).toBe(200);
+      expect(response.body.species).toBeInstanceOf(Array);
+      expect(response.body.species[0]).toMatchObject({
+        total: expect.stringMatching(/\d+/),
+        name: expect.any(String),
+        id: expect.any(Number),
+      });
+    },
+    1000 * 30,
+  );
 });
