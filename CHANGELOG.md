@@ -1,3 +1,18 @@
+# [1.27.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.26.0...v1.27.0) (2022-06-28)
+
+### Bug Fixes
+
+- adjust response data to match api conventions ([76b3492](https://github.com/Greenstand/treetracker-query-api/commit/76b3492591d3d06e2de84ba35d49bcb49c8c67ca))
+
+### Features
+
+- add database scripts ([deb8da1](https://github.com/Greenstand/treetracker-query-api/commit/deb8da1ba17bcdd19fae171b2d7b1811acbb9edc))
+- add filering captures by id, organization_id, tokenized, and reference_id ([e21e8b6](https://github.com/Greenstand/treetracker-query-api/commit/e21e8b6de956ac2e826f91f5f437928f9ed38ab9))
+- add getCount() to get total results, reduce device info returned ([50d689a](https://github.com/Greenstand/treetracker-query-api/commit/50d689acc4246d0ccc6c13ebdc4b94aadaf21fd9))
+- add tags array to /v2/captures/:id query ([63e3163](https://github.com/Greenstand/treetracker-query-api/commit/63e31631d428fbf56b56c2dc52be0dcf984d8118))
+- update captures queries ([0145bbc](https://github.com/Greenstand/treetracker-query-api/commit/0145bbc780da78130f4dc1147c929984fbc59b11))
+- update yaml with /v2/captures updates ([1f9f90f](https://github.com/Greenstand/treetracker-query-api/commit/1f9f90f7452f5e2e57dcda8cc8d8eb7001531337))
+
 # [1.26.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.25.0...v1.26.0) (2022-06-27)
 
 ### Features
