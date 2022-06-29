@@ -44,10 +44,19 @@ router.get(
     Joi.assert(
       req.query,
       Joi.object().keys({
-        keyword: Joi.string(),
-        organization_id: Joi.number().integer().min(0),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
+        keyword: Joi.string(),
+        organization_id: Joi.number().integer().min(0),
+        id: Joi.string().uuid(),
+        person_id: Joi.string().uuid(),
+        device_identifier: Joi.string(),
+        first_name: Joi.string(),
+        last_name: Joi.string(),
+        wallet: Joi.string(),
+        email: Joi.string(),
+        phone: Joi.string(),
+        // id, first_name, last_name,email, person_id, device_id, organization_id, phone, gender, capture count
       }),
     );
     const { limit = 20, offset = 0, organization_id, keyword } = req.query;

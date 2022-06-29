@@ -6,7 +6,8 @@ import Session from './Session';
 
 export default class GrowerAccountRepository extends BaseRepository<GrowerAccount> {
   constructor(session: Session) {
-    super('planter', session);
+    super('grower_account', session);
+    this.tableName = 'treetracker.grower_account';
   }
 
   async getById(id: string | number) {
@@ -14,17 +15,22 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
       .getDB()
       .select(
         this.session.getDB().raw(`
-        planter.*,
-        country.name as country_name,
-        continent.name as continent_name
-        from planter
-        left join trees on planter.id = trees.planter_id
-        left join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
-          and country.type_id in
-            (select id from region_type where type = 'country')
-        left join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
-          and continent.type_id in
-            (select id from region_type where type = 'continents' )
+        ${this.tableName}.*,
+        stakeholder.org_name as organization,
+        LEFT JOIN treetracker.capture AS tc
+          ON treetracker.grower_account.id = tc.grower_account_id
+        LEFT JOIN regions.region AS country
+          ON ST_WITHIN(c.estimated_geometric_location, country.geom)
+          AND country.type_id IN
+            (select id FROM region_type WHERE type = 'country')
+        LEFT JOIN regions.region AS continent
+          ON ST_WITHIN(tc.estimated_geometric_location, continent.geom)
+          AND continent.type_id IN
+            (select id FROM region_type WHERE type = 'continents' )
+        LEFT JOIN stakeholder.stakeholder AS stakeholder
+          ON stakeholder.id = treetracker.grower_account.organization_id
+        LEFT JOIN messaging.author AS author
+          ON author.handle = treetracker.grower_account.wallet
       `),
       )
       .where('planter.id', id)
@@ -37,17 +43,44 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
   }
 
   async getByOrganization(organization_id: number, options: FilterOptions) {
-    const { limit, offset } = options;
+    // const { limit, offset } = options;
+    // const sql = `
+    //   SELECT
+    //     *
+    //   FROM ${this.tableName} AS gc
+    //   WHERE gc.organization_id = ${organization_id}
+    //   LIMIT ${limit}
+    //   OFFSET ${offset}
+    // `;
     const sql = `
-      SELECT
-        *
-      FROM planter
-      WHERE planter.organization_id = ${organization_id}
-      LIMIT ${limit}
-      OFFSET ${offset}
+        ${this.tableName}.*,
+        stakeholder.org_name as organization,
+        LEFT JOIN treetracker.capture AS tc
+          ON treetracker.grower_account.id = tc.grower_account_id
+        LEFT JOIN regions.region AS country
+          ON ST_WITHIN(c.estimated_geometric_location, country.geom)
+          AND country.type_id IN
+            (select id FROM region_type WHERE type = 'country')
+        LEFT JOIN regions.region AS continent
+          ON ST_WITHIN(tc.estimated_geometric_location, continent.geom)
+          AND continent.type_id IN
+            (select id FROM region_type WHERE type = 'continents' )
+        LEFT JOIN stakeholder.stakeholder AS stakeholder
+          ON stakeholder.id = treetracker.grower_account.organization_id
+        LEFT JOIN messaging.author AS author
+          ON author.handle = treetracker.grower_account.wallet
     `;
-    const object = await this.session.getDB().raw(sql);
-    return object.rows;
+    let promise = this.session.getDB().select(this.session.getDB().raw(sql));
+    const { limit, offset } = options;
+    if (limit) {
+      promise = promise.limit(limit);
+    }
+    if (offset) {
+      promise = promise.offset(offset);
+    }
+    const growers = await promise;
+    console.log('growers', growers);
+    return growers;
   }
 
   async getByName(keyword: string, options: FilterOptions) {
@@ -55,7 +88,7 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     const sql = `
       SELECT
         *
-      FROM planter
+      FROM ${this.tableName}
       WHERE first_name LIKE '${keyword}%' OR last_name LIKE '${keyword}%'
       ORDER BY first_name, last_name
       LIMIT ${limit}
@@ -70,7 +103,7 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     const sql = `
       SELECT
       *
-      FROM planter
+      FROM ${this.tableName}
       ORDER BY id DESC
       LIMIT ${limit}
     `;
