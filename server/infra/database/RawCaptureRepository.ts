@@ -202,31 +202,35 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
       .getDB()
       .select(
         this.session.getDB().raw(`
-          treetracker.capture.*,
+          ${this.tableName}.*,
           t.tags,
           field_data.device_configuration.device_identifier,
           field_data.device_configuration.manufacturer AS device_manufacturer,
           field_data.device_configuration.model AS device_model,
           field_data.device_configuration.device AS device_type,
           field_data.device_configuration.os_version AS device_os_version,
-          treetracker.grower_account.wallet,
-          regions.region.properties AS region_properties
-          FROM treetracker.capture
-            LEFT JOIN treetracker.grower_account
-              ON grower_account.id = treetracker.capture.grower_account_id
+          wr.grower_account_id,
+          re.properties AS region_properties
+          FROM ${this.tableName}
+            LEFT JOIN treetracker.capture AS c
+              ON ${this.tableName}.id = c.id
             LEFT JOIN (
               SELECT ct.capture_id, ARRAY_AGG(t.name) AS tags
-              FROM treetracker.capture_tag ct
-              JOIN treetracker.tag t ON t.id = ct.tag_id
+              FROM treetracker.capture_tag AS ct
+              JOIN treetracker.tag AS t ON t.id = ct.tag_id
               GROUP BY ct.capture_id
-            ) t ON treetracker.capture.id = t.capture_id
+            ) AS t ON c.id = t.capture_id
+            LEFT JOIN regions.region AS re
+              ON ST_WITHIN(c.estimated_geometric_location, re.shape)
+            LEFT JOIN field_data.session AS se
+              ON ${this.tableName}.session_id = se.id
             LEFT JOIN field_data.device_configuration
-              ON field_data.device_configuration.id = treetracker.capture.device_configuration_id
-            LEFT JOIN regions.region
-              ON ST_WITHIN(capture.estimated_geometric_location, regions.region.shape)
+              ON field_data.device_configuration.id = se.device_configuration_id
+            LEFT JOIN field_data.wallet_registration AS wr
+              ON se.originating_wallet_registration_id = wr.id
       `),
       )
-      .where('capture.id', id)
+      .where(`${this.tableName}.id`, id)
       .first();
 
     if (!object) {
