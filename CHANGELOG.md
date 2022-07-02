@@ -1,3 +1,16 @@
+# [1.28.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.27.0...v1.28.0) (2022-07-02)
+
+### Bug Fixes
+
+- adjust limit to allow for capture exports ([ae3535c](https://github.com/Greenstand/treetracker-query-api/commit/ae3535caed8c621c4bd74d519c72f9d15d2b27c6))
+- query for getting raw-capture by id ([c0239ba](https://github.com/Greenstand/treetracker-query-api/commit/c0239bac8e20e9627707e0622281174b7c53e2f0))
+
+### Features
+
+- add route for raw-captures to allow filter by capture_tag ([77f9ccd](https://github.com/Greenstand/treetracker-query-api/commit/77f9ccd2d71b3251cd835533ab47e022f86cc47f))
+- add route to get the count of captures w/ or w/o filter ([9bc12cc](https://github.com/Greenstand/treetracker-query-api/commit/9bc12cc35cbf235fc549c4bf80de553099ca99f9))
+- add sorting back and update capture query with alt joins ([97307ab](https://github.com/Greenstand/treetracker-query-api/commit/97307ab06a8f6f55d3c713984a9206d4460ce663))
+
 # [1.27.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.26.0...v1.27.0) (2022-06-28)
 
 ### Bug Fixes
