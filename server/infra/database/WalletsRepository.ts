@@ -28,4 +28,24 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
     }
     return object.rows[0];
   }
+
+  async getWalletTokenContinentCount(walletIdOrName: string) {
+    const sql = `
+    select continent.name as continent ,count(continent.name) as token_count
+    from wallet.wallet
+      left join wallet.token on 
+        wallet.token.wallet_id = wallet.wallet.id
+      left join public.trees on 
+        wallet.token.capture_id::text = public.trees.uuid::text
+      left join region as continent on 
+        ST_WITHIN(public.trees.estimated_geometric_location, continent.geom)
+          and continent.type_id in (select id from region_type where type = 'continents' )
+      where wallet.wallet.id::text  = '${walletIdOrName}'
+        or wallet.wallet.name = '${walletIdOrName}' 
+      group by continent.name
+  `;
+
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
 }

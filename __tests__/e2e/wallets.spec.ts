@@ -31,4 +31,18 @@ describe('wallets', () => {
       // created_at: '2021-10-08T02:33:20.732Z',
     });
   });
+
+  it('get wallet token-continent count ', async () => {
+    const response = await supertest(app).get(
+      '/wallets/token-region-count/eecdf253-05b6-419a-8425-416a3e5fc9a0',
+    );
+    expect(response.status).toBe(200);
+    expect(response.body.walletStatistics).toBeInstanceOf(Array);
+    expect(response.body.walletStatistics).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ continent: 'Africa' }),
+        expect.objectContaining({ continent: 'North America' }),
+      ]),
+    );
+  });
 });

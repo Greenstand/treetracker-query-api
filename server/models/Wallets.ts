@@ -6,4 +6,7 @@ export default {
   getWalletByIdOrName: delegateRepository<WalletsRepository, Wallets>(
     'getWalletByIdOrName',
   ),
+  getWalletTokenContinentCount: delegateRepository<WalletsRepository, Wallets>(
+    'getWalletTokenContinentCount',
+  ),
 };
