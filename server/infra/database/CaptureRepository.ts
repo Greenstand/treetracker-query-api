@@ -56,7 +56,7 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     }
 
     if (filterObject.tag) {
-      filterObject[`treetracker.tag.name`] = filterObject.tag;
+      filterObject[`treetracker.capture_tag.tag_id`] = filterObject.tag;
       delete filterObject.tag;
     }
 
@@ -74,14 +74,25 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       delete filterObject.reference_id;
     }
 
-    if (filterObject.organization_ids) {
-      result.where(
-        `${this.tableName}.planting_organization_id`,
-        'in',
-        filterObject.organization_ids.split(','),
-      );
-      delete filterObject.organization_ids;
+    // how to get all the parent and children ids for the org -- if they exist?
+    // Stakeholder api? or pass the org ids from the frontend?
+    if (filterObject.organization_id) {
+      result.where(`${this.tableName}.planting_organization_id`, 'in', [
+        filterObject.organization_id,
+      ]);
+      delete filterObject.organization_id;
     }
+
+    // if we want to allow the client to pass more than one org id
+
+    // if (filterObject.organization_ids) {
+    //   result.where(
+    //     `${this.tableName}.planting_organization_id`,
+    //     'in',
+    //     filterObject.organization_ids.split(','),
+    //   );
+    //   delete filterObject.organization_ids;
+    // }
 
     result.where(filterObject);
   }
@@ -90,6 +101,8 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     const knex = this.session.getDB();
     const { sort, ...filter } = filterCriteria;
 
+    // there are two joins to connect the capture to the token and to the wallet right now so that we can double check our data entries
+    // the current data entered in the tables doesn't match up so there are some mismatches
     let promise = knex
       .select(
         knex.raw(
@@ -99,7 +112,8 @@ export default class CaptureRepository extends BaseRepository<Capture> {
             field_data.device_configuration.device_identifier,
             treetracker.grower_account.wallet,
             wt.wallet_name,
-            wt.token_id
+            wt.token_id,
+            tk.id AS wallet_token_id
           FROM treetracker.capture
           LEFT JOIN (
               SELECT ct.capture_id, array_agg(t.name) AS tags
@@ -111,6 +125,8 @@ export default class CaptureRepository extends BaseRepository<Capture> {
               ON field_data.device_configuration.id = treetracker.capture.device_configuration_id
           LEFT JOIN treetracker.grower_account
               ON grower_account.id = treetracker.capture.grower_account_id
+          LEFT JOIN wallet.token tk
+              ON treetracker.capture.id = tk.capture_id
           LEFT JOIN (
               SELECT ga.id, w.name AS wallet_name, t.id AS token_id
               FROM wallet.wallet w
@@ -119,10 +135,10 @@ export default class CaptureRepository extends BaseRepository<Capture> {
             ) wt ON treetracker.capture.grower_account_id = wt.id
           ${
             filter.tag
-              ? `INNER JOIN treetracker.tree_tag
-                  on treetracker.tree_tag.tree_id = treetracker.capture.id
+              ? `INNER JOIN treetracker.capture_tag
+                  on treetracker.capture_tag.capture_id = treetracker.capture.id
                  INNER JOIN treetracker.tag
-                  on treetracker.tree_tag.tag_id = treetracker.tag.id`
+                  on treetracker.capture_tag.tag_id = treetracker.tag.id`
               : ''
           }
           ${
@@ -185,10 +201,10 @@ export default class CaptureRepository extends BaseRepository<Capture> {
             ) wt ON treetracker.capture.grower_account_id = wt.id
           ${
             filter.tag
-              ? `INNER JOIN treetracker.tree_tag
-                  on treetracker.tree_tag.tree_id = treetracker.capture.id
+              ? `INNER JOIN treetracker.capture_tag
+                  on treetracker.capture_tag.capture_id = treetracker.capture.id
                  INNER JOIN treetracker.tag
-                  on treetracker.tree_tag.tag_id = treetracker.tag.id`
+                  on treetracker.capture_tag.tag_id = treetracker.tag.id`
               : ''
           }
           ${
