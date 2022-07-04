@@ -34,7 +34,7 @@ describe('wallets', () => {
 
   it('get wallet token-continent count ', async () => {
     const response = await supertest(app).get(
-      '/wallets/token-region-count/eecdf253-05b6-419a-8425-416a3e5fc9a0',
+      '/wallets/eecdf253-05b6-419a-8425-416a3e5fc9a0/token-region-count',
     );
     expect(response.status).toBe(200);
     expect(response.body.walletStatistics).toBeInstanceOf(Array);

@@ -8,7 +8,7 @@ import WalletModel from '../models/Wallets';
 const router = express.Router();
 
 router.get(
-  '/token-region-count/:walletIdOrName',
+  '/:walletIdOrName/token-region-count',
   handlerWrapper(async (req: express.Request, res: express.Response) => {
     Joi.assert(req.params.walletIdOrName, Joi.string().required());
     const repo = new WalletsRepository(new Session());
