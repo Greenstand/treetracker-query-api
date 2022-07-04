@@ -16,10 +16,14 @@ export default class TokensRepository extends BaseRepository<Tokens> {
 
   async getById(tokenId: string) {
     const sql = `
-    SELECT *
-    FROM
-     wallet.token
-     WHERE id = '${tokenId}'
+    select wallet.token.*,public.trees.id as tree_id,public.trees.image_url as tree_image_url,
+    public.tree_species.name as tree_species_name
+    from wallet.token
+      left join public.trees on 
+        wallet.token.capture_id::text = public.trees.uuid::text
+      left join public.tree_species 
+        on public.trees.species_id = public.tree_species.id 
+      where  wallet.token.id = '${tokenId}'
 `;
 
     const object = await this.session.getDB().raw(sql);
