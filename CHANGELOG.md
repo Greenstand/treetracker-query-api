@@ -1,3 +1,9 @@
+# [1.29.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.28.0...v1.29.0) (2022-07-04)
+
+### Features
+
+- extended token endpoint to return basic tree info ([5a64edd](https://github.com/Greenstand/treetracker-query-api/commit/5a64edd48e83bc9f7d33129e9a6e4cc941ee9e6c))
+
 # [1.28.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.27.0...v1.28.0) (2022-07-02)
 
 ### Bug Fixes
