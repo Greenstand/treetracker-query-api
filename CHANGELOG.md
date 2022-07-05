@@ -1,3 +1,13 @@
+# [1.30.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.29.0...v1.30.0) (2022-07-05)
+
+### Bug Fixes
+
+- changed url structure ([af5850f](https://github.com/Greenstand/treetracker-query-api/commit/af5850f54fc8d79b624a11712d03db9c03799faf))
+
+### Features
+
+- added endpoint for getting total no of token/trees per continent for a gived wallet id ([6c74951](https://github.com/Greenstand/treetracker-query-api/commit/6c749515d3ff3261ba877aef615b19c951c3df15))
+
 # [1.29.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.28.0...v1.29.0) (2022-07-04)
 
 ### Features
