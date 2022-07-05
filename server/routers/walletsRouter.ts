@@ -6,6 +6,21 @@ import WalletsRepository from '../infra/database/WalletsRepository';
 import WalletModel from '../models/Wallets';
 
 const router = express.Router();
+
+router.get(
+  '/:walletIdOrName/token-region-count',
+  handlerWrapper(async (req: express.Request, res: express.Response) => {
+    Joi.assert(req.params.walletIdOrName, Joi.string().required());
+    const repo = new WalletsRepository(new Session());
+    const exe = WalletModel.getWalletTokenContinentCount(repo);
+    const result = await exe(req.params.walletIdOrName);
+    res.send({
+      walletStatistics: result,
+    });
+    res.end();
+  }),
+);
+
 router.get(
   '/:walletIdOrName',
   handlerWrapper(async (req, res) => {
@@ -17,4 +32,5 @@ router.get(
     res.end();
   }),
 );
+
 export default router;
