@@ -11,15 +11,6 @@ type GrowerAccountFilter = Partial<{
   wallet: string;
   email: string;
   phone: string;
-
-  // Filters for future:
-
-  // first_registration_at: string;
-  // created_at: string;
-  // updated_at: string;
-  // location: string;
-  // lon: string;
-  // lat: string;
 }>;
 
 export default GrowerAccountFilter;

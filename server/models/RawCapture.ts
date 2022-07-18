@@ -15,7 +15,7 @@ function getByFilter(
 
 function getCount(
   rawCaptureRepository: RawCaptureRepository,
-): (filter: RawCaptureFilter) => Promise<RawCapture[]> {
+): (filter: RawCaptureFilter) => Promise<{ count: number }> {
   return async function (filter: RawCaptureFilter) {
     const count = await rawCaptureRepository.getCount(filter);
     return count;

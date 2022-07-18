@@ -3,23 +3,36 @@ import FilterOptions from 'interfaces/FilterOptions';
 import GrowerAccount from 'interfaces/GrowerAccount';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import GrowerAccountRepository from '../infra/database/GrowerAccountRepository';
+import GrowerAccountFilter from '../interfaces/GrowerAccountFilter';
 
-type Filter = Partial<{ organization_id: number }>;
+function getCount(
+  growerAccountRepository: GrowerAccountRepository,
+): (filter: GrowerAccountFilter) => Promise<{ count: number }> {
+  return async function (filter: GrowerAccountFilter) {
+    const count = await growerAccountRepository.getCount(filter);
+    return count;
+  };
+}
 
 function getByFilter(
   growerAccountRepository: GrowerAccountRepository,
-): (filter: Filter, options: FilterOptions) => Promise<GrowerAccount[]> {
-  return async function (filter: Filter, options: FilterOptions) {
-    if (filter.organization_id) {
-      log.warn('using org filter...');
-      const trees = await growerAccountRepository.getByOrganization(
-        filter.organization_id,
-        options,
-      );
-      return trees;
-    }
-    const trees = await growerAccountRepository.getByFilter(filter, options);
-    return trees;
+): (
+  filter: GrowerAccountFilter,
+  options: FilterOptions,
+) => Promise<GrowerAccount[]> {
+  return async function (filter: GrowerAccountFilter, options: FilterOptions) {
+    const result = await growerAccountRepository.getByFilter(filter, options);
+    return result;
+  };
+}
+
+function getSelfiesById(
+  growerAccountRepository: GrowerAccountRepository,
+): (id: string) => Promise<GrowerAccount[]> {
+  return async function (id: string) {
+    log.warn('using planter name filter...');
+    const grower_accounts = await growerAccountRepository.getSelfiesById(id);
+    return grower_accounts;
   };
 }
 
@@ -28,8 +41,11 @@ function getByName(
 ): (keyword: string, options: FilterOptions) => Promise<GrowerAccount[]> {
   return async function (keyword: string, options: FilterOptions) {
     log.warn('using planter name filter...');
-    const planters = await growerAccountRepository.getByName(keyword, options);
-    return planters;
+    const grower_accounts = await growerAccountRepository.getByName(
+      keyword,
+      options,
+    );
+    return grower_accounts;
   };
 }
 
@@ -42,15 +58,14 @@ function getGrowerAccountLinks(planter) {
   return links;
 }
 
-function getFeaturedPlanters(
+function getFeaturedGrowers(
   growerAccountRepository: GrowerAccountRepository,
 ): (options: FilterOptions) => Promise<GrowerAccount[]> {
   return async function (options: FilterOptions) {
     log.warn('using featured planters filter...');
-    const planters = await growerAccountRepository.getFeaturedGrowerAccounts(
-      options,
-    );
-    return planters;
+    const grower_accounts =
+      await growerAccountRepository.getFeaturedGrowerAccounts(options);
+    return grower_accounts;
   };
 }
 
@@ -58,8 +73,10 @@ export default {
   getById: delegateRepository<GrowerAccountRepository, GrowerAccount>(
     'getById',
   ),
+  getSelfiesById,
+  getCount,
   getByFilter,
   getByName,
   getGrowerAccountLinks,
-  getFeaturedPlanters,
+  getFeaturedGrowers,
 };
