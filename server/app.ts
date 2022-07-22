@@ -1,8 +1,8 @@
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 import capturesRouter from './routers/capturesRouter';
 import countriesRouter from './routers/countriesRouter';
+import growerAccountsRouter from './routers/growerAccountsRouter';
 import organizationsRouter from './routers/organizationsRouter';
 import plantersRouter from './routers/plantersRouter';
 import rawCapturesRouter from './routers/rawCapturesRouter';
@@ -58,6 +58,7 @@ app.use('/transactions', transactionsRouter);
 app.use('/tokens', tokensRouter);
 app.use('/v2/captures', capturesRouter);
 app.use('/raw-captures', rawCapturesRouter);
+app.use('/grower-accounts', growerAccountsRouter);
 // Global error handler
 app.use(errorHandler);
 
