@@ -1,3 +1,13 @@
+# [1.31.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.30.0...v1.31.0) (2022-07-22)
+
+### Features
+
+- add /grower-accounts queries ([36283f8](https://github.com/Greenstand/treetracker-query-api/commit/36283f89fbbc04e8040ce1a775d60be3cc65f33c))
+- add files to start making grower-account query ([b340dc4](https://github.com/Greenstand/treetracker-query-api/commit/b340dc4fd5b5415254e00f2795a4e1e08db1cfb6))
+- add route to get the count of raw-captures w/ or w/o filter & fix tag type ([9ca1c18](https://github.com/Greenstand/treetracker-query-api/commit/9ca1c186c159fc2bfed732e14480ebbebafc0f9e))
+- add selfies query and update other grower queries ([f1d4c63](https://github.com/Greenstand/treetracker-query-api/commit/f1d4c630819c271620d5fa064154a9ffb5257ace))
+- work on grower_account query (need data to test) ([8f84a5c](https://github.com/Greenstand/treetracker-query-api/commit/8f84a5c2ac1d19a30cec91898d2265cec94b6a41))
+
 # [1.30.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.29.0...v1.30.0) (2022-07-05)
 
 ### Bug Fixes
