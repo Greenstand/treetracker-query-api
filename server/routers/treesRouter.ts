@@ -1,5 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
+import Tree from 'interfaces/Tree';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import TreeRepository from '../infra/database/TreeRepository';
@@ -12,6 +13,15 @@ type Filter = Partial<{
   date_range: { startDate: string; endDate: string };
   tag: string;
 }>;
+
+type BaseFilterOptions<T> = {
+  limit: number;
+  offset: number;
+  orderBy?: {
+    column: keyof T;
+    direction?: 'desc' | 'asc';
+  };
+};
 
 router.get(
   '/featured',
@@ -48,6 +58,8 @@ router.get(
         organization_id: Joi.number().integer().min(0),
         tag: Joi.string(),
         limit: Joi.number().integer().min(1).max(1000),
+        order_by: Joi.string(),
+        desc: Joi.boolean(),
         offset: Joi.number().integer().min(0),
         startDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
         endDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -56,6 +68,8 @@ router.get(
     const {
       limit = 20,
       offset = 0,
+      order_by,
+      desc = true,
       planter_id,
       organization_id,
       startDate,
@@ -64,8 +78,19 @@ router.get(
     } = req.query;
     const repo = new TreeRepository(new Session());
     const filter: Filter = {};
+    const options: BaseFilterOptions<Tree> = {
+      limit,
+      offset,
+    };
+
     if (planter_id) {
       filter.planter_id = planter_id;
+      if (order_by) {
+        options.orderBy = {
+          column: order_by === 'created_at' ? 'time_created' : order_by,
+          direction: desc === true ? 'desc' : 'asc',
+        };
+      }
     } else if (organization_id) {
       filter.organization_id = organization_id;
     } else if (startDate && endDate) {
@@ -73,10 +98,7 @@ router.get(
     } else if (tag) {
       filter.tag = tag;
     }
-    const result = await TreeModel.getByFilter(repo)(filter, {
-      limit,
-      offset,
-    });
+    const result = await TreeModel.getByFilter(repo)(filter, options);
     res.send({
       total: (startDate && endDate) || tag ? result.length : null,
       offset,
