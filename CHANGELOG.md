@@ -1,3 +1,9 @@
+# [1.32.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.31.0...v1.32.0) (2022-08-04)
+
+### Features
+
+- use config table to get featured tree ([ebfdbf5](https://github.com/Greenstand/treetracker-query-api/commit/ebfdbf5dad5986321401c87bd4decd1be9c6918e))
+
 # [1.31.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.30.0...v1.31.0) (2022-07-22)
 
 ### Features
