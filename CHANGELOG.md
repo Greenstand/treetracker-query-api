@@ -1,3 +1,10 @@
+# [1.33.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.32.0...v1.33.0) (2022-08-04)
+
+### Features
+
+- org featured api ([038ea38](https://github.com/Greenstand/treetracker-query-api/commit/038ea38781870f60b4794f538c00569c56d88b6d))
+- planter featured ([a764c0a](https://github.com/Greenstand/treetracker-query-api/commit/a764c0a6d5b17a9960b70d9e866a40f78179b7c6))
+
 # [1.32.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.31.0...v1.32.0) (2022-08-04)
 
 ### Features
