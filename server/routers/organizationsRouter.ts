@@ -10,6 +10,23 @@ type Filter = Partial<{ planter_id: number; organization_id: number }>;
 const router = express.Router();
 
 router.get(
+  '/featured',
+  handlerWrapper(async (req, res) => {
+    const repo = new OrganizationRepository(new Session());
+    const result = await OrganizationModel.getFeaturedOrganizations(repo)();
+    res.send({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      organizations: result.map((org) => ({
+        ...org,
+        links: OrganizationModel.getOrganizationLinks(org),
+      })),
+    });
+    res.end();
+  }),
+);
+
+router.get(
   '/:id',
   handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.number().required());

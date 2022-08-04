@@ -22,4 +22,17 @@ export default class OrganizationRepository extends BaseRepository<Organization>
     const object = await this.session.getDB().raw(sql);
     return object.rows;
   }
+
+  async getFeaturedOrganizations() {
+    const sql = `
+      select entity.* from entity 
+      join (
+      --- convert json array to row
+      SELECT json_array_elements(data -> 'organizations') AS organization_id FROM webmap.config WHERE name = 'featured-organization'
+      ) AS t ON 
+      t.organization_id::text::integer = entity.id;
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
 }
