@@ -44,7 +44,7 @@ function getByFilter(
  featured tree, some highlighted tree, for a tempororily solution
  we just put the newest, verified tree
  */
-function getFeaturedTree(treeRepository: TreeRepository) {
+function getFeaturedTreeDepricated(treeRepository: TreeRepository) {
   return async () => {
     // const trees = await treeRepository.getByFilter(
     //  {
@@ -67,5 +67,5 @@ function getFeaturedTree(treeRepository: TreeRepository) {
 export default {
   getById: delegateRepository<TreeRepository, Tree>('getById'),
   getByFilter,
-  getFeaturedTree,
+  getFeaturedTree: delegateRepository<TreeRepository, Tree>('getFeaturedTree'),
 };
