@@ -36,4 +36,8 @@ export default {
   getById: delegateRepository<OrganizationRepository, Organization>('getById'),
   getByFilter,
   getOrganizationLinks,
+  getFeaturedOrganizations: delegateRepository<
+    OrganizationRepository,
+    Organization
+  >('getFeaturedOrganizations'),
 };
