@@ -68,11 +68,11 @@ export default class PlanterRepository extends BaseRepository<Planter> {
   async getFeaturedPlanters(options: FilterOptions) {
     const { limit } = options;
     const sql = `
-      SELECT
-      *
-      FROM planter
-      ORDER BY id DESC
-      LIMIT ${limit}
+      select planter.* from planter 
+      join (
+      SELECT json_array_elements(data -> 'planters') AS planter_id FROM webmap.config WHERE name = 'featured-planter'
+      ) AS t ON 
+      t.planter_id::text::integer = planter.id;
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;
