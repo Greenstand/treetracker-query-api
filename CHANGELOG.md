@@ -1,3 +1,9 @@
+# [1.34.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.33.0...v1.34.0) (2022-08-12)
+
+### Features
+
+- implemented Get /trees?planter_id=1&order_by=created_at&desc=true ([56ed8b1](https://github.com/Greenstand/treetracker-query-api/commit/56ed8b1b9c082cf1ce6bce93718e8ab7572adc4d))
+
 # [1.33.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.32.0...v1.33.0) (2022-08-04)
 
 ### Features
