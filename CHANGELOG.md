@@ -1,3 +1,9 @@
+# [1.35.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.34.0...v1.35.0) (2022-08-15)
+
+### Features
+
+- add continent to response [#141](https://github.com/Greenstand/treetracker-query-api/issues/141) ([e35f5ab](https://github.com/Greenstand/treetracker-query-api/commit/e35f5abb8dabab1eadd3e2ee6d231cc0d5ae011c))
+
 # [1.34.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.33.0...v1.34.0) (2022-08-12)
 
 ### Features
