@@ -102,13 +102,17 @@ export default class TreeRepository extends BaseRepository<Tree> {
 
   async getFeaturedTree() {
     const sql = `
-      select trees.* from trees 
+      select trees.*,
+      tree_species.name as species_name
+      from trees 
       join (
       --- convert json array to row
       SELECT json_array_elements(data -> 'trees') AS tree_id FROM webmap.config WHERE name = 'featured-tree'
       ) AS t ON 
       --- cast json type t.tree_id to integer
-      t.tree_id::text::integer = trees.id;
+      t.tree_id::text::integer = trees.id
+      LEFT JOIN tree_species 
+      ON trees.species_id = tree_species.id ;
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;
