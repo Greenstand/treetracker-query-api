@@ -1,8 +1,8 @@
+import FilterOptions from 'interfaces/FilterOptions';
 import Wallets from 'interfaces/Wallets';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 import HttpError from '../../utils/HttpError';
-import FilterOptions from 'interfaces/FilterOptions';
 
 export default class WalletsRepository extends BaseRepository<Wallets> {
   constructor(session: Session) {

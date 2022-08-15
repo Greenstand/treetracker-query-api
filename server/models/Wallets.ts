@@ -1,8 +1,8 @@
+import log from 'loglevel';
+import FilterOptions from 'interfaces/FilterOptions';
 import Wallets from 'interfaces/Wallets';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import WalletsRepository from '../infra/database/WalletsRepository';
-import FilterOptions from 'interfaces/FilterOptions';
-import log from 'loglevel';
 
 type Filter = Partial<{ name: string }>;
 
