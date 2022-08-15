@@ -1,5 +1,6 @@
 import FilterOptions from 'interfaces/FilterOptions';
 import Organization from 'interfaces/Organization';
+import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 
@@ -21,6 +22,33 @@ export default class OrganizationRepository extends BaseRepository<Organization>
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;
+  }
+
+  async getById(id: string | number) {
+    const object = await this.session
+      .getDB()
+      .select(
+        this.session.getDB().raw(`
+        entity.*,
+        country.name as country_name,
+        continent.name as continent_name
+        from entity 
+        left join trees on entity.id = trees.planting_organization_id
+        left join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
+              and country.type_id in
+                (select id from region_type where type = 'country')
+        left join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
+              and continent.type_id in
+                (select id from region_type where type = 'continents' )
+        `),
+      )
+      .where('entity.id', id)
+      .first();
+
+    if (!object) {
+      throw new HttpError(404, `Can not find ${this.tableName} by id:${id}`);
+    }
+    return object;
   }
 
   async getFeaturedOrganizations() {
