@@ -2,6 +2,7 @@ import Wallets from 'interfaces/Wallets';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 import HttpError from '../../utils/HttpError';
+import FilterOptions from 'interfaces/FilterOptions';
 
 export default class WalletsRepository extends BaseRepository<Wallets> {
   constructor(session: Session) {
@@ -48,4 +49,20 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
     const object = await this.session.getDB().raw(sql);
     return object.rows;
   }
+
+  async getByName(keyword: string, options: FilterOptions) {
+    const { limit, offset } = options;
+    const sql = `
+      SELECT
+        *
+      FROM wallet.wallet
+      WHERE name LIKE '%${keyword}%'
+      ORDER BY name
+      LIMIT ${limit}
+      OFFSET ${offset}
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
+
 }
