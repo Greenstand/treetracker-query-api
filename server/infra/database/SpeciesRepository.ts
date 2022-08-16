@@ -11,7 +11,7 @@ export default class SpeciesRepository extends BaseRepository<Species> {
   async getByOrganization(organization_id: number, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
-      select species_id as id, count(species_id) as total, tree_species.name
+      select species_id as id, count(species_id) as total, tree_species.name, tree_species.desc
       from trees
       LEFT JOIN tree_species 
       on trees.species_id = tree_species.id
@@ -22,7 +22,7 @@ export default class SpeciesRepository extends BaseRepository<Species> {
       AND tree_species.name is not null
       AND trees.species_id is not null
       AND planter.organization_id IN (SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
-      group by species_id, tree_species.name
+      group by species_id, tree_species.name, tree_species.desc
       order by total desc
       LIMIT ${limit}
       OFFSET ${offset}
@@ -34,7 +34,7 @@ export default class SpeciesRepository extends BaseRepository<Species> {
   async getByPlanter(planter_id: number, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
-      select species_id as id, count(species_id) as total, tree_species.name
+      select species_id as id, count(species_id) as total, tree_species.name, tree_species.desc
       from trees
       LEFT JOIN tree_species 
       on trees.species_id = tree_species.id
@@ -43,7 +43,7 @@ export default class SpeciesRepository extends BaseRepository<Species> {
       AND trees.planter_id = ${planter_id}
       AND tree_species.name is not null
       AND trees.species_id is not null
-      group by species_id, tree_species.name
+      group by species_id, tree_species.name, tree_species.desc
       order by total desc
       LIMIT ${limit}
       OFFSET ${offset}
@@ -55,7 +55,7 @@ export default class SpeciesRepository extends BaseRepository<Species> {
   async getByWallet(wallet_id: string, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
-      select species_id as id, count(species_id) as total, tree_species.name
+      select species_id as id, count(species_id) as total, tree_species.name, tree_species.desc
       from trees
       LEFT JOIN tree_species 
       on trees.species_id = tree_species.id
@@ -68,7 +68,7 @@ export default class SpeciesRepository extends BaseRepository<Species> {
       AND wallet.wallet.id::text = '${wallet_id}'
       AND tree_species.name is not null
       AND trees.species_id is not null
-      group by species_id, tree_species.name
+      group by species_id, tree_species.name, tree_species.desc
       order by total desc
       LIMIT ${limit}
       OFFSET ${offset}
