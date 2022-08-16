@@ -46,9 +46,11 @@ describe('', () => {
   });
 
   it(
-    'countries/leaderboard',
+    'countries/leaderboard/Europe',
     async () => {
-      const response = await supertest(app).get('/countries/leaderboard');
+      const response = await supertest(app).get(
+        '/countries/leaderboard/Europe',
+      );
       expect(response.status).toBe(200);
       expect(response.body.countries[0]).toMatchObject({
         id: expect.any(Number),
@@ -57,7 +59,7 @@ describe('', () => {
         centroid: expect.stringMatching(/coordinates/),
       });
     },
-    1000 * 60,
+    1000 * 600,
   );
 
   it('countries/v2/leaderboard', async () => {

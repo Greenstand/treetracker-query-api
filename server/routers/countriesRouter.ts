@@ -56,11 +56,12 @@ router.get(
 );
 
 router.get(
-  '/leaderboard',
+  '/leaderboard/:region',
   handlerWrapper(async (req, res) => {
+    Joi.assert(req.params.region, Joi.string().required());
     const repo = new CountryRepository(new Session());
     const exe = CountryModel.getLeaderBoard(repo);
-    const result = await exe(req.params.id);
+    const result = await exe(req.params.region);
     res.send({
       countries: result,
     });
