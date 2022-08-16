@@ -59,42 +59,41 @@ export default class CountryRepository extends BaseRepository<Country> {
     return object.rows;
   }
 
-   
   async getLeaderBoard(region: string /* top = 10 */) {
-    let regionID = 0;
+    let regionName = '';
 
     switch (region.toUpperCase()) {
       case 'AFRICA':
-        regionID = 6632611;
+        regionName = 'Africa';
         break;
       case 'ANTARCTICA':
-        regionID = 6632612;
+        regionName = 'Antarctica';
         break;
       case 'ASIA':
-        regionID = 6632613;
+        regionName = 'Asia';
         break;
       case 'AUSTRALIA':
-        regionID = 6632614;
+        regionName = 'Australia';
         break;
       case 'EUROPE':
-        regionID = 6632615;
+        regionName = 'Europe';
         break;
       case 'NORTHA':
-        regionID = 6632616;
+        regionName = 'North America';
         break;
       case 'OCEANIA':
-        regionID = 6632617;
+        regionName = 'Oceania';
         break;
       case 'SOUTHA':
-        regionID = 6632618;
+        regionName = 'South America';
         break;
       default:
-        regionID = 0;
+        regionName = '';
     }
 
     let sql: string;
 
-    if (regionID === 0) {
+    if (regionName === '') {
       sql = `
         select r.*, region.name, ST_AsGeoJSON(centroid) as centroid  from (
         select count(region.id) as planted, region.id
@@ -117,7 +116,7 @@ export default class CountryRepository extends BaseRepository<Country> {
       select count(region.id) as planted, region.id
       from (
         select trees.*  from trees, region c
-        where c.id = ${regionID} and ST_WITHIN(trees.estimated_geometric_location, c.geom)
+        where c.name = '${regionName}' and ST_WITHIN(trees.estimated_geometric_location, c.geom)
       ) as trees_in_continent
       LEFT JOIN region
       on ST_WITHIN(trees_in_continent.estimated_geometric_location, region.geom)
