@@ -1,3 +1,13 @@
+# [1.36.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.35.0...v1.36.0) (2022-08-16)
+
+### Bug Fixes
+
+- use region name to merge tables instead of region ID ([ab04709](https://github.com/Greenstand/treetracker-query-api/commit/ab04709e56113a967fc8c3bd5f7bea3348bad2d6))
+
+### Features
+
+- add filter by continent ([16b721e](https://github.com/Greenstand/treetracker-query-api/commit/16b721ed026f81ff0b53fa3541de9788ee9356b5))
+
 # [1.35.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.34.0...v1.35.0) (2022-08-15)
 
 ### Features
