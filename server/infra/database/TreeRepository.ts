@@ -20,7 +20,9 @@ export default class TreeRepository extends BaseRepository<Tree> {
           region.name as country_name,
           region.id as country_id,
           entity.id as organization_id,
-          entity.name as organization_name
+          entity.name as organization_name,
+          wallet.wallet.id as wallet_id,
+          wallet.wallet.name as wallet_name
           from trees
             left JOIN planter 
               on trees.planter_id = planter.id
@@ -31,6 +33,10 @@ export default class TreeRepository extends BaseRepository<Tree> {
             left JOIN region
               on ST_WITHIN(trees.estimated_geometric_location, region.geom)
               and region.type_id in (select id from region_type where type = 'country')
+            left JOIN wallet.token
+              on wallet.token.capture_id::text = trees.uuid::text
+            left JOIN wallet.wallet
+              on wallet.token.wallet_id = wallet.wallet.id
       `),
       )
       .where('trees.id', id)
