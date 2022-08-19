@@ -1,3 +1,9 @@
+# [1.37.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.36.0...v1.37.0) (2022-08-19)
+
+### Features
+
+- added species_name for get featured tree ([f8e73a6](https://github.com/Greenstand/treetracker-query-api/commit/f8e73a66400eca56c1da8ead84c8bf71e4585492))
+
 # [1.36.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.35.0...v1.36.0) (2022-08-16)
 
 ### Bug Fixes
