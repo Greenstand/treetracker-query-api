@@ -23,6 +23,7 @@ describe('species', () => {
         total: expect.stringMatching(/\d+/),
         name: expect.any(String),
         id: expect.any(Number),
+        desc: expect.any(String),
       });
     },
     1000 * 30,
@@ -40,6 +41,7 @@ describe('species', () => {
         total: expect.stringMatching(/\d+/),
         name: expect.any(String),
         id: expect.any(Number),
+        desc: expect.any(String),
       });
     },
     1000 * 30,
@@ -57,6 +59,7 @@ describe('species', () => {
         total: expect.stringMatching(/\d+/),
         name: expect.any(String),
         id: expect.any(Number),
+        desc: expect.any(String),
       });
     },
     1000 * 30,
