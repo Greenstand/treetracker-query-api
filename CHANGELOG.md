@@ -1,3 +1,9 @@
+# [1.38.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.37.0...v1.38.0) (2022-08-19)
+
+### Features
+
+- get species need to return description ([658e201](https://github.com/Greenstand/treetracker-query-api/commit/658e201a9f91fbdc518d7001ed21d54f2c85d68b))
+
 # [1.37.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.36.0...v1.37.0) (2022-08-19)
 
 ### Features
