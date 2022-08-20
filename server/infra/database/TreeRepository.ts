@@ -22,7 +22,8 @@ export default class TreeRepository extends BaseRepository<Tree> {
           entity.id as organization_id,
           entity.name as organization_name,
           wallet.wallet.id as wallet_id,
-          wallet.wallet.name as wallet_name
+          wallet.wallet.name as wallet_name,
+          wallet.token.id as token_id
           from trees
             left JOIN planter 
               on trees.planter_id = planter.id
