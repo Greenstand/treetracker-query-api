@@ -70,6 +70,19 @@ router.get(
 );
 
 router.get(
+  '/leaderboard',
+  handlerWrapper(async (req, res) => {
+    const repo = new CountryRepository(new Session());
+    const exe = CountryModel.getLeaderBoard(repo);
+    const result = await exe('');
+    res.send({
+      countries: result,
+    });
+    res.end();
+  }),
+);
+
+router.get(
   '/:id',
   handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.number().required());
