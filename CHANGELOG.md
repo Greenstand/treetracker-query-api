@@ -1,3 +1,9 @@
+# [1.39.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.38.0...v1.39.0) (2022-08-22)
+
+### Features
+
+- Added GET /wallets route ([f959393](https://github.com/Greenstand/treetracker-query-api/commit/f95939366ccdebe1fb196ccd78e9dfc1fc70f7af))
+
 # [1.38.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.37.0...v1.38.0) (2022-08-19)
 
 ### Features
