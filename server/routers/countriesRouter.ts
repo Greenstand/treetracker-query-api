@@ -1,4 +1,5 @@
 import express from 'express';
+import expressLru from 'express-lru';
 import Joi from 'joi';
 import CountryRepositoryV2 from 'infra/database/CountryRepositoryV2';
 import { handlerWrapper } from './utils';
@@ -8,6 +9,15 @@ import CountryModel from '../models/Country';
 import CountryModelV2 from '../models/CountryV2';
 
 const router = express.Router();
+
+const cache = expressLru({
+  max: 10,
+  ttl: 31536000 * 1000,
+  skip () {
+    // skip conditions
+    return false;
+  },
+});
 
 router.get(
   '/v2/leaderboard',
@@ -57,6 +67,7 @@ router.get(
 
 router.get(
   '/leaderboard/:region',
+  cache,
   handlerWrapper(async (req, res) => {
     Joi.assert(req.params.region, Joi.string().required());
     const repo = new CountryRepository(new Session());
