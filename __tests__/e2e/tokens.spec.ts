@@ -20,6 +20,18 @@ describe('Tokens', () => {
     });
   });
 
+  it('/token/{tokenId} should return 404 for invalid id', async () => {
+    const response = await supertest(app).get(
+      '/tokens/b1e2d4f9-1c02-444f-9ca9-8b4477ee55cb',
+    );
+    expect(response.status).toBe(404);
+    expect(response.body).toMatchObject({
+      code: 404,
+      message:
+        'Can not found wallet.token by id:b1e2d4f9-1c02-444f-9ca9-8b4477ee55cb',
+    });
+  });
+
   it('/tokens?wallet=bd60973b-2f08-45c5-afb3-7ec018180f17', async () => {
     const response = await supertest(app).get(
       '/tokens?wallet=bd60973b-2f08-45c5-afb3-7ec018180f17',

@@ -28,13 +28,14 @@ export default class TokensRepository extends BaseRepository<Tokens> {
 
     const object = await this.session.getDB().raw(sql);
 
-    if (!object && object.rows.length !== 1) {
+    if (object && object.rows.length > 0) {
+      return object.rows[0];
+    } 
       throw new HttpError(
         404,
         `Can not found ${this.tableName} by id:${tokenId}`,
       );
-    }
-    return object.rows[0];
+    
   }
 
   async getByFilter(filter: Filter, options: FilterOptions) {
