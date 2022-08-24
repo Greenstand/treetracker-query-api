@@ -12,10 +12,10 @@ const router = express.Router();
 
 const cache = expressLru({
   max: 10,
-  ttl: 31536000 * 1000,
-  skip () {
+  ttl: 604800 * 1000,
+  skip() {
     // skip conditions
-    return false;
+    return process.env.CACHE_ENABLED !== 'true';
   },
 });
 
