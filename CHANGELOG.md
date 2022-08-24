@@ -1,3 +1,10 @@
+# [1.40.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.39.0...v1.40.0) (2022-08-24)
+
+### Features
+
+- add env variable to turn caching on and off, change cache max age to a week ([19c1561](https://github.com/Greenstand/treetracker-query-api/commit/19c15614699ec15414c9295e995fca03296b5d6f))
+- express-lru cache for countries/leaderboard ([522d9a0](https://github.com/Greenstand/treetracker-query-api/commit/522d9a00808b0323376b19d43f3fb116ae700ff8))
+
 # [1.39.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.38.0...v1.39.0) (2022-08-22)
 
 ### Features
