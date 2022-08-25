@@ -1,3 +1,9 @@
+# [1.41.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.40.0...v1.41.0) (2022-08-25)
+
+### Features
+
+- get token by id return 404 for invalid id ([6fc4cb2](https://github.com/Greenstand/treetracker-query-api/commit/6fc4cb201ffcfba74363a1fdd25ce8bc3ab61ec0))
+
 # [1.40.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.39.0...v1.40.0) (2022-08-24)
 
 ### Features
