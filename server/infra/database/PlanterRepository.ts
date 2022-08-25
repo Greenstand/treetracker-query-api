@@ -16,7 +16,8 @@ export default class PlanterRepository extends BaseRepository<Planter> {
         this.session.getDB().raw(`
         planter.*,
         country.name as country_name,
-        continent.name as continent_name
+        continent.name as continent_name,
+        planter_registrations.created_at as created_at
         from planter
         left join trees on planter.id = trees.planter_id
         left join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
@@ -25,6 +26,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
         left join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
           and continent.type_id in
             (select id from region_type where type = 'continents' )
+        left join planter_registrations on planter.id = planter_registrations.planter_id
       `),
       )
       .where('planter.id', id)
