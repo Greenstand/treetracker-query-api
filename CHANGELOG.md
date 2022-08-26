@@ -1,3 +1,10 @@
+# [1.42.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.41.0...v1.42.0) (2022-08-26)
+
+### Features
+
+- add country_id and country_name to /trees/featured [#166](https://github.com/Greenstand/treetracker-query-api/issues/166) ([41c0db0](https://github.com/Greenstand/treetracker-query-api/commit/41c0db0f77bb19375be248d3b39c6a43c509cc32))
+- Added source_wallet_logo_url in /transactions ([b926fa7](https://github.com/Greenstand/treetracker-query-api/commit/b926fa7f71f769faf4f311a35f33ddb577aa6347)), closes [#161](https://github.com/Greenstand/treetracker-query-api/issues/161)
+
 # [1.41.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.40.0...v1.41.0) (2022-08-25)
 
 ### Features
