@@ -6,4 +6,5 @@ export default interface Transaction {
   source_wallet_name: string;
   destination_wallet_name: string;
   processed_at: string;
+  source_wallet_logo_url: string;
 }

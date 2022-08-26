@@ -22,7 +22,8 @@ export default class TransactionRepository extends BaseRepository<Transaction> {
             t.destination_wallet_id,
             srcWallet.name AS source_wallet_name,
             destWallet.name AS destination_wallet_name,
-            t.processed_at
+            t.processed_at,
+            srcWallet.logo_url AS source_wallet_logo_url
         FROM
             wallet.transaction t
             LEFT JOIN wallet.wallet srcWallet ON srcWallet.id = t.source_wallet_id
