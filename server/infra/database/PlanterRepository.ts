@@ -4,6 +4,8 @@ import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 
+type Filter = Partial<{ organization_id: number }>;
+
 export default class PlanterRepository extends BaseRepository<Planter> {
   constructor(session: Session) {
     super('planter', session);
@@ -42,9 +44,35 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const { limit, offset } = options;
     const sql = `
       SELECT
-        *
+        planter.*,
+        planter_registrations.created_at
       FROM planter
+      LEFT JOIN planter_registrations
+           ON planter.id = planter_registrations.planter_id
       WHERE planter.organization_id = ${organization_id}
+      LIMIT ${limit}
+      OFFSET ${offset}
+    `;
+    const object = await this.session.getDB().raw(sql);
+
+    if (!object) {
+      throw new HttpError(
+        404,
+        `Can not find ${this.tableName} by organization_id: ${organization_id}`,
+      );
+    }
+    return object.rows;
+  }
+
+  async getByFilter(filter: Filter, options: FilterOptions) {
+    const { limit, offset } = options;
+    const sql = `
+      SELECT
+        planter.*,
+        planter_registrations.created_at
+      FROM planter
+      LEFT JOIN planter_registrations
+           ON planter.id = planter_registrations.planter_id
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -56,14 +84,24 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const { limit, offset } = options;
     const sql = `
       SELECT
-        *
+        planter.*,
+        planter_registrations.created_at
       FROM planter
-      WHERE first_name LIKE '${keyword}%' OR last_name LIKE '${keyword}%'
-      ORDER BY first_name, last_name
+      LEFT JOIN planter_registrations
+           ON planter.id = planter_registrations.planter_id
+      WHERE planter.first_name LIKE '${keyword}%' OR planter.last_name LIKE '${keyword}%'
+      ORDER BY planter.first_name, planter.last_name
       LIMIT ${limit}
       OFFSET ${offset}
     `;
     const object = await this.session.getDB().raw(sql);
+
+    if (!object) {
+      throw new HttpError(
+        404,
+        `Can not find ${this.tableName} by name: ${keyword}`,
+      );
+    }
     return object.rows;
   }
 
