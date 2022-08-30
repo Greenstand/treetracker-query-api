@@ -1,3 +1,9 @@
+# [1.43.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.42.0...v1.43.0) (2022-08-30)
+
+### Features
+
+- add created_at field at GET /planters/{id} and GET /planters endpoints ([2808df0](https://github.com/Greenstand/treetracker-query-api/commit/2808df0058836e1c327b774fa97b556802d6687f))
+
 # [1.42.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.41.0...v1.42.0) (2022-08-26)
 
 ### Features
