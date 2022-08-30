@@ -34,6 +34,9 @@ function getOrganizationLinks(organization) {
 
 export default {
   getById: delegateRepository<OrganizationRepository, Organization>('getById'),
+  getByMapName: delegateRepository<OrganizationRepository, Organization>(
+    'getByMapName',
+  ),
   getByFilter,
   getOrganizationLinks,
   getFeaturedOrganizations: delegateRepository<
