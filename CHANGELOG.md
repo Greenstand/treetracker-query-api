@@ -1,3 +1,9 @@
+# [1.44.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.43.0...v1.44.0) (2022-08-31)
+
+### Features
+
+- get organization by map name ([6016138](https://github.com/Greenstand/treetracker-query-api/commit/6016138a6fafb0bff905875ca86344b62dc41cef))
+
 # [1.43.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.42.0...v1.43.0) (2022-08-30)
 
 ### Features
