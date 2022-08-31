@@ -29,9 +29,14 @@ router.get(
 router.get(
   '/:id',
   handlerWrapper(async (req, res) => {
-    Joi.assert(req.params.id, Joi.number().required());
+    Joi.assert(req.params.id, Joi.string().required());
     const repo = new OrganizationRepository(new Session());
-    const exe = OrganizationModel.getById(repo);
+    let exe;
+    if (Number.isNaN(req.params.id)) {
+      exe = OrganizationModel.getByMapName(repo);
+    } else {
+      exe = OrganizationModel.getById(repo);
+    }
     const result = await exe(req.params.id);
     result.links = OrganizationModel.getOrganizationLinks(result);
     res.send(result);

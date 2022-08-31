@@ -14,7 +14,18 @@ describe('organizations', () => {
       },
     });
   });
-
+  it('organizations/{map_name}', async () => {
+    const response = await supertest(app).get('/organizations/freetown');
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      map_name: 'freetown',
+      links: {
+        featured_trees: expect.stringMatching(/trees/),
+        associated_planters: expect.stringMatching(/planters/),
+        species: expect.stringMatching(/species/),
+      },
+    });
+  });
   it(
     'organizations?planter_id=1&limit=1',
     async () => {
