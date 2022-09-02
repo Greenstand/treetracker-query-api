@@ -40,9 +40,10 @@ router.get(
   '/:id',
   handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.number().required());
+    Joi.assert(req.query.organization_id, Joi.number());
     const repo = new TreeRepository(new Session());
-    const exe = TreeModel.getById(repo);
-    const result = await exe(req.params.id);
+    const exe = TreeModel.getByIdOrOrganizationId(repo);
+    const result = await exe(req.params.id, req.query.organization_id);
     res.send(result);
     res.end();
   }),

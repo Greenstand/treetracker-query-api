@@ -81,7 +81,7 @@ function getFeaturedTreeDepricated(treeRepository: TreeRepository) {
 }
 
 export default {
-  getById: delegateRepository<TreeRepository, Tree>('getById'),
+  getByIdOrOrganizationId: delegateRepository<TreeRepository, Tree>('getByIdOrOrganizationId'),
   getByFilter,
   getFeaturedTree: delegateRepository<TreeRepository, Tree>('getFeaturedTree'),
 };

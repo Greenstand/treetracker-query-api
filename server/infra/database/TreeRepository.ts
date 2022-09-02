@@ -9,39 +9,48 @@ export default class TreeRepository extends BaseRepository<Tree> {
     super('trees', session);
   }
 
-  async getById(id: string | number) {
+  async getByIdOrOrganizationId(id: string | number, organization_id?: number) {
+    let sql =` 
+    trees.*,
+    tree_species.id as species_id,
+    tree_species.name as species_name,
+    region.name as country_name,
+    region.id as country_id,
+    entity.id as organization_id,
+    entity.name as organization_name,
+    wallet.wallet.id as wallet_id,
+    wallet.wallet.name as wallet_name,
+    wallet.token.id as token_id
+    from trees
+      left JOIN planter 
+        on trees.planter_id = planter.id
+      left JOIN entity 
+        on entity.id = planter.organization_id
+      left JOIN tree_species 
+        on trees.species_id = tree_species.id 
+      left JOIN region
+        on ST_WITHIN(trees.estimated_geometric_location, region.geom)
+        and region.type_id in (select id from region_type where type = 'country')
+      left JOIN wallet.token
+        on wallet.token.capture_id::text = trees.uuid::text
+      left JOIN wallet.wallet
+        on wallet.token.wallet_id = wallet.wallet.id
+      WHERE trees.id = ${id}  
+      `;
+      
+    if(organization_id) {
+      sql+= 
+      `
+        AND
+          entity.id = ${organization_id}
+          `;
+    }
+    
     const object = await this.session
       .getDB()
       .select(
-        this.session.getDB().raw(`
-          trees.*,
-          tree_species.id as species_id,
-          tree_species.name as species_name,
-          region.name as country_name,
-          region.id as country_id,
-          entity.id as organization_id,
-          entity.name as organization_name,
-          wallet.wallet.id as wallet_id,
-          wallet.wallet.name as wallet_name,
-          wallet.token.id as token_id
-          from trees
-            left JOIN planter 
-              on trees.planter_id = planter.id
-            left JOIN entity 
-              on entity.id = planter.organization_id
-            left JOIN tree_species 
-              on trees.species_id = tree_species.id 
-            left JOIN region
-              on ST_WITHIN(trees.estimated_geometric_location, region.geom)
-              and region.type_id in (select id from region_type where type = 'country')
-            left JOIN wallet.token
-              on wallet.token.capture_id::text = trees.uuid::text
-            left JOIN wallet.wallet
-              on wallet.token.wallet_id = wallet.wallet.id
-      `),
-      )
-      .where('trees.id', id)
-      .first();
+        this.session.getDB().raw(sql),
+      ).first();
 
     if (!object) {
       throw new HttpError(404, `Can not find ${this.tableName} by id:${id}`);
