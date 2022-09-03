@@ -1,3 +1,9 @@
+# [1.45.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.44.0...v1.45.0) (2022-09-03)
+
+### Features
+
+- add featured wallet ([0cbdad9](https://github.com/Greenstand/treetracker-query-api/commit/0cbdad9ecdd6c2458bf26bcfae7e132c07bcbeb5))
+
 # [1.44.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.43.0...v1.44.0) (2022-08-31)
 
 ### Features
