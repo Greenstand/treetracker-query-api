@@ -65,4 +65,19 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
     return object.rows;
   }
 
+  async getFeaturedWallet() {
+    const sql = `
+      SELECT
+        wallet.*
+      FROM wallet.wallet
+      join (
+      --- convert json array to row
+        SELECT json_array_elements(data -> 'wallets') AS wallet_id FROM
+        webmap.config WHERE name = 'featured-wallet'
+      ) AS t ON
+      t.wallet_id::text = concat('"', wallet.id::text, '"')
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
 }

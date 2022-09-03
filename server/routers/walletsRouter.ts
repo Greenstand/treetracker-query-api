@@ -9,6 +9,19 @@ const router = express.Router();
 type Filter = Partial<{ id: number; name: string }>;
 
 router.get(
+  '/featured',
+  handlerWrapper(async (req, res) => {
+    const repo = new WalletsRepository(new Session());
+    const exe = WalletModel.getFeaturedWallet(repo);
+    const result = await exe();
+    res.send({
+      wallets: result,
+    });
+    res.end();
+  }),
+);
+
+router.get(
   '/:walletIdOrName/token-region-count',
   handlerWrapper(async (req: express.Request, res: express.Response) => {
     Joi.assert(req.params.walletIdOrName, Joi.string().required());
@@ -60,7 +73,7 @@ router.get(
       total: null,
       offset,
       limit,
-      wallets: result
+      wallets: result,
     });
     res.end();
   }),
