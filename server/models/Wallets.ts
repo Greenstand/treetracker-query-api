@@ -12,10 +12,7 @@ function getByFilter(
   return async function (filter: Filter, options: FilterOptions) {
     if (filter.name) {
       log.warn('using wallet name filter...');
-      const wallets = await WalletRepository.getByName(
-        filter.name,
-        options,
-      );
+      const wallets = await WalletRepository.getByName(filter.name, options);
       return wallets;
     }
     const wallets = await WalletRepository.getByFilter(filter, options);
@@ -31,4 +28,7 @@ export default {
     'getWalletTokenContinentCount',
   ),
   getByFilter,
+  getFeaturedWallet: delegateRepository<WalletsRepository, Wallets>(
+    'getFeaturedWallet',
+  ),
 };
