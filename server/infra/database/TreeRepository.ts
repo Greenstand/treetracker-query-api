@@ -53,7 +53,9 @@ export default class TreeRepository extends BaseRepository<Tree> {
     const { limit, offset } = options;
     const sql = `
       SELECT
-        *
+      trees.*,
+      entity.id as organization_id,
+      entity.name as organization_name  
       FROM trees
       LEFT JOIN planter ON trees.planter_id = planter.id
       LEFT JOIN entity ON entity.id = planter.organization_id
