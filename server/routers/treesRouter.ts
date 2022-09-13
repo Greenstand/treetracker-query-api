@@ -100,7 +100,7 @@ router.get(
     }
     const result = await TreeModel.getByFilter(repo)(filter, options);
     res.send({
-      total: (startDate && endDate) || tag ? result.length : null,
+      total: result.length,
       offset,
       limit,
       trees: result,
