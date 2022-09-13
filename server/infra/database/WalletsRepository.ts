@@ -4,6 +4,7 @@ import BaseRepository from './BaseRepository';
 import Session from './Session';
 import HttpError from '../../utils/HttpError';
 
+type Filter = Partial<{ name: string }>;
 export default class WalletsRepository extends BaseRepository<Wallets> {
   constructor(session: Session) {
     super('wallet.wallet', session);
@@ -11,7 +12,11 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
 
   async getWalletByIdOrName(walletIdOrName: string) {
     const sql = `
-    SELECT *
+    SELECT 
+      wallet.wallet.id,
+      wallet.wallet.name,
+      wallet.wallet.logo_url,
+      wallet.wallet.created_at
     FROM
      wallet.wallet
     WHERE
@@ -50,11 +55,30 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
     return object.rows;
   }
 
+  async getByFilter(filter: Filter, options: FilterOptions) {
+    const { limit, offset } = options;
+    const sql = `
+      SELECT
+        wallet.wallet.id,
+        wallet.wallet.name,
+        wallet.wallet.logo_url,
+        wallet.wallet.created_at
+      FROM wallet.wallet
+      LIMIT ${limit}
+      OFFSET ${offset}
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
+
   async getByName(keyword: string, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
       SELECT
-        *
+        wallet.wallet.id,
+        wallet.wallet.name,
+        wallet.wallet.logo_url,
+        wallet.wallet.created_at
       FROM wallet.wallet
       WHERE name LIKE '%${keyword}%'
       ORDER BY name
@@ -68,7 +92,10 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
   async getFeaturedWallet() {
     const sql = `
       SELECT
-        wallet.*
+        wallet.wallet.id,
+        wallet.wallet.name,
+        wallet.wallet.logo_url,
+        wallet.wallet.created_at
       FROM wallet.wallet
       join (
       --- convert json array to row
