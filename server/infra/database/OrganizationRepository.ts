@@ -13,8 +13,8 @@ export default class OrganizationRepository extends BaseRepository<Organization>
     const { limit, offset } = options;
     const sql = `
       SELECT
-        *
-      FROM entity
+      entity.*
+      from entity
       LEFT JOIN planter ON planter.organization_id = entity.id
       WHERE planter.id = ${planter_id}
       LIMIT ${limit}
