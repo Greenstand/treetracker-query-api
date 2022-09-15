@@ -17,6 +17,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
           trees.*,
           tree_species.id as species_id,
           tree_species.name as species_name,
+          tree_species.desc as species_desc,
           region.name as country_name,
           region.id as country_id,
           entity.id as organization_id,
