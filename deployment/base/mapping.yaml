@@ -7,3 +7,4 @@ spec:
   prefix: /query/
   service: treetracker-query-api
   rewrite: /
+  timeout_ms: 0
