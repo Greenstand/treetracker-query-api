@@ -1,3 +1,9 @@
+# [1.46.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.45.1...v1.46.0) (2022-09-15)
+
+### Features
+
+- increase timeout ([0ece423](https://github.com/Greenstand/treetracker-query-api/commit/0ece4239c5685d45d6ba9878ca579fcfa5b33a39))
+
 ## [1.45.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.45.0...v1.45.1) (2022-09-09)
 
 ### Bug Fixes
