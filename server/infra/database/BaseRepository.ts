@@ -97,7 +97,7 @@ export default class BaseRepository<T> {
     return result as T[];
   }
 
-  async countByFilter(filter: T) {
+  async countByFilter(filter) {
     const result = await this.session
       .getDB()
       .count()
