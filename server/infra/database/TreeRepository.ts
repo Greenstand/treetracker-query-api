@@ -49,7 +49,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
     return object;
   }
 
-  async getByOrganization(organization_id: number, options: FilterOptions, totalCount: boolean = false) {
+  async getByOrganization(organization_id: number, options: FilterOptions, totalCount = false) {
     const { limit, offset } = options;
     
     if(totalCount) {
@@ -84,7 +84,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
   async getByDateRange(
     date_range: { startDate: string; endDate: string },
     options: FilterOptions,
-    totalCount: boolean = false
+    totalCount = false
   ) {
     const { limit, offset } = options;
     const startDateISO = `${date_range.startDate}T00:00:00.000Z`;
@@ -117,7 +117,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
     return object.rows;
   }
 
-  async getByTag(tag: string, options: FilterOptions, totalCount: boolean = false) {
+  async getByTag(tag: string, options: FilterOptions, totalCount = false) {
     const { limit, offset } = options;
 
     if(totalCount) {
