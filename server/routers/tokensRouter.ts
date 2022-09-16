@@ -57,7 +57,7 @@ router.get(
       offset,
     });
     res.send({
-      total: result.length,
+      total: await TokensModel.getCountByFilter(repo)(filter),
       offset,
       limit,
       tokens: result,

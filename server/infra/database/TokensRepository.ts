@@ -84,4 +84,18 @@ export default class TokensRepository extends BaseRepository<Tokens> {
     const object = await this.session.getDB().raw(sql);
     return object.rows;
   }
+
+  async getCountByFilter(filter: Filter) {
+    const sql = `SELECT
+        COUNT(*)
+      from wallet.token as wlt_tkn
+      left join wallet.wallet as wlt_wallet on
+      wlt_wallet.id = wlt_tkn.wallet_id
+      where wlt_wallet.id::text = '${filter.wallet}' or 
+      wlt_wallet.name = '${filter.wallet}'
+    `;
+    const total = await this.session.getDB().raw(sql);
+    return parseInt(total.rows[0].count.toString());;
+  }
+  
 }
