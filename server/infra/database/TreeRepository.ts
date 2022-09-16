@@ -50,8 +50,22 @@ export default class TreeRepository extends BaseRepository<Tree> {
     return object;
   }
 
-  async getByOrganization(organization_id: number, options: FilterOptions) {
+  async getByOrganization(organization_id: number, options: FilterOptions, totalCount = false) {
     const { limit, offset } = options;
+    
+    if(totalCount) {
+      const totalSql = `
+        SELECT
+          COUNT(*)
+        FROM trees
+        LEFT JOIN planter ON trees.planter_id = planter.id
+        LEFT JOIN entity ON entity.id = planter.organization_id
+        WHERE entity.id = ${organization_id}
+      `;
+      const total = await this.session.getDB().raw(totalSql);
+      return parseInt(total.rows[0].count.toString());
+    }
+
     const sql = `
       SELECT
       trees.*,
@@ -71,12 +85,26 @@ export default class TreeRepository extends BaseRepository<Tree> {
   async getByDateRange(
     date_range: { startDate: string; endDate: string },
     options: FilterOptions,
+    totalCount = false
   ) {
     const { limit, offset } = options;
     const startDateISO = `${date_range.startDate}T00:00:00.000Z`;
     const endDateISO = new Date(
       new Date(`${date_range.endDate}T00:00:00.000Z`).getTime() + 86400000,
     ).toISOString();
+    
+    if(totalCount) {
+      const totalSql = `
+        SELECT
+        COUNT(*)
+        FROM trees
+        WHERE time_created >= '${startDateISO}'::timestamp
+        AND time_created < '${endDateISO}'::timestamp
+      `;
+      const total = await this.session.getDB().raw(totalCount);
+      return parseInt(total.rows[0].count.toString());
+    }
+
     const sql = `
       SELECT
         *
@@ -90,9 +118,24 @@ export default class TreeRepository extends BaseRepository<Tree> {
     return object.rows;
   }
 
-  async getByTag(tag: string, options: FilterOptions) {
+  async getByTag(tag: string, options: FilterOptions, totalCount = false) {
     const { limit, offset } = options;
 
+    if(totalCount) {
+      const totalSql = `
+      SELECT 
+        COUNT(*)
+      FROM trees
+      INNER JOIN tree_tag 
+        on tree_tag.tree_id = trees.id
+      INNER JOIN tag 
+        on tree_tag.tag_id = tag.id
+      WHERE 
+        tag.tag_name in ('${tag}')
+      `;
+      const total = await this.session.getDB().raw(totalCount);
+      return parseInt(total.rows[0].count.toString());
+    }
     const sql = `
     SELECT 
       trees.*

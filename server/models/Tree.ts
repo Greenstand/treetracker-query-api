@@ -56,6 +56,46 @@ function getByFilter(
   };
 }
 
+function countByFilter(
+  treeRepository: TreeRepository,
+): (
+  filter: Filter,
+  options: FilterOptions | BaseFilterOptions<Tree>,
+) => Promise<number> {
+  return async function (
+    filter: Filter,
+    options: FilterOptions | BaseFilterOptions<Tree>,
+  ) {
+    if (filter.organization_id) {
+      log.warn('using org filter...');
+      const total = await treeRepository.getByOrganization(
+        filter.organization_id,
+        options,
+        true
+      );
+      return total;
+    }
+    if (filter.date_range) {
+      log.warn('using date range filter...');
+      const total = await treeRepository.getByDateRange(
+        filter.date_range,
+        options,
+        true
+      );
+      return total;
+    }
+    if (filter.tag) {
+      log.warn('using tag filter...');
+      const total = await treeRepository.getByTag(filter.tag, options, true);
+      return total;
+    }
+
+    const total = await treeRepository.countByFilter(filter);
+    return total;
+  };
+}
+
+
 /*
  featured tree, some highlighted tree, for a tempororily solution
  we just put the newest, verified tree
@@ -84,4 +124,5 @@ export default {
   getById: delegateRepository<TreeRepository, Tree>('getById'),
   getByFilter,
   getFeaturedTree: delegateRepository<TreeRepository, Tree>('getFeaturedTree'),
+  countByFilter,
 };
