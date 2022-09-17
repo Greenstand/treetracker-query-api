@@ -18,7 +18,17 @@ function getByFilter(
   };
 }
 
+function getCountByFilter(
+  tokenRepository: TokensRepository,
+): (filter: Filter) => Promise<number> {
+  return async (filter: Filter) => {
+    const total = await tokenRepository.getCountByFilter(filter);
+    return total;
+  };
+}
+
 export default {
   getById: delegateRepository<TokensRepository, Tokens>('getById'),
   getByFilter,
+  getCountByFilter,
 };
