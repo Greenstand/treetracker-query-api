@@ -101,7 +101,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
         WHERE time_created >= '${startDateISO}'::timestamp
         AND time_created < '${endDateISO}'::timestamp
       `;
-      const total = await this.session.getDB().raw(totalCount);
+      const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
     }
 
@@ -133,7 +133,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
       WHERE 
         tag.tag_name in ('${tag}')
       `;
-      const total = await this.session.getDB().raw(totalCount);
+      const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
     }
     const sql = `
