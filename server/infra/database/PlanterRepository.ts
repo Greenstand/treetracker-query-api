@@ -45,10 +45,19 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const sql = `
       SELECT
         planter.*,
-        planter_registrations.created_at
+        planter_registrations.created_at,
+        country.name as country_name,
+        continent.name as continent_name
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
+      LEFT JOIN locations ON locations.planter_id = planter.id
+      left join region as country on ST_WITHIN(ST_SETSRID(ST_MakePoint(cast(locations.lon as float), cast(locations.lat as float)),4326)::geometry, country.geom)
+          and country.type_id in
+            (select id from region_type where type = 'country')
+        left join region as continent on ST_WITHIN(ST_SETSRID(ST_MakePoint(cast(locations.lon as float), cast(locations.lat as float)),4326)::geometry, continent.geom)
+          and continent.type_id in
+            (select id from region_type where type = 'continents')
       WHERE planter.organization_id = ${organization_id}
       LIMIT ${limit}
       OFFSET ${offset}
@@ -69,10 +78,19 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const sql = `
       SELECT
         planter.*,
-        planter_registrations.created_at
+        planter_registrations.created_at,
+        country.name as country_name,
+        continent.name as continent_name
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
+      LEFT JOIN locations ON locations.planter_id = planter.id
+      left join region as country on ST_WITHIN(ST_SETSRID(ST_MakePoint(cast(locations.lon as float), cast(locations.lat as float)),4326)::geometry, country.geom)
+          and country.type_id in
+            (select id from region_type where type = 'country')
+      left join region as continent on ST_WITHIN(ST_SETSRID(ST_MakePoint(cast(locations.lon as float), cast(locations.lat as float)),4326)::geometry, continent.geom)
+        and continent.type_id in
+          (select id from region_type where type = 'continents' )
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -85,10 +103,19 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const sql = `
       SELECT
         planter.*,
-        planter_registrations.created_at
+        planter_registrations.created_at,
+        country.name as country_name,
+        continent.name as continent_name
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
+      LEFT JOIN locations ON locations.planter_id = planter.id
+      left join region as country on ST_WITHIN(ST_SETSRID(ST_MakePoint(cast(locations.lon as float), cast(locations.lat as float)),4326)::geometry, country.geom)
+          and country.type_id in
+            (select id from region_type where type = 'country')
+        left join region as continent on ST_WITHIN(ST_SETSRID(ST_MakePoint(cast(locations.lon as float), cast(locations.lat as float)),4326)::geometry, continent.geom)
+          and continent.type_id in
+            (select id from region_type where type = 'continents' )
       WHERE planter.first_name LIKE '${keyword}%' OR planter.last_name LIKE '${keyword}%'
       ORDER BY planter.first_name, planter.last_name
       LIMIT ${limit}
