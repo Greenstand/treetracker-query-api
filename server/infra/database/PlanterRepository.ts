@@ -64,6 +64,17 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     return object.rows;
   }
 
+  async countByOrganization(organization_id: number) {
+    const totalSql = `
+      SELECT
+        COUNT(*)
+      FROM planter
+      WHERE planter.organization_id = ${organization_id}
+    `;
+    const total = await this.session.getDB().raw(totalSql);
+    return parseInt(total.rows[0].count.toString());
+  }
+
   async getByFilter(filter: Filter, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
@@ -103,6 +114,17 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       );
     }
     return object.rows;
+  }
+
+  async countByName(keyword: string) {
+    const totalSql = `
+      SELECT
+      COUNT(*)
+      FROM planter
+      WHERE planter.first_name LIKE '${keyword}%' OR planter.last_name LIKE '${keyword}%'
+    `;
+    const total = await this.session.getDB().raw(totalSql);
+    return parseInt(total.rows[0].count.toString());
   }
 
   async getFeaturedPlanters(options: FilterOptions) {

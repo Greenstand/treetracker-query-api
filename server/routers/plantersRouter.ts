@@ -61,7 +61,7 @@ router.get(
         offset,
       });
       res.send({
-        total: null,
+        total: await PlanterModel.countByName(repo)(keyword),
         offset,
         limit,
         planters: result.map((planter) => ({
@@ -76,7 +76,7 @@ router.get(
         offset,
       });
       res.send({
-        total: null,
+        total: await PlanterModel.countByFilter(repo)(filter),
         offset,
         limit,
         planters: result.map((planter) => ({
