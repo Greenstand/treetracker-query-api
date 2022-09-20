@@ -155,7 +155,8 @@ export default class TreeRepository extends BaseRepository<Tree> {
 
   async getFeaturedTree() {
     const sql = `
-      SELECT trees.* ,tree_species.name as species_name
+      SELECT trees.* ,tree_species.name as species_name,
+      country.id as country_id, country.name as country_name
       FROM trees 
       join (
       --- convert json array to row
@@ -164,7 +165,10 @@ export default class TreeRepository extends BaseRepository<Tree> {
       --- cast json type t.tree_id to integer
       t.tree_id::text::integer = trees.id
       LEFT JOIN tree_species 
-      ON trees.species_id = tree_species.id;
+      ON trees.species_id = tree_species.id
+      LEFT JOIN region as country ON ST_WITHIN(trees.estimated_geometric_location, country.geom)
+            and country.type_id in
+              (SELECT id FROM region_type WHERE type = 'country')
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;
