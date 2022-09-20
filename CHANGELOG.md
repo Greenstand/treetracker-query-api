@@ -1,3 +1,9 @@
+# [1.47.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.46.0...v1.47.0) (2022-09-20)
+
+### Features
+
+- add country_id and country_name to trees/featured [#166](https://github.com/Greenstand/treetracker-query-api/issues/166) ([02ca801](https://github.com/Greenstand/treetracker-query-api/commit/02ca8019fad103647b3dcb1182f20b7698a9a563))
+
 # [1.46.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.45.1...v1.46.0) (2022-09-15)
 
 ### Features
