@@ -30,7 +30,9 @@ export default class OrganizationRepository extends BaseRepository<Organization>
       .select(
         this.session.getDB().raw(`
         entity.*,
+        country.id as country_id,
         country.name as country_name,
+        continent.id as continent_id,
         continent.name as continent_name
         from entity 
         left join trees on entity.id = trees.planting_organization_id
