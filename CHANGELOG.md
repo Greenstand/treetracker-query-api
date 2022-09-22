@@ -1,3 +1,10 @@
+# [1.48.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.47.1...v1.48.0) (2022-09-22)
+
+### Features
+
+- can patch planter list ([b37a5cc](https://github.com/Greenstand/treetracker-query-api/commit/b37a5cc50a2aef520874d0a0a20f0d3c3d37d12c))
+- can patch planter single ([a92d31f](https://github.com/Greenstand/treetracker-query-api/commit/a92d31f573ae3df12ac6825967df5517ff970b5d))
+
 ## [1.47.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.47.0...v1.47.1) (2022-09-22)
 
 ### Bug Fixes
