@@ -1,7 +1,9 @@
+import log from 'loglevel';
 import FilterOptions from 'interfaces/FilterOptions';
 import Planter from 'interfaces/Planter';
 import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
+import patch, { PATCH_TYPE } from './patch';
 import Session from './Session';
 
 type Filter = Partial<{ organization_id: number }>;
@@ -37,7 +39,16 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     if (!object) {
       throw new HttpError(404, `Can not find ${this.tableName} by id:${id}`);
     }
-    return object;
+
+    const objectPatched = await patch(
+      object,
+      PATCH_TYPE.EXTRA_PLANTER,
+      this.session,
+    );
+
+    log.warn('xxxx:', objectPatched);
+
+    return objectPatched;
   }
 
   async getByOrganization(organization_id: number, options: FilterOptions) {
