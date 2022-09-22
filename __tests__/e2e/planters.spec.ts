@@ -1,3 +1,4 @@
+import log from 'loglevel';
 import supertest from 'supertest';
 import app from '../../server/app';
 
@@ -21,12 +22,13 @@ describe('planters', () => {
     1000 * 30,
   );
 
-  it(
+  it.only(
     'planters?organization_id=178&limit=1',
     async () => {
       const response = await supertest(app).get(
         '/planters?organization_id=178&limit=1',
       );
+      log.warn('xxx:', response.body);
       expect(response.status).toBe(200);
       expect(response.body.planters).toBeInstanceOf(Array);
       expect(response.body.planters[0]).toMatchObject({
@@ -39,7 +41,7 @@ describe('planters', () => {
         },
       });
     },
-    1000 * 30,
+    1000 * 31,
   );
 
   it('planters?keyword=da&limit=1', async () => {

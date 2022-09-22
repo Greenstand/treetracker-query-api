@@ -72,7 +72,14 @@ export default class PlanterRepository extends BaseRepository<Planter> {
         `Can not find ${this.tableName} by organization_id: ${organization_id}`,
       );
     }
-    return object.rows;
+
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_PLANTER,
+      this.session,
+    );
+
+    return objectPatched;
   }
 
   async countByOrganization(organization_id: number) {
