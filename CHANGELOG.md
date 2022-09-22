@@ -1,3 +1,9 @@
+## [1.47.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.47.0...v1.47.1) (2022-09-22)
+
+### Bug Fixes
+
+- fixes total value of GET /planters ([8d69fe8](https://github.com/Greenstand/treetracker-query-api/commit/8d69fe8381f525762f7e69ce14197d88e5fca242)), closes [#183](https://github.com/Greenstand/treetracker-query-api/issues/183)
+
 # [1.47.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.46.0...v1.47.0) (2022-09-20)
 
 ### Features
