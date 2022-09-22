@@ -1,7 +1,9 @@
+import log from 'loglevel';
 import FilterOptions from 'interfaces/FilterOptions';
 import Planter from 'interfaces/Planter';
 import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
+import patch, { PATCH_TYPE } from './patch';
 import Session from './Session';
 
 type Filter = Partial<{ organization_id: number }>;
@@ -37,7 +39,14 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     if (!object) {
       throw new HttpError(404, `Can not find ${this.tableName} by id:${id}`);
     }
-    return object;
+
+    const objectPatched = await patch(
+      object,
+      PATCH_TYPE.EXTRA_PLANTER,
+      this.session,
+    );
+
+    return objectPatched;
   }
 
   async getByOrganization(organization_id: number, options: FilterOptions) {
@@ -61,7 +70,14 @@ export default class PlanterRepository extends BaseRepository<Planter> {
         `Can not find ${this.tableName} by organization_id: ${organization_id}`,
       );
     }
-    return object.rows;
+
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_PLANTER,
+      this.session,
+    );
+
+    return objectPatched;
   }
 
   async countByOrganization(organization_id: number) {
@@ -113,7 +129,13 @@ export default class PlanterRepository extends BaseRepository<Planter> {
         `Can not find ${this.tableName} by name: ${keyword}`,
       );
     }
-    return object.rows;
+
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_PLANTER,
+      this.session,
+    );
+    return objectPatched;
   }
 
   async countByName(keyword: string) {
@@ -137,6 +159,12 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       t.planter_id::text::integer = planter.id;
     `;
     const object = await this.session.getDB().raw(sql);
-    return object.rows;
+
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_PLANTER,
+      this.session,
+    );
+    return objectPatched;
   }
 }

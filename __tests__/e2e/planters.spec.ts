@@ -1,21 +1,26 @@
+import log from 'loglevel';
 import supertest from 'supertest';
 import app from '../../server/app';
 
 describe('planters', () => {
-  it('planters/{id}', async () => {
-    const response = await supertest(app).get('/planters/3564');
-    expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({
-      id: 3564,
-      continent_name: 'North America',
-      country_name: 'Costa Rica',
-      links: {
-        featured_trees: expect.stringMatching(/trees/),
-        associated_organizations: expect.stringMatching(/organizations/),
-        species: expect.stringMatching(/species/),
-      },
-    });
-  });
+  it(
+    'planters/{id}',
+    async () => {
+      const response = await supertest(app).get('/planters/3564');
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        id: 3564,
+        continent_name: 'North America',
+        country_name: 'Costa Rica',
+        links: {
+          featured_trees: expect.stringMatching(/trees/),
+          associated_organizations: expect.stringMatching(/organizations/),
+          species: expect.stringMatching(/species/),
+        },
+      });
+    },
+    1000 * 30,
+  );
 
   it(
     'planters?organization_id=178&limit=1',
@@ -23,6 +28,7 @@ describe('planters', () => {
       const response = await supertest(app).get(
         '/planters?organization_id=178&limit=1',
       );
+      log.warn('xxx:', response.body);
       expect(response.status).toBe(200);
       expect(response.body.planters).toBeInstanceOf(Array);
       expect(response.body.planters[0]).toMatchObject({
@@ -35,10 +41,10 @@ describe('planters', () => {
         },
       });
     },
-    1000 * 30,
+    1000 * 31,
   );
 
-  it('planters?keyword=da&limit=1', async () => {
+  it.skip('planters?keyword=da&limit=1', async () => {
     const response = await supertest(app).get('/planters?keyword=da&limit=1');
     expect(response.status).toBe(200);
     expect(response.body.planters).toBeInstanceOf(Array);
