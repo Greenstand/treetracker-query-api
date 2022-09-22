@@ -26,7 +26,9 @@ async function patch(object: any, patchType: PATCH_TYPE, session: Session) {
 
   let result = object;
   if (object instanceof Array) {
-    const ids = object.map((o) => parseInt(o.id));
+    const ids = object
+      .map((o) => parseInt(o.id))
+      .filter((o) => !Number.isNaN(o));
 
     const res = await session.getDB().raw(
       `
