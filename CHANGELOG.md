@@ -1,3 +1,9 @@
+## [1.48.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.48.0...v1.48.1) (2022-09-22)
+
+### Bug Fixes
+
+- nan in patch ([5d79b98](https://github.com/Greenstand/treetracker-query-api/commit/5d79b98595342e649aeb82ebc5950f969d97ee12))
+
 # [1.48.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.47.1...v1.48.0) (2022-09-22)
 
 ### Features
