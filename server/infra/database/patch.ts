@@ -32,10 +32,10 @@ async function patch(object: any, patchType: PATCH_TYPE, session: Session) {
 
     const res = await session.getDB().raw(
       `
-        select data, ref_id from webmap.config where name = '${configName}' and ref_id in (${ids.join(
-        ',',
-      )})
-  `,
+        select data, ref_id from webmap.config where name = '${configName}' and ref_id in (${ids
+        .map((e) => `'${e}'`)
+        .join(',')})
+      `,
     );
 
     if (res.rows.length > 0) {
@@ -54,7 +54,7 @@ async function patch(object: any, patchType: PATCH_TYPE, session: Session) {
     }
   } else {
     const res = await session.getDB().raw(`
-      select data from webmap.config where name = '${configName}' and ref_id = ${object.id}
+      select data from webmap.config where name = '${configName}' and ref_id = '${object.id}'
     `);
 
     if (res.rows.length === 1) {
