@@ -1,3 +1,9 @@
+## [1.48.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.48.1...v1.48.2) (2022-09-22)
+
+### Bug Fixes
+
+- change config refid to string ([0a93362](https://github.com/Greenstand/treetracker-query-api/commit/0a93362ce36dc03bd40c45d731460ef4c0f98128))
+
 ## [1.48.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.48.0...v1.48.1) (2022-09-22)
 
 ### Bug Fixes
