@@ -23,6 +23,22 @@ function getByFilter(
   };
 }
 
+function countByFilter(
+  planterRepository: PlanterRepository,
+): (filter: Filter) => Promise<number> {
+  return async function (filter: Filter) {
+    if (filter.organization_id) {
+      log.warn('using org filter...');
+      const total = await planterRepository.countByOrganization(
+        filter.organization_id,
+      );
+      return total;
+    }
+    const total = await planterRepository.countByFilter(filter);
+    return total;
+  };
+}
+
 function getByName(
   planterRepository: PlanterRepository,
 ): (keyword: string, options: FilterOptions) => Promise<Planter[]> {
@@ -30,6 +46,15 @@ function getByName(
     log.warn('using planter name filter...');
     const planters = await planterRepository.getByName(keyword, options);
     return planters;
+  };
+}
+
+function countByName(
+  planterRepository: PlanterRepository,
+): (keyword: string) => Promise<number> {
+  return async function (keyword: string) {
+    const total = await planterRepository.countByName(keyword);
+    return total;
   };
 }
 
@@ -58,4 +83,6 @@ export default {
   getByName,
   getPlanterLinks,
   getFeaturedPlanters,
+  countByName,
+  countByFilter
 };
