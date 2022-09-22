@@ -1,6 +1,7 @@
 import FilterOptions from 'interfaces/FilterOptions';
 import Wallets from 'interfaces/Wallets';
 import BaseRepository from './BaseRepository';
+import patch, { PATCH_TYPE } from './patch';
 import Session from './Session';
 import HttpError from '../../utils/HttpError';
 
@@ -32,7 +33,12 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
         `Can not found ${this.tableName} by id:${walletIdOrName} name:${walletIdOrName}`,
       );
     }
-    return object.rows[0];
+    const objectPatched = await patch(
+      object.rows[0],
+      PATCH_TYPE.EXTRA_WALLET,
+      this.session,
+    );
+    return objectPatched;
   }
 
   async getWalletTokenContinentCount(walletIdOrName: string) {
@@ -52,7 +58,13 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
   `;
 
     const object = await this.session.getDB().raw(sql);
-    return object.rows;
+
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_WALLET,
+      this.session,
+    );
+    return objectPatched;
   }
 
   async getByFilter(filter: Filter, options: FilterOptions) {
@@ -68,7 +80,12 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
       OFFSET ${offset}
     `;
     const object = await this.session.getDB().raw(sql);
-    return object.rows;
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_WALLET,
+      this.session,
+    );
+    return objectPatched;
   }
 
   async getByName(keyword: string, options: FilterOptions) {
@@ -86,7 +103,12 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
       OFFSET ${offset}
     `;
     const object = await this.session.getDB().raw(sql);
-    return object.rows;
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_WALLET,
+      this.session,
+    );
+    return objectPatched;
   }
 
   async getFeaturedWallet() {
@@ -105,6 +127,11 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
       t.wallet_id::text = concat('"', wallet.id::text, '"')
     `;
     const object = await this.session.getDB().raw(sql);
-    return object.rows;
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_WALLET,
+      this.session,
+    );
+    return objectPatched;
   }
 }

@@ -4,7 +4,8 @@ import Session from './Session';
 // enum
 export enum PATCH_TYPE {
   EXTRA_PLANTER = 'extra_planter',
-  EXTRA_TREE = 'extra_tree',
+  EXTRA_ORG = 'extra_organization',
+  EXTRA_WALLET = 'extra_wallet',
 }
 
 async function patch(object: any, patchType: PATCH_TYPE, session: Session) {
@@ -13,8 +14,11 @@ async function patch(object: any, patchType: PATCH_TYPE, session: Session) {
     case PATCH_TYPE.EXTRA_PLANTER:
       configName = 'extra-planter';
       break;
-    case PATCH_TYPE.EXTRA_TREE:
-      configName = 'extra-tree';
+    case PATCH_TYPE.EXTRA_ORG:
+      configName = 'extra-organization';
+      break;
+    case PATCH_TYPE.EXTRA_WALLET:
+      configName = 'extra-wallet';
       break;
     default:
       throw new Error('Invalid patch type');

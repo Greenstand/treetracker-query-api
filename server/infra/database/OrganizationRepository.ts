@@ -2,6 +2,7 @@ import FilterOptions from 'interfaces/FilterOptions';
 import Organization from 'interfaces/Organization';
 import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
+import patch, { PATCH_TYPE } from './patch';
 import Session from './Session';
 
 export default class OrganizationRepository extends BaseRepository<Organization> {
@@ -21,7 +22,12 @@ export default class OrganizationRepository extends BaseRepository<Organization>
       OFFSET ${offset}
     `;
     const object = await this.session.getDB().raw(sql);
-    return object.rows;
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_ORG,
+      this.session,
+    );
+    return objectPatched;
   }
 
   async getById(id: string | number) {
@@ -50,7 +56,12 @@ export default class OrganizationRepository extends BaseRepository<Organization>
     if (!object) {
       throw new HttpError(404, `Can not find ${this.tableName} by id:${id}`);
     }
-    return object;
+    const objectPatched = await patch(
+      object,
+      PATCH_TYPE.EXTRA_ORG,
+      this.session,
+    );
+    return objectPatched;
   }
 
   async getByMapName(mapName: string) {
@@ -80,7 +91,12 @@ export default class OrganizationRepository extends BaseRepository<Organization>
         `Can not find ${this.tableName} by map name:${mapName}`,
       );
     }
-    return object;
+    const objectPatched = await patch(
+      object,
+      PATCH_TYPE.EXTRA_ORG,
+      this.session,
+    );
+    return objectPatched;
   }
 
   async getFeaturedOrganizations() {
@@ -93,6 +109,12 @@ export default class OrganizationRepository extends BaseRepository<Organization>
       t.organization_id::text::integer = entity.id;
     `;
     const object = await this.session.getDB().raw(sql);
-    return object.rows;
+
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_ORG,
+      this.session,
+    );
+    return objectPatched;
   }
 }
