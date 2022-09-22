@@ -22,7 +22,7 @@ describe('planters', () => {
     1000 * 30,
   );
 
-  it.only(
+  it(
     'planters?organization_id=178&limit=1',
     async () => {
       const response = await supertest(app).get(
@@ -44,7 +44,7 @@ describe('planters', () => {
     1000 * 31,
   );
 
-  it('planters?keyword=da&limit=1', async () => {
+  it.skip('planters?keyword=da&limit=1', async () => {
     const response = await supertest(app).get('/planters?keyword=da&limit=1');
     expect(response.status).toBe(200);
     expect(response.body.planters).toBeInstanceOf(Array);

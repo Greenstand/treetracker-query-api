@@ -46,8 +46,6 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       this.session,
     );
 
-    log.warn('xxxx:', objectPatched);
-
     return objectPatched;
   }
 
@@ -131,7 +129,13 @@ export default class PlanterRepository extends BaseRepository<Planter> {
         `Can not find ${this.tableName} by name: ${keyword}`,
       );
     }
-    return object.rows;
+
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_PLANTER,
+      this.session,
+    );
+    return objectPatched;
   }
 
   async countByName(keyword: string) {
@@ -155,6 +159,12 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       t.planter_id::text::integer = planter.id;
     `;
     const object = await this.session.getDB().raw(sql);
-    return object.rows;
+
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_PLANTER,
+      this.session,
+    );
+    return objectPatched;
   }
 }
