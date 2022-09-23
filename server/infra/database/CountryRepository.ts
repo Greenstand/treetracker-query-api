@@ -95,20 +95,16 @@ export default class CountryRepository extends BaseRepository<Country> {
 
     if (regionName === '') {
       sql = `
-        select r.*, region.name, ST_AsGeoJSON(centroid) as centroid  from (
-        select count(region.id) as planted, region.id
-        from trees
-        LEFT JOIN region
-        on ST_WITHIN(trees.estimated_geometric_location, region.geom)
-        left join region_type
-        on region.type_id = region_type.id
-        where
-        region_type.type = 'country'
-        group by region.id
-        order by count(region.id) desc
-        limit ${10}
-        ) r left join region
-        on r.id = region.id
+        select r2.*,region.name, ST_AsGeoJSON(centroid) as centroid from (
+          select count(r.region_id) as planted,r.region_id as region_id from (
+            select distinct(tree_id),region_id  from public.active_tree_region
+            left join region_type on type_id = region_type.id
+            where region_type.type = 'country') r
+          group by region_id
+          order by planted desc
+          limit ${10}) r2
+        left join region
+        on r2.region_id = region.id
         `;
     } else {
       sql = `
