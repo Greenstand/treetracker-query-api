@@ -1,3 +1,13 @@
+# [1.49.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.48.3...v1.49.0) (2022-09-24)
+
+### Bug Fixes
+
+- Added country & species info for trees?org ([00fd94c](https://github.com/Greenstand/treetracker-query-api/commit/00fd94cf84a32f47bfb708575ed65d98aed73401)), closes [#208](https://github.com/Greenstand/treetracker-query-api/issues/208)
+
+### Features
+
+- make sql query for getting country leaderboard stats fast ([fc9ff44](https://github.com/Greenstand/treetracker-query-api/commit/fc9ff44fb9e01358087b5d5cbbc5f9e97999f4f0))
+
 ## [1.48.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.48.2...v1.48.3) (2022-09-22)
 
 ### Bug Fixes
