@@ -69,11 +69,20 @@ export default class TreeRepository extends BaseRepository<Tree> {
     const sql = `
       SELECT
       trees.*,
+      tree_species.id as species_id,
+      tree_species.name as species_name,
+      region.id as country_id,
+      region.name as country_name,
       entity.id as organization_id,
-      entity.name as organization_name  
+      entity.name as organization_name
       FROM trees
       LEFT JOIN planter ON trees.planter_id = planter.id
       LEFT JOIN entity ON entity.id = planter.organization_id
+      LEFT JOIN tree_species 
+        on trees.species_id = tree_species.id 
+      LEFT JOIN region
+        on ST_WITHIN(trees.estimated_geometric_location, region.geom)
+        and region.type_id in (select id from region_type where type = 'country')
       WHERE entity.id = ${organization_id}
       LIMIT ${limit}
       OFFSET ${offset}
@@ -107,8 +116,21 @@ export default class TreeRepository extends BaseRepository<Tree> {
 
     const sql = `
       SELECT
-        *
+      trees.*,
+      tree_species.id as species_id,
+      tree_species.name as species_name,
+      region.id as country_id,
+      region.name as country_name,
+      entity.id as organization_id,
+      entity.name as organization_name
       FROM trees
+      LEFT JOIN planter ON trees.planter_id = planter.id
+      LEFT JOIN entity ON entity.id = planter.organization_id
+      LEFT JOIN tree_species 
+        on trees.species_id = tree_species.id 
+      LEFT JOIN region
+        on ST_WITHIN(trees.estimated_geometric_location, region.geom)
+        and region.type_id in (select id from region_type where type = 'country')
       WHERE time_created >= '${startDateISO}'::timestamp
       AND time_created < '${endDateISO}'::timestamp
       LIMIT ${limit}
@@ -138,8 +160,21 @@ export default class TreeRepository extends BaseRepository<Tree> {
     }
     const sql = `
     SELECT 
-      trees.*
+    trees.*,
+    tree_species.id as species_id,
+    tree_species.name as species_name,
+    region.id as country_id,
+    region.name as country_name,
+    entity.id as organization_id,
+    entity.name as organization_name
     FROM trees
+    LEFT JOIN planter ON trees.planter_id = planter.id
+    LEFT JOIN entity ON entity.id = planter.organization_id
+    LEFT JOIN tree_species 
+      on trees.species_id = tree_species.id 
+    LEFT JOIN region
+      on ST_WITHIN(trees.estimated_geometric_location, region.geom)
+      and region.type_id in (select id from region_type where type = 'country')
     INNER JOIN tree_tag 
       on tree_tag.tree_id = trees.id
     INNER JOIN tag 
