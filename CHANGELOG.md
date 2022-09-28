@@ -1,3 +1,9 @@
+## [1.49.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.49.0...v1.49.1) (2022-09-28)
+
+### Bug Fixes
+
+- trigger CI ([8b3caad](https://github.com/Greenstand/treetracker-query-api/commit/8b3caad835cd8e97f0bc3235c5e7d7270de6b968))
+
 # [1.49.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.48.3...v1.49.0) (2022-09-24)
 
 ### Bug Fixes
