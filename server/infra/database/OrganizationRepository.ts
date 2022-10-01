@@ -40,9 +40,14 @@ export default class OrganizationRepository extends BaseRepository<Organization>
         country.name as country_name,
         continent.id as continent_id,
         continent.name as continent_name
-        from entity
-        left join planter ON planter.organization_id = entity.id
-        left join trees on planter.id = trees.planter_id
+        from entity 
+        left join trees on trees.planting_organization_id = (
+          SELECT
+            trees.planting_organization_id
+          FROM trees tr
+          WHERE tr.planting_organization_id = entity.id
+          LIMIT 1
+        )
         left join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
           and country.type_id in
             (select id from region_type where type = 'country')
