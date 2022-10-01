@@ -54,10 +54,26 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const sql = `
       SELECT
         planter.*,
-        planter_registrations.created_at
+        planter_registrations.created_at,
+        country.name as country_name,
+        continent.name as continent_name
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
+      LEFT JOIN trees ON trees.id = (
+        SELECT
+          id
+        FROM trees tr 
+        WHERE tr.planter_id = planter.id
+        ORDER BY tr.id desc
+        LIMIT 1
+      )
+      LEFT join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
+        and country.type_id in
+          (select id from region_type where type = 'country')
+      LEFT join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
+        and continent.type_id in
+          (select id from region_type where type = 'continents' )
       WHERE planter.organization_id = ${organization_id}
       LIMIT ${limit}
       OFFSET ${offset}
@@ -96,10 +112,19 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const sql = `
       SELECT
         planter.*,
-        planter_registrations.created_at
+        planter_registrations.created_at,
+        country.name as country_name,
+        continent.name as continent_name
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
+      LEFT join trees on planter.id = trees.planter_id
+      LEFT join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
+        and country.type_id in
+          (select id from region_type where type = 'country')
+      LEFT join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
+        and continent.type_id in
+          (select id from region_type where type = 'continents' )
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -112,10 +137,19 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const sql = `
       SELECT
         planter.*,
-        planter_registrations.created_at
+        planter_registrations.created_at,
+        country.name as country_name,
+        continent.name as continent_name
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
+      LEFT join trees on planter.id = trees.planter_id
+      LEFT join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
+        and country.type_id in
+          (select id from region_type where type = 'country')
+      LEFT join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
+        and continent.type_id in
+          (select id from region_type where type = 'continents' )
       WHERE planter.first_name LIKE '${keyword}%' OR planter.last_name LIKE '${keyword}%'
       ORDER BY planter.first_name, planter.last_name
       LIMIT ${limit}
