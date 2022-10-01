@@ -1,3 +1,9 @@
+# [1.50.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.49.2...v1.50.0) (2022-10-01)
+
+### Features
+
+- add filter by wallet for trees ([d0b4e9d](https://github.com/Greenstand/treetracker-query-api/commit/d0b4e9d10b4b1aed01155bcd7330d78f55a1b7a9))
+
 ## [1.49.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.49.1...v1.49.2) (2022-10-01)
 
 ### Bug Fixes
