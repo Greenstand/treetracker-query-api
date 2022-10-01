@@ -1,3 +1,9 @@
+## [1.49.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.49.1...v1.49.2) (2022-10-01)
+
+### Bug Fixes
+
+- query to remove duplicate records ([61c5a14](https://github.com/Greenstand/treetracker-query-api/commit/61c5a14e247d6cc6a09a44ed80631f598ca1d755))
+
 ## [1.49.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.49.0...v1.49.1) (2022-09-28)
 
 ### Bug Fixes
