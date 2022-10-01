@@ -50,10 +50,14 @@ export default class TreeRepository extends BaseRepository<Tree> {
     return object;
   }
 
-  async getByOrganization(organization_id: number, options: FilterOptions, totalCount = false) {
+  async getByOrganization(
+    organization_id: number,
+    options: FilterOptions,
+    totalCount = false,
+  ) {
     const { limit, offset } = options;
-    
-    if(totalCount) {
+
+    if (totalCount) {
       const totalSql = `
         SELECT
           COUNT(*)
@@ -94,15 +98,15 @@ export default class TreeRepository extends BaseRepository<Tree> {
   async getByDateRange(
     date_range: { startDate: string; endDate: string },
     options: FilterOptions,
-    totalCount = false
+    totalCount = false,
   ) {
     const { limit, offset } = options;
     const startDateISO = `${date_range.startDate}T00:00:00.000Z`;
     const endDateISO = new Date(
       new Date(`${date_range.endDate}T00:00:00.000Z`).getTime() + 86400000,
     ).toISOString();
-    
-    if(totalCount) {
+
+    if (totalCount) {
       const totalSql = `
         SELECT
         COUNT(*)
@@ -143,7 +147,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
   async getByTag(tag: string, options: FilterOptions, totalCount = false) {
     const { limit, offset } = options;
 
-    if(totalCount) {
+    if (totalCount) {
       const totalSql = `
       SELECT 
         COUNT(*)
@@ -204,6 +208,38 @@ export default class TreeRepository extends BaseRepository<Tree> {
       LEFT JOIN region as country ON ST_WITHIN(trees.estimated_geometric_location, country.geom)
             and country.type_id in
               (SELECT id FROM region_type WHERE type = 'country')
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
+
+  async getByWallet(
+    wallet_id: string,
+    options: FilterOptions,
+    totalCount = false,
+  ) {
+    const { limit, offset } = options;
+
+    if (totalCount) {
+      const totalSql = `
+        SELECT
+          COUNT(*)
+        FROM trees
+        LEFT JOIN wallet.token ON token.capture_id::text = trees.uuid
+        WHERE wallet.token.wallet_id = '${wallet_id}'
+      `;
+      const total = await this.session.getDB().raw(totalSql);
+      return parseInt(total.rows[0].count.toString());
+    }
+
+    const sql = `
+      SELECT
+      trees.*
+      FROM trees
+      LEFT JOIN wallet.token ON token.capture_id::text = trees.uuid
+      WHERE wallet.token.wallet_id = '${wallet_id}'
+      LIMIT ${limit}
+      OFFSET ${offset}
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;
