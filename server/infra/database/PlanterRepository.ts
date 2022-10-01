@@ -51,7 +51,14 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
-      LEFT join trees on planter.id = trees.planter_id
+      LEFT JOIN trees ON trees.id = (
+        SELECT
+          id
+        FROM trees tr 
+        WHERE tr.planter_id = planter.id
+        ORDER BY tr.id desc
+        LIMIT 1
+      )
       LEFT join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
         and country.type_id in
           (select id from region_type where type = 'country')
