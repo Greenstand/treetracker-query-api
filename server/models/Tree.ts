@@ -8,6 +8,7 @@ type Filter = Partial<{
   organization_id: number;
   date_range: { startDate: string; endDate: string };
   tag: string;
+  wallet_id: string;
 }>;
 
 type BaseFilterOptions<T> = {
@@ -50,6 +51,11 @@ function getByFilter(
       const trees = await treeRepository.getByTag(filter.tag, options);
       return trees;
     }
+    if (filter.wallet_id) {
+      log.warn('using wallet filter...');
+      const trees = await treeRepository.getByWallet(filter.wallet_id, options);
+      return trees;
+    }
 
     const trees = await treeRepository.getByFilter(filter, options);
     return trees;
@@ -71,7 +77,7 @@ function countByFilter(
       const total = await treeRepository.getByOrganization(
         filter.organization_id,
         options,
-        true
+        true,
       );
       return total;
     }
@@ -80,7 +86,7 @@ function countByFilter(
       const total = await treeRepository.getByDateRange(
         filter.date_range,
         options,
-        true
+        true,
       );
       return total;
     }
@@ -89,12 +95,20 @@ function countByFilter(
       const total = await treeRepository.getByTag(filter.tag, options, true);
       return total;
     }
+    if (filter.wallet_id) {
+      log.warn('using wallet filter...');
+      const total = await treeRepository.getByWallet(
+        filter.wallet_id,
+        options,
+        true,
+      );
+      return total;
+    }
 
     const total = await treeRepository.countByFilter(filter);
     return total;
   };
 }
-
 
 /*
  featured tree, some highlighted tree, for a tempororily solution
