@@ -1,3 +1,9 @@
+## [1.50.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.50.0...v1.50.1) (2022-10-02)
+
+### Bug Fixes
+
+- Added entity to tree ref ([69adb47](https://github.com/Greenstand/treetracker-query-api/commit/69adb473aa27010caf999a7a363557e802472b7c))
+
 # [1.50.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.49.2...v1.50.0) (2022-10-01)
 
 ### Features
