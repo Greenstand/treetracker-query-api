@@ -1,5 +1,7 @@
 import cors from 'cors';
 import express from 'express';
+import log from 'loglevel';
+import responseTime from 'response-time';
 import capturesRouter from './routers/capturesRouter';
 import countriesRouter from './routers/countriesRouter';
 import growerAccountsRouter from './routers/growerAccountsRouter';
@@ -19,6 +21,12 @@ const version = process.env.npm_package_version;
 const app = express();
 
 // Sentry.init({ dsn: config.sentry_dsn });
+
+app.use(
+  responseTime((req, res, time) => {
+    log.warn('API took:', req.url, time);
+  }),
+);
 
 // app allow cors
 app.use(cors());

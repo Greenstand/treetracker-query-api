@@ -55,6 +55,7 @@
     "loglevel": "^1.6.8",
     "pg": "^8.7.1",
     "rascal": "^14.4.0",
+    "response-time": "^2.3.2",
     "uuid": "^8.2.0"
   },
   "devDependencies": {
