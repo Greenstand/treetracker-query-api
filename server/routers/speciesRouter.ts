@@ -1,5 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
+import log from 'loglevel';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import SpeciesRepository from '../infra/database/SpeciesRepository';
@@ -53,10 +54,12 @@ router.get(
     } else if (wallet_id) {
       filter.wallet_id = wallet_id;
     }
+    const begin = Date.now();
     const result = await SpeciesModel.getByFilter(repo)(filter, {
       limit,
       offset,
     });
+    log.warn('species filter:', filter, 'took time:', Date.now() - begin, 'ms');
     res.send({
       total: null,
       offset,
