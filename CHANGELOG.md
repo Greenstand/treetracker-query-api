@@ -1,3 +1,9 @@
+## [1.50.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.50.1...v1.50.2) (2022-10-02)
+
+### Bug Fixes
+
+- log ([65fc007](https://github.com/Greenstand/treetracker-query-api/commit/65fc0071bccc0a00313cf00346094924c18c9db0))
+
 ## [1.50.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.50.0...v1.50.1) (2022-10-02)
 
 ### Bug Fixes
