@@ -24,7 +24,7 @@ const app = express();
 
 app.use(
   responseTime((req, res, time) => {
-    log.warn('API took:', req.url, time);
+    log.warn('API took:', req.originalUrl, time);
   }),
 );
 
