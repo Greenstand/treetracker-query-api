@@ -1,3 +1,10 @@
+## [1.52.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.52.0...v1.52.1) (2022-10-04)
+
+### Bug Fixes
+
+- use location view to speed up ([8b4cc83](https://github.com/Greenstand/treetracker-query-api/commit/8b4cc83f3b80e9adcad9fcfa6ec774ba1736cf7c))
+- use species view to speed up ([924321b](https://github.com/Greenstand/treetracker-query-api/commit/924321b93e59992c1ca8e3c05ffec3b875d711f8))
+
 # [1.52.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.51.1...v1.52.0) (2022-10-04)
 
 ### Features
