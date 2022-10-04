@@ -19,7 +19,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       .select(
         this.session.getDB().raw(`
         planter.*,
-        l.*
+        l.*,
         planter_registrations.created_at as created_at
         from planter
         left join planter_registrations on planter.id = planter_registrations.planter_id
