@@ -14,8 +14,10 @@ export default class OrganizationRepository extends BaseRepository<Organization>
     const { limit, offset } = options;
     const sql = `
       SELECT
-      entity.*
+      entity.*,
+      l.*
       FROM entity
+      LEFT JOIN webmap.organization_location l ON l.id = entity.id
       LEFT JOIN planter ON planter.organization_id = entity.id
       WHERE planter.id = ${planter_id}
       LIMIT ${limit}
@@ -60,16 +62,9 @@ export default class OrganizationRepository extends BaseRepository<Organization>
       .select(
         this.session.getDB().raw(`
         entity.*,
-        country.name as country_name,
-        continent.name as continent_name
+        l.*
         from entity 
-        left join trees on entity.id = trees.planting_organization_id
-        left join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
-              and country.type_id in
-                (select id from region_type where type = 'country')
-        left join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
-              and continent.type_id in
-                (select id from region_type where type = 'continents' )
+        LEFT JOIN webmap.organization_location l ON l.id = entity.id
         `),
       )
       .where('entity.map_name', mapName)
@@ -91,7 +86,11 @@ export default class OrganizationRepository extends BaseRepository<Organization>
 
   async getFeaturedOrganizations() {
     const sql = `
-      select entity.* from entity 
+      select 
+        entity.*,
+        l.*
+      from entity 
+      LEFT JOIN webmap.organization_location l ON l.id = entity.id
       join (
       --- convert json array to row
       SELECT json_array_elements(data -> 'organizations') AS organization_id FROM webmap.config WHERE name = 'featured-organization'

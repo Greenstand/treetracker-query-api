@@ -19,18 +19,11 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       .select(
         this.session.getDB().raw(`
         planter.*,
-        country.name as country_name,
-        continent.name as continent_name,
+        l.*
         planter_registrations.created_at as created_at
         from planter
-        left join trees on planter.id = trees.planter_id
-        left join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
-          and country.type_id in
-            (select id from region_type where type = 'country')
-        left join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
-          and continent.type_id in
-            (select id from region_type where type = 'continents' )
         left join planter_registrations on planter.id = planter_registrations.planter_id
+        LEFT JOIN webmap.planter_location l ON l.id = planter.id
       `),
       )
       .where('planter.id', id)
@@ -55,25 +48,11 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       SELECT
         planter.*,
         planter_registrations.created_at,
-        country.name as country_name,
-        continent.name as continent_name
+        l.*
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
-      LEFT JOIN trees ON trees.id = (
-        SELECT
-          id
-        FROM trees tr 
-        WHERE tr.planter_id = planter.id
-        ORDER BY tr.id desc
-        LIMIT 1
-      )
-      LEFT join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
-        and country.type_id in
-          (select id from region_type where type = 'country')
-      LEFT join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
-        and continent.type_id in
-          (select id from region_type where type = 'continents' )
+      LEFT JOIN webmap.planter_location l ON l.id = planter.id
       WHERE planter.organization_id = ${organization_id}
       LIMIT ${limit}
       OFFSET ${offset}
@@ -113,18 +92,11 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       SELECT
         planter.*,
         planter_registrations.created_at,
-        country.name as country_name,
-        continent.name as continent_name
+        l.*
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
-      LEFT join trees on planter.id = trees.planter_id
-      LEFT join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
-        and country.type_id in
-          (select id from region_type where type = 'country')
-      LEFT join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
-        and continent.type_id in
-          (select id from region_type where type = 'continents' )
+      LEFT JOIN webmap.planter_location l ON l.id = planter.id
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -138,18 +110,11 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       SELECT
         planter.*,
         planter_registrations.created_at,
-        country.name as country_name,
-        continent.name as continent_name
+        l.*
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
-      LEFT join trees on planter.id = trees.planter_id
-      LEFT join region as country on ST_WITHIN(trees.estimated_geometric_location, country.geom)
-        and country.type_id in
-          (select id from region_type where type = 'country')
-      LEFT join region as continent on ST_WITHIN(trees.estimated_geometric_location, continent.geom)
-        and continent.type_id in
-          (select id from region_type where type = 'continents' )
+      LEFT JOIN webmap.planter_location l ON l.id = planter.id
       WHERE planter.first_name LIKE '${keyword}%' OR planter.last_name LIKE '${keyword}%'
       ORDER BY planter.first_name, planter.last_name
       LIMIT ${limit}
@@ -186,7 +151,11 @@ export default class PlanterRepository extends BaseRepository<Planter> {
   async getFeaturedPlanters(options: FilterOptions) {
     const { limit } = options;
     const sql = `
-      select planter.* from planter 
+      select 
+        planter.*,
+        l.*
+      from planter 
+      LEFT JOIN webmap.planter_location l ON l.id = planter.id
       join (
       SELECT json_array_elements(data -> 'planters') AS planter_id FROM webmap.config WHERE name = 'featured-planter'
       ) AS t ON 
