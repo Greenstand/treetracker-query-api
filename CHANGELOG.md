@@ -1,3 +1,9 @@
+## [1.52.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.52.1...v1.52.2) (2022-10-04)
+
+### Bug Fixes
+
+- sql syntax ([cda9966](https://github.com/Greenstand/treetracker-query-api/commit/cda99662b24540cc3afffa0b656603c0d6ebcec2))
+
 ## [1.52.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.52.0...v1.52.1) (2022-10-04)
 
 ### Bug Fixes
