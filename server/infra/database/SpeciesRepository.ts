@@ -11,19 +11,26 @@ export default class SpeciesRepository extends BaseRepository<Species> {
   async getByOrganization(organization_id: number, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
-      select species_id as id, count(species_id) as total, tree_species.name, tree_species.desc
-      from trees
-      LEFT JOIN tree_species 
-      on trees.species_id = tree_species.id
-      JOIN planter
-      ON planter.id = trees.planter_id
-      where 
-      trees.active = true
-      AND tree_species.name is not null
-      AND trees.species_id is not null
-      AND planter.organization_id IN (SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
-      group by species_id, tree_species.name, tree_species.desc
-      order by total desc
+      SELECT 
+      species_id as id, total, ts.name, ts.desc
+      FROM 
+      (
+      SELECT 
+      ss.species_id, count(ss.species_id) as total
+      from webmap.species_stat ss
+      WHERE
+      ss.planter_id IN (
+        SELECT
+          id
+        FROM planter p
+        WHERE
+          p.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
+      )
+      GROUP BY ss.species_id
+      ) s_count
+      JOIN tree_species ts
+      ON ts.id = s_count.species_id
+      ORDER BY total DESC
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -34,17 +41,20 @@ export default class SpeciesRepository extends BaseRepository<Species> {
   async getByPlanter(planter_id: number, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
-      select species_id as id, count(species_id) as total, tree_species.name, tree_species.desc
-      from trees
-      LEFT JOIN tree_species 
-      on trees.species_id = tree_species.id
-      where 
-      trees.active = true
-      AND trees.planter_id = ${planter_id}
-      AND tree_species.name is not null
-      AND trees.species_id is not null
-      group by species_id, tree_species.name, tree_species.desc
-      order by total desc
+      SELECT 
+      species_id as id, total, ts.name, ts.desc
+      FROM 
+      (
+      SELECT 
+      ss.species_id, count(ss.species_id) as total
+      from webmap.species_stat ss
+      WHERE
+      ss.planter_id = ${planter_id}
+      GROUP BY ss.species_id
+      ) s_count
+      JOIN tree_species ts
+      ON ts.id = s_count.species_id
+      ORDER BY total DESC
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -55,21 +65,20 @@ export default class SpeciesRepository extends BaseRepository<Species> {
   async getByWallet(wallet_id: string, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
-      select species_id as id, count(species_id) as total, tree_species.name, tree_species.desc
-      from trees
-      LEFT JOIN tree_species 
-      on trees.species_id = tree_species.id
-      INNER JOIN wallet.token
-      on wallet.token.capture_id::text = trees.uuid::text
-      INNER JOIN wallet.wallet  
-      on wallet.token.wallet_id = wallet.wallet.id
-      where 
-      trees.active = true
-      AND wallet.wallet.id::text = '${wallet_id}'
-      AND tree_species.name is not null
-      AND trees.species_id is not null
-      group by species_id, tree_species.name, tree_species.desc
-      order by total desc
+      SELECT 
+      species_id as id, total, ts.name, ts.desc
+      FROM 
+      (
+      SELECT 
+      ss.species_id, count(ss.species_id) as total
+      from webmap.species_stat ss
+      WHERE
+      ss.wallet_id::text = '${wallet_id}'
+      GROUP BY ss.species_id
+      ) s_count
+      JOIN tree_species ts
+      ON ts.id = s_count.species_id
+      ORDER BY total DESC
       LIMIT ${limit}
       OFFSET ${offset}
     `;
