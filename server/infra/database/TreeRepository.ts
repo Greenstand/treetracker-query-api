@@ -63,8 +63,8 @@ export default class TreeRepository extends BaseRepository<Tree> {
           COUNT(*)
         FROM trees
         LEFT JOIN planter ON trees.planter_id = planter.id
-        LEFT JOIN entity ON entity.id = planter.organization_id
-        WHERE entity.id = ${organization_id}
+        WHERE
+          planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
@@ -87,7 +87,8 @@ export default class TreeRepository extends BaseRepository<Tree> {
       LEFT JOIN region
         on ST_WITHIN(trees.estimated_geometric_location, region.geom)
         and region.type_id in (select id from region_type where type = 'country')
-      WHERE entity.id = ${organization_id}
+      WHERE
+        planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
       LIMIT ${limit}
       OFFSET ${offset}
     `;
