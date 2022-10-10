@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       git-tag:
-        description: 'tag'
+        description: 'tag(e.g. v1.52.4)'
         required: true
 
 env:
@@ -12,7 +12,7 @@ env:
 
 jobs:
   deploy:
-    name: Deploy, requires approval
+    name: Deploy to prod env
     runs-on: ubuntu-latest
     if: |
       github.repository == 'Greenstand/treetracker-query-api'
