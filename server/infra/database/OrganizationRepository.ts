@@ -15,7 +15,7 @@ export default class OrganizationRepository extends BaseRepository<Organization>
     const sql = `
       SELECT
       entity.*,
-      l.*
+      l.country_id, l.country_name, l.continent_id, l.continent_name
       FROM entity
       LEFT JOIN webmap.organization_location l ON l.id = entity.id
       LEFT JOIN planter ON planter.organization_id = entity.id
@@ -62,7 +62,7 @@ export default class OrganizationRepository extends BaseRepository<Organization>
       .select(
         this.session.getDB().raw(`
         entity.*,
-        l.*
+        l.country_id, l.country_name, l.continent_id, l.continent_name
         from entity 
         LEFT JOIN webmap.organization_location l ON l.id = entity.id
         `),
@@ -88,7 +88,7 @@ export default class OrganizationRepository extends BaseRepository<Organization>
     const sql = `
       select 
         entity.*,
-        l.*
+      l.country_id, l.country_name, l.continent_id, l.continent_name
       from entity 
       LEFT JOIN webmap.organization_location l ON l.id = entity.id
       join (
