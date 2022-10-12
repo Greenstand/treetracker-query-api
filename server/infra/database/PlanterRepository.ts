@@ -19,7 +19,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       .select(
         this.session.getDB().raw(`
         planter.*,
-        l.*,
+      l.country_id, l.country_name, l.continent_id, l.continent_name,
         planter_registrations.created_at as created_at
         from planter
         left join planter_registrations on planter.id = planter_registrations.planter_id
@@ -48,7 +48,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       SELECT
         planter.*,
         planter_registrations.created_at,
-        l.*
+      l.country_id, l.country_name, l.continent_id, l.continent_name
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
@@ -92,7 +92,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       SELECT
         planter.*,
         planter_registrations.created_at,
-        l.*
+      l.country_id, l.country_name, l.continent_id, l.continent_name
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
@@ -110,7 +110,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       SELECT
         planter.*,
         planter_registrations.created_at,
-        l.*
+      l.country_id, l.country_name, l.continent_id, l.continent_name
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
@@ -153,7 +153,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     const sql = `
       select 
         planter.*,
-        l.*
+      l.country_id, l.country_name, l.continent_id, l.continent_name
       from planter 
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
       join (
