@@ -1,3 +1,9 @@
+## [1.52.5](https://github.com/Greenstand/treetracker-query-api/compare/v1.52.4...v1.52.5) (2022-10-12)
+
+### Bug Fixes
+
+- wrong id by location ([f6a5731](https://github.com/Greenstand/treetracker-query-api/commit/f6a573147e80e3ce0472fd91d6ddc941c1ee8b13))
+
 ## [1.52.4](https://github.com/Greenstand/treetracker-query-api/compare/v1.52.3...v1.52.4) (2022-10-10)
 
 ### Bug Fixes
