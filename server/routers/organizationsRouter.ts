@@ -32,7 +32,7 @@ router.get(
     Joi.assert(req.params.id, Joi.string().required());
     const repo = new OrganizationRepository(new Session());
     let exe;
-    if (Number.isNaN(req.params.id)) {
+    if (isNaN(req.params.id)) {
       exe = OrganizationModel.getByMapName(repo);
     } else {
       exe = OrganizationModel.getById(repo);
