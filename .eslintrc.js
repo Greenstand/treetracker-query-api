@@ -12,6 +12,7 @@ module.exports = {
 
   rules: {
     // disabled or modified because too strict
+    'no-restricted-globals': 'warn',
     'no-console': ['warn', { allow: ['info', 'error'] }],
     'import/prefer-default-export': 'off',
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
