@@ -37,7 +37,8 @@ export default class OrganizationRepository extends BaseRepository<Organization>
       .getDB()
       .select(
         this.session.getDB().raw(`
-          *
+          entity.*,
+          l.country_id, l.country_name, l.continent_id, l.continent_name
           from entity 
           left join webmap.organization_location l on l.id = entity.id
         `),
