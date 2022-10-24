@@ -1,3 +1,9 @@
+## [1.52.7](https://github.com/Greenstand/treetracker-query-api/compare/v1.52.6...v1.52.7) (2022-10-24)
+
+### Bug Fixes
+
+- org id return null ([05d0060](https://github.com/Greenstand/treetracker-query-api/commit/05d0060acbfbaa557e302b51fbf24cf8bf215211))
+
 ## [1.52.6](https://github.com/Greenstand/treetracker-query-api/compare/v1.52.5...v1.52.6) (2022-10-17)
 
 ### Bug Fixes
