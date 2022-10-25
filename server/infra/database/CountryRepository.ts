@@ -61,38 +61,44 @@ export default class CountryRepository extends BaseRepository<Country> {
   }
 
   async getLeaderBoard(region: string /* top = 10 */) {
-    let regionName = '';
+    const regionName = region || 'Global';
 
-    switch (region.toUpperCase()) {
-      case 'AFRICA':
-        regionName = 'Africa';
-        break;
-      case 'ANTARCTICA':
-        regionName = 'Antarctica';
-        break;
-      case 'ASIA':
-        regionName = 'Asia';
-        break;
-      case 'AUSTRALIA':
-        regionName = 'Australia';
-        break;
-      case 'EUROPE':
-        regionName = 'Europe';
-        break;
-      case 'NORTHA':
-        regionName = 'North America';
-        break;
-      case 'OCEANIA':
-        regionName = 'Oceania';
-        break;
-      case 'SOUTHA':
-        regionName = 'South America';
-        break;
-      default:
-        regionName = 'Global';
-    }
+    // switch (region.toUpperCase()) {
+    //   case 'AFRICA':
+    //     regionName = 'Africa';
+    //     break;
+    //   case 'ANTARCTICA':
+    //     regionName = 'Antarctica';
+    //     break;
+    //   case 'ASIA':
+    //     regionName = 'Asia';
+    //     break;
+    //   case 'AUSTRALIA':
+    //     regionName = 'Australia';
+    //     break;
+    //   case 'EUROPE':
+    //     regionName = 'Europe';
+    //     break;
+    //   case 'NORTHA':
+    //     regionName = 'North America';
+    //     break;
+    //   case 'OCEANIA':
+    //     regionName = 'Oceania';
+    //     break;
+    //   case 'SOUTHA':
+    //     regionName = 'South America';
+    //     break;
+    //   case 'AMERICAS':
+    //     regionName = 'Americas';
+    //     break;
+    //   default:
+    //     regionName = 'Global';
+    // }
 
-    const sql = "select * from webmap.config where name = 'country-leader-board'";
+    log.warn('to fetch contient:', regionName);
+
+    const sql =
+      "select * from webmap.config where name = 'country-leader-board'";
 
     const object = await this.session.getDB().raw(sql);
     if (object.rows.length === 0) {
