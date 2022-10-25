@@ -1,3 +1,9 @@
+# [1.53.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.52.7...v1.53.0) (2022-10-25)
+
+### Features
+
+- new way to get country leader board ([7ee478f](https://github.com/Greenstand/treetracker-query-api/commit/7ee478fae3fbbf67070cf2ddea6fc5be3c52c909))
+
 ## [1.52.7](https://github.com/Greenstand/treetracker-query-api/compare/v1.52.6...v1.52.7) (2022-10-24)
 
 ### Bug Fixes
