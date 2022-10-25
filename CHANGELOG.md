@@ -1,3 +1,9 @@
+## [1.53.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.53.0...v1.53.1) (2022-10-25)
+
+### Bug Fixes
+
+- correct the continent name ([ce61ac6](https://github.com/Greenstand/treetracker-query-api/commit/ce61ac6481d46d67e1a205f01d6fb57186a7730e))
+
 # [1.53.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.52.7...v1.53.0) (2022-10-25)
 
 ### Features
