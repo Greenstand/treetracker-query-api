@@ -1,3 +1,9 @@
+## [1.53.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.53.1...v1.53.2) (2022-10-26)
+
+### Bug Fixes
+
+- returning duplicates of approved captures ([90a0f8e](https://github.com/Greenstand/treetracker-query-api/commit/90a0f8e8c60246d0e8d657d30f7feff743857a55))
+
 ## [1.53.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.53.0...v1.53.1) (2022-10-25)
 
 ### Bug Fixes
