@@ -147,7 +147,8 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
         `${this.tableName}.${sort?.order_by || 'created_at'}`,
         sort?.order || 'desc',
       )
-      .where((builder) => this.filterWhereBuilder(filter, builder));
+      .where((builder) => this.filterWhereBuilder(filter, builder))
+      .distinct();
 
     const { limit, offset } = options;
     if (limit) {
