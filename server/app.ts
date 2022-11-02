@@ -12,6 +12,7 @@ import speciesRouter from './routers/speciesRouter';
 import tokensRouter from './routers/tokensRouter';
 import transactionsRouter from './routers/transactionsRouter';
 import treesRouter from './routers/treesRouter';
+import treesRouterV2 from './routers/treesRouterV2';
 import { errorHandler, handlerWrapper } from './routers/utils';
 import walletsRouter from './routers/walletsRouter';
 import HttpError from './utils/HttpError';
@@ -67,6 +68,7 @@ app.use('/tokens', tokensRouter);
 app.use('/v2/captures', capturesRouter);
 app.use('/raw-captures', rawCapturesRouter);
 app.use('/grower-accounts', growerAccountsRouter);
+app.use('/v2/trees', treesRouterV2);
 // Global error handler
 app.use(errorHandler);
 
