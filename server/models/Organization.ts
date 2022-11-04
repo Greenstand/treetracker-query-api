@@ -26,7 +26,7 @@ function getByFilter(
 function getOrganizationLinks(organization) {
   const links = {
     featured_trees: `/trees?organization_id=${organization.id}&limit=20&offset=0`,
-    associated_planters: `/planters?organization_id=${organization.id}&limit=20&offset=0`,
+    associated_planters: `/planters?organization_id=${organization.id}&limit=20&offset=0&order_by=about`,
     species: `/species?organization_id=${organization.id}&limit=20&offset=0`,
   };
   return links;
