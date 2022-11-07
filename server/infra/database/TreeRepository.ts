@@ -64,7 +64,11 @@ export default class TreeRepository extends BaseRepository<Tree> {
         FROM trees
         LEFT JOIN planter ON trees.planter_id = planter.id
         WHERE
-          planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
+          (
+            planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
+          OR
+            trees.planting_organization_id = ${organization_id}
+          )
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
@@ -88,7 +92,11 @@ export default class TreeRepository extends BaseRepository<Tree> {
         on ST_WITHIN(trees.estimated_geometric_location, region.geom)
         and region.type_id in (select id from region_type where type = 'country')
       WHERE
-        planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
+        (
+          planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
+        OR
+          trees.planting_organization_id = ${organization_id}
+        )
       LIMIT ${limit}
       OFFSET ${offset}
     `;
