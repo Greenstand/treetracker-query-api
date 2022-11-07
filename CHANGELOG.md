@@ -1,3 +1,9 @@
+## [1.55.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.55.0...v1.55.1) (2022-11-07)
+
+### Bug Fixes
+
+- wrong sql for species ([0847830](https://github.com/Greenstand/treetracker-query-api/commit/08478308d2c57cfe9b1fa9c4a0eac7d6631ca967))
+
 # [1.55.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.54.0...v1.55.0) (2022-11-07)
 
 ### Features
