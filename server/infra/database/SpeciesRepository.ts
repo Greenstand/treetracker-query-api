@@ -24,12 +24,10 @@ export default class SpeciesRepository extends BaseRepository<Species> {
           id
         FROM planter p
         WHERE
-          (
             p.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
-          OR
-            ss.planting_organization_id = ${organization_id}
-          )
       )
+      OR
+        ss.planting_organization_id = ${organization_id}
       GROUP BY ss.species_id
       ) s_count
       JOIN tree_species ts
