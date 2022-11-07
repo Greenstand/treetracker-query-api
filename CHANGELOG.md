@@ -1,3 +1,9 @@
+# [1.55.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.54.0...v1.55.0) (2022-11-07)
+
+### Features
+
+- take planting_ogranzation_id in consideration ([2eb24e1](https://github.com/Greenstand/treetracker-query-api/commit/2eb24e1e8aa57169c827eba080728525ef060244))
+
 # [1.54.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.53.2...v1.54.0) (2022-11-02)
 
 ### Features
