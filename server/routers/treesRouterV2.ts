@@ -1,5 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
+import FilterOptions from 'interfaces/FilterOptions';
 import Tree from 'interfaces/Tree';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
@@ -14,15 +15,6 @@ type Filter = Partial<{
   tag: string;
   wallet_id: string;
 }>;
-
-type BaseFilterOptions<T> = {
-  limit: number;
-  offset: number;
-  orderBy?: {
-    column: keyof T;
-    direction?: 'desc' | 'asc';
-  };
-};
 
 router.get(
   '/featured',
@@ -81,7 +73,7 @@ router.get(
     } = req.query;
     const repo = new TreeRepositoryV2(new Session());
     const filter: Filter = {};
-    const options: BaseFilterOptions<Tree> = {
+    const options: FilterOptions = {
       limit,
       offset,
     };
