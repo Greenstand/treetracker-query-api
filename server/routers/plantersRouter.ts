@@ -47,19 +47,8 @@ router.get(
         organization_id: Joi.number().integer().min(0),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
-        order_by: Joi.string().custom((value, helper) => {
-          if (value.length > 0) {
-            if (value.includes(':')) {
-              const sortOrder = value.split(':')[1].toLowerCase();
-              if (sortOrder !== 'asc' && sortOrder !== 'desc') {
-                return helper.error(
-                  "order_by query's sortOrder should either be asc or desc",
-                );
-              }
-            }
-          }
-          return value;
-        }, 'custom validation'),
+        order_by: Joi.string(),
+        order: Joi.string().valid('asc', 'desc', 'ASC', 'DESC'),
       }),
     );
     const {
@@ -68,11 +57,11 @@ router.get(
       organization_id,
       keyword,
       order_by = null,
+      order = 'asc',
     } = req.query;
     const options: FilterOptions = { limit, offset };
     if (order_by) {
-      const direction = order_by.includes(':') ? order_by.split(':')[1] : 'asc';
-      options.orderBy = { column: order_by.split(':')[0] as string, direction };
+      options.orderBy = { column: order_by, direction: order };
     }
     const repo = new PlanterRepository(new Session());
     const filter: Filter = {};
