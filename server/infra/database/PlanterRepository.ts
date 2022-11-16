@@ -54,6 +54,14 @@ export default class PlanterRepository extends BaseRepository<Planter> {
            ON planter.id = planter_registrations.planter_id
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
       WHERE planter.organization_id = ${organization_id}
+      ${
+        options.orderBy
+          ? `order by ${ 
+            options.orderBy.column 
+            } ${ 
+            options.orderBy.direction}`
+          : ''
+      }
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -97,6 +105,14 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
+      ${
+        options.orderBy
+          ? `order by ${ 
+            options.orderBy.column 
+            } ${ 
+            options.orderBy.direction}`
+          : ''
+      }
       LIMIT ${limit}
       OFFSET ${offset}
     `;

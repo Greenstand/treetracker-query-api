@@ -11,25 +11,10 @@ type Filter = Partial<{
   wallet_id: string;
 }>;
 
-type BaseFilterOptions<T> = {
-  limit: number;
-  offset: number;
-  orderBy?: {
-    column: keyof T;
-    direction?: 'desc' | 'asc';
-  };
-};
-
 function getByFilter(
   treeRepository: TreeRepository,
-): (
-  filter: Filter,
-  options: FilterOptions | BaseFilterOptions<Tree>,
-) => Promise<Tree[]> {
-  return async function (
-    filter: Filter,
-    options: FilterOptions | BaseFilterOptions<Tree>,
-  ) {
+): (filter: Filter, options: FilterOptions) => Promise<Tree[]> {
+  return async function (filter: Filter, options: FilterOptions) {
     if (filter.organization_id) {
       log.warn('using org filter...');
       const trees = await treeRepository.getByOrganization(
@@ -64,14 +49,8 @@ function getByFilter(
 
 function countByFilter(
   treeRepository: TreeRepository,
-): (
-  filter: Filter,
-  options: FilterOptions | BaseFilterOptions<Tree>,
-) => Promise<number> {
-  return async function (
-    filter: Filter,
-    options: FilterOptions | BaseFilterOptions<Tree>,
-  ) {
+): (filter: Filter, options: FilterOptions) => Promise<number> {
+  return async function (filter: Filter, options: FilterOptions) {
     if (filter.organization_id) {
       log.warn('using org filter...');
       const total = await treeRepository.getByOrganization(

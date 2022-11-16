@@ -1,4 +1,6 @@
-export default interface Tree {
+import DbModel from './DbModel';
+
+export default interface Tree extends DbModel {
   id: number;
   lat: number;
   lon: number;

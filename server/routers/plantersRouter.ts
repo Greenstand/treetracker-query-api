@@ -1,5 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
+import FilterOptions from 'interfaces/FilterOptions';
 import { handlerWrapper } from './utils';
 import PlanterRepository from '../infra/database/PlanterRepository';
 import Session from '../infra/database/Session';
@@ -46,9 +47,22 @@ router.get(
         organization_id: Joi.number().integer().min(0),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
+        order_by: Joi.string(),
+        order: Joi.string().valid('asc', 'desc', 'ASC', 'DESC'),
       }),
     );
-    const { limit = 20, offset = 0, organization_id, keyword } = req.query;
+    const {
+      limit = 20,
+      offset = 0,
+      organization_id,
+      keyword,
+      order_by = null,
+      order = 'asc',
+    } = req.query;
+    const options: FilterOptions = { limit, offset };
+    if (order_by) {
+      options.orderBy = { column: order_by, direction: order };
+    }
     const repo = new PlanterRepository(new Session());
     const filter: Filter = {};
     if (organization_id) {
@@ -56,10 +70,7 @@ router.get(
     }
 
     if (keyword !== undefined) {
-      const result = await PlanterModel.getByName(repo)(keyword, {
-        limit,
-        offset,
-      });
+      const result = await PlanterModel.getByName(repo)(keyword, options);
       res.send({
         total: await PlanterModel.countByName(repo)(keyword),
         offset,
@@ -71,10 +82,7 @@ router.get(
       });
       res.end();
     } else {
-      const result = await PlanterModel.getByFilter(repo)(filter, {
-        limit,
-        offset,
-      });
+      const result = await PlanterModel.getByFilter(repo)(filter, options);
       res.send({
         total: await PlanterModel.countByFilter(repo)(filter),
         offset,
