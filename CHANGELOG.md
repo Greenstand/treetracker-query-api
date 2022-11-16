@@ -1,3 +1,14 @@
+# [1.56.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.55.1...v1.56.0) (2022-11-16)
+
+### Bug Fixes
+
+- made order_by parameter consistent with the code base ([a10aaeb](https://github.com/Greenstand/treetracker-query-api/commit/a10aaeb5ed254cf5cec97c78ee71b702723c33e0))
+
+### Features
+
+- added order_by for planter endpoint ([61cf970](https://github.com/Greenstand/treetracker-query-api/commit/61cf97055fa329b5e1db11cdbfc8dfa65bb8e3a7))
+- restructed some interfaces to support order by in filter options ([89858d7](https://github.com/Greenstand/treetracker-query-api/commit/89858d77b081b880b288b673f4f864faf2ef45fd))
+
 ## [1.55.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.55.0...v1.55.1) (2022-11-07)
 
 ### Bug Fixes
