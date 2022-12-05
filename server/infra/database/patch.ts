@@ -27,7 +27,7 @@ async function patch(object: any, patchType: PATCH_TYPE, session: Session) {
   let result = object;
   if (object instanceof Array) {
     if (object.length > 0) {
-      const ids = object.map((o) => parseInt(o.id));
+      const ids = object.map((o) => o.id);
 
       const res = await session.getDB().raw(
         `
@@ -41,9 +41,7 @@ async function patch(object: any, patchType: PATCH_TYPE, session: Session) {
         result = [];
         log.debug('found result, patch');
         object.forEach((o) => {
-          const extra = res.rows.find(
-            (r) => parseInt(r.ref_id) === parseInt(o.id),
-          );
+          const extra = res.rows.find((r) => r.ref_id === o.id);
           if (extra) {
             result.push({ ...o, ...extra.data });
           } else {

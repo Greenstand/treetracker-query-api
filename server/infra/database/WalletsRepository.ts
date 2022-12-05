@@ -114,7 +114,7 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
   async getFeaturedWallet() {
     const sql = `
       SELECT
-        wallet.wallet.id,
+        wallet.wallet.id as id,
         wallet.wallet.name,
         wallet.wallet.logo_url,
         wallet.wallet.created_at
