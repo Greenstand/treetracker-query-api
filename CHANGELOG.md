@@ -1,3 +1,9 @@
+## [1.57.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.57.0...v1.57.1) (2022-12-06)
+
+### Bug Fixes
+
+- k8s type ([4959772](https://github.com/Greenstand/treetracker-query-api/commit/495977278730d3031de65698cc130bc6424bb06c))
+
 # [1.57.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.56.1...v1.57.0) (2022-12-06)
 
 ### Bug Fixes
