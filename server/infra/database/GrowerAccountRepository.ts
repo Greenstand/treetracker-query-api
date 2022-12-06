@@ -33,6 +33,20 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
       result.whereIn(whereIn.field, whereIn.values);
     });
 
+    Object.entries(parameters).forEach(([key, val]) => {
+      if (val === 'not null') {
+        result.whereNotNull(key);
+        delete parameters[key];
+      }
+    });
+
+    Object.entries(parameters).forEach(([key, val]) => {
+      if (val === 'null') {
+        result.whereNull(key);
+        delete parameters[key];
+      }
+    });
+
     const filterObject = { ...parameters };
 
     if (filterObject.id) {
@@ -90,25 +104,14 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
       delete filterObject.device_identifier;
     }
 
-    // how to get all the parent and children ids for the org -- if they exist?
-    // Stakeholder api? or pass the org ids from the frontend?
     if (filterObject.organization_id) {
-      result.where(`${this.tableName}.organization_id`, 'in', [
-        filterObject.organization_id,
-      ]);
+      result.where(
+        `${this.tableName}.organization_id`,
+        'in',
+        filterObject.organization_id.split(','),
+      );
       delete filterObject.organization_id;
     }
-
-    // if we want to allow the client to pass more than one org id
-
-    // if (filterObject.organization_ids) {
-    //   result.where(
-    //     `${this.tableName}.planting_organization_id`,
-    //     'in',
-    //     filterObject.organization_ids.split(','),
-    //   );
-    //   delete filterObject.organization_ids;
-    // }
 
     result.where(filterObject);
   }

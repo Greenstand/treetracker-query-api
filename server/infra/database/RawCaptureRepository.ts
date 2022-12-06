@@ -40,6 +40,20 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
       result.whereIn(whereIn.field, whereIn.values);
     });
 
+    Object.entries(parameters).forEach(([key, val]) => {
+      if (val === 'not null') {
+        result.whereNotNull(key);
+        delete parameters[key];
+      }
+    });
+
+    Object.entries(parameters).forEach(([key, val]) => {
+      if (val === 'null') {
+        result.whereNull(key);
+        delete parameters[key];
+      }
+    });
+
     const filterObject = { ...parameters };
 
     if (filterObject.status) {
@@ -55,15 +69,21 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
       );
       delete filterObject.startDate;
     }
+
     if (filterObject.endDate) {
       result.where(`${this.tableName}.captured_at`, '<=', filterObject.endDate);
       delete filterObject.endDate;
     }
 
-    if (filterObject.tag) {
-      filterObject[`treetracker.capture_tag.tag_id`] = filterObject.tag;
-      delete filterObject.tag;
+    if (filterObject.tag && filterObject.tag !== 'null') {
+      filterObject[`treetracker.capture_tag.tag_id`] = filterObject.tag_id;
+      delete filterObject.tag_id;
     }
+
+    // if (filterObject.species_id && filterObject.species_id !== 'null') {
+    //   filterObject[`treetracker.capture_tag.tag_id`] = filterObject.species_id;
+    //   delete filterObject.species_id;
+    // }
 
     if (filterObject.id) {
       result.where(`${this.tableName}.id`, '=', filterObject.id);
@@ -80,9 +100,11 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
     }
 
     if (filterObject.organization_id) {
-      result.where(`session.organization_id`, 'in', [
-        filterObject.organization_id,
-      ]);
+      // handle either an array of org ids or one uuid
+      const items = filterObject.organization_id.length
+        ? filterObject.organization_id.split(',')
+        : [filterObject.organization_id];
+      result.where(`field_data.session.organization_id`, 'in', [...items]);
       delete filterObject.organization_id;
     }
 
@@ -193,7 +215,8 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
         '=',
         'treetracker.capture_tag.capture_id',
       )
-      .where((builder) => this.filterWhereBuilder(filter, builder));
+      .where((builder) => this.filterWhereBuilder(filter, builder))
+      .distinct();
 
     return result[0].count;
   }
