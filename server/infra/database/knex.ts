@@ -5,7 +5,9 @@ const connection = process.env.DATABASE_URL;
 
 !connection && log.warn('env var DATABASE_URL not set');
 
-const max = process.env.DATABASE_POOL_MAX || 10;
+const max =
+  (process.env.DATABASE_POOL_MAX && parseInt(process.env.DATABASE_POOL_MAX)) ||
+  10;
 log.warn('knex pool max:', max);
 
 const knexConfig: Knex.Config = {
