@@ -1,3 +1,13 @@
+# [1.57.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.56.1...v1.57.0) (2022-12-06)
+
+### Bug Fixes
+
+- type ([5f83912](https://github.com/Greenstand/treetracker-query-api/commit/5f839127f1b97a42d87056656cf76009f0783047))
+
+### Features
+
+- pool max env ([f00763d](https://github.com/Greenstand/treetracker-query-api/commit/f00763dc6c237cefa1bf65f72d05ee16bf912b3c))
+
 ## [1.56.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.56.0...v1.56.1) (2022-12-05)
 
 ### Bug Fixes
