@@ -5,12 +5,15 @@ const connection = process.env.DATABASE_URL;
 
 !connection && log.warn('env var DATABASE_URL not set');
 
+const max = process.env.DATABASE_POOL_MAX || 10;
+log.warn('knex pool max:', max);
+
 const knexConfig: Knex.Config = {
   client: 'pg',
   // debug: process.env.NODE_LOG_LEVEL === 'debug',
   debug: true,
   connection,
-  pool: { min: 0, max: 10 },
+  pool: { min: 0, max },
 };
 
 log.debug(process.env.DATABASE_SCHEMA);
