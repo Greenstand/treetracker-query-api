@@ -32,3 +32,5 @@ spec:
                 secretKeyRef:
                   name: dbconnection
                   key: database
+            - name: DATABASE_POOL_MAX
+              value: 5
