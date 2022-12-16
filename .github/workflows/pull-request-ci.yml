@@ -33,3 +33,6 @@ jobs:
 
       - name: run tests
         run: npm test
+
+      - name: run repository tests
+        run: npm run test-repository
