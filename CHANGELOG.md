@@ -1,3 +1,9 @@
+# [1.58.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.57.1...v1.58.0) (2022-12-20)
+
+### Features
+
+- add repository unit tests to CI ([90ffd43](https://github.com/Greenstand/treetracker-query-api/commit/90ffd43e1ac74d8382450bf77599db5a9bed6b02))
+
 ## [1.57.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.57.0...v1.57.1) (2022-12-06)
 
 ### Bug Fixes
