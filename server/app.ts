@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import log from 'loglevel';
 import responseTime from 'response-time';
+import boundsRouter from './routers/boundsRouter';
 import capturesRouter from './routers/capturesRouter';
 import countriesRouter from './routers/countriesRouter';
 import growerAccountsRouter from './routers/growerAccountsRouter';
@@ -69,6 +70,7 @@ app.use('/v2/captures', capturesRouter);
 app.use('/raw-captures', rawCapturesRouter);
 app.use('/grower-accounts', growerAccountsRouter);
 app.use('/v2/trees', treesRouterV2);
+app.use('/bounds', boundsRouter);
 // Global error handler
 app.use(errorHandler);
 
