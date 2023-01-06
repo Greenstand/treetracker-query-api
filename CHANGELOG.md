@@ -1,3 +1,12 @@
+# [1.59.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.58.0...v1.59.0) (2023-01-06)
+
+### Features
+
+- respository and model for bound endpoint ([8b8a216](https://github.com/Greenstand/treetracker-query-api/commit/8b8a2160e85d97bc424b21b976f7e1a69f768282))
+- routes for bound endpoint ([318b145](https://github.com/Greenstand/treetracker-query-api/commit/318b1459c860af2e0433222c07dfca690e648ea8))
+- type for bound endpoint ([84f5c64](https://github.com/Greenstand/treetracker-query-api/commit/84f5c640f4a32478d645dd02f8342d6a25f4a9ee))
+- unit test for bound endpoint ([951f751](https://github.com/Greenstand/treetracker-query-api/commit/951f7511fa67db1fef04cdf28a2c76ae357ef218))
+
 # [1.58.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.57.1...v1.58.0) (2022-12-20)
 
 ### Features
