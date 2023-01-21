@@ -29,11 +29,28 @@ export default class CaptureRepository extends BaseRepository<Capture> {
 
     result.whereNot(`${this.tableName}.status`, 'deleted');
     whereNotNulls.forEach((whereNot) => {
-      result.whereNotNull(whereNot);
+      // to map table names to fields for query
+      switch (true) {
+        case whereNot === 'tag_id':
+          result.whereNotNull('treetracker.capture_tag.tag_id');
+          break;
+        default:
+          result.whereNotNull(whereNot);
+      }
+
+      // result.whereNotNull(whereNot);
     });
 
     whereNulls.forEach((whereNull) => {
-      result.whereNull(whereNull);
+      // to map table names to fields for query
+      switch (true) {
+        case whereNull === 'tag_id':
+          result.whereNull('treetracker.capture_tag.tag_id');
+          break;
+        default:
+          result.whereNull(whereNull);
+      }
+      // result.whereNull(whereNull);
     });
 
     whereIns.forEach((whereIn) => {
@@ -55,9 +72,9 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       delete filterObject.endDate;
     }
 
-    if (filterObject.tag) {
-      filterObject[`treetracker.capture_tag.tag_id`] = filterObject.tag;
-      delete filterObject.tag;
+    if (filterObject.tag_id) {
+      filterObject[`treetracker.capture_tag.tag_id`] = filterObject.tag_id;
+      delete filterObject.tag_id;
     }
 
     if (filterObject.id) {
@@ -74,25 +91,12 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       delete filterObject.reference_id;
     }
 
-    // how to get all the parent and children ids for the org -- if they exist?
-    // Stakeholder api? or pass the org ids from the frontend?
     if (filterObject.organization_id) {
       result.where(`${this.tableName}.planting_organization_id`, 'in', [
-        filterObject.organization_id,
+        ...filterObject.organization_id,
       ]);
       delete filterObject.organization_id;
     }
-
-    // if we want to allow the client to pass more than one org id
-
-    // if (filterObject.organization_ids) {
-    //   result.where(
-    //     `${this.tableName}.planting_organization_id`,
-    //     'in',
-    //     filterObject.organization_ids.split(','),
-    //   );
-    //   delete filterObject.organization_ids;
-    // }
 
     result.where(filterObject);
   }
@@ -133,14 +137,10 @@ export default class CaptureRepository extends BaseRepository<Capture> {
               JOIN wallet.token t ON t.wallet_id = w.id
               JOIN treetracker.grower_account ga ON ga.wallet = w.name
             ) wt ON treetracker.capture.grower_account_id = wt.id
-          ${
-            filter.tag
-              ? `INNER JOIN treetracker.capture_tag
-                  on treetracker.capture_tag.capture_id = treetracker.capture.id
-                 INNER JOIN treetracker.tag
-                  on treetracker.capture_tag.tag_id = treetracker.tag.id`
-              : ''
-          }
+          LEFT JOIN treetracker.capture_tag
+              on treetracker.capture_tag.capture_id = treetracker.capture.id
+          LEFT JOIN treetracker.tag
+              on treetracker.capture_tag.tag_id = treetracker.tag.id
           ${
             filter.tokenized
               ? `LEFT JOIN wallet.wallet
@@ -156,7 +156,7 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       .where((builder) => this.filterWhereBuilder(filter, builder));
 
     promise = promise.orderBy(
-      sort?.order_by || 'created_at',
+      sort?.order_by || 'treetracker.capture.created_at',
       sort?.order || 'desc',
     );
 
@@ -180,8 +180,7 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     const result = await knex
       .select(
         knex.raw(
-          `
-            COUNT(*) AS count
+          `COUNT(*) AS count
           FROM treetracker.capture
           LEFT JOIN (
               SELECT ct.capture_id, array_agg(t.name) AS tags
@@ -199,14 +198,10 @@ export default class CaptureRepository extends BaseRepository<Capture> {
               JOIN wallet.token t ON t.wallet_id = w.id
               JOIN treetracker.grower_account ga ON ga.wallet = w.name
             ) wt ON treetracker.capture.grower_account_id = wt.id
-          ${
-            filter.tag
-              ? `INNER JOIN treetracker.capture_tag
-                  on treetracker.capture_tag.capture_id = treetracker.capture.id
-                 INNER JOIN treetracker.tag
-                  on treetracker.capture_tag.tag_id = treetracker.tag.id`
-              : ''
-          }
+          LEFT JOIN treetracker.capture_tag
+              on treetracker.capture_tag.capture_id = treetracker.capture.id
+          LEFT JOIN treetracker.tag
+              on treetracker.capture_tag.tag_id = treetracker.tag.id
           ${
             filter.tokenized
               ? `LEFT JOIN wallet.wallet

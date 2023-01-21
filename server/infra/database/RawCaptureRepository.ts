@@ -29,29 +29,30 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
 
     result.whereNot(`${this.tableName}.status`, 'deleted');
     whereNotNulls.forEach((whereNot) => {
-      result.whereNotNull(whereNot);
+      switch (true) {
+        case whereNot === 'tag_id':
+          result.whereNotNull('treetracker.capture_tag.tag_id');
+          break;
+        default:
+          result.whereNotNull(whereNot);
+      }
+
+      // result.whereNotNull(whereNot);
     });
 
     whereNulls.forEach((whereNull) => {
-      result.whereNull(whereNull);
+      switch (true) {
+        case whereNull === 'tag_id':
+          result.whereNull('treetracker.capture_tag.tag_id');
+          break;
+        default:
+          result.whereNull(whereNull);
+      }
+      // result.whereNull(whereNull);
     });
 
     whereIns.forEach((whereIn) => {
       result.whereIn(whereIn.field, whereIn.values);
-    });
-
-    Object.entries(parameters).forEach(([key, val]) => {
-      if (val === 'not null') {
-        result.whereNotNull(key);
-        delete parameters[key];
-      }
-    });
-
-    Object.entries(parameters).forEach(([key, val]) => {
-      if (val === 'null') {
-        result.whereNull(key);
-        delete parameters[key];
-      }
     });
 
     const filterObject = { ...parameters };
@@ -75,7 +76,7 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
       delete filterObject.endDate;
     }
 
-    if (filterObject.tag && filterObject.tag !== 'null') {
+    if (filterObject.tag_id) {
       filterObject[`treetracker.capture_tag.tag_id`] = filterObject.tag_id;
       delete filterObject.tag_id;
     }
@@ -100,11 +101,9 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
     }
 
     if (filterObject.organization_id) {
-      // handle either an array of org ids or one uuid
-      const items = filterObject.organization_id.length
-        ? filterObject.organization_id.split(',')
-        : [filterObject.organization_id];
-      result.where(`field_data.session.organization_id`, 'in', [...items]);
+      result.where(`field_data.session.organization_id`, 'in', [
+        ...filterObject.organization_id,
+      ]);
       delete filterObject.organization_id;
     }
 
