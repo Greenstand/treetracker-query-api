@@ -86,6 +86,15 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
       delete filterObject.organization_id;
     }
 
+    if (filterObject.session_id) {
+      result.where(
+        `${this.tableName}.session_id`,
+        '=',
+        filterObject.session_id,
+      );
+      delete filterObject.session_id;
+    }
+
     result.where(filterObject);
   }
 
