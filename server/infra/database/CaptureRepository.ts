@@ -107,6 +107,26 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       delete filterObject.organization_id;
     }
 
+    // if we want to allow the client to pass more than one org id
+
+    // if (filterObject.organization_ids) {
+    //   result.where(
+    //     `${this.tableName}.planting_organization_id`,
+    //     'in',
+    //     filterObject.organization_ids.split(','),
+    //   );
+    //   delete filterObject.organization_ids;
+    // }
+
+    if (filterObject.session_id) {
+      result.where(
+        `${this.tableName}.session_id`,
+        '=',
+        filterObject.session_id,
+      );
+      delete filterObject.session_id;
+    }
+
     result.where(filterObject);
   }
 
