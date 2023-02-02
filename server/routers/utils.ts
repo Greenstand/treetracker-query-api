@@ -53,4 +53,23 @@ const errorHandler = (err, _req, res, _next) => {
   }
 };
 
-export { handlerWrapper, errorHandler };
+const queryFormatter = (req) => {
+  const { whereNulls, whereNotNulls, whereIns, organization_id, ...others } =
+    req.query;
+
+  // parse values before verifying
+  const query = {
+    whereNulls: whereNulls?.length ? JSON.parse(whereNulls) : [],
+    whereNotNulls: whereNotNulls?.length ? JSON.parse(whereNotNulls) : [],
+    whereIns: whereIns?.length ? JSON.parse(whereIns) : [],
+    ...others,
+  };
+
+  if (organization_id) {
+    query.organization_id = JSON.parse(organization_id);
+  }
+
+  return query;
+};
+
+export { handlerWrapper, errorHandler, queryFormatter };
