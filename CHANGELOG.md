@@ -1,3 +1,10 @@
+# [1.60.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.59.0...v1.60.0) (2023-02-02)
+
+### Features
+
+- allow filtering by multiple orgs, tag_id, and allow null or not null queries ([2561b9b](https://github.com/Greenstand/treetracker-query-api/commit/2561b9b1b91dab84b925b41b6e916a171331a33d))
+- format incoming queries for validation and to make use of whereNull, whereNotNull arrays ([06b0116](https://github.com/Greenstand/treetracker-query-api/commit/06b0116a32cb2ad2a9cf0e1ccd45cb992b0b351d))
+
 # [1.59.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.58.0...v1.59.0) (2023-01-06)
 
 ### Features
