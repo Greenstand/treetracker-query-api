@@ -12,7 +12,7 @@ const router = express.Router();
 router.get(
   '/featured',
   handlerWrapper(async (req, res) => {
-    const repo = new OrganizationRepository(new Session());
+    const repo = new OrganizationRepositoryV2(new Session());
     const result = await OrganizationModel.getFeaturedOrganizations(repo)();
     res.send({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -30,13 +30,13 @@ router.get(
   '/:id',
   handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.string().required());
-    const repo = new OrganizationRepository(new Session());
-    let exe;
-    if (isNaN(req.params.id)) {
-      exe = OrganizationModel.getByMapName(repo);
-    } else {
-      exe = OrganizationModel.getById(repo);
-    }
+    const repo = new OrganizationRepositoryV2(new Session());
+    const exe = OrganizationModel.getById(repo);
+    // if (isNaN(req.params.id)) {
+    //   exe = OrganizationModel.getByMapName(repo);
+    // } else {
+    //   exe = OrganizationModel.getById(repo);
+    // }
     const result = await exe(req.params.id);
     result.links = OrganizationModel.getOrganizationLinks(result);
     res.send(result);
@@ -56,7 +56,7 @@ router.get(
       }),
     );
     const { limit = 20, offset = 0, planter_id } = req.query;
-    const repo = new OrganizationRepository(new Session());
+    const repo = new OrganizationRepositoryV2(new Session());
     const filter: Filter = {};
     if (planter_id) {
       filter.planter_id = planter_id;

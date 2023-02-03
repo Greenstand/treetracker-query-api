@@ -5,9 +5,9 @@ import BaseRepository from './BaseRepository';
 import patch, { PATCH_TYPE } from './patch';
 import Session from './Session';
 
-export default class OrganizationRepository extends BaseRepository<Organization> {
+export default class OrganizationRepositoryV2 extends BaseRepository<Organization> {
   constructor(session: Session) {
-    super('entity', session);
+    super('stakeholder.stakeholder', session);
   }
 
   async getByPlanter(planter_id: number, options: FilterOptions) {
@@ -35,15 +35,9 @@ export default class OrganizationRepository extends BaseRepository<Organization>
   async getById(id: string | number) {
     const object = await this.session
       .getDB()
-      .select(
-        this.session.getDB().raw(`
-          entity.*,
-          l.country_id, l.country_name, l.continent_id, l.continent_name
-          from entity 
-          left join webmap.organization_location l on l.id = entity.id
-        `),
-      )
-      .where('entity.id', id)
+      .select()
+      .from(this.tableName)
+      .where('id', id)
       .first();
 
     if (!object) {
