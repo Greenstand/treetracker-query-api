@@ -1,3 +1,12 @@
+# [1.61.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.60.0...v1.61.0) (2023-02-07)
+
+### Features
+
+- added get v2/org and v2/org/id ([3a47cd0](https://github.com/Greenstand/treetracker-query-api/commit/3a47cd0acf158680165513d06c74e987b08305c9))
+- added links to grower router ([0c09e1d](https://github.com/Greenstand/treetracker-query-api/commit/0c09e1d337f28c87124a065091d8646948df6691))
+- added orgv2 router and files ([67d38ee](https://github.com/Greenstand/treetracker-query-api/commit/67d38ee29f1023b7d549cb29b9caa6e7d3590ac0))
+- added v2 to the rest of GETs ([1393277](https://github.com/Greenstand/treetracker-query-api/commit/139327719cb08ff75e304a74ceeb140eb603007c))
+
 # [1.60.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.59.0...v1.60.0) (2023-02-02)
 
 ### Features
