@@ -147,6 +147,7 @@ router.get(
         limit,
         grower_accounts: result.map((planter) => ({
           ...planter,
+          links: GrowerAccountModel.getGrowerAccountLinks(planter),
         })),
       });
       res.end();
