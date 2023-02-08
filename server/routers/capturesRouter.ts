@@ -2,7 +2,7 @@ import express from 'express';
 import Joi from 'joi';
 import CaptureRepository from 'infra/database/CaptureRepository';
 import Session from 'infra/database/Session';
-import { handlerWrapper } from './utils';
+import { handlerWrapper, queryFormatter } from './utils';
 import CaptureModel from '../models/Capture';
 
 const router = express.Router();
@@ -10,11 +10,14 @@ const router = express.Router();
 router.get(
   '/count',
   handlerWrapper(async (req, res) => {
+    const query = queryFormatter(req);
+
+    // verify filter values
     Joi.assert(
-      req.query,
+      query,
       Joi.object().keys({
         grower_account_id: Joi.string().uuid(),
-        organization_id: Joi.string(),
+        organization_id: Joi.array(),
         limit: Joi.number().integer().min(1).max(20000),
         offset: Joi.number().integer().min(0),
         startDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -23,13 +26,16 @@ router.get(
         reference_id: Joi.string(),
         tree_id: Joi.string().uuid(),
         species_id: Joi.string().uuid(),
-        tag: Joi.string().uuid(),
+        tag_id: Joi.string().uuid(),
         device_identifier: Joi.string(),
         wallet: Joi.string(),
         tokenized: Joi.string(),
         order_by: Joi.string(),
         order: Joi.string(),
         token_id: Joi.string().uuid(),
+        whereNulls: Joi.array(),
+        whereNotNulls: Joi.array(),
+        whereIns: Joi.array(),
       }),
     );
     const { ...rest } = req.query;
@@ -58,8 +64,11 @@ router.get(
 router.get(
   '/',
   handlerWrapper(async (req, res) => {
+    const query = queryFormatter(req);
+
+    // verify filter values
     Joi.assert(
-      req.query,
+      query,
       Joi.object().keys({
         grower_account_id: Joi.string().uuid(),
         organization_id: Joi.string(),
@@ -72,13 +81,16 @@ router.get(
         reference_id: Joi.string(),
         tree_id: Joi.string().uuid(),
         species_id: Joi.string().uuid(),
-        tag: Joi.string().uuid(),
+        tag_id: Joi.string().uuid(),
         device_identifier: Joi.string(),
         wallet: Joi.string(),
         tokenized: Joi.string(),
         order_by: Joi.string(),
         order: Joi.string(),
         token_id: Joi.string().uuid(),
+        whereNulls: Joi.array(),
+        whereNotNulls: Joi.array(),
+        whereIns: Joi.array(),
       }),
     );
     const {
@@ -87,7 +99,7 @@ router.get(
       order = 'desc',
       order_by = 'captured_at',
       ...rest
-    } = req.query;
+    } = query;
 
     const repo = new CaptureRepository(new Session());
     const exe = CaptureModel.getByFilter(repo);

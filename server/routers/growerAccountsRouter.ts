@@ -1,6 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
-import { handlerWrapper } from './utils';
+import { handlerWrapper, queryFormatter } from './utils';
 import GrowerAccountRepository from '../infra/database/GrowerAccountRepository';
 import Session from '../infra/database/Session';
 import GrowerAccountFilter from '../interfaces/GrowerAccountFilter';
@@ -11,13 +11,16 @@ const router = express.Router();
 router.get(
   '/count',
   handlerWrapper(async (req, res) => {
+    const query = queryFormatter(req);
+
+    // verify filter values
     Joi.assert(
-      req.query,
+      query,
       Joi.object().keys({
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
         keyword: Joi.string(),
-        organization_id: Joi.number().integer().min(0),
+        organization_id: Joi.array(),
         id: Joi.string().uuid(),
         person_id: Joi.string().uuid(),
         device_identifier: Joi.string(),
@@ -26,9 +29,12 @@ router.get(
         wallet: Joi.string(),
         email: Joi.string(),
         phone: Joi.string(),
+        whereNulls: Joi.array(),
+        whereNotNulls: Joi.array(),
+        whereIns: Joi.array(),
       }),
     );
-    const { ...rest } = req.query;
+    const { ...rest } = query;
 
     const repo = new GrowerAccountRepository(new Session());
     const { count } = await GrowerAccountModel.getCount(repo)({ ...rest });
@@ -84,13 +90,16 @@ router.get(
 router.get(
   '/',
   handlerWrapper(async (req, res) => {
+    const query = queryFormatter(req);
+
+    // verify filter values
     Joi.assert(
-      req.query,
+      query,
       Joi.object().keys({
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
         keyword: Joi.string(),
-        organization_id: Joi.string().uuid(),
+        organization_id: Joi.array(),
         id: Joi.string().uuid(),
         person_id: Joi.string().uuid(),
         device_identifier: Joi.string(),
@@ -99,9 +108,13 @@ router.get(
         wallet: Joi.string(),
         email: Joi.string(),
         phone: Joi.string(),
+        whereNulls: Joi.array(),
+        whereNotNulls: Joi.array(),
+        whereIns: Joi.array(),
       }),
     );
-    const { limit = 20, offset = 0, keyword, ...rest } = req.query;
+
+    const { limit = 20, offset = 0, keyword, ...rest } = query;
 
     const repo = new GrowerAccountRepository(new Session());
     const filter: GrowerAccountFilter = { ...rest };
@@ -111,6 +124,7 @@ router.get(
         limit,
         offset,
       });
+
       res.send({
         total: null,
         offset,
@@ -125,6 +139,7 @@ router.get(
         limit,
         offset,
       });
+
       const { count } = await GrowerAccountModel.getCount(repo)(filter);
       res.send({
         total: Number(count),
@@ -132,6 +147,7 @@ router.get(
         limit,
         grower_accounts: result.map((planter) => ({
           ...planter,
+          links: GrowerAccountModel.getGrowerAccountLinks(planter),
         })),
       });
       res.end();

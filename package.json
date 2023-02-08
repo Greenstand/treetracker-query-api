@@ -1,6 +1,6 @@
 {
   "name": "treetracker-query-api",
-  "version": "1.59.0",
+  "version": "1.61.0",
   "private": false,
   "keywords": [
     "ecology"
@@ -93,7 +93,7 @@
     "typescript": "^4.4.4"
   },
   "engines": {
-    "node": "^16",
+    "node": ">=16",
     "npm": ">=6.0.0"
   }
 }
