@@ -71,7 +71,7 @@ router.get(
       query,
       Joi.object().keys({
         grower_account_id: Joi.string().uuid(),
-        organization_id: Joi.string(),
+        organization_id: Joi.array(),
         session_id: Joi.string(),
         limit: Joi.number().integer().min(1).max(20000),
         offset: Joi.number().integer().min(0),
