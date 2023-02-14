@@ -115,6 +115,7 @@ export default class CaptureRepository extends BaseRepository<Capture> {
             t.tags,
             field_data.device_configuration.device_identifier,
             treetracker.grower_account.wallet,
+            treetracker.grower_account.reference_id as grower_reference_id,
             wt.wallet_name,
             wt.token_id,
             tk.id AS wallet_token_id
@@ -232,6 +233,7 @@ export default class CaptureRepository extends BaseRepository<Capture> {
           field_data.device_configuration.device AS device_type,
           field_data.device_configuration.os_version AS device_os_version,
           treetracker.grower_account.wallet,
+          treetracker.grower_account.reference_id as grower_reference_id,
           regions.region.properties AS region_properties
           FROM treetracker.capture
             LEFT JOIN treetracker.grower_account

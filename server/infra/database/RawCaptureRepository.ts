@@ -232,7 +232,10 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
           field_data.device_configuration.model AS device_model,
           field_data.device_configuration.device AS device_type,
           field_data.device_configuration.os_version AS device_os_version,
+          wr.wallet,
+          wr.user_photo_url,
           wr.grower_account_id,
+          ga.reference_id as grower_reference_id,
           re.properties AS region_properties
           FROM ${this.tableName}
             LEFT JOIN treetracker.capture AS c
@@ -251,6 +254,8 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
               ON field_data.device_configuration.id = se.device_configuration_id
             LEFT JOIN field_data.wallet_registration AS wr
               ON se.originating_wallet_registration_id = wr.id
+            LEFT JOIN treetracker.grower_account AS ga
+              ON ga.id = wr.grower_account_id
       `),
       )
       .where(`${this.tableName}.id`, id)
