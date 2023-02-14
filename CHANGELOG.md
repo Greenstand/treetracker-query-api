@@ -1,3 +1,9 @@
+## [1.62.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.62.0...v1.62.1) (2023-02-14)
+
+### Bug Fixes
+
+- capture/raw-capture queries ([b804082](https://github.com/Greenstand/treetracker-query-api/commit/b804082cb09c53e92d85dbf3217dcf793533d27c))
+
 # [1.62.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.61.0...v1.62.0) (2023-02-09)
 
 ### Features
