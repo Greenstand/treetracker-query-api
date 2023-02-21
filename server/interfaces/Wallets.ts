@@ -1,6 +1,4 @@
-import DbModel from './DbModel';
-
-export default interface Wallets extends DbModel {
+export default interface Wallets {
   id: string;
   name: string;
   password: string;

@@ -1,6 +1,4 @@
-import DbModel from './DbModel';
-
-export default interface Organization extends DbModel {
+export default interface Organization {
   id: number;
   first_name: string;
   last_name: string;

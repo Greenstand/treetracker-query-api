@@ -1,6 +1,4 @@
-import DbModel from './DbModel';
-
-interface GrowerAccountFilter extends DbModel {
+interface GrowerAccountFilter {
   id?: number;
   first_name?: string;
   last_name?: string;

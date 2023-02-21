@@ -1,6 +1,4 @@
-import DbModel from './DbModel';
-
-interface RawCaptureFilter extends DbModel {
+interface RawCaptureFilter {
   organization_id?: Array<string> | undefined;
   reference_id?: string | undefined;
   grower_account_id?: string | undefined;

@@ -1,5 +1,5 @@
 import log from 'loglevel';
-import Session from './Session';
+import Session from '../infra/database/Session';
 
 // enum
 export enum PATCH_TYPE {
@@ -9,7 +9,7 @@ export enum PATCH_TYPE {
 }
 
 async function patch(object: any, patchType: PATCH_TYPE, session: Session) {
-  let configName;
+  let configName: string;
   switch (patchType) {
     case PATCH_TYPE.EXTRA_PLANTER:
       configName = 'extra-planter';

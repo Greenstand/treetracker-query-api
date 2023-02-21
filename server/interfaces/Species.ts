@@ -1,7 +1,9 @@
-import DbModel from './DbModel';
-
-export default interface Species extends DbModel {
+export default interface Species {
   id: number;
-  first_name: string;
-  last_name: string;
+  name: string;
+  desc: string;
+  active: boolean;
+  value_factor: number;
+  uuid: string;
+  total?: number;
 }

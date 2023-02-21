@@ -1,5 +1,3 @@
-// This is used by `ts language service` and testing.
-// Includes source and test files.
 {
   "extends": "./tsconfig.base.json",
   "include": [

@@ -1,6 +1,4 @@
-import DbModel from './DbModel';
-
-export default interface Tokens extends DbModel {
+export default interface Tokens {
   id: string;
   capture_id: string;
   wallet_id: string;

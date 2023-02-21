@@ -8,9 +8,9 @@ module.exports = {
   proseWrap: 'preserve', // format long lines in md files
   quoteProps: 'as-needed', // add quotes to js object property names
   requirePragma: false, // enable to restrict prettier to specified files
-  semi: false, // use semicolons
   singleQuote: true,
   tabWidth: 2,
   trailingComma: 'all',
   useTabs: false,
+  semi: true,
 };

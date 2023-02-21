@@ -1,6 +1,4 @@
-import DbModel from './DbModel';
-
-export default interface Capture extends DbModel {
+export default interface Capture {
   id: number;
   lat: number;
   lon: number;

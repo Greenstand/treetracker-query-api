@@ -1,15 +1,14 @@
-import Bounds from 'interfaces/Bounds';
 import HttpError from 'utils/HttpError';
-import Session from './Session';
+import Session from '../infra/database/Session';
 
 export default class BoundsRepository {
-  session: Session;
+  private session: Session;
 
   constructor(session: Session) {
     this.session = session;
   }
 
-  async filterByPlanter(planterId: string): Promise<Bounds> {
+  async filterByPlanter(planterId: number): Promise<string> {
     const planterBoundsSql = `
 			select  
 				ST_EXTENT(ST_GeomFromText('POINT(' || t.lon || ' ' || t.lat || ')', 4326)) as bounds 
@@ -25,10 +24,11 @@ export default class BoundsRepository {
         `Can not found bounds for this planter ${planterId}`,
       );
     }
-    return BoundsRepository.convertStringToBounds(bounds);
+    console.log(bounds);
+    return bounds;
   }
 
-  async filterByWallet(walletId: string): Promise<Bounds> {
+  async filterByWallet(walletId: number): Promise<string> {
     const walletBoundsSql = `
 			select  
 				ST_EXTENT(ST_GeomFromText('POINT(' || t.lon || ' ' || t.lat || ')', 4326)) as bounds
@@ -44,10 +44,10 @@ export default class BoundsRepository {
         `Can not found bounds for this wallet ${walletId}`,
       );
     }
-    return BoundsRepository.convertStringToBounds(bounds);
+    return bounds;
   }
 
-  async filterByOrganisation(organisationId: string): Promise<Bounds> {
+  async filterByOrganisation(organisationId: string): Promise<string> {
     const organisationBoundsSql = `
 			select  
 				ST_EXTENT(ST_GeomFromText('POINT(' || t.lon || ' ' || t.lat || ')', 4326)) as bounds
@@ -64,20 +64,6 @@ export default class BoundsRepository {
         `Could not found bounds for this organisation ${organisationId}`,
       );
     }
-    return BoundsRepository.convertStringToBounds(bounds);
-  }
-
-  static convertStringToBounds(boundString: string): Bounds {
-    // result that we get back from db
-    // BOX(-165.75204 -87.53491,178.08949 82.28428)
-    const trimmedString = boundString.slice(4, boundString.length - 2);
-    const lngLatStrArr = trimmedString.split(',');
-    const lngLatNumArr = lngLatStrArr.map((coorStr) =>
-      coorStr.split(' ').map((str) => Number(str)),
-    );
-    return {
-      ne: [lngLatNumArr[0][1], lngLatNumArr[0][0]],
-      se: [lngLatNumArr[1][1], lngLatNumArr[1][0]],
-    };
+    return bounds;
   }
 }

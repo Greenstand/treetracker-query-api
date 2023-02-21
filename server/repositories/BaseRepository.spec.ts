@@ -1,7 +1,7 @@
 import mockKnex from 'mock-knex';
 import BaseRepository from './BaseRepository';
-import knex from './knex';
-import Session from './Session';
+import knex from '../infra/database/knex';
+import Session from '../infra/database/Session';
 
 const tracker = mockKnex.getTracker();
 

@@ -2,18 +2,12 @@
 /* eslint-disable no-restricted-syntax */
 import { Knex } from 'knex';
 import HttpError from 'utils/HttpError';
-import Session from './Session';
-
-type FilterOptions<T> = {
-  limit?: number;
-  orderBy?: { column: keyof T; direction?: 'asc' | 'desc' };
-  offset?: number;
-};
+import Session from 'infra/database/Session';
+import FilterOptions from 'interfaces/FilterOptions';
 
 export default class BaseRepository<T> {
-  tableName: string;
-
-  session: Session;
+  protected tableName: string;
+  protected session: Session;
 
   constructor(tableName: string, session: Session) {
     this.tableName = tableName;
@@ -40,10 +34,7 @@ export default class BaseRepository<T> {
    *  limit: number
    */
 
-  async getByFilter(
-    filter: unknown,
-    options: Partial<FilterOptions<T>>,
-  ): Promise<T[]> {
+  async getByFilter(filter: unknown, options: FilterOptions): Promise<T[]> {
     const whereBuilder = function (object: any, builder: Knex.QueryBuilder) {
       let result = builder;
       if (object.and) {

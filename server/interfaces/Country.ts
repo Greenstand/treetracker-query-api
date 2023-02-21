@@ -1,6 +1,4 @@
-import DbModel from './DbModel';
-
-export default interface Country extends DbModel {
+export default interface Country {
   name: string;
   code: string;
   lat: number;

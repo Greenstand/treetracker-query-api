@@ -1,17 +1,17 @@
 import FilterOptions from 'interfaces/FilterOptions';
 import Transaction from 'interfaces/Transaction';
 import BaseRepository from './BaseRepository';
-import Session from './Session';
+import Session from '../infra/database/Session';
 
 export default class TransactionRepository extends BaseRepository<Transaction> {
   constructor(session: Session) {
     super('wallet.transaction', session);
   }
 
-  async getByFilter(
+  async getTransactions(
     filter: Partial<{ token_id: string; wallet_id: string }>,
     options: FilterOptions,
-  ) {
+  ): Promise<{ transactions: Transaction[]; count: number }> {
     const { token_id, wallet_id } = filter;
     const { limit, offset } = options;
     let sql = `
@@ -42,11 +42,16 @@ export default class TransactionRepository extends BaseRepository<Transaction> {
             `;
     }
 
+    const knex = this.session.getDB();
+    const count = await knex.select(
+      knex.raw(`count(*) from (${sql}) as count`),
+    );
+
     sql += `
             LIMIT ${limit}
             OFFSET ${offset};
         `;
-    const object = await this.session.getDB().raw(sql);
-    return object.rows;
+    const object = await knex.raw(sql);
+    return { transactions: object.rows, count: +count[0].count };
   }
 }

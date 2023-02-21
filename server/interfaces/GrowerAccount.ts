@@ -1,6 +1,4 @@
-import DbModel from './DbModel';
-
-export default interface GrowerAccount extends DbModel {
+export default interface GrowerAccount {
   id: number;
   first_name: string;
   last_name: string;
