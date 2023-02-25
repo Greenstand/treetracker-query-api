@@ -3,7 +3,7 @@ import CaptureFilter from 'interfaces/CaptureFilter';
 import FilterOptions from 'interfaces/FilterOptions';
 import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
-import Session from './Session';
+import Session from 'infra/database/Session';
 
 export default class CaptureRepository extends BaseRepository<Capture> {
   constructor(session: Session) {
@@ -174,7 +174,7 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     return captures;
   }
 
-  async getCount(filterCriteria: CaptureFilter) {
+  async getCount(filterCriteria: CaptureFilter): Promise<number> {
     const knex = this.session.getDB();
     const { ...filter } = filterCriteria;
 

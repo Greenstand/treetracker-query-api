@@ -5,7 +5,7 @@ import swaggerUi, { SwaggerUiOptions } from 'swagger-ui-express';
 import swaggerDocument from './handlers/swaggerDoc';
 import responseTime from 'response-time';
 import router from './routes';
-import { errorHandler, handlerWrapper } from './routes/utils';
+import { errorHandler, handlerWrapper } from './utils/utils';
 import HttpError from './utils/HttpError';
 import { join } from 'path';
 import { version } from '../package.json';
@@ -74,7 +74,7 @@ app.use(express.json()); // parse application/json
 // app.use('/tokens', tokensRouter);
 // app.use('/v2/tokens', tokensRouter);
 // app.use('/v2/captures', capturesRouter);
-// app.use('/raw-captures', rawCapturesRouter);
+
 // app.use('/v2/growers', growerAccountsRouter);
 // app.use('/v2/trees', treesRouterV2);
 

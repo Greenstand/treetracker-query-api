@@ -15,6 +15,11 @@ import treesRouter from './treesRouter';
 import treesRouterV2 from './treesRouterV2';
 import walletsRouter from './walletsRouter';
 
-const routers: Router[] = [boundsRouter, transactionsRouter, speciesRouter];
+const routers: Router[] = [
+  boundsRouter,
+  transactionsRouter,
+  speciesRouter,
+  rawCapturesRouter,
+];
 
 export default routers;

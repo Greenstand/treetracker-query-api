@@ -1,7 +1,7 @@
 import express from 'express';
 import Joi from 'joi';
 import FilterOptions from 'interfaces/FilterOptions';
-import { handlerWrapper } from './utils';
+import { handlerWrapper } from '../utils/utils';
 import PlanterRepository from '../infra/database/PlanterRepository';
 import Session from '../infra/database/Session';
 import PlanterModel from '../models/Planter';

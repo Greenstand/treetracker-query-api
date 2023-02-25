@@ -1,6 +1,33 @@
-export default interface Capture {
-  id: number;
+export default interface RawCapture {
+  id: string;
+  reference_id: number;
+  image_url: string;
   lat: number;
   lon: number;
-  time_created: string;
+  gps_accuracy: number;
+  note: string;
+  abs_step_count: number;
+  delta_step_count: number;
+  rotation_matrix: Array<number>;
+  session_id: string;
+  rejection_reason: string;
+  device_identifier: string;
+  device_configuration_id: string;
+  grower_account_id: string;
+  wallet: string;
+  user_photo_url: string;
+  extra_attributes: Array<object>;
+  status: 'unprocessed' | 'approved' | 'rejected';
+  created_at: string;
+  updated_at: string;
+  captured_at: string;
+  organization_id: string;
+  bulk_pack_file_name?: string;
+  tags?: Array<string>;
+  device_manufacturer?: string;
+  device_model?: string;
+  device_type?: string;
+  device_os_version?: string;
+  grower_reference_id?: number;
+  region_properties?: object;
 }

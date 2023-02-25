@@ -1,6 +1,6 @@
 import express from 'express';
 import { transactionGet } from 'handlers/transactionHandler';
-import { handlerWrapper } from './utils';
+import { handlerWrapper } from '../utils/utils';
 
 const router = express.Router();
 

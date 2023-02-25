@@ -1,6 +1,6 @@
 import express from 'express';
 import { speciesGet, speciesGetById } from 'handlers/speciesHandler';
-import { handlerWrapper } from './utils';
+import { handlerWrapper } from '../utils/utils';
 
 const router = express.Router();
 const routerWrapper = express.Router();

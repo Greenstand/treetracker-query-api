@@ -3,7 +3,7 @@
  */
 import { ValidationError } from 'joi';
 import log from 'loglevel';
-import HttpError from '../utils/HttpError';
+import HttpError from './HttpError';
 
 /*
  * This is from the library https://github.com/Abazhenov/express-async-handler

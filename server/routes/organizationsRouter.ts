@@ -1,6 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
-import { handlerWrapper } from './utils';
+import { handlerWrapper } from '../utils/utils';
 import OrganizationRepository from '../infra/database/OrganizationRepository';
 import Session from '../infra/database/Session';
 import OrganizationModel from '../models/Organization';

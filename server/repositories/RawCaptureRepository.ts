@@ -3,7 +3,7 @@ import RawCapture from 'interfaces/RawCapture';
 import RawCaptureFilter from 'interfaces/RawCaptureFilter';
 import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
-import Session from './Session';
+import Session from 'infra/database/Session';
 
 export default class RawCaptureRepository extends BaseRepository<RawCapture> {
   constructor(session: Session) {
@@ -184,7 +184,7 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
     return captures;
   }
 
-  async getCount(filterCriteria: RawCaptureFilter) {
+  async getCount(filterCriteria: RawCaptureFilter): Promise<number> {
     const knex = this.session.getDB();
     const { ...filter } = filterCriteria;
 
@@ -217,7 +217,7 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
       .where((builder) => this.filterWhereBuilder(filter, builder))
       .distinct();
 
-    return result[0].count;
+    return +result[0].count;
   }
 
   async getById(id: string | number) {

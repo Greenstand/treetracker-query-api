@@ -1,16 +1,24 @@
 interface RawCaptureFilter {
-  organization_id?: Array<string> | undefined;
-  reference_id?: string | undefined;
-  grower_account_id?: string | undefined;
-  startDate?: string | undefined;
-  endDate?: string | undefined;
-  id?: string | undefined;
-  species_id?: string | undefined;
-  tag?: string | undefined;
-  device_identifier?: string | undefined;
-  wallet?: string | undefined;
-  status?: string | undefined;
-  sort?: { order?: string; order_by?: string };
+  organization_id?: Array<string>;
+  reference_id?: string;
+  grower_account_id?: string;
+  startDate?: string;
+  endDate?: string;
+  id?: string;
+  species_id?: string;
+  tag?: string;
+  device_identifier?: string;
+  wallet?: string;
+  status?: 'unprocessed' | 'approved' | 'rejected';
+  sort?: { order?: 'asc' | 'desc'; order_by?: string };
+  bulk_pack_file_name?: string;
+  tree_id?: string;
+  tag_id?: string;
+  tokenized?: boolean;
+  token_id?: string;
+  whereNulls?: Array<string>;
+  whereNotNulls?: Array<string>;
+  whereIns?: Array<{ field: string; values: Array<string> }>;
 }
 
 export default RawCaptureFilter;

@@ -1,6 +1,6 @@
 import express from 'express';
 import { boundsGet } from 'handlers/boundsHandler';
-import { handlerWrapper } from './utils';
+import { handlerWrapper } from '../utils/utils';
 
 const router = express.Router();
 

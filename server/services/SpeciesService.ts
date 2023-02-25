@@ -10,7 +10,7 @@ export default class SpeciesService {
     return this.speciesModel.getSpecies(filter, options);
   }
 
-  getSpeciesById(species_id: number) {
-    return this.speciesModel.getSpeciesById(species_id);
+  getSpeciesById(speciesId: number) {
+    return this.speciesModel.getSpeciesById(speciesId);
   }
 }

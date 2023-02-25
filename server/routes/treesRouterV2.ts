@@ -2,7 +2,7 @@ import express from 'express';
 import Joi from 'joi';
 import FilterOptions from 'interfaces/FilterOptions';
 import Tree from 'interfaces/Tree';
-import { handlerWrapper } from './utils';
+import { handlerWrapper } from '../utils/utils';
 import Session from '../infra/database/Session';
 import TreeRepositoryV2 from '../infra/database/TreeRepositoryV2';
 import TreeModel from '../models/Tree';

@@ -1,7 +1,7 @@
 import express from 'express';
 import Joi from 'joi';
 import TokensModel from 'models/Tokens';
-import { handlerWrapper } from './utils';
+import { handlerWrapper } from '../utils/utils';
 import Session from '../infra/database/Session';
 import TokensRepository from '../infra/database/TokensRepository';
 

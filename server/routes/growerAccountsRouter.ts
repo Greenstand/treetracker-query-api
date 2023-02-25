@@ -1,6 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
-import { handlerWrapper, queryFormatter } from './utils';
+import { handlerWrapper, queryFormatter } from '../utils/utils';
 import GrowerAccountRepository from '../infra/database/GrowerAccountRepository';
 import Session from '../infra/database/Session';
 import GrowerAccountFilter from '../interfaces/GrowerAccountFilter';

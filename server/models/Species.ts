@@ -50,8 +50,8 @@ class SpeciesModel {
     return { species, count };
   }
 
-  async getSpeciesById(species_id: number): Promise<Species> {
-    return this.speciesRepository.getById(species_id);
+  async getSpeciesById(speciesId: number): Promise<Species> {
+    return this.speciesRepository.getById(speciesId);
   }
 }
 

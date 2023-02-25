@@ -1,6 +1,11 @@
 import { SwaggerOptions } from 'swagger-ui-express';
 import { version } from '../../package.json';
 import { boundsSwagger, boundsComponent } from './boundsHandler/docs';
+import {
+  rawCaptureComponent,
+  rawCaptureGetByIdComponent,
+  rawCaptureSwagger,
+} from './rawCaptureHandler/docs';
 import { speciesSwagger, speciesComponent } from './speciesHandler/docs';
 import {
   transactionSwagger,
@@ -11,6 +16,7 @@ const paths = {
   ...boundsSwagger,
   ...speciesSwagger,
   ...transactionSwagger,
+  ...rawCaptureSwagger,
 };
 
 const swaggerDefinition: SwaggerOptions = {
@@ -24,7 +30,9 @@ const swaggerDefinition: SwaggerOptions = {
     schemas: {
       Bounds: { ...boundsComponent },
       Species: { ...speciesComponent },
+      RawCapture: { ...rawCaptureComponent },
       Transaction: { ...transactionComponent },
+      RawCaptureById: { ...rawCaptureGetByIdComponent },
     },
   },
 };

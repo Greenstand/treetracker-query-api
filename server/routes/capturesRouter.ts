@@ -2,7 +2,7 @@ import express from 'express';
 import Joi from 'joi';
 import CaptureRepository from 'infra/database/CaptureRepository';
 import Session from 'infra/database/Session';
-import { handlerWrapper, queryFormatter } from './utils';
+import { handlerWrapper, queryFormatter } from '../utils/utils';
 import CaptureModel from '../models/Capture';
 
 const router = express.Router();

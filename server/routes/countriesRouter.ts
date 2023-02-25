@@ -2,7 +2,7 @@ import express from 'express';
 import expressLru from 'express-lru';
 import Joi from 'joi';
 import CountryRepositoryV2 from 'infra/database/CountryRepositoryV2';
-import { handlerWrapper } from './utils';
+import { handlerWrapper } from '../utils/utils';
 import CountryRepository from '../infra/database/CountryRepository';
 import Session from '../infra/database/Session';
 import CountryModel from '../models/Country';
