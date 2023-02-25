@@ -82,6 +82,7 @@ router.get(
     const repo = new GrowerAccountRepository(new Session());
     const exe = GrowerAccountModel.getById(repo);
     const result = await exe(req.params.id);
+    result.links = GrowerAccountModel.getGrowerAccountLinks(result);
     res.send(result);
     res.end();
   }),
