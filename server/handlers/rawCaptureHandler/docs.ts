@@ -122,9 +122,9 @@ export const rawCaptureComponent = {
     user_photo_url: { type: 'string' },
     extra_attributes: { type: 'object' },
     status: { type: 'string' },
-    created_at: { type: 'string', format: 'datetime' },
-    updated_at: { type: 'string', format: 'datetime' },
-    captured_at: { type: 'string', format: 'datetime' },
+    created_at: { type: 'string', format: 'date-time' },
+    updated_at: { type: 'string', format: 'date-time' },
+    captured_at: { type: 'string', format: 'date-time' },
     organization_id: { type: 'string', format: 'uuid' },
   },
 };

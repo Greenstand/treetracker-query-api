@@ -56,7 +56,6 @@ export const rawCaptureGet: RequestHandler = async (
     { ...rest, sort },
     { limit, offset },
   );
-  console.log(result[0]);
   const count = await rawCaptureService.getRawCapturesCount(rest);
   res.send({
     raw_captures: result,

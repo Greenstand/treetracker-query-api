@@ -1,20 +1,16 @@
 import FilterOptions from 'interfaces/FilterOptions';
-import Tokens from 'interfaces/Tokens';
+import Token from 'interfaces/Token';
 import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
-import Session from './Session';
+import Session from 'infra/database/Session';
+import { TokenFilter } from 'models/Tokens';
 
-type Filter = {
-  wallet: string;
-  withPlanter?: boolean;
-  withCapture?: boolean;
-};
-export default class TokensRepository extends BaseRepository<Tokens> {
+export default class TokensRepository extends BaseRepository<Token> {
   constructor(session: Session) {
     super('wallet.token', session);
   }
 
-  async getById(tokenId: string) {
+  async getById(tokenId: string): Promise<Token> {
     const sql = `
     select wallet.token.*,public.trees.id as tree_id,public.trees.image_url as tree_image_url,
     public.tree_species.name as tree_species_name
@@ -28,17 +24,16 @@ export default class TokensRepository extends BaseRepository<Tokens> {
 
     const object = await this.session.getDB().raw(sql);
 
-    if (object && object.rows.length > 0) {
+    if (object?.rows?.length) {
       return object.rows[0];
-    } 
-      throw new HttpError(
-        404,
-        `Can not found ${this.tableName} by id:${tokenId}`,
-      );
-    
+    }
+    throw new HttpError(404, `Can not find ${this.tableName} by id:${tokenId}`);
   }
 
-  async getByFilter(filter: Filter, options: FilterOptions) {
+  async getByFilter(
+    filter: TokenFilter,
+    options: FilterOptions,
+  ): Promise<Token[]> {
     const { limit, offset } = options;
     const { withCapture, withPlanter } = filter;
 
@@ -85,7 +80,7 @@ export default class TokensRepository extends BaseRepository<Tokens> {
     return object.rows;
   }
 
-  async getCountByFilter(filter: Filter) {
+  async getCountByFilter(filter: TokenFilter): Promise<number> {
     const sql = `SELECT
         COUNT(*)
       from wallet.token as wlt_tkn
@@ -95,7 +90,6 @@ export default class TokensRepository extends BaseRepository<Tokens> {
       wlt_wallet.name = '${filter.wallet}'
     `;
     const total = await this.session.getDB().raw(sql);
-    return parseInt(total.rows[0].count.toString());;
+    return +total.rows[0].count.toString();
   }
-  
 }

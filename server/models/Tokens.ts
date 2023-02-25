@@ -1,34 +1,35 @@
+import Session from 'infra/database/Session';
 import FilterOptions from 'interfaces/FilterOptions';
-import Tokens from 'interfaces/Tokens';
-import { delegateRepository } from '../infra/database/delegateRepository';
-import TokensRepository from '../infra/database/TokensRepository';
+import Token from 'interfaces/Token';
+import TokensRepository from 'repositories/TokensRepository';
 
-type Filter = {
+export type TokenFilter = {
   wallet: string;
   withPlanter?: boolean;
   withCapture?: boolean;
 };
 
-function getByFilter(
-  tokenRepository: TokensRepository,
-): (filter: Filter, options: FilterOptions) => Promise<Tokens[]> {
-  return async (filter: Filter, options: FilterOptions) => {
-    const tokens = await tokenRepository.getByFilter(filter, options);
+export default class TokenModel {
+  private tokenRepository: TokensRepository;
+  constructor(session: Session) {
+    this.tokenRepository = new TokensRepository(session);
+  }
+
+  async getTokens(
+    filter: TokenFilter,
+    options: FilterOptions,
+  ): Promise<Token[]> {
+    const tokens = await this.tokenRepository.getByFilter(filter, options);
     return tokens;
-  };
-}
+  }
 
-function getCountByFilter(
-  tokenRepository: TokensRepository,
-): (filter: Filter) => Promise<number> {
-  return async (filter: Filter) => {
-    const total = await tokenRepository.getCountByFilter(filter);
+  async getTokensCount(filter: TokenFilter): Promise<number> {
+    const total = await this.tokenRepository.getCountByFilter(filter);
     return total;
-  };
-}
+  }
 
-export default {
-  getById: delegateRepository<TokensRepository, Tokens>('getById'),
-  getByFilter,
-  getCountByFilter,
-};
+  async getTokenById(tokenId: string): Promise<Token> {
+    const token = await this.tokenRepository.getById(tokenId);
+    return token;
+  }
+}

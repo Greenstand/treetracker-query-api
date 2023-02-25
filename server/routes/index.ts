@@ -20,6 +20,7 @@ const routers: Router[] = [
   transactionsRouter,
   speciesRouter,
   rawCapturesRouter,
+  tokensRouter,
 ];
 
 export default routers;

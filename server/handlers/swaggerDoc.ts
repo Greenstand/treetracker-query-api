@@ -8,15 +8,21 @@ import {
 } from './rawCaptureHandler/docs';
 import { speciesSwagger, speciesComponent } from './speciesHandler/docs';
 import {
+  tokenByIdComponent,
+  tokenComponent,
+  tokenSwagger,
+} from './tokensHandler/docs';
+import {
   transactionSwagger,
   transactionComponent,
 } from './transactionHandler/docs';
 
 const paths = {
+  ...tokenSwagger,
   ...boundsSwagger,
   ...speciesSwagger,
-  ...transactionSwagger,
   ...rawCaptureSwagger,
+  ...transactionSwagger,
 };
 
 const swaggerDefinition: SwaggerOptions = {
@@ -28,8 +34,10 @@ const swaggerDefinition: SwaggerOptions = {
   paths,
   components: {
     schemas: {
+      Token: { ...tokenComponent },
       Bounds: { ...boundsComponent },
       Species: { ...speciesComponent },
+      TokenById: { ...tokenByIdComponent },
       RawCapture: { ...rawCaptureComponent },
       Transaction: { ...transactionComponent },
       RawCaptureById: { ...rawCaptureGetByIdComponent },

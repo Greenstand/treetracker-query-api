@@ -71,8 +71,7 @@ app.use(express.json()); // parse application/json
 
 // app.use('/wallets', walletsRouter);
 // app.use('/v2/wallets', walletsRouter);
-// app.use('/tokens', tokensRouter);
-// app.use('/v2/tokens', tokensRouter);
+
 // app.use('/v2/captures', capturesRouter);
 
 // app.use('/v2/growers', growerAccountsRouter);
