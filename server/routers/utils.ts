@@ -69,6 +69,14 @@ const queryFormatter = (req) => {
     query.organization_id = JSON.parse(organization_id);
   }
 
+  if (req.query.captures_amount_min) {
+    query.captures_amount_min = parseInt(req.query.captures_amount_min);
+  }
+
+  if (req.query.captures_amount_max) {
+    query.captures_amount_max = parseInt(req.query.captures_amount_max);
+  }
+
   return query;
 };
 
