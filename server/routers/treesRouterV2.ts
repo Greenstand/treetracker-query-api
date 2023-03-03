@@ -64,7 +64,6 @@ router.get(
       offset = 0,
       order_by,
       desc = true,
-      planter_id,
       organization_id,
       startDate,
       endDate,
@@ -83,14 +82,11 @@ router.get(
       },
     };
 
-    if (planter_id) {
-      // filter.planter_id = planter_id; This will have to be fixed later, currently the planter_id is not in the tree table
-      if (order_by) {
-        options.orderBy = {
-          column: order_by === 'created_at' ? 'time_created' : order_by,
-          direction: desc === true ? 'desc' : 'asc',
-        };
-      }
+    if (order_by) {
+      options.orderBy = {
+        column: order_by === 'created_at' ? 'time_created' : order_by,
+        direction: desc === true ? 'desc' : 'asc',
+      };
     } else if (organization_id) {
       filter.organization_id = organization_id;
     } else if (startDate && endDate) {
