@@ -90,13 +90,11 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
       delete filterObject.device_identifier;
     }
 
-    if (filterObject.phone) {
-      result.where(
-        `${this.tableName}.phone`,
-        'ilike',
-        `%${filterObject.phone}%`,
-      );
-      delete filterObject.phone;
+    if (filterObject.organization_id) {
+      result.where(`${this.tableName}.organization_id`, 'in', [
+        ...filterObject.organization_id,
+      ]);
+      delete filterObject.organization_id;
     }
 
     // if 'captures_amount_max' === 0, 'captures_amount_min' can be only 0.
