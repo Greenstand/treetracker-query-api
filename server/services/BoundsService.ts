@@ -5,7 +5,7 @@ export default class BoundsService {
   private session = new Session();
   private boundsModel = new BoundsModel(this.session);
 
-  getBounds(filter: BoundsFilter) {
+  async getBounds(filter: BoundsFilter) {
     return this.boundsModel.getBounds(filter);
   }
 }

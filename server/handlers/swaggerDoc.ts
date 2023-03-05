@@ -16,10 +16,12 @@ import {
   transactionSwagger,
   transactionComponent,
 } from './transactionHandler/docs';
+import { walletComponent, walletSwagger } from './walletHandler/docs';
 
 const paths = {
   ...tokenSwagger,
   ...boundsSwagger,
+  ...walletSwagger,
   ...speciesSwagger,
   ...rawCaptureSwagger,
   ...transactionSwagger,
@@ -36,6 +38,7 @@ const swaggerDefinition: SwaggerOptions = {
     schemas: {
       Token: { ...tokenComponent },
       Bounds: { ...boundsComponent },
+      Wallet: { ...walletComponent },
       Species: { ...speciesComponent },
       TokenById: { ...tokenByIdComponent },
       RawCapture: { ...rawCaptureComponent },

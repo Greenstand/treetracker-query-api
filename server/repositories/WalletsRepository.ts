@@ -1,36 +1,36 @@
 import FilterOptions from 'interfaces/FilterOptions';
-import Wallets from 'interfaces/Wallets';
+import Wallet from 'interfaces/Wallet';
 import BaseRepository from './BaseRepository';
 import patch, { PATCH_TYPE } from './patch';
-import Session from './Session';
-import HttpError from '../../utils/HttpError';
+import Session from 'infra/database/Session';
+import HttpError from 'utils/HttpError';
+import { WalletFilter } from 'models/Wallet';
 
-type Filter = Partial<{ name: string }>;
-export default class WalletsRepository extends BaseRepository<Wallets> {
+export default class WalletsRepository extends BaseRepository<Wallet> {
   constructor(session: Session) {
     super('wallet.wallet', session);
   }
 
   async getWalletByIdOrName(walletIdOrName: string) {
     const sql = `
-    SELECT 
-      wallet.wallet.id,
-      wallet.wallet.name,
-      wallet.wallet.logo_url,
-      wallet.wallet.created_at
-    FROM
-     wallet.wallet
-    WHERE
-      id::text = '${walletIdOrName}'
-    OR
-      name = '${walletIdOrName}'`;
+      SELECT 
+        wallet.wallet.id,
+        wallet.wallet.name,
+        wallet.wallet.logo_url,
+        wallet.wallet.created_at
+      FROM
+      wallet.wallet
+      WHERE
+        id::text = '${walletIdOrName}'
+      OR
+        name = '${walletIdOrName}'`;
 
     const object = await this.session.getDB().raw(sql);
 
     if (!object && object.rows.length !== 1) {
       throw new HttpError(
         404,
-        `Can not found ${this.tableName} by id:${walletIdOrName} name:${walletIdOrName}`,
+        `Can not find ${this.tableName} by id:${walletIdOrName} name:${walletIdOrName}`,
       );
     }
     const objectPatched = await patch(
@@ -41,7 +41,7 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
     return objectPatched;
   }
 
-  async getWalletTokenContinentCount(walletIdOrName: string) {
+  async getWalletTokenRegionCount(walletIdOrName: string) {
     const sql = `
     select continent.name as continent ,count(continent.name) as token_count
     from wallet.wallet
@@ -67,7 +67,7 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
     return objectPatched;
   }
 
-  async getByFilter(filter: Filter, options: FilterOptions) {
+  async getByFilter(filter: WalletFilter, options: FilterOptions) {
     const { limit, offset } = options;
     const sql = `
       SELECT

@@ -7,15 +7,15 @@ export default class RawCaptureService {
   private session = new Session();
   private rawCaptureModel = new RawCaptureModel(this.session);
 
-  getRawCaptures(filter: RawCaptureFilter, options: FilterOptions) {
+  async getRawCaptures(filter: RawCaptureFilter, options: FilterOptions) {
     return this.rawCaptureModel.getRawCaptures(filter, options);
   }
 
-  getRawCaptureById(rawCaptureId: string) {
+  async getRawCaptureById(rawCaptureId: string) {
     return this.rawCaptureModel.getRawCaptureById(rawCaptureId);
   }
 
-  getRawCapturesCount(filter: RawCaptureFilter) {
+  async getRawCapturesCount(filter: RawCaptureFilter) {
     return this.rawCaptureModel.getRawCapturesCount(filter);
   }
 }

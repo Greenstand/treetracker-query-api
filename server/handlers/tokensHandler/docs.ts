@@ -3,7 +3,7 @@ import { tokenGetQuerySchema } from './schemas';
 
 const { swagger: tokenGetSwagger } = j2s(tokenGetQuerySchema);
 
-const tokenV1Swagger = {
+export const tokenSwagger = {
   '/tokens': {
     get: {
       tags: ['tokens'],
@@ -66,24 +66,6 @@ const tokenV1Swagger = {
           },
         },
       },
-    },
-  },
-};
-
-export const tokenSwagger = {
-  ...tokenV1Swagger,
-  '/v2/tokens': {
-    get: {
-      ...tokenV1Swagger['/tokens'].get,
-      summary:
-        'v2 token endpoint, currently the same as /tokens, yet to be updated',
-    },
-  },
-  '/v2/tokens/{token_id}': {
-    get: {
-      ...tokenV1Swagger['/tokens/{token_id}'].get,
-      summary:
-        'v2 token endpoint, currently the same as /tokens/token_id, yet to be updated',
     },
   },
 };

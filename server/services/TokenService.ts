@@ -6,15 +6,15 @@ export default class TokenService {
   private session = new Session();
   private tokenModel = new TokenModel(this.session);
 
-  getTokens(filter: TokenFilter, options: FilterOptions) {
+  async getTokens(filter: TokenFilter, options: FilterOptions) {
     return this.tokenModel.getTokens(filter, options);
   }
 
-  getTokensCount(filter: TokenFilter) {
+  async getTokensCount(filter: TokenFilter) {
     return this.tokenModel.getTokensCount(filter);
   }
 
-  getTokenById(tokenId: string) {
+  async getTokenById(tokenId: string) {
     return this.tokenModel.getTokenById(tokenId);
   }
 }

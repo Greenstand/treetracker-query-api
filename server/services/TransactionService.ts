@@ -6,7 +6,7 @@ export default class TransactionService {
   private session = new Session();
   private transactionModel = new TransactionModel(this.session);
 
-  getTransactions(filter: TransactionFilter, options: FilterOptions) {
+  async getTransactions(filter: TransactionFilter, options: FilterOptions) {
     return this.transactionModel.getTransactions(filter, options);
   }
 }

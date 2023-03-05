@@ -3,7 +3,7 @@ import { speciesGetQuerySchema } from './schemas';
 
 const { swagger: speciesGetSwagger } = j2s(speciesGetQuerySchema);
 
-const speciesV1Swagger = {
+export const speciesSwagger = {
   '/species': {
     get: {
       tags: ['species'],
@@ -66,24 +66,6 @@ const speciesV1Swagger = {
           },
         },
       },
-    },
-  },
-};
-
-export const speciesSwagger = {
-  ...speciesV1Swagger,
-  '/v2/species': {
-    get: {
-      ...speciesV1Swagger['/species'].get,
-      summary:
-        'v2 species endpoint, currently the same as /species, yet to be updated',
-    },
-  },
-  '/v2/species/{species_id}': {
-    get: {
-      ...speciesV1Swagger['/species/{species_id}'].get,
-      summary:
-        'v2 species endpoint, currently the same as /species/species_id, yet to be updated',
     },
   },
 };
