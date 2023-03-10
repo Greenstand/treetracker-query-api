@@ -1,5 +1,5 @@
-import RawCaptureRepository from 'infra/database/CaptureRepository';
 import { delegateRepository } from 'infra/database/delegateRepository';
+import RawCaptureRepository from 'infra/database/RawCaptureRepository';
 import RawCapture from 'interfaces/Capture';
 import RawCaptureFilter from 'interfaces/CaptureFilter';
 import FilterOptions from 'interfaces/FilterOptions';
@@ -15,7 +15,7 @@ function getByFilter(
 
 function getCount(
   rawCaptureRepository: RawCaptureRepository,
-): (filter: RawCaptureFilter) => Promise<{ count: number }> {
+): (filter: RawCaptureFilter) => Promise<string | number> {
   return async function (filter: RawCaptureFilter) {
     const count = await rawCaptureRepository.getCount(filter);
     return count;

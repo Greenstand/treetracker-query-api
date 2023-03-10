@@ -51,6 +51,55 @@ router.get(
 );
 
 router.get(
+  '/location',
+  handlerWrapper(async (req, res) => {
+    const query = queryFormatter(req);
+
+    // verify filter values
+    Joi.assert(
+      query,
+      Joi.object().keys({
+        session_id: Joi.string().uuid(),
+        lat: Joi.number(),
+        lon: Joi.number(),
+        deviation: Joi.number(),
+        limit: Joi.number().integer().min(1).max(20000),
+        offset: Joi.number().integer().min(0),
+        order_by: Joi.string(),
+        order: Joi.string(),
+        whereNulls: Joi.array(),
+        whereNotNulls: Joi.array(),
+        whereIns: Joi.array(),
+      }),
+    );
+    const {
+      deviation = '0.01',
+      limit = 0,
+      offset = 0,
+      order = 'desc',
+      order_by = 'captured_at',
+      ...rest
+    } = query;
+
+    console.log('REST', rest);
+
+    const repo = new CaptureRepository(new Session());
+    const exe = CaptureModel.getByLocation(repo);
+    const sort = { order, order_by };
+    const result = await exe({ ...rest, deviation, sort }, { limit, offset });
+    // const count = await CaptureModel.getCount(repo)({ ...rest });
+    res.send({
+      captures: result,
+      total: Number(result.length),
+      // total: Number(count),
+      offset,
+      limit,
+    });
+    res.end();
+  }),
+);
+
+router.get(
   '/:id',
   handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.string().required());

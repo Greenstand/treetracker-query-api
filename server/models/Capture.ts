@@ -2,6 +2,7 @@ import CaptureRepository from 'infra/database/CaptureRepository';
 import { delegateRepository } from 'infra/database/delegateRepository';
 import Capture from 'interfaces/Capture';
 import CaptureFilter from 'interfaces/CaptureFilter';
+import CaptureLocationFilter from 'interfaces/CaptureLocationFilter';
 import FilterOptions from 'interfaces/FilterOptions';
 
 function getByFilter(
@@ -9,6 +10,21 @@ function getByFilter(
 ): (filter: CaptureFilter, options: FilterOptions) => Promise<Capture[]> {
   return async function (filter: CaptureFilter, options: FilterOptions) {
     const captures = await captureRepository.getByFilter(filter, options);
+    return captures;
+  };
+}
+
+function getByLocation(
+  captureRepository: CaptureRepository,
+): (
+  filter: CaptureLocationFilter,
+  options: FilterOptions,
+) => Promise<Capture[]> {
+  return async function (
+    filter: CaptureLocationFilter,
+    options: FilterOptions,
+  ) {
+    const captures = await captureRepository.getByLocation(filter, options);
     return captures;
   };
 }
@@ -24,6 +40,7 @@ function getCount(
 
 export default {
   getByFilter,
+  getByLocation,
   getCount,
   getById: delegateRepository<CaptureRepository, Capture>('getById'),
 };

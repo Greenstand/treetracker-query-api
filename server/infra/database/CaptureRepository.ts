@@ -1,5 +1,6 @@
 import Capture from 'interfaces/Capture';
 import CaptureFilter from 'interfaces/CaptureFilter';
+import CaptureLocationFilter from 'interfaces/CaptureLocationFilter';
 import FilterOptions from 'interfaces/FilterOptions';
 import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
@@ -107,6 +108,16 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       delete filterObject.organization_id;
     }
 
+    // remove these filters because they'll be included manually
+    if (filterObject.lat && filterObject.lon && filterObject.deviation) {
+      // result.where(
+      //   `ST_DWithin(treetracker.capture.estimated_geometric_location, ST_GeomFromText('POINT (${filterObject.lon} ${filterObject.lat})', 4326), ${filterObject.deviation})`,
+      // );
+      delete filterObject.lat;
+      delete filterObject.lon;
+      delete filterObject.deviation;
+    }
+
     result.where(filterObject);
   }
 
@@ -165,6 +176,62 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       )
       .where((builder) => this.filterWhereBuilder(filter, builder))
       .distinct();
+
+    promise = promise.orderBy(
+      sort?.order_by || 'treetracker.capture.created_at',
+      sort?.order || 'desc',
+    );
+
+    const { limit, offset } = options;
+    if (limit) {
+      promise = promise.limit(limit);
+    }
+    if (offset) {
+      promise = promise.offset(offset);
+    }
+
+    const captures = await promise;
+
+    return captures;
+  }
+
+  async getByLocation(
+    filterCriteria: CaptureLocationFilter,
+    options: FilterOptions,
+  ) {
+    const knex = this.session.getDB();
+    const { sort, ...filter } = filterCriteria;
+
+    let promise = knex.select(
+      knex.raw(
+        `
+              treetracker.capture.*,
+              field_data.device_configuration.device_identifier,
+              field_data.device_configuration.manufacturer AS device_manufacturer,
+              treetracker.grower_account.reference_id as grower_reference_id,
+              treetracker.grower_account.wallet as grower_wallet,
+              treetracker.grower_account.location  as grower_location,
+              field_data.session.id as session_id
+          FROM treetracker.capture
+          LEFT JOIN treetracker.grower_account
+            ON grower_account.id = treetracker.capture.grower_account_id
+          LEFT JOIN field_data.device_configuration
+            ON field_data.device_configuration.id = treetracker.capture.device_configuration_id
+          LEFT JOIN field_data.raw_capture
+            ON field_data.raw_capture.id = treetracker.capture.id
+          LEFT JOIN field_data.session
+            ON field_data.raw_capture.session_id = field_data.session.id
+          ${
+            filter.lat && filter.lon && filter.deviation
+              ? `WHERE
+          ST_DWithin(treetracker.capture.estimated_geometric_location, ST_GeomFromText('POINT (${filter.lon} ${filter.lat})', 4326), ${filter.deviation})
+                `
+              : ''
+          }`,
+      ),
+    );
+    // .where('field_data.session.id', filter.session_id);
+    // .where((builder) => this.filterWhereBuilder(filter, builder));
 
     promise = promise.orderBy(
       sort?.order_by || 'treetracker.capture.created_at',
