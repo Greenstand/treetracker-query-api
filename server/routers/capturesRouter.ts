@@ -81,17 +81,14 @@ router.get(
       ...rest
     } = query;
 
-    console.log('REST', rest);
-
     const repo = new CaptureRepository(new Session());
     const exe = CaptureModel.getByLocation(repo);
     const sort = { order, order_by };
     const result = await exe({ ...rest, deviation, sort }, { limit, offset });
-    // const count = await CaptureModel.getCount(repo)({ ...rest });
+
     res.send({
       captures: result,
       total: Number(result.length),
-      // total: Number(count),
       offset,
       limit,
     });

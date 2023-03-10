@@ -110,9 +110,6 @@ export default class CaptureRepository extends BaseRepository<Capture> {
 
     // remove these filters because they'll be included manually
     if (filterObject.lat && filterObject.lon && filterObject.deviation) {
-      // result.where(
-      //   `ST_DWithin(treetracker.capture.estimated_geometric_location, ST_GeomFromText('POINT (${filterObject.lon} ${filterObject.lat})', 4326), ${filterObject.deviation})`,
-      // );
       delete filterObject.lat;
       delete filterObject.lon;
       delete filterObject.deviation;
@@ -230,8 +227,6 @@ export default class CaptureRepository extends BaseRepository<Capture> {
           }`,
       ),
     );
-    // .where('field_data.session.id', filter.session_id);
-    // .where((builder) => this.filterWhereBuilder(filter, builder));
 
     promise = promise.orderBy(
       sort?.order_by || 'treetracker.capture.created_at',
