@@ -17,7 +17,7 @@ router.get(
     Joi.assert(
       query,
       Joi.object().keys({
-        limit: Joi.number().integer().min(1).max(1000),
+        limit: Joi.number().integer().min(1).max(100),
         offset: Joi.number().integer().min(0),
         keyword: Joi.string(),
         organization_id: Joi.array(),
@@ -97,7 +97,7 @@ router.get(
     Joi.assert(
       query,
       Joi.object().keys({
-        limit: Joi.number().integer().min(1).max(1000),
+        limit: Joi.number().integer().min(1).max(100),
         offset: Joi.number().integer().min(0),
         keyword: Joi.string(),
         organization_id: Joi.array(),

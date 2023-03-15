@@ -31,7 +31,7 @@ router.get(
     Joi.assert(
       req.query,
       Joi.object().keys({
-        limit: Joi.number().integer().min(1).max(1000),
+        limit: Joi.number().integer().min(1).max(100),
         offset: Joi.number().integer().min(0),
         wallet: Joi.string().required(),
         withPlanter: Joi.boolean().sensitive(true),
