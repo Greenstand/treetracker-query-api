@@ -13,7 +13,7 @@ router.get(
     Joi.assert(
       req.query,
       Joi.object().keys({
-        limit: Joi.number().integer().min(-15).max(1000),
+        limit: Joi.number().integer().min(1).max(100),
         offset: Joi.number().integer().min(0),
         wallet_id: Joi.string().guid(),
         token_id: Joi.string().guid(),
