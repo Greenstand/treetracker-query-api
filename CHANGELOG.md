@@ -1,3 +1,9 @@
+## [1.62.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.62.1...v1.62.2) (2023-03-16)
+
+### Bug Fixes
+
+- chaged the records limit to 100 ([4069d1e](https://github.com/Greenstand/treetracker-query-api/commit/4069d1e86b0e444896aab041dea20b2e639a9acc))
+
 ## [1.62.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.62.0...v1.62.1) (2023-02-14)
 
 ### Bug Fixes
