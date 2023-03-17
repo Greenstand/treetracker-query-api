@@ -1,3 +1,9 @@
+## [1.62.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.62.2...v1.62.3) (2023-03-17)
+
+### Bug Fixes
+
+- [#291](https://github.com/Greenstand/treetracker-query-api/issues/291) tress order by default time_created ([13da656](https://github.com/Greenstand/treetracker-query-api/commit/13da65667ae40c16fef5154dd52f60aea9ff212e))
+
 ## [1.62.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.62.1...v1.62.2) (2023-03-16)
 
 ### Bug Fixes
