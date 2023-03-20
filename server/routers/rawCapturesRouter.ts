@@ -16,7 +16,7 @@ router.get(
     Joi.assert(
       query,
       Joi.object().keys({
-        limit: Joi.number().integer().min(1).max(100),
+        limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
         status: Joi.string().allow('unprocessed', 'approved', 'rejected'),
         bulk_pack_file_name: Joi.string(),
@@ -71,7 +71,7 @@ router.get(
     Joi.assert(
       query,
       Joi.object().keys({
-        limit: Joi.number().integer().min(1).max(100),
+        limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
         status: Joi.string().allow('unprocessed', 'approved', 'rejected'),
         bulk_pack_file_name: Joi.string(),

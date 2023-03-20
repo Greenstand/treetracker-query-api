@@ -54,7 +54,7 @@ router.get(
       req.query,
       Joi.object().keys({
         name: Joi.string(),
-        limit: Joi.number().integer().min(1).max(100),
+        limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
       }),
     );

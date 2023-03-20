@@ -45,7 +45,7 @@ router.get(
       Joi.object().keys({
         keyword: Joi.string(),
         organization_id: Joi.number().integer().min(0),
-        limit: Joi.number().integer().min(1).max(100),
+        limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
         order_by: Joi.string(),
         order: Joi.string().valid('asc', 'desc', 'ASC', 'DESC'),
