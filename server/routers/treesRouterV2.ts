@@ -9,7 +9,7 @@ import TreeModel from '../models/Tree';
 
 const router = express.Router();
 type Filter = Partial<{
-  planter_id: number;
+  planter_id: string;
   organization_id: number;
   date_range: { startDate: string; endDate: string };
   tag: string;
@@ -47,7 +47,7 @@ router.get(
     Joi.assert(
       req.query,
       Joi.object().keys({
-        planter_id: Joi.number().integer().min(0),
+        planter_id: Joi.string().uuid(),
         organization_id: Joi.number().integer().min(0),
         wallet_id: Joi.string().uuid(),
         tag: Joi.string(),
@@ -64,27 +64,25 @@ router.get(
       offset = 0,
       order_by,
       desc = true,
-      planter_id,
       organization_id,
       startDate,
       endDate,
       tag,
       wallet_id,
     } = req.query;
+
     const repo = new TreeRepositoryV2(new Session());
     const filter: Filter = {};
     const options: FilterOptions = {
       limit,
       offset,
       orderBy: {
-        column: order_by || 'time_created',
+        column: order_by || 'created_at',
         direction: desc === true ? 'desc' : 'asc',
       },
     };
 
-    if (planter_id) {
-      filter.planter_id = planter_id;
-    } else if (organization_id) {
+    if (organization_id) {
       filter.organization_id = organization_id;
     } else if (startDate && endDate) {
       filter.date_range = { startDate, endDate };
