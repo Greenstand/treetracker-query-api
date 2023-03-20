@@ -1,3 +1,9 @@
+## [1.63.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.63.0...v1.63.1) (2023-03-20)
+
+### Bug Fixes
+
+- revert pages ([874e400](https://github.com/Greenstand/treetracker-query-api/commit/874e4008e03c4eb4d6bc999b420c531b5141e7fa))
+
 # [1.63.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.62.3...v1.63.0) (2023-03-20)
 
 ### Bug Fixes
