@@ -77,17 +77,12 @@ router.get(
       limit,
       offset,
       orderBy: {
-        column: order_by || 'time_created',
+        column: order_by || 'created_at',
         direction: desc === true ? 'desc' : 'asc',
       },
     };
 
-    if (order_by) {
-      options.orderBy = {
-        column: order_by === 'created_at' ? 'time_created' : order_by,
-        direction: desc === true ? 'desc' : 'asc',
-      };
-    } else if (organization_id) {
+    if (organization_id) {
       filter.organization_id = organization_id;
     } else if (startDate && endDate) {
       filter.date_range = { startDate, endDate };
