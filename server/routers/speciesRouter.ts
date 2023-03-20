@@ -34,7 +34,7 @@ router.get(
         organization_id: Joi.number().integer().min(0),
         planter_id: Joi.number().integer().min(0),
         wallet_id: Joi.string(),
-        limit: Joi.number().integer().min(1).max(100),
+        limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
       }),
     );

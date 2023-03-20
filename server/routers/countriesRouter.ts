@@ -50,7 +50,7 @@ router.get(
     Joi.assert(
       req.query,
       Joi.object().keys({
-        limit: Joi.number().integer().min(1).max(100),
+        limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
         lat: Joi.number(),
         lon: Joi.number(),
@@ -111,7 +111,7 @@ router.get(
     Joi.assert(
       req.query,
       Joi.object().keys({
-        limit: Joi.number().integer().min(1).max(100),
+        limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
         lat: Joi.number(),
         lon: Joi.number(),

@@ -51,7 +51,7 @@ router.get(
         organization_id: Joi.number().integer().min(0),
         wallet_id: Joi.string().uuid(),
         tag: Joi.string(),
-        limit: Joi.number().integer().min(1).max(100),
+        limit: Joi.number().integer().min(1).max(1000),
         order_by: Joi.string(),
         desc: Joi.boolean(),
         offset: Joi.number().integer().min(0),
