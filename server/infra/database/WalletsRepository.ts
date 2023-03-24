@@ -9,6 +9,7 @@ type Filter = Partial<{ name: string }>;
 export default class WalletsRepository extends BaseRepository<Wallets> {
   constructor(session: Session) {
     super('wallet.wallet', session);
+    this.tableName = 'wallet.wallet';
   }
 
   async getWalletByIdOrName(walletIdOrName: string) {
@@ -133,5 +134,21 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
       this.session,
     );
     return objectPatched;
+  }
+
+  async getCount(filter: Filter) {
+    const knex = this.session.getDB();
+
+    const result = await knex
+      .select(
+        knex.raw(`
+        COUNT(DISTINCT(${this.tableName}.id)) AS count
+        FROM ${this.tableName}
+        ${filter.name ? `WHERE name LIKE '%${filter.name}%'` : ''}
+    `),
+      )
+      .first();
+
+    return result.count;
   }
 }
