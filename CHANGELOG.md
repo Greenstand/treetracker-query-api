@@ -1,3 +1,10 @@
+# [1.64.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.63.1...v1.64.0) (2023-03-26)
+
+### Features
+
+- filter growers by number of captures ([334c406](https://github.com/Greenstand/treetracker-query-api/commit/334c40690b91af049b56ce81fc660bb91a99601e))
+- fix merge errors ([ae2bb9e](https://github.com/Greenstand/treetracker-query-api/commit/ae2bb9e48b5cc335c8d4bcad904339d34744ae7a))
+
 ## [1.63.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.63.0...v1.63.1) (2023-03-20)
 
 ### Bug Fixes
