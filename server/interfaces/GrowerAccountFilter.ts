@@ -13,6 +13,8 @@ interface GrowerAccountFilter extends DbModel {
   wallet?: string;
   email?: string;
   phone?: string;
+  captures_amount_min?: number;
+  captures_amount_max?: number;
 }
 
 export default GrowerAccountFilter;

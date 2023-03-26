@@ -97,6 +97,40 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
       delete filterObject.organization_id;
     }
 
+    // if 'captures_amount_max' === 0, 'captures_amount_min' can be only 0.
+    if (filterObject.captures_amount_max === 0) {
+      result.whereNull('c.captures_count');
+      delete filterObject.captures_amount_min;
+      delete filterObject.captures_amount_max;
+    }
+
+    // if 'captures_amount_max' === 0 and 'captures_amount_max' is not defined, all results should be returned.
+    if (
+      filterObject.captures_amount_min === 0 &&
+      !filterObject.captures_amount_max
+    ) {
+      delete filterObject.captures_amount_min;
+      delete filterObject.captures_amount_max;
+    }
+
+    if (filterObject.captures_amount_min) {
+      result.where(
+        `c.captures_count`,
+        '>=',
+        `${filterObject.captures_amount_min}`,
+      );
+      delete filterObject.captures_amount_min;
+    }
+
+    if (filterObject.captures_amount_max) {
+      result.where(
+        `c.captures_count`,
+        '<=',
+        `${filterObject.captures_amount_max}`,
+      );
+      delete filterObject.captures_amount_max;
+    }
+
     result.where(filterObject);
   }
 
@@ -116,6 +150,11 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
           ON s.id = ${this.tableName}.organization_id
         LEFT JOIN messaging.author AS author
           ON author.handle = ${this.tableName}.wallet
+        LEFT JOIN (
+          SELECT grower_account_id, COUNT(*) AS captures_count
+          FROM treetracker.capture
+          GROUP BY grower_account_id
+        ) c ON ${this.tableName}.id = c.grower_account_id
     `),
       )
       .where((builder) => this.filterWhereBuilder(filter, builder))
@@ -227,7 +266,8 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
         ${this.tableName}.*,
         s.org_name as organization,
         d.device_configurations as devices,
-        r.regions AS regions
+        r.regions AS regions,
+        COALESCE(c.captures_count, 0) AS captures
         FROM ${this.tableName}
         LEFT JOIN treetracker.capture AS tc
           ON ${this.tableName}.id = tc.grower_account_id
@@ -244,6 +284,11 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
           ON s.id = ${this.tableName}.organization_id
         LEFT JOIN messaging.author AS author
           ON author.handle = ${this.tableName}.wallet
+        LEFT JOIN (
+          SELECT grower_account_id, COUNT(*) AS captures_count
+          FROM treetracker.capture
+          GROUP BY grower_account_id
+        ) c ON ${this.tableName}.id = c.grower_account_id
         LEFT JOIN (
           SELECT tc.grower_account_id, ARRAY_AGG(row_to_json(dc.*)) AS device_configurations
           FROM treetracker.capture AS tc
