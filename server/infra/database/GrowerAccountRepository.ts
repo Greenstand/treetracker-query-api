@@ -131,6 +131,15 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
       delete filterObject.captures_amount_max;
     }
 
+    if (filterObject.wallet) {
+      result.where(
+        `${this.tableName}.wallet`,
+        'ilike',
+        `%${filterObject.wallet}%`,
+      );
+      delete filterObject.wallet;
+    }
+
     result.where(filterObject);
   }
 
@@ -370,7 +379,8 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     `),
       )
       .where((builder) => this.filterWhereBuilder(filter, builder))
-      .distinctOn(`${this.tableName}.id`);
+      .distinctOn(`${this.tableName}.id`, `${this.tableName}.wallet`)
+      .orderBy(`${this.tableName}.wallet`);
 
     const { limit, offset } = options;
     if (limit) {
