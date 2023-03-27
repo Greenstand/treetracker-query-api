@@ -341,4 +341,46 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
 
     return object.rows;
   }
+
+  async getWalletsCount(filter: GrowerAccountFilter) {
+    const knex = this.session.getDB();
+    const result = await knex
+      .select(
+        knex.raw(`
+        COUNT(DISTINCT(${this.tableName}.id)) AS count
+        FROM ${this.tableName}        
+    `),
+      )
+      .where((builder) => this.filterWhereBuilder(filter, builder))
+      .first();
+
+    return result;
+  }
+
+  async getWalletsByFilter(
+    filter: GrowerAccountFilter,
+    options: FilterOptions,
+  ) {
+    let promise = this.session
+      .getDB()
+      .select(
+        this.session.getDB().raw(`
+        ${this.tableName}.wallet
+        FROM ${this.tableName}
+    `),
+      )
+      .where((builder) => this.filterWhereBuilder(filter, builder))
+      .distinctOn(`${this.tableName}.id`);
+
+    const { limit, offset } = options;
+    if (limit) {
+      promise = promise.limit(limit);
+    }
+    if (offset) {
+      promise = promise.offset(offset);
+    }
+
+    const wallets = await promise;
+    return wallets;
+  }
 }

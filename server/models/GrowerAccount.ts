@@ -69,6 +69,30 @@ function getFeaturedGrowers(
   };
 }
 
+function getWalletsCount(
+  growerAccountRepository: GrowerAccountRepository,
+): (filter: GrowerAccountFilter) => Promise<{ count: number }> {
+  return async (filter: GrowerAccountFilter) => {
+    const count = await growerAccountRepository.getWalletsCount(filter);
+    return count;
+  };
+}
+
+function getWalletsByFilter(
+  growerAccountRepository: GrowerAccountRepository,
+): (
+  filter: GrowerAccountFilter,
+  options: FilterOptions,
+) => Promise<GrowerAccount[]> {
+  return async (filter: GrowerAccountFilter, options: FilterOptions) => {
+    const result = await growerAccountRepository.getWalletsByFilter(
+      filter,
+      options,
+    );
+    return result.map((obj) => obj.wallet);
+  };
+}
+
 export default {
   getById: delegateRepository<GrowerAccountRepository, GrowerAccount>(
     'getById',
@@ -79,4 +103,6 @@ export default {
   getByName,
   getGrowerAccountLinks,
   getFeaturedGrowers,
+  getWalletsCount,
+  getWalletsByFilter,
 };

@@ -66,6 +66,41 @@ router.get(
 );
 
 router.get(
+  '/wallets',
+  handlerWrapper(async (req, res) => {
+    // verify filter values
+    Joi.assert(
+      req.params,
+      Joi.object().keys({
+        limit: Joi.number().integer().min(1).max(1000),
+        offset: Joi.number().integer().min(0),
+        wallet: Joi.string(),
+      }),
+    );
+
+    const { limit = 20, offset = 0, ...rest } = req.query;
+
+    const repo = new GrowerAccountRepository(new Session());
+    const filter: GrowerAccountFilter = { ...rest };
+
+    const result = await GrowerAccountModel.getWalletsByFilter(repo)(filter, {
+      limit,
+      offset,
+    });
+
+    const { count } = await GrowerAccountModel.getWalletsCount(repo)(filter);
+
+    res.send({
+      total: Number(count),
+      offset,
+      limit,
+      wallets: result,
+    });
+    res.end();
+  }),
+);
+
+router.get(
   '/:id/selfies',
   handlerWrapper(async (req, res) => {
     Joi.assert(req.params.id, Joi.string().uuid().required());
