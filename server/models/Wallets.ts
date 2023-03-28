@@ -22,7 +22,7 @@ function getByFilter(
 
 function getCount(
   WalletRepository: WalletsRepository,
-): (filter: Filter) => Promise<Wallets[]> {
+): (filter: Filter) => Promise<number> {
   return async (filter: Filter) => {
     const count = await WalletRepository.getCount(filter);
     return count;
