@@ -356,7 +356,7 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     const result = await knex
       .select(
         knex.raw(`
-        COUNT(DISTINCT(${this.tableName}.id)) AS count
+        COUNT(${this.tableName}.id) AS count
         FROM ${this.tableName}        
     `),
       )
@@ -379,7 +379,6 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     `),
       )
       .where((builder) => this.filterWhereBuilder(filter, builder))
-      .distinctOn(`${this.tableName}.id`, `${this.tableName}.wallet`)
       .orderBy(`${this.tableName}.wallet`);
 
     const { limit, offset } = options;
