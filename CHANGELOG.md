@@ -1,3 +1,16 @@
+# [1.65.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.64.0...v1.65.0) (2023-03-29)
+
+### Bug Fixes
+
+- add 'total' to wallets api response ([61bf6ac](https://github.com/Greenstand/treetracker-query-api/commit/61bf6ac678191500d013940e9a6c697512e715d9))
+- remove distinct from select of wallets ([5118377](https://github.com/Greenstand/treetracker-query-api/commit/5118377137ea3477c032bfa6e9d5e4a279446dfc))
+- update return value type ([1609643](https://github.com/Greenstand/treetracker-query-api/commit/160964351daf20e5236cf40ad5bc0f02af20404d))
+
+### Features
+
+- add wallets api ([4601cce](https://github.com/Greenstand/treetracker-query-api/commit/4601cceb5a320ee0c02795dcb4f0b876a57c713e))
+- order filtered wallets by name and grower id ([bf1a980](https://github.com/Greenstand/treetracker-query-api/commit/bf1a98082ba1762132b67bb09873f5595f28e973))
+
 # [1.64.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.63.1...v1.64.0) (2023-03-26)
 
 ### Features
