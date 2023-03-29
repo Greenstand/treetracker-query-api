@@ -9,7 +9,7 @@ type Filter = Partial<{ name: string }>;
 function getByFilter(
   WalletRepository: WalletsRepository,
 ): (filter: Filter, options: FilterOptions) => Promise<Wallets[]> {
-  return async function (filter: Filter, options: FilterOptions) {
+  return async (filter: Filter, options: FilterOptions) => {
     if (filter.name) {
       log.warn('using wallet name filter...');
       const wallets = await WalletRepository.getByName(filter.name, options);
@@ -17,6 +17,15 @@ function getByFilter(
     }
     const wallets = await WalletRepository.getByFilter(filter, options);
     return wallets;
+  };
+}
+
+function getCount(
+  WalletRepository: WalletsRepository,
+): (filter: Filter) => Promise<number> {
+  return async (filter: Filter) => {
+    const count = await WalletRepository.getCount(filter);
+    return count;
   };
 }
 
@@ -28,6 +37,7 @@ export default {
     'getWalletTokenContinentCount',
   ),
   getByFilter,
+  getCount,
   getFeaturedWallet: delegateRepository<WalletsRepository, Wallets>(
     'getFeaturedWallet',
   ),

@@ -1,5 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
+import FilterOptions from 'interfaces/FilterOptions';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import WalletsRepository from '../infra/database/WalletsRepository';
@@ -65,12 +66,15 @@ router.get(
       filter.name = name;
     }
 
-    const result = await WalletModel.getByFilter(repo)(filter, {
+    const options: FilterOptions = {
       limit,
       offset,
-    });
+    };
+
+    const result = await WalletModel.getByFilter(repo)(filter, options);
+    const count = await WalletModel.getCount(repo)(filter);
     res.send({
-      total: null,
+      total: Number(count),
       offset,
       limit,
       wallets: result,
