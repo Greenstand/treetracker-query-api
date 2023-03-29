@@ -131,6 +131,15 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
       delete filterObject.captures_amount_max;
     }
 
+    if (filterObject.wallet) {
+      result.where(
+        `${this.tableName}.wallet`,
+        'ilike',
+        `%${filterObject.wallet}%`,
+      );
+      delete filterObject.wallet;
+    }
+
     result.where(filterObject);
   }
 
@@ -340,5 +349,47 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     `);
 
     return object.rows;
+  }
+
+  async getWalletsCount(filter: GrowerAccountFilter) {
+    const knex = this.session.getDB();
+    const result = await knex
+      .select(
+        knex.raw(`
+        COUNT(${this.tableName}.id) AS count
+        FROM ${this.tableName}        
+    `),
+      )
+      .where((builder) => this.filterWhereBuilder(filter, builder))
+      .first();
+
+    return result;
+  }
+
+  async getWalletsByFilter(
+    filter: GrowerAccountFilter,
+    options: FilterOptions,
+  ) {
+    let promise = this.session
+      .getDB()
+      .select(
+        this.session.getDB().raw(`
+        ${this.tableName}.wallet
+        FROM ${this.tableName}
+    `),
+      )
+      .where((builder) => this.filterWhereBuilder(filter, builder))
+      .orderBy(`${this.tableName}.wallet`);
+
+    const { limit, offset } = options;
+    if (limit) {
+      promise = promise.limit(limit);
+    }
+    if (offset) {
+      promise = promise.offset(offset);
+    }
+
+    const wallets = await promise;
+    return wallets;
   }
 }
