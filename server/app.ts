@@ -5,6 +5,7 @@ import responseTime from 'response-time';
 import organizationsRouterV2 from 'routers/organizationsRouterV2';
 import boundsRouter from './routers/boundsRouter';
 import capturesRouter from './routers/capturesRouter';
+import contractsRouter from './routers/contractsRouter';
 import countriesRouter from './routers/countriesRouter';
 import growerAccountsRouter from './routers/growerAccountsRouter';
 import organizationsRouter from './routers/organizationsRouter';
@@ -77,6 +78,7 @@ app.use('/raw-captures', rawCapturesRouter);
 app.use('/v2/growers', growerAccountsRouter);
 app.use('/v2/trees', treesRouterV2);
 app.use('/bounds', boundsRouter);
+app.use('/contract', contractsRouter);
 // Global error handler
 app.use(errorHandler);
 
