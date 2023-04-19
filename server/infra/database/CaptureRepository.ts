@@ -154,7 +154,8 @@ export default class CaptureRepository extends BaseRepository<Capture> {
         `,
         ),
       )
-      .where((builder) => this.filterWhereBuilder(filter, builder));
+      .where((builder) => this.filterWhereBuilder(filter, builder))
+      .distinct();
 
     promise = promise.orderBy(
       sort?.order_by || 'treetracker.capture.created_at',
