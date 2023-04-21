@@ -27,7 +27,7 @@ export default class ContractRepository extends BaseRepository<Contract> {
     }
     delete parameters.tokenized;
 
-    // result.whereNot(`${this.tableName}.status`, 'deleted');
+    result.whereNot(`${this.tableName}.status`, 'deleted');
 
     whereNotNulls.forEach((whereNot) => {
       // to map table names to fields for query
@@ -38,8 +38,6 @@ export default class ContractRepository extends BaseRepository<Contract> {
         default:
           result.whereNotNull(whereNot);
       }
-
-      // result.whereNotNull(whereNot);
     });
 
     whereNulls.forEach((whereNull) => {
@@ -51,7 +49,6 @@ export default class ContractRepository extends BaseRepository<Contract> {
         default:
           result.whereNull(whereNull);
       }
-      // result.whereNull(whereNull);
     });
 
     whereIns.forEach((whereIn) => {
@@ -73,24 +70,10 @@ export default class ContractRepository extends BaseRepository<Contract> {
       delete filterObject.endDate;
     }
 
-    // if (filterObject.tag_id) {
-    //   filterObject[`treetracker.capture_tag.tag_id`] = filterObject.tag_id;
-    //   delete filterObject.tag_id;
-    // }
-
     if (filterObject.id) {
       result.where(`${this.tableName}.id`, '=', filterObject.id);
       delete filterObject.id;
     }
-
-    // if (filterObject.reference_id) {
-    //   result.where(
-    //     `${this.tableName}.reference_id`,
-    //     '=',
-    //     filterObject.reference_id,
-    //   );
-    //   delete filterObject.reference_id;
-    // }
 
     if (filterObject.organization_id) {
       result.where(`${this.tableName}.growing_organization_id`, 'in', [
@@ -106,30 +89,35 @@ export default class ContractRepository extends BaseRepository<Contract> {
     const knex = this.session.getDB();
     const { sort, ...filter } = filterCriteria;
 
-    // there are two joins to connect the capture to the token and to the wallet right now so that we can double check our data entries
-    // the current data entered in the tables doesn't match up so there are some mismatches
     let promise = knex
       .select(
         knex.raw(
           `
-            row_to_json(contract.*) AS contract,
+            ${this.tableName}.id,
+            ${this.tableName}.status,
+            ${this.tableName}.notes,
+            ${this.tableName}.created_at,
+            ${this.tableName}.updated_at,
+            ${this.tableName}.signed_at,
+            ${this.tableName}.closed_at,
+            ${this.tableName}.listed,
             row_to_json(agreement.*) AS agreement,
             row_to_json(grower_account.*) AS worker,
             row_to_json(stakeholder.*) AS stakeholder
-          FROM contracts.contract AS contract
+          FROM ${this.tableName}
           LEFT JOIN contracts.agreement AS agreement
-              ON agreement.id = contract.agreement_id
+              ON agreement.id = ${this.tableName}.agreement_id
           LEFT JOIN stakeholder.stakeholder AS stakeholder
               ON stakeholder.id = agreement.growing_organization_id
           LEFT JOIN treetracker.grower_account AS grower_account
-              ON grower_account.id = contract.worker_id
+              ON grower_account.id = ${this.tableName}.worker_id
         `,
         ),
       )
       .where((builder) => this.filterWhereBuilder(filter, builder));
 
     promise = promise.orderBy(
-      sort?.order_by || `${this.tableName}.id`,
+      `${this.tableName}.${sort?.order_by}` || `${this.tableName}.id`,
       sort?.order || 'desc',
     );
 
@@ -154,13 +142,13 @@ export default class ContractRepository extends BaseRepository<Contract> {
       .select(
         knex.raw(
           `COUNT(*) AS count
-          FROM contracts.contract AS contract
+          FROM ${this.tableName}
           LEFT JOIN contracts.agreement AS agreement
-              ON agreement.id = contract.agreement_id
+              ON agreement.id = ${this.tableName}.agreement_id
           LEFT JOIN stakeholder.stakeholder AS stakeholder
               ON stakeholder.id = agreement.growing_organization_id
           LEFT JOIN treetracker.grower_account AS grower_account
-              ON grower_account.id = contract.worker_id
+              ON grower_account.id = ${this.tableName}.worker_id
         `,
         ),
       )
@@ -174,17 +162,24 @@ export default class ContractRepository extends BaseRepository<Contract> {
       .getDB()
       .select(
         this.session.getDB().raw(`
-            contract.*,
-            agreement.*,
-            grower_account.*,
-            stakeholder.*
-          FROM contracts.contract AS contract
+            ${this.tableName}.id,
+            ${this.tableName}.status,
+            ${this.tableName}.notes,
+            ${this.tableName}.created_at,
+            ${this.tableName}.updated_at,
+            ${this.tableName}.signed_at,
+            ${this.tableName}.closed_at,
+            ${this.tableName}.listed,
+            row_to_json(agreement.*) AS agreement,
+            row_to_json(grower_account.*) AS worker,
+            row_to_json(stakeholder.*) AS stakeholder
+          FROM ${this.tableName}
           LEFT JOIN contracts.agreement AS agreement
-              ON agreement.id = contract.agreement_id
+              ON agreement.id = ${this.tableName}.agreement_id
           LEFT JOIN stakeholder.stakeholder AS stakeholder
               ON stakeholder.id = agreement.growing_organization_id
           LEFT JOIN treetracker.grower_account AS grower_account
-              ON grower_account.id = contract.worker_id
+              ON grower_account.id = ${this.tableName}.worker_id
       `),
       )
       .where(`${this.tableName}.id`, id)

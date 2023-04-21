@@ -12,34 +12,20 @@ router.get(
   handlerWrapper(async (req, res) => {
     const query = queryFormatter(req);
 
-    // verify filter values
     Joi.assert(
       query,
       Joi.object().keys({
-        // capture filters
-        grower_account_id: Joi.string().uuid(),
-        // grower_account_id: Joi.string().uuid(),
-        organization_id: Joi.array(),
-        limit: Joi.number().integer().min(1).max(20000),
-        offset: Joi.number().integer().min(0),
-        startDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-        endDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        // contract table filters
         id: Joi.string().uuid(),
-        // reference_id: Joi.string(),
-        // tree_id: Joi.string().uuid(),
-        // species_id: Joi.string().uuid(),
-        // tag_id: Joi.string().uuid(),
-        // device_identifier: Joi.string(),
-        wallet: Joi.string(),
-        // tokenized: Joi.string(),
-        // order_by: Joi.string(),
-        // order: Joi.string(),
-        token_id: Joi.string().uuid(),
-        // contract filters
         agreement_id: Joi.string().uuid(),
         worker_id: Joi.string().uuid(), // grower_account_id?
         listed: Joi.boolean(),
-
+        // organization_id: Joi.array(),
+        startDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        endDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        // defaults
+        limit: Joi.number().integer().min(1).max(20000),
+        offset: Joi.number().integer().min(0),
         whereNulls: Joi.array(),
         whereNotNulls: Joi.array(),
         whereIns: Joi.array(),
@@ -72,35 +58,21 @@ router.get(
   '/',
   handlerWrapper(async (req, res) => {
     const query = queryFormatter(req);
-    console.log('*************************     /contract');
 
-    // verify filter values
     Joi.assert(
       query,
       Joi.object().keys({
-        // capture filters
-        // grower_account_id: Joi.string().uuid(),
-        organization_id: Joi.array(),
-        limit: Joi.number().integer().min(1).max(20000),
-        offset: Joi.number().integer().min(0),
-        startDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-        endDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        // contract table filters
         id: Joi.string().uuid(),
-        // reference_id: Joi.string(),
-        // tree_id: Joi.string().uuid(),
-        // species_id: Joi.string().uuid(),
-        // tag_id: Joi.string().uuid(),
-        // device_identifier: Joi.string(),
-        wallet: Joi.string(),
-        // tokenized: Joi.string(),
-        // order_by: Joi.string(),
-        // order: Joi.string(),
-        token_id: Joi.string().uuid(),
-        // contract filters
         agreement_id: Joi.string().uuid(),
         worker_id: Joi.string().uuid(), // grower_account_id?
         listed: Joi.boolean(),
-
+        // organization_id: Joi.array(),
+        startDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        endDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        // defaults
+        limit: Joi.number().integer().min(1).max(20000),
+        offset: Joi.number().integer().min(0),
         whereNulls: Joi.array(),
         whereNotNulls: Joi.array(),
         whereIns: Joi.array(),
@@ -110,7 +82,7 @@ router.get(
       limit = 25,
       offset = 0,
       order = 'desc',
-      order_by = 'contract.id',
+      order_by = 'id',
       ...rest
     } = query;
 
@@ -120,7 +92,7 @@ router.get(
     const result = await exe({ ...rest, sort }, { limit, offset });
     const count = await ContractModel.getCount(repo)({ ...rest });
     res.send({
-      Contracts: result,
+      contracts: result,
       total: Number(count),
       offset,
       limit,
