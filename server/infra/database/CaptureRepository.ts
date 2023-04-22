@@ -90,6 +90,14 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       );
       delete filterObject.reference_id;
     }
+    if (filterObject.grower_reference_id) {
+      result.where(
+        `treetracker.grower_account.reference_id`,
+        '=',
+        filterObject.grower_reference_id,
+      );
+      delete filterObject.grower_reference_id;
+    }
 
     if (filterObject.organization_id) {
       result.where(`${this.tableName}.planting_organization_id`, 'in', [

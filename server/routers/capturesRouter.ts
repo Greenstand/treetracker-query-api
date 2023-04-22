@@ -17,6 +17,7 @@ router.get(
       query,
       Joi.object().keys({
         grower_account_id: Joi.string().uuid(),
+        grower_reference_id: Joi.number(),
         organization_id: Joi.array(),
         limit: Joi.number().integer().min(1).max(20000),
         offset: Joi.number().integer().min(0),
@@ -71,6 +72,7 @@ router.get(
       query,
       Joi.object().keys({
         grower_account_id: Joi.string().uuid(),
+        grower_reference_id: Joi.number(),
         organization_id: Joi.array(),
         limit: Joi.number().integer().min(1).max(20000),
         offset: Joi.number().integer().min(0),
