@@ -100,6 +100,15 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
       delete filterObject.reference_id;
     }
 
+    if (filterObject.grower_reference_id) {
+      result.where(
+        `treetracker.grower_account.reference_id`,
+        '=',
+        filterObject.grower_reference_id,
+      );
+      delete filterObject.grower_reference_id;
+    }
+
     if (filterObject.organization_id) {
       result.where(`field_data.session.organization_id`, 'in', [
         ...filterObject.organization_id,
@@ -153,6 +162,12 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
         'field_data.wallet_registration.id',
       )
       .leftJoin(
+        'treetracker.grower_account',
+        'field_data.wallet_registration.grower_account_id',
+        '=',
+        'treetracker.grower_account.id',
+      )
+      .leftJoin(
         'field_data.device_configuration',
         'field_data.session.device_configuration_id',
         '=',
@@ -201,6 +216,12 @@ export default class RawCaptureRepository extends BaseRepository<RawCapture> {
         'field_data.session.originating_wallet_registration_id',
         '=',
         'field_data.wallet_registration.id',
+      )
+      .leftJoin(
+        'treetracker.grower_account',
+        'field_data.wallet_registration.grower_account_id',
+        '=',
+        'treetracker.grower_account.id',
       )
       .leftJoin(
         'field_data.device_configuration',

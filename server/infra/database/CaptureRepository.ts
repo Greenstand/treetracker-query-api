@@ -90,6 +90,7 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       );
       delete filterObject.reference_id;
     }
+
     if (filterObject.grower_reference_id) {
       result.where(
         `treetracker.grower_account.reference_id`,
