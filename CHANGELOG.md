@@ -1,3 +1,9 @@
+# [1.66.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.65.0...v1.66.0) (2023-04-25)
+
+### Features
+
+- make results of captures query distinct to avoid duplicates ([7d99679](https://github.com/Greenstand/treetracker-query-api/commit/7d996798bfbf8cfd66678e12c4061c84709883f3))
+
 # [1.65.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.64.0...v1.65.0) (2023-03-29)
 
 ### Bug Fixes
