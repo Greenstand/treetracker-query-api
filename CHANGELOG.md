@@ -1,3 +1,11 @@
+# [1.67.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.66.0...v1.67.0) (2023-04-25)
+
+### Features
+
+- add grower_reference_id as a filter field for captures ([b6bea8c](https://github.com/Greenstand/treetracker-query-api/commit/b6bea8cd210a6869b312d95b119c2bbed65cdee8))
+- add grower_reference_id as a filter field for verify ([3a8b1cc](https://github.com/Greenstand/treetracker-query-api/commit/3a8b1ccdb9fc6d03e0b4126e022d77a6679286ef))
+- add reference_id as a valid field for growers query ([a92728a](https://github.com/Greenstand/treetracker-query-api/commit/a92728aa0d18ceee060aa60115edf30a45552a7f))
+
 # [1.66.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.65.0...v1.66.0) (2023-04-25)
 
 ### Features
