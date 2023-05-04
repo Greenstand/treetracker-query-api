@@ -199,7 +199,7 @@ export default class TreeRepositoryV2 extends BaseRepository<Tree> {
         SELECT
           COUNT(*)
         FROM trees
-        LEFT JOIN wallet.token ON token.capture_id::text = trees.uuid
+        LEFT JOIN wallet.token ON token.capture_id::text = lower(trees.uuid)
         WHERE wallet.token.wallet_id = '${wallet_id}'
       `;
       const total = await this.session.getDB().raw(totalSql);
@@ -210,7 +210,7 @@ export default class TreeRepositoryV2 extends BaseRepository<Tree> {
       SELECT
       trees.*
       FROM trees
-      LEFT JOIN wallet.token ON token.capture_id::text = trees.uuid
+      LEFT JOIN wallet.token ON token.capture_id::text = lower(trees.uuid)
       WHERE wallet.token.wallet_id = '${wallet_id}'
       LIMIT ${limit}
       OFFSET ${offset}

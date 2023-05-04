@@ -20,7 +20,7 @@ export default class TokensRepository extends BaseRepository<Tokens> {
     public.tree_species.name as tree_species_name
     from wallet.token
       left join public.trees on 
-        wallet.token.capture_id::text = public.trees.uuid::text
+        wallet.token.capture_id::text = lower(public.trees.uuid::text)
       left join public.tree_species 
         on public.trees.species_id = public.tree_species.id 
       where  wallet.token.id = '${tokenId}'
