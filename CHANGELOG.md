@@ -1,3 +1,9 @@
+## [1.67.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.67.0...v1.67.1) (2023-05-04)
+
+### Bug Fixes
+
+- uuid capital problem ([fac9485](https://github.com/Greenstand/treetracker-query-api/commit/fac9485658f4b83af814d701ef32dd8ae4958dbd))
+
 # [1.67.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.66.0...v1.67.0) (2023-04-25)
 
 ### Features
