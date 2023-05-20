@@ -1,3 +1,9 @@
+## [1.67.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.67.1...v1.67.2) (2023-05-20)
+
+### Bug Fixes
+
+- remove `v2` and let's the client to decide the version number ([bb8e730](https://github.com/Greenstand/treetracker-query-api/commit/bb8e730ceea2a09d7a2636605d859e8f053fcb31))
+
 ## [1.67.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.67.0...v1.67.1) (2023-05-04)
 
 ### Bug Fixes
