@@ -51,7 +51,7 @@ function getByName(
 
 function getGrowerAccountLinks(planter) {
   const links = {
-    featured_trees: `/v2/trees?planter_id=${planter.id}&limit=20&offset=0`,
+    featured_trees: `/trees?planter_id=${planter.id}&limit=20&offset=0`,
     associated_organizations: `/organizations?planter_id=${planter.id}&limit=20&offset=0`,
     species: `/species?planter_id=${planter.id}&limit=20&offset=0`,
   };
