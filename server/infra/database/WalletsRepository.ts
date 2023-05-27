@@ -49,7 +49,7 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
       left join wallet.token on 
         wallet.token.wallet_id = wallet.wallet.id
       left join public.trees on 
-        wallet.token.capture_id::text = lower(public.trees.uuid::text)
+        wallet.token.capture_id::text = public.trees.uuid::text
       left join region as continent on 
         ST_WITHIN(public.trees.estimated_geometric_location, continent.geom)
           and continent.type_id in (select id from region_type where type = 'continents' )

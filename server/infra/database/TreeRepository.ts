@@ -36,7 +36,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
               on ST_WITHIN(trees.estimated_geometric_location, region.geom)
               and region.type_id in (select id from region_type where type = 'country')
             left JOIN wallet.token
-              on wallet.token.capture_id::text = lower(trees.uuid::text)
+              on wallet.token.capture_id::text = trees.uuid::text
             left JOIN wallet.wallet
               on wallet.token.wallet_id = wallet.wallet.id
       `),
@@ -239,7 +239,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
         SELECT
           COUNT(*)
         FROM trees
-        LEFT JOIN wallet.token ON token.capture_id::text = lower(trees.uuid)
+        LEFT JOIN wallet.token ON token.capture_id::text = trees.uuid
         WHERE wallet.token.wallet_id = '${wallet_id}'
         and trees.active = true
       `;
@@ -251,7 +251,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
       SELECT
       trees.*
       FROM trees
-      LEFT JOIN wallet.token ON token.capture_id::text = lower(trees.uuid)
+      LEFT JOIN wallet.token ON token.capture_id::text = trees.uuid
       WHERE wallet.token.wallet_id = '${wallet_id}'
       and trees.active = true
       LIMIT ${limit}
