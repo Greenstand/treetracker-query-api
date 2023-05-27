@@ -14,6 +14,7 @@ type Filter = Partial<{
   date_range: { startDate: string; endDate: string };
   tag: string;
   wallet_id: string;
+  active: true;
 }>;
 
 router.get(
@@ -72,7 +73,7 @@ router.get(
       wallet_id,
     } = req.query;
     const repo = new TreeRepository(new Session());
-    const filter: Filter = {};
+    const filter: Filter = { active: true };
     const options: FilterOptions = {
       limit,
       offset,

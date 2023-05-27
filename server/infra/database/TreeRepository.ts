@@ -68,7 +68,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
             planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
           OR
             trees.planting_organization_id = ${organization_id}
-          )
+          ) and trees.active = true
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
@@ -97,6 +97,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
         OR
           trees.planting_organization_id = ${organization_id}
         )
+        and trees.active = true
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -122,6 +123,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
         FROM trees
         WHERE time_created >= '${startDateISO}'::timestamp
         AND time_created < '${endDateISO}'::timestamp
+        and trees.active = true
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
@@ -146,6 +148,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
         and region.type_id in (select id from region_type where type = 'country')
       WHERE time_created >= '${startDateISO}'::timestamp
       AND time_created < '${endDateISO}'::timestamp
+      and trees.active = true
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -167,6 +170,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
         on tree_tag.tag_id = tag.id
       WHERE 
         tag.tag_name in ('${tag}')
+        and trees.active = true
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
@@ -194,6 +198,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
       on tree_tag.tag_id = tag.id
     WHERE 
       tag.tag_name in ('${tag}')
+      and trees.active = true
     LIMIT ${limit}
     OFFSET ${offset}
     `;
@@ -236,6 +241,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
         FROM trees
         LEFT JOIN wallet.token ON token.capture_id::text = lower(trees.uuid)
         WHERE wallet.token.wallet_id = '${wallet_id}'
+        and trees.active = true
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
@@ -247,6 +253,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
       FROM trees
       LEFT JOIN wallet.token ON token.capture_id::text = lower(trees.uuid)
       WHERE wallet.token.wallet_id = '${wallet_id}'
+      and trees.active = true
       LIMIT ${limit}
       OFFSET ${offset}
     `;
