@@ -1,3 +1,10 @@
+## [1.67.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.67.2...v1.67.3) (2023-05-27)
+
+### Bug Fixes
+
+- wrong planter count ([14dae92](https://github.com/Greenstand/treetracker-query-api/commit/14dae9219a6baf4504e596969cc9615583822bb9))
+- wrong tree count ([e7b4cab](https://github.com/Greenstand/treetracker-query-api/commit/e7b4cab29273beea9e7ed1f2dd74372f66e4c67e))
+
 ## [1.67.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.67.1...v1.67.2) (2023-05-20)
 
 ### Bug Fixes
