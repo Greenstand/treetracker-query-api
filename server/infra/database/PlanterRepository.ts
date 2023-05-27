@@ -53,13 +53,10 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
-      WHERE planter.organization_id = ${organization_id}
+      WHERE planter.organization_id in (select entity_id from getEntityRelationshipChildren(${organization_id}))
       ${
         options.orderBy
-          ? `order by ${ 
-            options.orderBy.column 
-            } ${ 
-            options.orderBy.direction}`
+          ? `order by ${options.orderBy.column} ${options.orderBy.direction}`
           : ''
       }
       LIMIT ${limit}
@@ -88,7 +85,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       SELECT
         COUNT(*)
       FROM planter
-      WHERE planter.organization_id = ${organization_id}
+      WHERE planter.organization_id in (select entity_id from getEntityRelationshipChildren(${organization_id}))
     `;
     const total = await this.session.getDB().raw(totalSql);
     return parseInt(total.rows[0].count.toString());
@@ -107,10 +104,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
       ${
         options.orderBy
-          ? `order by ${ 
-            options.orderBy.column 
-            } ${ 
-            options.orderBy.direction}`
+          ? `order by ${options.orderBy.column} ${options.orderBy.direction}`
           : ''
       }
       LIMIT ${limit}
