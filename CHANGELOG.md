@@ -1,3 +1,9 @@
+## [1.67.4](https://github.com/Greenstand/treetracker-query-api/compare/v1.67.3...v1.67.4) (2023-05-27)
+
+### Bug Fixes
+
+- version trigger ([cc24027](https://github.com/Greenstand/treetracker-query-api/commit/cc24027f9ced7a3aee66f8bbf703cc21394206b9))
+
 ## [1.67.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.67.2...v1.67.3) (2023-05-27)
 
 ### Bug Fixes
