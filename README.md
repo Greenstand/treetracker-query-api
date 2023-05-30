@@ -35,7 +35,7 @@ npm ci
 Run the server with database settings:
 
 ```
-DATABASE_URL=[...] npm run server
+DATABASE_URL=[...] npm run dev
 ```
 
 Please join our slack channel to get help with setting up the database.
