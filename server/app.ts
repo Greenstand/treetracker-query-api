@@ -6,6 +6,7 @@ import organizationsRouterV2 from 'routers/organizationsRouterV2';
 import boundsRouter from './routers/boundsRouter';
 import capturesRouter from './routers/capturesRouter';
 import countriesRouter from './routers/countriesRouter';
+import gisRouter from './routers/gisRouter';
 import growerAccountsRouter from './routers/growerAccountsRouter';
 import organizationsRouter from './routers/organizationsRouter';
 import plantersRouter from './routers/plantersRouter';
@@ -77,6 +78,7 @@ app.use('/raw-captures', rawCapturesRouter);
 app.use('/v2/growers', growerAccountsRouter);
 app.use('/v2/trees', treesRouterV2);
 app.use('/bounds', boundsRouter);
+app.use('/gis', gisRouter);
 // Global error handler
 app.use(errorHandler);
 
