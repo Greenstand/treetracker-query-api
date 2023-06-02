@@ -1,3 +1,9 @@
+# [1.68.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.67.4...v1.68.0) (2023-06-02)
+
+### Features
+
+- git location nearest ([a6bec57](https://github.com/Greenstand/treetracker-query-api/commit/a6bec57ae092529068fd902e6d63d0b4851c3f11))
+
 ## [1.67.4](https://github.com/Greenstand/treetracker-query-api/compare/v1.67.3...v1.67.4) (2023-05-27)
 
 ### Bug Fixes
