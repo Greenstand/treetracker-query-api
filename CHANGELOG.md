@@ -1,3 +1,9 @@
+## [1.68.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.68.1...v1.68.2) (2023-06-03)
+
+### Bug Fixes
+
+- support wallet name, map name, format mistake ([b4cb0b6](https://github.com/Greenstand/treetracker-query-api/commit/b4cb0b62fbf9d69aff98585129dabe400b65f010))
+
 ## [1.68.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.68.0...v1.68.1) (2023-06-03)
 
 ### Bug Fixes
