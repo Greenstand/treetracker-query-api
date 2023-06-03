@@ -42,6 +42,9 @@ export default class GisRepository {
     `;
     } else if (zoom_level >= 15) {
       sql = `
+  WITH box AS (
+      SELECT ST_Extent(ST_MakeLine(ST_Project(ST_SetSRID(ST_MakePoint(${lng}, ${lat}),4326), 10000, radians(45))::geometry, ST_Project(ST_SetSRID(ST_MakePoint(${lng}, ${lat}),4326), 10000, radians(225))::geometry)) AS geom
+  )
   SELECT
     ST_ASGeoJson(estimated_geometric_location)
   FROM
@@ -67,6 +70,7 @@ export default class GisRepository {
       ? `and planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${params.organization_id}))`
       : ''
   }
+  and estimated_geometric_location && (select geom from box)
   ORDER BY
     estimated_geometric_location <->
     ST_SetSRID(ST_MakePoint(${lng}, ${lat}),4326)
