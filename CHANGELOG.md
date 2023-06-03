@@ -1,3 +1,9 @@
+## [1.68.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.68.0...v1.68.1) (2023-06-03)
+
+### Bug Fixes
+
+- bound is wrong to limit the neearest request ([b76abf3](https://github.com/Greenstand/treetracker-query-api/commit/b76abf35c4461d17260a1886f498c5f01ca5ad76))
+
 # [1.68.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.67.4...v1.68.0) (2023-06-02)
 
 ### Features
