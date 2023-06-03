@@ -17,9 +17,10 @@ router.get(
         zoom_level: Joi.number().integer().min(0).required(),
         lat: Joi.number().min(-90).max(90).required(),
         lng: Joi.number().min(-180).max(180).required(),
-        wallet_id: Joi.string().uuid().optional(),
+        wallet_id: Joi.string().optional(),
         planter_id: Joi.number().integer().optional(),
         organization_id: Joi.number().integer().optional(),
+        map_name: Joi.string().optional(),
       }),
     );
     const repo = new GisRepository(new Session());
