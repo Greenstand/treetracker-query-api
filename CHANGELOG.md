@@ -1,3 +1,9 @@
+# [1.69.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.68.2...v1.69.0) (2023-06-04)
+
+### Features
+
+- neartest wallet case ([8e1182a](https://github.com/Greenstand/treetracker-query-api/commit/8e1182a96a7c6d766ddae8add2affd376dcbf7f7))
+
 ## [1.68.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.68.1...v1.68.2) (2023-06-03)
 
 ### Bug Fixes
