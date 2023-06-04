@@ -63,7 +63,9 @@ export default class GisRepository {
     active = true
   ${
     params.wallet_id
-      ? `and (wallet.token.wallet_id::text = '${params.wallet_id}' or wallet.wallet.name = '${params.wallet_id}')`
+      ? /[0-9a-f-]{36}/.test(params.wallet_id)
+        ? `and wallet.token.wallet_id = '${params.wallet_id}' `
+        : `and wallet.wallet.name = '${params.wallet_id}'`
       : ''
   }
   ${params.planter_id ? `and planter_id = ${params.planter_id}` : ''}
