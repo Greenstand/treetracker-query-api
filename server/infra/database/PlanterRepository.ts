@@ -13,7 +13,31 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     super('planter', session);
   }
 
+  async cleanDuplicates(){
+    let sqlQuery = 
+    `delete from planter
+    where exists (select 1
+                  from planter t2
+                  where t2.first_name = planter.first_name and
+                        t2.last_name = planter.last_name and
+                        t2.email = planter.email and
+                        t2.organization = planter.organization and
+                        t2.id > planter.id
+                 );`;
+    let temp = await this.session.getDB().raw(sqlQuery);
+    sqlQuery = 
+    `delete from planter_registrations
+    where exists (select 1
+                  from planter_registrations t2
+                  where t2.planter_id = planter_registrations.planter_id and
+                        t2.id > planter_registrations.id
+                 );`;
+    
+    temp = await this.session.getDB().raw(sqlQuery);
+      }
+
   async getById(id: string | number) {
+    this.cleanDuplicates()
     const object = await this.session
       .getDB()
       .select(
@@ -43,6 +67,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
   }
 
   async getByOrganization(organization_id: number, options: FilterOptions) {
+    this.cleanDuplicates();
     const { limit, offset } = options;
     const sql = `
       SELECT
@@ -81,6 +106,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
   }
 
   async countByOrganization(organization_id: number) {
+    this.cleanDuplicates();
     const totalSql = `
       SELECT
         COUNT(*)
@@ -92,6 +118,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
   }
 
   async getByFilter(filter: Filter, options: FilterOptions) {
+    this.cleanDuplicates();
     const { limit, offset } = options;
     const sql = `
       SELECT
@@ -115,6 +142,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
   }
 
   async getByName(keyword: string, options: FilterOptions) {
+    this.cleanDuplicates();
     const { limit, offset } = options;
     const sql = `
       SELECT
@@ -148,6 +176,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
   }
 
   async countByName(keyword: string) {
+    this.cleanDuplicates();
     const totalSql = `
       SELECT
       COUNT(*)
@@ -159,6 +188,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
   }
 
   async getFeaturedPlanters(options: FilterOptions) {
+    this.cleanDuplicates();
     const { limit } = options;
     const sql = `
       select 
