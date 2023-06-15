@@ -1,3 +1,9 @@
+## [1.69.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.69.0...v1.69.1) (2023-06-15)
+
+### Bug Fixes
+
+- shows only acitve trees for GET /tokens ([7cdeb02](https://github.com/Greenstand/treetracker-query-api/commit/7cdeb02c4deaab7443119a5e3c5a28efed984864)), closes [#322](https://github.com/Greenstand/treetracker-query-api/issues/322)
+
 # [1.69.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.68.2...v1.69.0) (2023-06-04)
 
 ### Features
