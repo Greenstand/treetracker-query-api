@@ -86,6 +86,16 @@ export default class TokensRepository extends BaseRepository<Tokens> {
   }
 
   async getCountByFilter(filter: Filter) {
+    const { withCapture, withPlanter } = filter;
+
+    const wihtPlanterQueryPart2 = `left join public.planter as planter on
+      capture.planter_id = planter.id
+    `;
+
+    const wihtCaptureQueryPart2 = `left join public.trees as capture on
+      capture.uuid::text = wlt_tkn.capture_id::text
+    `;
+
     const sql = `SELECT
         COUNT(*)
       from wallet.token as wlt_tkn
@@ -93,6 +103,8 @@ export default class TokensRepository extends BaseRepository<Tokens> {
       public.trees.uuid::text = wlt_tkn.capture_id::text
       left join wallet.wallet as wlt_wallet on
       wlt_wallet.id = wlt_tkn.wallet_id
+      ${withCapture || withPlanter ? wihtCaptureQueryPart2 : ''}
+      ${withPlanter ? wihtPlanterQueryPart2 : ''}
       where wlt_wallet.id::text = '${filter.wallet}' or 
       wlt_wallet.name = '${filter.wallet} and
       public.trees.active = true'
