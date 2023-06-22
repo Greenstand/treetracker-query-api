@@ -23,7 +23,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
         planter_registrations.created_at as created_at
         from planter
         left join planter_registrations on planter.id = planter_registrations.planter_id
-        AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations planter_registrations.planter_id=planter.id)
+        AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations as planter_reg where planter_reg.planter_id=planter.id)
         LEFT JOIN webmap.planter_location l ON l.id = planter.id
       `),
       )
@@ -53,7 +53,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
-           AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations planter_registrations.planter_id=planter.id)
+           AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations as planter_reg where planter_reg.planter_id=planter.id)
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
       WHERE planter.organization_id in (select entity_id from getEntityRelationshipChildren(${organization_id}))
       ${
