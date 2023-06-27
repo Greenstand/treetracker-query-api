@@ -9,19 +9,8 @@ export default class OrganizationRepositoryV2 extends BaseRepository<Organizatio
   constructor(session: Session) {
     super('stakeholder.stakeholder', session);
   }
-  async test(){
 
-    const sql = `
-      SELECT *
-      FROM
-      planter
-      `;
-    const object = await this.session.getDB().raw(sql);
-    console.log(object)
-  
-  }
   async getByPlanter(planter_id: number, options: FilterOptions) {
-    this.test();
     const { limit, offset } = options;
     const sql = `
       SELECT
@@ -44,7 +33,6 @@ export default class OrganizationRepositoryV2 extends BaseRepository<Organizatio
   }
 
   async getByGrower(grower_id: string, options: FilterOptions) {
-    this.test();
     const { limit, offset } = options;
     const sql = `
       SELECT
@@ -67,7 +55,6 @@ export default class OrganizationRepositoryV2 extends BaseRepository<Organizatio
   }
 
   async getById(id: string | number) {
-    this.test();
     const object = await this.session
       .getDB()
       .select()
@@ -106,7 +93,6 @@ export default class OrganizationRepositoryV2 extends BaseRepository<Organizatio
   // }
 
   async getByMapName(mapName: string) {
-    this.test();
     const object = await this.session
       .getDB()
       .select(
@@ -135,7 +121,6 @@ export default class OrganizationRepositoryV2 extends BaseRepository<Organizatio
   }
 
   async getFeaturedOrganizations() {
-    this.test();
     const sql = `
       select 
         entity.*,
