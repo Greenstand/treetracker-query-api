@@ -9,8 +9,19 @@ export default class OrganizationRepositoryV2 extends BaseRepository<Organizatio
   constructor(session: Session) {
     super('stakeholder.stakeholder', session);
   }
+  async test(){
 
+    const sql = `
+      SELECT *
+      FROM
+      planter
+      `;
+    const object = await this.session.getDB().raw(sql);
+    console.log(object)
+  
+  }
   async getByPlanter(planter_id: number, options: FilterOptions) {
+    this.test();
     const { limit, offset } = options;
     const sql = `
       SELECT
@@ -32,7 +43,31 @@ export default class OrganizationRepositoryV2 extends BaseRepository<Organizatio
     return objectPatched;
   }
 
+  async getByGrower(grower_id: string, options: FilterOptions) {
+    this.test();
+    const { limit, offset } = options;
+    const sql = `
+      SELECT
+      entity.*,
+      l.country_id, l.country_name, l.continent_id, l.continent_name
+      FROM entity
+      LEFT JOIN webmap.organization_location l ON l.id = entity.id
+      LEFT JOIN planter ON planter.organization_id = entity.id
+      WHERE planter.grower_account_uuid = '${grower_id}'
+      LIMIT ${limit}
+      OFFSET ${offset}
+    `;
+    const object = await this.session.getDB().raw(sql);
+    const objectPatched = await patch(
+      object.rows,
+      PATCH_TYPE.EXTRA_ORG,
+      this.session,
+    );
+    return objectPatched;
+  }
+
   async getById(id: string | number) {
+    this.test();
     const object = await this.session
       .getDB()
       .select()
@@ -51,7 +86,27 @@ export default class OrganizationRepositoryV2 extends BaseRepository<Organizatio
     return objectPatched;
   }
 
+  // async getByGrowerId(id: string | number) {
+  //   const object = await this.session
+  //     .getDB()
+  //     .select()
+  //     .from(this.tableName)
+  //     .where('grower_account_', id)
+  //     .first();
+
+  //   if (!object) {
+  //     throw new HttpError(404, `Can not find ${this.tableName} by id:${id}`);
+  //   }
+  //   const objectPatched = await patch(
+  //     object,
+  //     PATCH_TYPE.EXTRA_ORG,
+  //     this.session,
+  //   );
+  //   return objectPatched;
+  // }
+
   async getByMapName(mapName: string) {
+    this.test();
     const object = await this.session
       .getDB()
       .select(
@@ -80,6 +135,7 @@ export default class OrganizationRepositoryV2 extends BaseRepository<Organizatio
   }
 
   async getFeaturedOrganizations() {
+    this.test();
     const sql = `
       select 
         entity.*,

@@ -4,7 +4,7 @@ import Organization from 'interfaces/Organization';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import OrganizationRepository from '../infra/database/OrganizationRepository';
 
-type Filter = Partial<{ planter_id: number; organization_id: number }>;
+type Filter = Partial<{ planter_id: number; organization_id: number, grower_id:string }>;
 
 function getByFilter(
   organizationRepository: OrganizationRepository,
@@ -14,6 +14,14 @@ function getByFilter(
       log.warn('using planter filter...');
       const trees = await organizationRepository.getByPlanter(
         filter.planter_id,
+        options,
+      );
+      return trees;
+    }
+    else if (filter.grower_id){
+      log.warn('using planter filter...');
+      const trees = await organizationRepository.getByGrower(
+        filter.grower_id,
         options,
       );
       return trees;
