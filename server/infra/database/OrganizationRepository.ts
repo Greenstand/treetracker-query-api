@@ -32,28 +32,6 @@ export default class OrganizationRepository extends BaseRepository<Organization>
     return objectPatched;
   }
 
-  async getByGrower(grower_id: string, options: FilterOptions) {
-    const { limit, offset } = options;
-    const sql = `
-      SELECT
-      entity.*,
-      l.country_id, l.country_name, l.continent_id, l.continent_name
-      FROM entity
-      LEFT JOIN webmap.organization_location l ON l.id = entity.id
-      LEFT JOIN planter ON planter.organization_id = entity.id
-      WHERE planter.grower_account_uuid = ${grower_id}
-      LIMIT ${limit}
-      OFFSET ${offset}
-    `;
-    const object = await this.session.getDB().raw(sql);
-    const objectPatched = await patch(
-      object.rows,
-      PATCH_TYPE.EXTRA_ORG,
-      this.session,
-    );
-    return objectPatched;
-  }
-
   async getById(id: string | number) {
     const object = await this.session
       .getDB()

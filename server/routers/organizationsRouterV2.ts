@@ -3,7 +3,7 @@ import Joi from 'joi';
 import { handlerWrapper } from './utils';
 import OrganizationRepositoryV2 from '../infra/database/OrganizationRepositoryV2';
 import Session from '../infra/database/Session';
-import OrganizationModel from '../models/Organization';
+import OrganizationModel from '../models/OrganizationV2';
 
 type Filter = Partial<{ planter_id: number; organization_id: number, grower_id:string }>;
 
