@@ -30,7 +30,7 @@
     "prepare": "husky install",
     "server-test": "DEBUG=express:* NODE_LOG_LEVEL=debug nodemon server/serverTest.js",
     "start": "NODE_TLS_REJECT_UNAUTHORIZED='0' NODE_PATH=dist/ node dist/server.js",
-    "start:dev": "NODE_PATH=server/ ts-node -r dotenv/config --project tsconfig.build.json server/server.ts",
+    "start:dev": "cross-env NODE_PATH=server/ ts-node -r dotenv/config --project tsconfig.build.json server/server.ts",
     "test": "npm run test-unit; npm run test-integration;npm run test-repository",
     "test-e2e": "jest ./__tests__/e2e/",
     "test-integration": "NODE_ENV=test mocha -r dotenv/config dotenv_config_path=.env.test --exit --timeout 20000 './__tests__/supertest.js'",

@@ -18,7 +18,8 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
       wallet.wallet.id,
       wallet.wallet.name,
       wallet.wallet.logo_url,
-      wallet.wallet.created_at
+      wallet.wallet.created_at,
+      wallet.wallet.about
     FROM
      wallet.wallet
     WHERE
@@ -44,7 +45,7 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
 
   async getWalletTokenContinentCount(walletIdOrName: string) {
     const sql = `
-    select continent.name as continent ,count(continent.name) as token_count
+    select continent.name as continent , wallet.wallet.about, count(continent.name) as token_count
     from wallet.wallet
       left join wallet.token on 
         wallet.token.wallet_id = wallet.wallet.id
@@ -55,7 +56,7 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
           and continent.type_id in (select id from region_type where type = 'continents' )
       where wallet.wallet.id::text  = '${walletIdOrName}'
         or wallet.wallet.name = '${walletIdOrName}' 
-      group by continent.name
+      group by continent.name, wallet.about
   `;
 
     const object = await this.session.getDB().raw(sql);
@@ -75,7 +76,8 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
         wallet.wallet.id,
         wallet.wallet.name,
         wallet.wallet.logo_url,
-        wallet.wallet.created_at
+        wallet.wallet.created_at,
+        wallet.wallet.about
       FROM wallet.wallet
       LIMIT ${limit}
       OFFSET ${offset}
@@ -96,7 +98,8 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
         wallet.wallet.id,
         wallet.wallet.name,
         wallet.wallet.logo_url,
-        wallet.wallet.created_at
+        wallet.wallet.created_at,
+        wallet.wallet.about
       FROM wallet.wallet
       WHERE name LIKE '%${keyword}%'
       ORDER BY name
@@ -118,7 +121,8 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
         wallet.wallet.id as id,
         wallet.wallet.name,
         wallet.wallet.logo_url,
-        wallet.wallet.created_at
+        wallet.wallet.created_at,
+        wallet.wallet.about
       FROM wallet.wallet
       join (
       --- convert json array to row
