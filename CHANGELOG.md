@@ -1,3 +1,10 @@
+## [1.69.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.69.1...v1.69.2) (2023-07-04)
+
+### Bug Fixes
+
+- minor update ([ffd264a](https://github.com/Greenstand/treetracker-query-api/commit/ffd264a0f78d003fb004eef6759ef53032b01994))
+- wallet about ([481707d](https://github.com/Greenstand/treetracker-query-api/commit/481707d0d434fc47b4acfecff9bb469b403ef453))
+
 ## [1.69.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.69.0...v1.69.1) (2023-06-15)
 
 ### Bug Fixes
