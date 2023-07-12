@@ -5,7 +5,7 @@ import Tree from 'interfaces/Tree';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import TreeRepositoryV2 from '../infra/database/TreeRepositoryV2';
-import TreeModel from '../models/Tree';
+import TreeModel from '../models/TreeV2';
 
 const router = express.Router();
 type Filter = Partial<{
