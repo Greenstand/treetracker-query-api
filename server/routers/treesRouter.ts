@@ -36,7 +36,7 @@ router.get(
     const repo = new TreeRepository(new Session());
     let result
     if(isNaN(Number(req.params.val))){
-      Joi.assert(req.params.val, Joi.string().required());
+      Joi.assert(req.params.val, Joi.string().guid().required());
       const exe = TreeModel.getByUUID(repo);
       result = await exe(req.params.val);  
     } else{
