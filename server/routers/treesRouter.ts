@@ -31,16 +31,24 @@ router.get(
 );
 
 router.get(
-  '/:id',
+  '/:val',
   handlerWrapper(async (req, res) => {
-    Joi.assert(req.params.id, Joi.number().required());
     const repo = new TreeRepository(new Session());
-    const exe = TreeModel.getById(repo);
-    const result = await exe(req.params.id);
+    let result
+    if(isNaN(Number(req.params.val))){
+      Joi.assert(req.params.val, Joi.string().guid().required());
+      const exe = TreeModel.getByUUID(repo);
+      result = await exe(req.params.val);  
+    } else{
+      Joi.assert(req.params.val, Joi.number().required());
+      const exe = TreeModel.getById(repo);
+      result = await exe(req.params.val);
+    }
     res.send(result);
     res.end();
   }),
 );
+
 
 router.get(
   '/',
