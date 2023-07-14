@@ -51,7 +51,7 @@ router.get(
       req.query,
       Joi.object().keys({
         planter_id: Joi.number().integer().min(0),
-        grower_id:Joi.string(),
+        grower_id:Joi.string().guid(),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
       }),

@@ -19,7 +19,7 @@ function getByFilter(
       return trees;
     }
     if (filter.grower_id){
-      log.warn('using planter filter...');
+      log.warn('using grower filter...');
       const trees = await organizationRepository.getByGrower(
         filter.grower_id,
         options,
