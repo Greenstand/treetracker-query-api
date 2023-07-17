@@ -34,7 +34,7 @@ router.get(
       Joi.object().keys({
         organization_id: Joi.number().integer().min(0),
         planter_id: Joi.number().integer().min(0),
-        grower_id:Joi.string().guid(),
+        grower_id: Joi.string().guid(),
         wallet_id: Joi.string(),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
@@ -56,9 +56,9 @@ router.get(
       filter.planter_id = planter_id;
     } else if (wallet_id) {
       filter.wallet_id = wallet_id;
-    } else if(grower_id){
-        filter.grower_id = grower_id;
-      }
+    } else if (grower_id) {
+      filter.grower_id = grower_id;
+    }
     const begin = Date.now();
     const result = await SpeciesModel.getByFilter(repo)(filter, {
       limit,
@@ -66,7 +66,7 @@ router.get(
     });
     log.warn('species filter:', filter, 'took time:', Date.now() - begin, 'ms');
     res.send({
-      total: null,
+      total: await SpeciesModel.countByFilter(repo)(filter),
       offset,
       limit,
       species: result,
