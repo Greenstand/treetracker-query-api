@@ -1,3 +1,9 @@
+# [1.70.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.69.2...v1.70.0) (2023-07-19)
+
+### Features
+
+- trees/uuid ([4ea7d2c](https://github.com/Greenstand/treetracker-query-api/commit/4ea7d2cd55a6565f72acc22ebba3f10d25275869))
+
 ## [1.69.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.69.1...v1.69.2) (2023-07-04)
 
 ### Bug Fixes
