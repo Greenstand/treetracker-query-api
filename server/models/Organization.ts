@@ -33,6 +33,15 @@ function getOrganizationLinks(organization) {
   return links;
 }
 
+function countByFilter(
+  organizationRepository: OrganizationRepository,
+): (filter: Filter) => Promise<number> {
+  return async function (filter: Filter) {
+    const total = await organizationRepository.countByFilter(filter);
+    return total;
+  };
+}
+
 export default {
   getById: delegateRepository<OrganizationRepository, Organization>('getById'),
   getByMapName: delegateRepository<OrganizationRepository, Organization>(
@@ -40,6 +49,7 @@ export default {
   ),
   getByFilter,
   getOrganizationLinks,
+  countByFilter,
   getFeaturedOrganizations: delegateRepository<
     OrganizationRepository,
     Organization

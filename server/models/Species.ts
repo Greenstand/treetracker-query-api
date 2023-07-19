@@ -45,7 +45,24 @@ function getByFilter(
   };
 }
 
+function countByFilter(
+  speciesRepository: SpeciesRepository,
+): (filter: Filter) => Promise<number> {
+  return async function (filter: Filter) {
+    if (filter.organization_id) {
+      log.warn('using org filter...');
+      const total = await speciesRepository.countByOrganization(
+        filter.organization_id,
+      );
+      return total;
+    }
+    const total = await speciesRepository.countByFilter(filter);
+    return total;
+  };
+}
+
 export default {
   getById: delegateRepository<SpeciesRepository, Species>('getById'),
   getByFilter,
+  countByFilter,
 };
