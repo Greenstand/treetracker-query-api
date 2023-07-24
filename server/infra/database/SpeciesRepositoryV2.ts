@@ -66,7 +66,7 @@ export default class SpeciesRepositoryV2 extends BaseRepository<Species> {
     ORDER BY total DESC
     `;
     const total = await this.session.getDB().raw(totalSql);
-    return parseInt(total.rows[0].count.toString());
+    return parseInt(total.rows.length);
   }
 
   async getByPlanter(planter_id: number, options: FilterOptions) {
