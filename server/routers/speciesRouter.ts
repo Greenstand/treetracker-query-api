@@ -61,7 +61,7 @@ router.get(
     });
     log.warn('species filter:', filter, 'took time:', Date.now() - begin, 'ms');
     res.send({
-      total: await SpeciesModel.countByFilter(repo)(filter),
+      total: null,
       offset,
       limit,
       species: result,
