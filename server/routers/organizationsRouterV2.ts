@@ -69,7 +69,7 @@ router.get(
       offset,
     });
     res.send({
-      total: await OrganizationModel.countByFilter(repo)(filter),
+      total: null,
       offset,
       limit,
       organizations: result.map((organization) => ({
