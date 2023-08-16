@@ -1,3 +1,9 @@
+## [1.70.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.1...v1.70.2) (2023-08-16)
+
+### Bug Fixes
+
+- bug with total by a commit ([32df39a](https://github.com/Greenstand/treetracker-query-api/commit/32df39a98cd8673d71602bbb8c4471c38ec53ba6))
+
 ## [1.70.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.0...v1.70.1) (2023-07-31)
 
 ### Bug Fixes
