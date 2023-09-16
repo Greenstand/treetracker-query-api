@@ -1,11 +1,11 @@
 import express from 'express';
 import Joi from 'joi';
 import FilterOptions from 'interfaces/FilterOptions';
-import Tree from 'interfaces/Tree';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import TreeRepository from '../infra/database/TreeRepository';
 import TreeModel from '../models/Tree';
+import HttpError from '../utils/HttpError';
 
 const router = express.Router();
 type Filter = Partial<{
@@ -34,21 +34,25 @@ router.get(
   '/:val',
   handlerWrapper(async (req, res) => {
     const repo = new TreeRepository(new Session());
-    let result
-    if(isNaN(Number(req.params.val))){
+    let result;
+    if (isNaN(Number(req.params.val))) {
       Joi.assert(req.params.val, Joi.string().guid().required());
       const exe = TreeModel.getByUUID(repo);
-      result = await exe(req.params.val);  
-    } else{
+      result = await exe(req.params.val);
+    } else {
       Joi.assert(req.params.val, Joi.number().required());
       const exe = TreeModel.getById(repo);
       result = await exe(req.params.val);
     }
+
+    if (result.active === false) {
+      throw new HttpError(404, `Can not find trees by id:${result.id}`);
+    }
+
     res.send(result);
     res.end();
   }),
 );
-
 
 router.get(
   '/',
