@@ -1,3 +1,9 @@
+## [1.70.4](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.3...v1.70.4) (2023-09-16)
+
+### Bug Fixes
+
+- do not display inactive trees, and throw 404 error ([9bafbf6](https://github.com/Greenstand/treetracker-query-api/commit/9bafbf6f3b8691f56fd0a374912444394cfb0d2a))
+
 ## [1.70.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.2...v1.70.3) (2023-08-16)
 
 ### Bug Fixes
