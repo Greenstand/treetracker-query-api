@@ -9,7 +9,7 @@ import SpeciesModel from '../models/SpeciesV2';
 const router = express.Router();
 type Filter = Partial<{
   planter_id: number;
-  organization_id: number;
+  organization_id: string;
   wallet_id: string;
   grower_id: string;
 }>;
@@ -17,7 +17,7 @@ type Filter = Partial<{
 router.get(
   '/:id',
   handlerWrapper(async (req, res) => {
-    Joi.assert(req.params.id, Joi.number().required());
+    Joi.assert(req.params.id, Joi.string().uuid().required());
     const repo = new SpeciesRepositoryV2(new Session());
     const exe = SpeciesModel.getById(repo);
     const result = await exe(req.params.id);
@@ -32,12 +32,16 @@ router.get(
     Joi.assert(
       req.query,
       Joi.object().keys({
-        organization_id: Joi.number().integer().min(0),
-        planter_id: Joi.number().integer().min(0),
-        grower_id: Joi.string().guid(),
-        wallet_id: Joi.string(),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
+        keyword: Joi.string(),
+        id: Joi.string().uuid(),
+        scientific_name: Joi.string(),
+        description: Joi.string(),
+        morphology: Joi.string(),
+        range: Joi.string(),
+        created_at: Joi.string(),
+        updated_at: Joi.string(),
       }),
     );
     const {
@@ -66,7 +70,6 @@ router.get(
     });
     log.warn('species filter:', filter, 'took time:', Date.now() - begin, 'ms');
     res.send({
-      total: await SpeciesModel.countByFilter(repo)(filter),
       offset,
       limit,
       species: result,

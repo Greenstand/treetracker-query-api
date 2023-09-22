@@ -6,146 +6,99 @@ import Session from './Session';
 export default class SpeciesRepositoryV2 extends BaseRepository<Species> {
   constructor(session: Session) {
     super('tree_species', session);
+    this.tableName = 'herbarium.species';
   }
 
-  async getByOrganization(organization_id: number, options: FilterOptions) {
-    const { limit, offset } = options;
-    const sql = `
-      SELECT 
-      species_id as id, total, ts.name, ts.desc
-      FROM 
-      (
-      SELECT 
-      ss.species_id, count(ss.species_id) as total
-      from webmap.species_stat ss
-      WHERE
-      ss.planter_id IN (
-        SELECT
-          id
-        FROM planter p
-        WHERE
-            p.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
-      )
-      OR
-        ss.planting_organization_id = ${organization_id}
-      GROUP BY ss.species_id
-      ) s_count
-      JOIN tree_species ts
-      ON ts.id = s_count.species_id
-      ORDER BY total DESC
-      LIMIT ${limit}
-      OFFSET ${offset}
-    `;
-    const object = await this.session.getDB().raw(sql);
-    return object.rows;
-  }
+  filterWhereBuilder(object, builder) {
+    const result = builder;
+    const {
+      whereNulls = [],
+      whereNotNulls = [],
+      whereIns = [],
+      ...parameters
+    } = object;
 
-  async countByOrganization(organization_id: number) {
-    const totalSql = `
-    SELECT 
-    species_id as id, total, ts.name, ts.desc
-    FROM 
-    (
-    SELECT 
-    ss.species_id, count(ss.species_id) as total
-    from webmap.species_stat ss
-    WHERE
-    ss.planter_id IN (
-      SELECT
-        id
-      FROM planter p
-      WHERE
-          p.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
-    )
-    OR
-      ss.planting_organization_id = ${organization_id}
-    GROUP BY ss.species_id
-    ) s_count
-    JOIN tree_species ts
-    ON ts.id = s_count.species_id
-    ORDER BY total DESC
-    `;
-    const total = await this.session.getDB().raw(totalSql);
-    return parseInt(total.rows.length);
-  }
+    result.whereNot(`${this.tableName}.status`, 'deleted');
+    whereNotNulls.forEach((whereNot) => {
+      result.whereNotNull(whereNot);
+    });
 
-  async getByPlanter(planter_id: number, options: FilterOptions) {
-    const { limit, offset } = options;
-    const sql = `
-      SELECT 
-      species_id as id, total, ts.name, ts.desc
-      FROM 
-      (
-      SELECT 
-      ss.species_id, count(ss.species_id) as total
-      from webmap.species_stat ss
-      WHERE
-      ss.planter_id = ${planter_id}
-      GROUP BY ss.species_id
-      ) s_count
-      JOIN tree_species ts
-      ON ts.id = s_count.species_id
-      ORDER BY total DESC
-      LIMIT ${limit}
-      OFFSET ${offset}
-    `;
-    const object = await this.session.getDB().raw(sql);
-    return object.rows;
-  }
+    whereNulls.forEach((whereNull) => {
+      result.whereNull(whereNull);
+    });
 
-  async getByGrower(grower_id: string, options: FilterOptions) {
-    const { limit, offset } = options;
-    const sql = `
-    SELECT 
-    species_id as id, total, ts.name, ts.desc
-    FROM 
-    (
-    SELECT 
-    ss.species_id, count(ss.species_id) as total
-    from webmap.species_stat ss
-    WHERE
-    ss.planter_id IN (
-      SELECT
-        id
-      FROM planter p
-      WHERE
-          p.grower_account_uuid = '${grower_id}'
-    )
+    whereIns.forEach((whereIn) => {
+      result.whereIn(whereIn.field, whereIn.values);
+    });
 
-    GROUP BY 
-    ss.species_id
-    ) s_count
-    JOIN tree_species ts
-    ON ts.id = s_count.species_id
-    ORDER BY total DESC
-    LIMIT ${limit}
-    OFFSET ${offset}
-  `;
-    const object = await this.session.getDB().raw(sql);
-    return object.rows;
-  }
+    const filterObject = { ...parameters };
 
-  async getByWallet(wallet_id: string, options: FilterOptions) {
-    const { limit, offset } = options;
-    const sql = `
-      SELECT 
-      species_id as id, total, ts.name, ts.desc
-      FROM 
-      (
-      SELECT 
-      ss.species_id, count(ss.species_id) as total
-      from webmap.species_stat ss
-      WHERE
-      ss.wallet_id::text = '${wallet_id}'
-      GROUP BY ss.species_id
-      ) s_count
-      JOIN tree_species ts
-      ON ts.id = s_count.species_id
-      ORDER BY total DESC
-      LIMIT ${limit}
-      OFFSET ${offset}
-    `;
-    const object = await this.session.getDB().raw(sql);
-    return object.rows;
+    if (filterObject.id) {
+      result.where(`${this.tableName}.id`, '=', filterObject.id);
+      delete filterObject.id;
+    }
+
+    if (filterObject.scientific_name) {
+      result.where(
+        `${this.tableName}.scientific_name`,
+        'ilike',
+        `%${filterObject.scientific_name}%`,
+      );
+      delete filterObject.scientific_name;
+    }
+
+    if (filterObject.organization_id) {
+      result.where(
+        `${this.tableName}.organization_id`,
+        '=',
+        `${filterObject.organization_id}`,
+      );
+      delete filterObject.organization_id;
+    }
+
+    // if 'captures_amount_max' === 0, 'captures_amount_min' can be only 0.
+    if (filterObject.captures_amount_max === 0) {
+      result.whereNull('c.captures_count');
+      delete filterObject.captures_amount_min;
+      delete filterObject.captures_amount_max;
+    }
+
+    // if 'captures_amount_max' === 0 and 'captures_amount_max' is not defined, all results should be returned.
+    if (
+      filterObject.captures_amount_min === 0 &&
+      !filterObject.captures_amount_max
+    ) {
+      delete filterObject.captures_amount_min;
+      delete filterObject.captures_amount_max;
+    }
+
+    if (filterObject.captures_amount_min) {
+      result.where(
+        `c.captures_count`,
+        '>=',
+        `${filterObject.captures_amount_min}`,
+      );
+      delete filterObject.captures_amount_min;
+    }
+
+    if (filterObject.captures_amount_max) {
+      result.where(
+        `c.captures_count`,
+        '<=',
+        `${filterObject.captures_amount_max}`,
+      );
+      delete filterObject.captures_amount_max;
+    }
+
+    if (filterObject.wallet) {
+      result.where(
+        `${this.tableName}.wallet`,
+        'ilike',
+        `%${filterObject.wallet}%`,
+      );
+      delete filterObject.wallet;
+    }
+
+    result.where(filterObject);
   }
 }
