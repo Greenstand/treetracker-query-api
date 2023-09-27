@@ -1,3 +1,9 @@
+## [1.70.5](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.4...v1.70.5) (2023-09-27)
+
+### Bug Fixes
+
+- species v2 ([7883430](https://github.com/Greenstand/treetracker-query-api/commit/788343072c25ae8a0d0936ffbbba3cea0b911128))
+
 ## [1.70.4](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.3...v1.70.4) (2023-09-16)
 
 ### Bug Fixes
