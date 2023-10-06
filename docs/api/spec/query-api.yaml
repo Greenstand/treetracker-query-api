@@ -22,7 +22,7 @@ paths:
   '/trees':
     get:
       tags:
-        - Tree details
+        - Trees
       operationId: trees
       deprecated: false
       summary: 'Get the list of trees matching the query parameters'
@@ -159,18 +159,11 @@ paths:
                     items:
                       $ref: '#/components/schemas/tree'
         '422':
-          description: 'Invalid query parameters'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorResponse'
-              example:
-                code: 422
-                message: '"limit" must be less than or equal to 1000'
+          $ref: '#/components/responses/InvalidQueryParameters'
   '/trees/{treeId}':
     get:
       tags:
-        - Tree details
+        - Trees
       operationId: trees-treeId
       deprecated: false
       summary: 'Get specific tree information'
@@ -179,7 +172,7 @@ paths:
         - name: treeId
           in: path
           required: true
-          style: form
+          style: simple
           explode: true
           schema:
             oneOf:
@@ -220,7 +213,7 @@ paths:
   '/trees/featured':
     get:
       tags:
-        - Tree details
+        - Trees
       operationId: get-trees-featured
       deprecated: false
       summary: 'Get featured tree list'
@@ -244,7 +237,7 @@ paths:
   '/v2/trees':
     get:
       tags:
-        - Tree details v2
+        - Trees v2
       operationId: trees-v2
       deprecated: false
       summary: 'Get the list of trees matching the query parameters'
@@ -367,31 +360,27 @@ paths:
                 properties:
                   total:
                     type: integer
+                    format: int32
                     description: 'Total count of trees satifiying the query condition'
                     example: 1
                   offset:
                     type: integer
+                    format: int32
                     example: 0
                   limit:
                     type: integer
+                    format: int32
                     example: 20
                   trees:
                     type: array
                     items:
                       $ref: '#/components/schemas/treeV2'
         '422':
-          description: 'Invalid query parameters'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorResponse'
-              example:
-                code: 422
-                message: '"limit" must be less than or equal to 1000'
+          $ref: '#/components/responses/InvalidQueryParameters'
   '/v2/trees/{treeId}':
     get:
       tags:
-        - Tree details v2
+        - Trees v2
       operationId: trees-treeId-v2
       deprecated: false
       summary: 'Get specific tree information'
@@ -400,7 +389,7 @@ paths:
         - name: treeId
           in: path
           required: true
-          style: form
+          style: simple
           explode: true
           schema:
             type: string
@@ -425,7 +414,7 @@ paths:
   '/v2/trees/featured':
     get:
       tags:
-        - Tree details v2
+        - Trees v2
       operationId: get-trees-featured-v2
       deprecated: false
       summary: 'Get featured tree list'
@@ -446,33 +435,238 @@ paths:
                     items:
                       $ref: '#/components/schemas/treeV2'
 
-  '/v2/captures/{captureId}.':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
+  '/v2/captures':
     get:
-      summary: get capture info
-      tags: []
-      operationId: captures-id
+      tags:
+        - Captures
+      operationId: captures
+      deprecated: false
+      summary: 'Get capture list by query parameters'
+      description: |-
+        Query captures by filters like `grower_account_id`, `device_identifier`, or `species_id`. Also consider pagination. Filter all captures by `status=active` and exclude deleted.
+      parameters:
+        - name: offset
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            default: 0
+            example: 0
+          style: form
+          explode: true
+          in: query
+          description: 'The start offset of the list, if missing, default is 0'
+        - name: limit
+          schema:
+            type: integer
+            format: int32
+            maximum: 20000
+            minimum: 1
+            default: 25
+            example: 100
+          style: form
+          explode: true
+          in: query
+          description: 'The limit length of the return list, if missing, default is 25'
+        - schema:
+            type: string
+            format: uuid
+            example: fc81c671-1085-45e7-9c4e-c98948acb704
+          style: form
+          explode: true
+          in: query
+          name: grower_account_id
+          description: 'Filter by `grower_account_id`'
+        - schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            example:
+              [
+                '9322cfb3-c0e7-4186-b5c2-812c3ee066a7',
+                '71115148-febc-4036-8dd9-1e9dd6b1b00e',
+              ]
+          style: form
+          explode: true
+          in: query
+          name: organization_ids
+          description: 'Filter by organization ID(s)'
+        - schema:
+            type: string
+            format: date
+            example: 2023-11-21
+          style: form
+          explode: true
+          in: query
+          name: startDate
+          description: 'Filter by start date'
+        - schema:
+            type: string
+            format: date
+            example: 2023-11-25
+          style: form
+          explode: true
+          in: query
+          name: endDate
+          description: 'Filter by end date'
+        - schema:
+            type: string
+            format: uuid
+            example: 66ea2165-839b-4aa3-8959-7cb02159e6fa
+          style: form
+          explode: true
+          in: query
+          name: tag_id
+          description: 'Filter by tag ID'
+        - schema:
+            type: string
+            format: uuid
+            example: 306987a4-fcc0-4e10-a812-c6fd95be85bd
+          style: form
+          explode: true
+          in: query
+          name: id
+          description: 'Filter by id of capture'
+        - schema:
+            type: string
+            format: uuid
+            example: 2a9a7fa3-17ab-47e3-a7f0-1fffe75f3a04
+          style: form
+          explode: true
+          in: query
+          name: tree_id
+          description: 'Filter by `tree_id`'
+        - name: grower_account_id
+          in: query
+          description: 'Filter by grower account ID'
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
+            example: 11d19ae3-fea9-4f20-b8ca-3c800d065802
+        - name: grower_reference_id
+          in: query
+          description: 'Filter by grower reference ID'
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            example: 112345
+        - name: reference_id
+          in: query
+          description: 'Filter by reference ID'
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            example: 170128
+        - schema:
+            type: string
+            format: uuid
+            example: 74e23efa-b794-48f9-96f1-4b08fd02a562
+          style: form
+          explode: true
+          in: query
+          name: species_id
+          description: 'Filter by `species_id`'
+        - schema:
+            type: string
+            example: 48b123d175ceeb4c
+          style: form
+          explode: true
+          in: query
+          name: device_identifier
+          description: 'Filter by `device_identifier`'
+        - schema:
+            type: string
+            example: testwallet
+          style: form
+          explode: true
+          in: query
+          name: wallet
+          description: 'Filter by wallet name'
+        - schema:
+            type: string
+            format: uuid
+            example: 9322cfb3-c0e7-4186-b5c2-812c3ee066a7
+          style: form
+          explode: true
+          in: query
+          name: token_id
+          description: 'Filter by token ID'
+        - schema:
+            type: string
+            example: false
+          style: form
+          explode: true
+          in: query
+          name: tokenized
+          description: 'Filter by `tokenized`'
+        - schema:
+            type: string
+            default: captured_at
+            example: captured_at
+          style: form
+          explode: true
+          in: query
+          name: order_by
+          description: 'Sort the result by specific field'
+        - schema:
+            type: string
+            default: desc
+            example: desc
+          style: form
+          explode: true
+          in: query
+          name: order
+          description: 'Sort the result in ascending or descending order'
+        - name: whereNulls
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields that should be null'
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['tag_id', 'wallet_name']
+        - name: whereNotNulls
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields that should not be null'
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['tag_id', 'wallet_name']
+        - name: whereIns
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields whose value must be in a specified list of values'
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                field:
+                  type: string
+                  example: wallet
+                values:
+                  type: array
+                  items:
+                    type: string
+            example:
+              [{ 'field': 'wallet', 'values': ['wallet15', 'wallet10@test'] }]
+
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/capture'
-      description: get single capture object by id
-  /v2/captures:
-    parameters: []
-    get:
-      summary: get capture list by query parameters
-      tags: []
-      responses:
-        '200':
-          description: OK
+          description: 'Successfully retrieve the list of captures matching the query parameters.'
           content:
             application/json:
               schema:
@@ -483,117 +677,261 @@ paths:
                     items:
                       $ref: '#/components/schemas/capture'
                   total:
+                    description: 'Total count of captures satifiying the query condition'
                     type: integer
-                    description: total count of captures satifiying the query condition
+                    format: int32
+                    example: 1
                   offset:
                     type: integer
+                    format: int32
+                    example: 0
                   limit:
                     type: integer
-      operationId: captures
-      description: |-
-        query captures by filters like grower_account_id, device_identifier, or species_id, also consider pagination. Filter all captures by `status=active` and exclude deleted
+                    format: int32
+                    example: 20
+        '422':
+          $ref: '#/components/responses/InvalidQueryParameters'
+  '/v2/captures/{captureId}':
+    get:
+      summary: 'Get single capture info'
+      description: 'Get single capture object by ID.'
+      tags:
+        - Captures
+      operationId: captures-id
+      deprecated: false
       parameters:
         - schema:
-            type: integer
-          in: query
-          name: offset
-          description: 'The start offset of the list, if missing, default is 0'
-        - schema:
-            type: integer
-            maximum: 1000
-            minimum: 0
-          in: query
-          name: limit
-          description: 'The limit length of the return list, if missing, default is 25'
-        - schema:
-            type: string (uuid)
-          in: query
-          name: grower_account_id
-          description: Filter by grower_account_id
-        - schema:
-            type: array of integers or uuids
-          in: query
-          name: organization_ids
-          description: Filter by org id(s)
-        - schema:
             type: string
-          in: query
-          name: startDate
-          description: Filter by date range
-        - schema:
-            type: string
-          in: query
-          name: endDate
-          description: Filter by date range
-        - schema:
-            type: string
-          in: query
-          name: tag
-          description: Filter by tag name
-        - schema:
-            type: string
-          in: query
-          name: id
-          description: Filter by id of capture
-        - schema:
-            type: string
-          in: query
-          name: tree_id
-          description: Filter by tree_id
-        - schema:
-            type: string
-          in: query
-          name: species_id
-          description: Filter by species_id
-        - schema:
-            type: string
-          in: query
-          name: device_identifier
-          description: Filter by device_identifier
-        - schema:
-            type: string
-          in: query
-          name: wallet
-          description: Filter by wallet's name value
-        - schema:
-            type: string
-          in: query
-          name: token
-          description: Filter by token's id
-        - schema:
-            type: string
-          in: query
-          name: status
-          description: Filter by status, only 'status=active'
-        - schema:
-            type: string
-          in: query
-          name: sort
-          description: Sort by order and order_by values
-  '/raw_captures/{rawCaptureId}.':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-    get:
-      summary: get raw-capture info
-      tags: []
-      operationId: raw-captures-id
+            format: uuid
+            example: 937e87cb-18fa-453b-a4c0-997dacbc61dd
+          style: simple
+          explode: true
+          name: captureId
+          in: path
+          required: true
       responses:
         '200':
-          description: OK
+          description: 'Successfuly retrieve the capture object matching the capture ID.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/field_data'
-      description: get single capture object by id
-  /raw_captures:
+                $ref: '#/components/schemas/capture'
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 404
+                message: 'Can not find the treetracker.capture by id:f300964d-50d3-4f36-ba7a-17dda749c3b1!'
+
+  '/v2/captures/count':
+    get:
+      tags:
+        - Captures
+      operationId: captures-count
+      deprecated: false
+      summary: 'Get count of captures'
+      description: 'Get count of captures matching the query parameters.'
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+            example: fc81c671-1085-45e7-9c4e-c98948acb704
+          style: form
+          explode: true
+          in: query
+          name: grower_account_id
+          description: 'Filter by `grower_account_id`'
+        - schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            example:
+              [
+                '9322cfb3-c0e7-4186-b5c2-812c3ee066a7',
+                '71115148-febc-4036-8dd9-1e9dd6b1b00e',
+              ]
+          style: form
+          explode: true
+          in: query
+          name: organization_ids
+          description: 'Filter by organization ID(s)'
+        - schema:
+            type: string
+            format: date
+            example: 2023-11-21
+          style: form
+          explode: true
+          in: query
+          name: startDate
+          description: 'Filter by start date'
+        - schema:
+            type: string
+            format: date
+            example: 2023-11-25
+          style: form
+          explode: true
+          in: query
+          name: endDate
+          description: 'Filter by end date'
+        - schema:
+            type: string
+            format: uuid
+            example: 66ea2165-839b-4aa3-8959-7cb02159e6fa
+          style: form
+          explode: true
+          in: query
+          name: tag_id
+          description: 'Filter by tag ID'
+        - schema:
+            type: string
+            format: uuid
+            example: 306987a4-fcc0-4e10-a812-c6fd95be85bd
+          style: form
+          explode: true
+          in: query
+          name: id
+          description: 'Filter by id of capture'
+        - schema:
+            type: string
+            format: uuid
+            example: 2a9a7fa3-17ab-47e3-a7f0-1fffe75f3a04
+          style: form
+          explode: true
+          in: query
+          name: tree_id
+          description: 'Filter by `tree_id`'
+        - name: grower_account_id
+          in: query
+          description: 'Filter by grower account ID'
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
+            example: 11d19ae3-fea9-4f20-b8ca-3c800d065802
+        - name: grower_reference_id
+          in: query
+          description: 'Filter by grower reference ID'
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            example: 112345
+        - name: reference_id
+          in: query
+          description: 'Filter by reference ID'
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            example: 170128
+        - schema:
+            type: string
+            format: uuid
+            example: 74e23efa-b794-48f9-96f1-4b08fd02a562
+          style: form
+          explode: true
+          in: query
+          name: species_id
+          description: 'Filter by `species_id`'
+        - schema:
+            type: string
+            example: 48b123d175ceeb4c
+          style: form
+          explode: true
+          in: query
+          name: device_identifier
+          description: 'Filter by `device_identifier`'
+        - schema:
+            type: string
+            example: testwallet
+          style: form
+          explode: true
+          in: query
+          name: wallet
+          description: 'Filter by wallet name'
+        - schema:
+            type: string
+            format: uuid
+            example: 9322cfb3-c0e7-4186-b5c2-812c3ee066a7
+          style: form
+          explode: true
+          in: query
+          name: token_id
+          description: 'Filter by token ID'
+        - schema:
+            type: string
+            example: false
+          style: form
+          explode: true
+          in: query
+          name: tokenized
+          description: 'Filter by `tokenized`'
+        - name: whereNulls
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields that should be null'
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['tag_id', 'wallet_name']
+        - name: whereNotNulls
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields that should not be null'
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['tag_id', 'wallet_name']
+        - name: whereIns
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields whose value must be in a specified list of values'
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                field:
+                  type: string
+                  example: wallet
+                values:
+                  type: array
+                  items:
+                    type: string
+            example:
+              [{ 'field': 'wallet', 'values': ['wallet15', 'wallet10@test'] }]
+      responses:
+        '200':
+          description: 'Successfully get count of captures matching the query parameters.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    format: int32
+                    example: 23624
+        '422':
+          $ref: '#/components/responses/InvalidQueryParameters'
+  '/raw_captures':
     parameters: []
     get:
       summary: get capture list by query parameters
-      tags: []
+      tags:
+        - Raw Captures
       responses:
         '200':
           description: OK
@@ -699,10 +1037,32 @@ paths:
           in: query
           name: sort
           description: Sort by order and order_by values
-  /countries/leaderboard:
+        -
+  '/raw_captures/{rawCaptureId}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: get raw-capture info
+      tags:
+        - Raw Captures
+      operationId: raw-captures-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/field_data'
+      description: get single capture object by id
+  '/countries/leaderboard':
     get:
       summary: leader board of country
-      tags: []
+      tags:
+        - Countries
       responses:
         '200':
           description: OK
@@ -742,10 +1102,11 @@ paths:
 
         But it's slow so seba and I consider pre-query the db and store the result somewhere.
     parameters: []
-  /countries:
+  '/countries':
     get:
       summary: get countries by coordinates
-      tags: []
+      tags:
+        - Countries
       responses:
         '200':
           description: OK
@@ -794,7 +1155,8 @@ paths:
   '/countries/{countryId}':
     get:
       summary: get one country
-      tags: []
+      tags:
+        - Countries
       responses:
         '200':
           description: OK
@@ -844,7 +1206,8 @@ paths:
         required: true
     get:
       summary: get planter by id
-      tags: []
+      tags:
+        - Planters
       responses:
         '200':
           description: OK
@@ -858,9 +1221,11 @@ paths:
 
         'about' property: Seba says he might be able to populate this field, may be manually in the early stage
         'location?' property: I don't know if we can provide this infomation, the city/country of the planter, could be removed if impossible
-  /planters:
+  '/planters':
     get:
       summary: get planter list by query parameter
+      tags:
+        - Planters
       operationId: get-planters
       responses:
         '200':
@@ -911,7 +1276,8 @@ paths:
         required: true
     get:
       summary: get organization by id
-      tags: []
+      tags:
+        - Organizations
       responses:
         '200':
           description: OK
@@ -931,9 +1297,11 @@ paths:
         'about':Seba says he might be able to populate this field, may be manually in the early stage
 
         mission: Seba says he might be able to populate this field, may be manually in the early stage
-  /organizations:
+  '/organizations':
     get:
       summary: get organization list by query parameters
+      tags:
+        - Organizations
       parameters:
         - schema:
             type: integer
@@ -973,9 +1341,11 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/organization'
-  /species:
+  '/species':
     get:
       summary: get species list by filter/parameters
+      tags:
+        - Species
       operationId: get-species
       responses:
         '200':
@@ -1019,9 +1389,11 @@ paths:
           name: grower_account_id
           description: Filter by planter id
       description: "mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don't know if it is too resource consumming to query DB"
-  /transactions:
+  '/transactions':
     get:
       summary: get token transaction list by filter/parameters
+      tags:
+        - Transactions
       operationId: get-transactions
       description: "about returning wallet name, it is a pretty common use case that we need to display the wallet name in the frontend, so we'd better join and return the name of wallet"
       responses:
@@ -1068,6 +1440,8 @@ paths:
   '/tokens/{tokenId}':
     get:
       summary: get token by id
+      tags:
+        - Tokens
       operationId: get-tokens-tokenId
       responses:
         '200':
@@ -1076,9 +1450,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/token'
-  /tokens:
+  '/tokens':
     get:
       summary: get token list by filter/parameters
+      tags:
+        - Tokens
       operationId: get-tokens
       responses:
         '200':
@@ -1130,6 +1506,8 @@ paths:
   '/wallets/{walletIdOrName}':
     get:
       summary: get wallet by id or name
+      tags:
+        - Wallets
       operationId: get-wallets-walletIdOrName
       responses:
         '200':
@@ -1139,9 +1517,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/wallet'
       description: 'about retunning photo_url,it would be great if we can set a wallet avatar and show it on the wallet page, maybe we can create the column, and just pick some good case to manualy fill some photo into'
-  /gis/location/nearest:
+  '/gis/location/nearest':
     get:
       summary: get nearest gis location by filter/parameters
+      tags:
+        - GIS
       operationId: get-gis-location-nearest
       responses:
         '200':
@@ -1168,9 +1548,11 @@ paths:
           in: query
           name: lon
           description: the longitude
-  /gis/bounds:
+  '/gis/bounds':
     get:
       summary: get gis bounds by filter/parameters, e.g. give a planter id, get a bounds which contains all the trees in the planter
+      tags:
+        - GIS
       operationId: get-gis-bounds
       responses:
         '200':
@@ -1208,6 +1590,122 @@ components:
         type: string
         example: application/json
   schemas:
+    capture:
+      description: 'A single capture object'
+      type: object
+      x-examples: {}
+      title: 'Capture'
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 0c2d6e3a-d02a-4edf-bcdc-893e1f7a4817
+        reference_id:
+          type: integer
+          format: int32
+          example: 999940
+        tree_id:
+          type: string
+          fromat: uuid
+          example: 47d05e75-b5f2-4787-9b83-061292da53e3
+        image_url:
+          type: string
+          format: url
+          example: https://treetracker-xxx.xxxx.com/10045.jpg
+        lat:
+          type: number
+          example: -3.326408
+        lon:
+          type: number
+          example: 27.439936
+        estimated_geometric_location:
+          description: 'Geospatial location of type `geometry` used by PostGIS.'
+          type: string
+          example: 0101000020E6100000A22AA6D24FB84240DE3829CC7B9C0AC
+        gps_accuracy:
+          type: integer
+          format: int32
+          example: 6
+        morphology:
+          $ref: '#/components/schemas/morphologyType'
+        age:
+          $ref: '#/components/schemas/ageType'
+        note:
+          type: string
+          example: test note
+        attributes:
+          type: object
+          example: {}
+        domain_specific_data:
+          type: object
+          example: {}
+        created_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        estimated_geographic_location:
+          description: 'Geospatial location of type `geography` used by PostGIS.'
+          type: string
+          example: 0101000020E6100000A22AA6D24FB84240DE3829CC7B9C0AC
+        device_configuration_id:
+          type: string
+          format: uuid
+          example: 3153163e-8cee-4030-94dd-e585964fda92
+        session_id:
+          type: string
+          format: uuid
+          example: 625f810a-924e-4ba5-869f-4b7be02d2ee0
+        status:
+          $ref: '#/components/schemas/treeStatusTypeV2'
+        grower_account_id:
+          type: string
+          format: uuid
+          example: 03e78645-09c1-4856-b786-32ed922cc598
+        planting_organization_id:
+          type: string
+          format: uuid
+          example: 8b353fbe-0ad7-46a6-ad43-27e304a95757
+        species_id:
+          type: string
+          format: uuid
+          example: d21384a4-e3ff-4b15-bb75-3bfa742efed1
+        captured_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        token_id:
+          type: string
+          format: uuid
+          example: 03e78645-09c1-4856-b786-32ed922c1234
+        token_issued:
+          type: boolean
+          example: false
+        tags:
+          type: array
+          items:
+            type: string
+          example: ['simple_leaf']
+        device_identifier:
+          type: string
+          example: 48b123d175ceeb4c
+        wallet:
+          type: string
+          example: wallet10@test
+        grower_reference_id:
+          type: integer
+          format: int32
+          example: 112345
+        wallet_name:
+          type: string
+          example: some_wallet
+        wallet_token_id:
+          type: string
+          format: uuid
+          example: 87578b4d-fdd1-44cf-9dc4-fdae1bf04edb
     location:
       description: A location point
       type: object
@@ -1442,7 +1940,7 @@ components:
       description: 'A single tree object (v2)'
       type: object
       x-examples: {}
-      title: 'Tree v2'
+      title: 'Tree (v2)'
       properties:
         id:
           type: string
@@ -1481,6 +1979,7 @@ components:
         updated_at:
           type: string
           format: date-time
+          example: 2023-08-01T02:52:25.166Z
         estimated_geographic_location:
           description: 'Geospatial location of type `geography` used by PostGIS.'
           type: string
@@ -1500,6 +1999,7 @@ components:
           format: uuid
           example: d21384a4-e3ff-4b15-bb75-3bfa742efed1
     morphologyType:
+      title: 'Tree Morphology'
       type: string
       enum:
         - seedling
@@ -1512,12 +2012,14 @@ components:
         * `direct_seedling` - Direct Seedling
         * `fmnr` - Pruned/tied (Farmer Managed Natural Regeneration)
     ageType:
+      title: 'Tree Age'
       type: string
       enum:
         - new_tree
         - over_two_years
       example: new_tree
     captureApprovalType:
+      title: 'Tree Capture Approval Tag'
       type: string
       enum:
         - simple_leaf
@@ -1530,6 +2032,7 @@ components:
         - timber
       example: simple_leaf
     rejectionReasonType:
+      title: 'Tree Rejection Reason'
       type: string
       enum:
         - not_tree
@@ -1540,6 +2043,7 @@ components:
         - flag_user
         - needs_contact_or_review
     treeStatusTypeV2:
+      title: 'Tree Status (v2)'
       type: string
       enum:
         - active
@@ -1743,6 +2247,7 @@ components:
           description: it would be great if we can set a wallet avatar and show it on the wallet page
 
     errorResponse:
+      title: 'Error Response'
       type: object
       properties:
         code:
@@ -1751,7 +2256,7 @@ components:
           type: string
   responses:
     UnsupportedMediaTypeError:
-      description: Invalid content type
+      description: 'Invalid content type'
       content:
         application/json:
           schema:
@@ -1759,7 +2264,15 @@ components:
           example:
             code: 415
             message: 'Invalid content type. API only supports application/json'
-
+    InvalidQueryParameters:
+      description: 'Invalid query parameters'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            code: 422
+            message: '"startDate" with value "2023-09-xy" fails to match the required pattern: /^\\d{4}-\\d{2}-\\d{2}$/'
   examples:
     tree933042:
       value:
