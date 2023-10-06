@@ -1,3 +1,9 @@
+## [1.70.6](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.5...v1.70.6) (2023-10-04)
+
+### Bug Fixes
+
+- queryFormatter ([6a33308](https://github.com/Greenstand/treetracker-query-api/commit/6a33308ed4adf7315066dbcbf272c933e0ca08d7))
+
 ## [1.70.5](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.4...v1.70.5) (2023-09-27)
 
 ### Bug Fixes
