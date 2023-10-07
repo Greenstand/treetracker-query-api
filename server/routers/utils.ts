@@ -65,7 +65,7 @@ const queryFormatter = (req) => {
     ...others,
   };
   if (req.query.organization_id) {
-    query.organization_id = req.query.organization_id;  
+    query.organization_id = JSON.parse(req.query.organization_id);
   }
 
   if (req.query.captures_amount_min) {
