@@ -438,7 +438,7 @@ paths:
   '/v2/captures':
     get:
       tags:
-        - Captures
+        - Captures v2
       operationId: captures
       deprecated: false
       summary: 'Get capture list by query parameters'
@@ -687,7 +687,7 @@ paths:
       summary: 'Get single capture info'
       description: 'Get single capture object by ID.'
       tags:
-        - Captures
+        - Captures v2
       operationId: captures-id
       deprecated: false
       parameters:
@@ -719,7 +719,7 @@ paths:
   '/v2/captures/count':
     get:
       tags:
-        - Captures
+        - Captures v2
       operationId: captures-count
       deprecated: false
       summary: 'Get count of captures'
@@ -1201,6 +1201,63 @@ paths:
               example:
                 code: 404
                 message: 'Can not find field_data.raw_capture by id:9a55f2f5-84af-4213-bfbe-ce17b123e901'
+
+  '/countries':
+    get:
+      tags:
+        - Countries
+      operationId: get-countries
+      deprecated: false
+      summary: 'Get list of countries by coordinates'
+      description: |
+        get country by coordinates, currently, we use it to get the country name of a tree/location.
+        if given the 'lat' and 'lon', we can query db by SQL:
+        ```
+        SELECT region.* FROM region, region_type
+        WHERE region.type_id = region_type.id
+        AND ST_Contains(region.geom, ST_GeomFromText('POINT (-13.215865333333333 8.34645033333333)',4326))
+        AND  region_type.id = region.type_id AND region_type.type = 'country'
+        ```
+      parameters:
+        - schema:
+            type: number
+            example: -3.326408
+          in: query
+          style: form
+          explode: true
+          name: lat
+          description: 'The latitude of the location'
+        - schema:
+            type: number
+            example: 27.439936
+          in: query
+          style: form
+          explode: true
+          name: lon
+          description: 'The longitude of the location'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    total: 1
+                    countries: []
+                properties:
+                  total:
+                    type: number
+                    description: total result of countries
+                  countries:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/country'
+                required:
+                  - total
+                  - countries
   '/countries/leaderboard':
     get:
       summary: leader board of country
@@ -1245,56 +1302,7 @@ paths:
 
         But it's slow so seba and I consider pre-query the db and store the result somewhere.
     parameters: []
-  '/countries':
-    get:
-      summary: get countries by coordinates
-      tags:
-        - Countries
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                description: ''
-                type: object
-                x-examples:
-                  example-1:
-                    total: 1
-                    countries: []
-                properties:
-                  total:
-                    type: number
-                    description: total result of countries
-                  countries:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/country'
-                required:
-                  - total
-                  - countries
-      operationId: get-countries
-      description: |
-        get country by coordinates, currently, we use it to get the country name of a tree/location.
-        if given the 'lat' and 'lon', we can query db by SQL:
-        ```
-        SELECT region.* FROM region, region_type
-        WHERE region.type_id = region_type.id
-        AND ST_Contains(region.geom, ST_GeomFromText('POINT (-13.215865333333333 8.34645033333333)',4326))
-        AND  region_type.id = region.type_id AND region_type.type = 'country'
-        ```
-      parameters:
-        - schema:
-            type: number
-          in: query
-          name: lat
-          description: the latitude of the location
-        - schema:
-            type: number
-          in: query
-          name: lon
-          description: the longitude of the location
-    parameters: []
+  '/countries/leaderboard/{region}':
   '/countries/{countryId}':
     get:
       summary: get one country
@@ -1341,36 +1349,17 @@ paths:
         in: path
         required: true
 
-  '/planters/{planterId}':
-    parameters:
-      - schema:
-          type: string
-        name: planterId
-        in: path
-        required: true
-    get:
-      summary: get planter by id
-      tags:
-        - Planters
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/planter'
-      operationId: get-planters-planterId
-      description: |-
-        get planter object by id
+  '/v2/countries':
+  '/v2/countries/leaderboard':
+  '/v2/countries/{countryId}':
 
-        'about' property: Seba says he might be able to populate this field, may be manually in the early stage
-        'location?' property: I don't know if we can provide this infomation, the city/country of the planter, could be removed if impossible
   '/planters':
     get:
       summary: get planter list by query parameter
       tags:
         - Planters
       operationId: get-planters
+      deprecated: false
       responses:
         '200':
           description: OK
@@ -1411,37 +1400,38 @@ paths:
         - schema:
             type: string
           in: query
-
-  '/organizations/{orgId}':
+  '/planters/{planterId}':
     parameters:
       - schema:
           type: string
-        name: orgId
+        name: planterId
         in: path
         required: true
     get:
-      summary: get organization by id
+      summary: get planter by id
       tags:
-        - Organizations
+        - Planters
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/organization'
-      operationId: get-organizations-orgId
+                $ref: '#/components/schemas/planter'
+      operationId: get-planters-planterId
+      deprecated: false
       description: |-
-        Ge organization by id
+        get planter object by id
 
-        about some fields:
-        'photo_url' property:kind of like a cover photo, Seb says he will find a way to populate it, maybe manually in ealy stage
+        'about' property: Seba says he might be able to populate this field, may be manually in the early stage
+        'location?' property: I don't know if we can provide this infomation, the city/country of the planter, could be removed if impossible
+  '/planters/featured':
+    get:
+      tags:
+        - Planters
+      operationId: planters-featured
+      deprecated: false
 
-        'location?': I don't know if we can provide this infomation, the city/country of the org, could be removed if impossible
-
-        'about':Seba says he might be able to populate this field, may be manually in the early stage
-
-        mission: Seba says he might be able to populate this field, may be manually in the early stage
   '/organizations':
     get:
       summary: get organization list by query parameters
@@ -1486,6 +1476,123 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/organization'
+  '/organizations/{orgId}':
+    parameters:
+      - schema:
+          type: string
+        name: orgId
+        in: path
+        required: true
+    get:
+      summary: get organization by id
+      tags:
+        - Organizations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/organization'
+      operationId: get-organizations-orgId
+      description: |-
+        Ge organization by id
+
+        about some fields:
+        'photo_url' property:kind of like a cover photo, Seb says he will find a way to populate it, maybe manually in ealy stage
+
+        'location?': I don't know if we can provide this infomation, the city/country of the org, could be removed if impossible
+
+        'about':Seba says he might be able to populate this field, may be manually in the early stage
+
+        mission: Seba says he might be able to populate this field, may be manually in the early stage
+  '/organizations/featured':
+    get:
+      tags:
+        - Organizations
+      operationId: organizations-featured
+      deprecated: false
+
+  '/v2/organizations':
+    get:
+      summary: get organization list by query parameters
+      tags:
+        - Organizations v2
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            minimum: -15
+            maximum: 1000
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: integer
+          in: query
+          name: grower_account_id
+          description: Filter by planter id
+        - schema:
+            type: string
+          in: query
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+                  organizations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/organization'
+  '/v2/organizations/{orgId}':
+    parameters:
+      - schema:
+          type: string
+        name: orgId
+        in: path
+        required: true
+    get:
+      summary: get organization by id
+      tags:
+        - Organizations v2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/organization'
+      operationId: get-organizations-orgId-v2
+      description: |-
+        Ge organization by id
+
+        about some fields:
+        'photo_url' property:kind of like a cover photo, Seb says he will find a way to populate it, maybe manually in ealy stage
+
+        'location?': I don't know if we can provide this infomation, the city/country of the org, could be removed if impossible
+
+        'about':Seba says he might be able to populate this field, may be manually in the early stage
+
+        mission: Seba says he might be able to populate this field, may be manually in the early stage
+  '/v2/organizations/featured':
+    get:
+      tags:
+        - Organizations v2
+      operationId: organizations-featured-v2
+      deprecated: false
 
   '/species':
     get:
@@ -1535,6 +1642,67 @@ paths:
           name: grower_account_id
           description: Filter by planter id
       description: "mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don't know if it is too resource consumming to query DB"
+  '/species/{speciesId}':
+    get:
+      tags:
+        - Species
+      operationId: species-speciesId
+      deprecated: false
+
+  '/v2/species':
+    get:
+      summary: get species list by filter/parameters
+      tags:
+        - Species v2
+      operationId: get-species-v2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+                  species:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/species'
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            minimum: -15
+            maximum: 1000
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: integer
+          in: query
+          name: organization_id
+          description: Filter by org id
+        - schema:
+            type: string
+          in: query
+          name: grower_account_id
+          description: Filter by planter id
+      description: "mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don't know if it is too resource consumming to query DB"
+  '/v2/species/{speciesId}':
+    get:
+      tags:
+        - Species v2
+      operationId: species-speciesId-v2
+      deprecated: false
 
   '/transactions':
     get:
@@ -1585,19 +1753,6 @@ paths:
           name: wallet_id
           description: Filter by wallet id
 
-  '/tokens/{tokenId}':
-    get:
-      summary: get token by id
-      tags:
-        - Tokens
-      operationId: get-tokens-tokenId
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/token'
   '/tokens':
     get:
       summary: get token list by filter/parameters
@@ -1651,7 +1806,93 @@ paths:
           name: withPlanter
           description: "if we need show a token list, it's usually we need display the tree linked to the token, and the planter info, and I think make this configurable might be better, so I add this switcher"
       description: ''
+  '/tokens/{tokenId}':
+    get:
+      summary: get token by id
+      tags:
+        - Tokens
+      operationId: get-tokens-tokenId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
 
+  '/v2/tokens':
+    get:
+      summary: get token list by filter/parameters
+      tags:
+        - Tokens v2
+      operationId: get-tokens-v2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  offset:
+                    type: integer
+                  limit:
+                    type: integer
+                  tokens:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/token'
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            minimum: -15
+            maximum: 1000
+          in: query
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: string
+          in: query
+          name: wallet
+          description: 'Filter by wallet, the value can be wallet name or wallet id'
+        - schema:
+            type: boolean
+          in: query
+          name: withCapture
+          description: "if we need show a token list, it's usually we need display the tree linked to the token, and the planter info, and I think make this configurable might be better, so I add this switcher"
+        - schema:
+            type: boolean
+          in: query
+          name: withPlanter
+          description: "if we need show a token list, it's usually we need display the tree linked to the token, and the planter info, and I think make this configurable might be better, so I add this switcher"
+      description: ''
+  '/v2/tokens/{tokenId}':
+    get:
+      summary: get token by id
+      tags:
+        - Tokens v2
+      operationId: get-tokens-tokenId-v2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
+
+  '/wallets':
+    get:
+      tags:
+        - Wallets
+      operationId: get-wallets
+      deprecated: false
   '/wallets/{walletIdOrName}':
     get:
       summary: get wallet by id or name
@@ -1666,6 +1907,88 @@ paths:
               schema:
                 $ref: '#/components/schemas/wallet'
       description: 'about retunning photo_url,it would be great if we can set a wallet avatar and show it on the wallet page, maybe we can create the column, and just pick some good case to manualy fill some photo into'
+  '/wallets/{walletIdOrName}/token-region-count':
+    get:
+      tags:
+        - Wallets
+      operationId: get-wallets-walletIdOrName-tokenRegionCount
+      deprecated: false
+  '/wallets/featured':
+    get:
+      tags:
+        - Wallets
+      operationId: get-wallets-featured
+      deprecated: false
+
+  '/v2/wallets':
+    get:
+      tags:
+        - Wallets v2
+      operationId: get-wallets-v2
+      deprecated: false
+  '/v2/wallets/{walletIdOrName}':
+    get:
+      summary: get wallet by id or name
+      tags:
+        - Wallets v2
+      operationId: get-wallets-walletIdOrName-v2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/wallet'
+      description: 'about retunning photo_url,it would be great if we can set a wallet avatar and show it on the wallet page, maybe we can create the column, and just pick some good case to manualy fill some photo into'
+  '/v2/wallets/{walletIdOrName}/token-region-count':
+    get:
+      tags:
+        - Wallets v2
+      operationId: get-wallets-walletIdOrName-tokenRegionCount-v2
+      deprecated: false
+  '/v2/wallets/featured':
+    get:
+      tags:
+        - Wallets v2
+      operationId: get-wallets-featured-v2
+      deprecated: false
+
+  '/v2/growers':
+    get:
+      tags:
+        - Growers v2
+      operationId: get-growers-v2
+      deprecated: false
+  '/v2/growers/{growerId}':
+    get:
+      tags:
+        - Growers v2
+      operationId: get-growers-growerId-v2
+      deprecated: false
+  '/v2/growers/{growerId}/selfies':
+    get:
+      tags:
+        - Growers v2
+      operationId: get-growerId-selfies-v2
+      deprecated: false
+  '/v2/growers/wallets':
+    get:
+      tags:
+        - Growers v2
+      operationId: get-growers-wallets-v2
+      deprecated: false
+  '/v2/growers/count':
+    get:
+      tags:
+        - Growers v2
+      operationId: get-growers-count-v2
+      deprecated: false
+  '/v2/growers/featured':
+    get:
+      tags:
+        - Growers v2
+      operationId: get-growers-featured-v2
+      deprecated: false
 
   '/gis/location/nearest':
     get:
@@ -1698,7 +2021,7 @@ paths:
           in: query
           name: lon
           description: the longitude
-  '/gis/bounds':
+  '/bounds':
     get:
       summary: get gis bounds by filter/parameters, e.g. give a planter id, get a bounds which contains all the trees in the planter
       tags:
