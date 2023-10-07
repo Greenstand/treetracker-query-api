@@ -159,7 +159,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/tree'
         '422':
-          $ref: '#/components/responses/InvalidQueryParameters'
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
   '/trees/{treeId}':
     get:
       tags:
@@ -376,7 +376,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/treeV2'
         '422':
-          $ref: '#/components/responses/InvalidQueryParameters'
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
   '/v2/trees/{treeId}':
     get:
       tags:
@@ -681,7 +681,7 @@ paths:
                     format: int32
                     example: 20
         '422':
-          $ref: '#/components/responses/InvalidQueryParameters'
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
   '/v2/captures/{captureId}':
     get:
       summary: 'Get single capture info'
@@ -906,7 +906,7 @@ paths:
                     format: int32
                     example: 23624
         '422':
-          $ref: '#/components/responses/InvalidQueryParameters'
+          $ref: '#/components/responses/InvalidQueryParametersDate'
 
   '/raw-captures':
     get:
@@ -1167,7 +1167,7 @@ paths:
                     format: int32
                     example: 1
         '422':
-          $ref: '#/components/responses/InvalidQueryParameters'
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
   '/raw-captures/{rawCaptureId}':
     get:
       tags:
@@ -1355,14 +1355,75 @@ paths:
 
   '/planters':
     get:
-      summary: get planter list by query parameter
       tags:
         - Planters
       operationId: get-planters
       deprecated: false
+      summary: 'Get planter list by query parameter'
+      description: 'Get the list of planters that match the specified query parameters.'
+      parameters:
+        - schema:
+            type: integer
+            format: int32
+            minimum: 0
+            default: 0
+            example: 0
+          in: query
+          style: form
+          explode: true
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 1000
+            default: 20
+          in: query
+          style: form
+          explode: true
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 123
+          in: query
+          style: form
+          explode: true
+          name: organization_id
+          description: 'Filter by organization ID'
+        - schema:
+            type: string
+            example: testword
+          in: query
+          style: form
+          explode: true
+          name: keyword
+          description: 'Filter planters using a keyword'
+        - name: order_by
+          in: query
+          description: 'Order result by specific field'
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            default: null
+            example: country_name
+        - name: order
+          in: query
+          description: 'Order result in descending order'
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: '#/components/schemas/plantersOrderType'
+          example: asc
       responses:
         '200':
-          description: OK
+          description: 'Successfully retrieve list of planters matching the query parameters.'
           content:
             application/json:
               schema:
@@ -1370,97 +1431,134 @@ paths:
                 properties:
                   total:
                     type: integer
+                    format: int32
+                    example: 1
                   offset:
                     type: integer
+                    format: int32
+                    example: 0
                   limit:
                     type: integer
+                    format: int32
+                    example: 20
                   planters:
                     type: array
                     items:
                       $ref: '#/components/schemas/planter'
-      description: ''
+        '422':
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
+  '/planters/{planterId}':
+    get:
+      tags:
+        - Planters
+      operationId: get-planters-planterId
+      deprecated: false
+      summary: 'Get planter by ID'
+      description: |-
+        Get planter object by id
+
+        'about' property: Seba says he might be able to populate this field, may be manually in the early stage
+        'location?' property: I don't know if we can provide this infomation, the city/country of the planter, could be removed if impossible
       parameters:
         - schema:
             type: integer
-          in: query
-          name: offset
-          description: 'The start offset of the list, if missing, default is 0'
-        - schema:
-            type: integer
-            minimum: -15
-            maximum: 1000
-          in: query
-          name: limit
-          description: 'The limit length of the return list, if missing, default is 20'
-        - schema:
-            type: integer
-          in: query
-          name: organization_id
-          description: Filter by org id
-        - schema:
-            type: string
-          in: query
-  '/planters/{planterId}':
-    parameters:
-      - schema:
-          type: string
-        name: planterId
-        in: path
-        required: true
-    get:
-      summary: get planter by id
-      tags:
-        - Planters
+            format: int32
+            example: 88
+          name: planterId
+          style: form
+          explode: true
+          in: path
+          required: true
       responses:
         '200':
-          description: OK
+          description: 'Successfully return the specified planter.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/planter'
-      operationId: get-planters-planterId
-      deprecated: false
-      description: |-
-        get planter object by id
-
-        'about' property: Seba says he might be able to populate this field, may be manually in the early stage
-        'location?' property: I don't know if we can provide this infomation, the city/country of the planter, could be removed if impossible
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 404
+                message: 'Can not find planter by id:677'
+        '422':
+          description: 'Invalid request parameter'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 422
+                message: '"value" must be a number'
   '/planters/featured':
     get:
       tags:
         - Planters
       operationId: planters-featured
       deprecated: false
+      summary: 'Get featured planters'
+      description: 'Get the list of featured planters.'
+      responses:
+        '200':
+          description: 'Successfully return list of featured planters.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  planters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/planter'
 
   '/organizations':
     get:
-      summary: get organization list by query parameters
+      summary: 'Get organization list by query parameters'
+      description: 'Get the list of organizations that match the query parameters.'
       tags:
         - Organizations
+      operationId: organizations-get
+      deprecated: false
       parameters:
         - schema:
             type: integer
+            format: int32
+            default: 0
+            minimum: 0
+            example: 0
           in: query
+          style: form
+          explode: true
           name: offset
           description: 'The start offset of the list, if missing, default is 0'
         - schema:
             type: integer
-            minimum: -15
+            format: int32
+            minimum: 1
             maximum: 1000
+            default: 20
           in: query
+          style: form
+          explode: true
           name: limit
           description: 'The limit length of the return list, if missing, default is 20'
         - schema:
             type: integer
+            format: int32
+            minimum: 0
+            example: 66
           in: query
+          style: form
+          explode: true
           name: grower_account_id
-          description: Filter by planter id
-        - schema:
-            type: string
-          in: query
+          description: 'Filter by planter ID'
       responses:
         '200':
-          description: OK
+          description: 'Successfully retrieve list of organizations matching the query parameters.'
           content:
             application/json:
               schema:
@@ -1468,80 +1566,137 @@ paths:
                 properties:
                   total:
                     type: integer
+                    format: int32
+                    example: 1
                   offset:
                     type: integer
+                    format: int32
+                    example: 0
                   limit:
                     type: integer
+                    format: int32
+                    example: 20
                   organizations:
                     type: array
                     items:
                       $ref: '#/components/schemas/organization'
+        '422':
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
   '/organizations/{orgId}':
-    parameters:
-      - schema:
-          type: string
-        name: orgId
-        in: path
-        required: true
     get:
-      summary: get organization by id
       tags:
         - Organizations
+      operationId: get-organizations-orgId
+      deprecated: false
+      summary: 'Get organization by ID or map name'
+      description: 'Get organization by ID or map name.'
+      parameters:
+        - schema:
+            oneOf:
+              - type: string
+              - type: integer
+                format: int32
+          examples:
+            ID:
+              value: 66
+            MapName:
+              value: freetown
+          name: orgId
+          description: 'Search for organization using the organization ID or the organization map name.'
+          style: simple
+          explode: true
+          in: path
+          required: true
       responses:
         '200':
-          description: OK
+          description: 'Successfully return the specified organization.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/organization'
-      operationId: get-organizations-orgId
-      description: |-
-        Ge organization by id
-
-        about some fields:
-        'photo_url' property:kind of like a cover photo, Seb says he will find a way to populate it, maybe manually in ealy stage
-
-        'location?': I don't know if we can provide this infomation, the city/country of the org, could be removed if impossible
-
-        'about':Seba says he might be able to populate this field, may be manually in the early stage
-
-        mission: Seba says he might be able to populate this field, may be manually in the early stage
+                $ref: '#/components/schemas/organizationSingle'
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 404
+                message: 'Can not find entity by map name:xyz'
   '/organizations/featured':
     get:
       tags:
         - Organizations
       operationId: organizations-featured
       deprecated: false
+      summary: 'Get featured organizations'
+      description: 'Get the list of featured organizations.'
+      responses:
+        '200':
+          description: 'Successfully return list of featured organizations.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  organizations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/organizationSingle'
 
   '/v2/organizations':
     get:
-      summary: get organization list by query parameters
+      summary: 'Get organization list by query parameters'
+      description: 'Get the list of organizations that match the query parameters.'
       tags:
         - Organizations v2
+      operationId: organizations-get-v2
+      deprecated: false
       parameters:
         - schema:
             type: integer
+            format: int32
+            default: 0
+            minimum: 0
+            example: 0
           in: query
+          style: form
+          explode: true
           name: offset
           description: 'The start offset of the list, if missing, default is 0'
         - schema:
             type: integer
-            minimum: -15
+            format: int32
+            minimum: 1
             maximum: 1000
+            default: 20
           in: query
+          style: form
+          explode: true
           name: limit
           description: 'The limit length of the return list, if missing, default is 20'
         - schema:
             type: integer
+            format: int32
+            minimum: 0
+            example: 66
           in: query
-          name: grower_account_id
-          description: Filter by planter id
+          style: form
+          explode: true
+          name: planter_id
+          description: 'Filter by planter ID'
         - schema:
             type: string
+            format: uuid
+            example: b9947ef1-c4b3-4d5d-9f76-40fcd89a22bf
           in: query
+          style: form
+          explode: true
+          name: grower_id
+          description: 'Filter by grower ID'
       responses:
         '200':
-          description: OK
+          description: 'Successfully retrieve list of organizations matching the query parameters.'
           content:
             application/json:
               schema:
@@ -1549,50 +1704,77 @@ paths:
                 properties:
                   total:
                     type: integer
+                    format: int32
+                    example: 1
                   offset:
                     type: integer
+                    format: int32
+                    example: 0
                   limit:
                     type: integer
+                    format: int32
+                    example: 20
                   organizations:
                     type: array
                     items:
-                      $ref: '#/components/schemas/organization'
+                      $ref: '#/components/schemas/organizationV2'
+        '422':
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
   '/v2/organizations/{orgId}':
-    parameters:
-      - schema:
-          type: string
-        name: orgId
-        in: path
-        required: true
     get:
-      summary: get organization by id
       tags:
         - Organizations v2
+      operationId: get-organizations-orgId-v2
+      deprecated: false
+      summary: 'Get organization by ID'
+      description: 'Get organization by ID.'
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+            example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+          name: orgId
+          description: 'Search for organization using the organization ID.'
+          style: simple
+          explode: true
+          in: path
+          required: true
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/organization'
-      operationId: get-organizations-orgId-v2
-      description: |-
-        Ge organization by id
-
-        about some fields:
-        'photo_url' property:kind of like a cover photo, Seb says he will find a way to populate it, maybe manually in ealy stage
-
-        'location?': I don't know if we can provide this infomation, the city/country of the org, could be removed if impossible
-
-        'about':Seba says he might be able to populate this field, may be manually in the early stage
-
-        mission: Seba says he might be able to populate this field, may be manually in the early stage
+                $ref: '#/components/schemas/organizationV2'
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 404
+                message: 'Can not find stakeholder.stakeholder by id:101afbf4-f30e-47f6-914b-e223e0425a01'
   '/v2/organizations/featured':
     get:
       tags:
         - Organizations v2
       operationId: organizations-featured-v2
       deprecated: false
+      summary: 'Get featured organizations'
+      description: 'Get the list of featured organizations.'
+      responses:
+        '200':
+          description: 'Successfully return list of featured organizations.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  organizations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/organizationSingle'
 
   '/species':
     get:
@@ -2079,7 +2261,7 @@ components:
           example: 999940
         tree_id:
           type: string
-          fromat: uuid
+          format: uuid
           example: 47d05e75-b5f2-4787-9b83-061292da53e3
         image_url:
           type: string
@@ -2744,95 +2926,370 @@ components:
           type: string
           description: like POINT (-13.215865333333333 8.34645033333333)
     planter:
-      description: the planter ojbect
+      title: 'Planter'
+      description: 'Single planter object'
       type: object
       x-examples: {}
       properties:
         id:
           type: number
-        photo_url:
-          type: string
+          format: int32
+          example: 88
         first_name:
           type: string
+          example: Thomas
         last_name:
           type: string
-        about:
+          example: D'Engine
+        email:
           type: string
-          description: 'Seba says he might be able to populate this field, may be manually in the early stage'
+          format: email
+          example: thomas.tank@engine.com
+        organization:
+          type: string
+          example: Treerail
+        phone:
+          type: string
+          example: 1234567890
+        pwd_reset_required:
+          type: boolean
+          default: false
+          example: false
+        image_url:
+          type: string
+          format: url
+          example: http://dummyimage.com/111x100.png/5fa2dd/ffffff
+        person_id:
+          type: string
+          format: uuid
+          example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+        organization_id:
+          type: string
+          format: uuid
+          example: 000e5a88-90a1-4d98-9290-115d12345678
+        image_rotation:
+          $ref: '#/components/schemas/planterImageRotation'
+        gender:
+          type: string
+          example: male
+        grower_account_uuid:
+          type: string
+          format: uuid
+          example: 34abb8b3-fd73-4cc1-bce4-cc011bef76f5
         created_at:
           type: string
-        location?:
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        country_id:
+          type: integer
+          format: int32
+          example: 6632703
+        country_name:
           type: string
-          description: "I don't know if we can provide this infomation, the city/country of the planter, could be removed if impossible"
+          example: Uganda
+        continent_id:
+          type: integer
+          format: int32
+          example: 6632636
+        continent_name:
+          type: string
+          example: Africa
         links:
+          description: 'HATEOAS links to content related to the planter object'
           type: object
           properties:
             featured_trees:
               type: string
-              description: |-
-                Try HATEOAS here, in the app I'm using:
-                /trees?planter_id=940&limit=4
+              example: /trees?planter_id=88&limit=20&offset=0
             associated_organizations:
               type: string
-              description: |-
-                Try HATEOAS here, in the app I'm using:
-                /organizations?planter_id=940
+              example: /organizations?planter_id=88&limit=20&offset=0
             species:
               type: string
-              description: |-
-                Try HATEOAS here, in the app I'm using:
-                /species?planter_id=940
+              example: /species?planter_id=88&limit=20&offset=0
+    planterImageRotation:
+      title: 'Image Rotation'
+      description: 'Number of degrees by which planter image should be rotated for display in the UI'
+      type: integer
+      format: int32
+      enum:
+        - 0
+        - 90
+        - 180
+        - 270
+      example: 90
+    plantersOrderType:
+      title: 'Planters Sorting Order'
+      description: 'Accepted sorting order values.'
+      type: string
+      enum:
+        - asc
+        - desc
+        - ASC
+        - DESC
+      default: asc
     organization:
-      description: ''
+      title: 'Organization'
+      description: 'Single organization object'
       type: object
-      x-examples:
-        example-org:
-          id: 1
-          name: 180Earth
-          photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png'
-          location: 'Shirimatunda, Tanzania'
-          created_at: 'November 11, 2019'
-          about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
-          mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
+      x-examples: {}
       properties:
         id:
           type: number
+          format: int32
+          example: 66
+        type:
+          $ref: '#/components/schemas/organizationType'
         name:
           type: string
+          example: hannahM
+        first_name:
+          type: string
+          example: Hannah
+        last_name:
+          type: string
+          example: Montana
+        email:
+          type: string
+          format: email
+          example: hannah.montana@singer.com
+        phone:
+          type: string
+          example: 1234567890
+        pwd_reset_required:
+          type: boolean
+          default: false
+          example: false
+        website:
+          type: string
+          format: url
+          example: https://www.hannahwebsite.com
+        wallet:
+          type: string
+          example: hannahWallet
+        password:
+          type: string
+          example: b3525a0ac58125a808bf5b7fbb98bef229f904245126934d092c3dc3b5b98da727c1cc36afb1f9b7d9e72a367ff868480640fe78e5456bc15315d5bec02de794
+        salt:
+          type: string
+          example: A1kKHf46W1prukNCJpjJkyAqfQ08uutZ
+        active_contract_id:
+          type: integer
+          format: int32
+          example: null
+        offering_pay_to_plant:
+          type: boolean
+          default: false
+          example: false
+        tree_validation_contract_id:
+          type: integer
+          format: int32
+          example: null
         logo_url:
           type: string
-        photo_url:
+          format: url
+          example: https://treetracker-xxx.xxxx.com/logo.jpg
+        map_name:
           type: string
-          description: 'kind of like a cover photo, Seb says he will find a way to populate it, maybe manually in ealy stage'
-        location?:
+          example: null
+        stakeholder_uuid:
           type: string
-          description: "I don't know if we can provide this infomation, the city/country of the org, could be removed if impossible"
-        created_at:
-          type: string
-        about:
-          type: string
-          description: 'Seba says he might be able to populate this field, may be manually in the early stage'
-        mission:
-          type: string
-          description: 'Seba says he might be able to populate this field, may be manually in the early stage'
+          format: uuid
+          example: 9d0f962a-efc8-4a11-a5fd-0bdb814143f5
         links:
+          description: 'HATEOAS links to content related to the organization object'
           type: object
           properties:
             featured_trees:
               type: string
-              description: |-
-                Try HATEOAS here, in the app I'm using:
-                /trees?organization_id=1&limit=4
+              example: /trees?organization_id=66&limit=20&offset=0
             associated_planters:
               type: string
-              description: |-
-                Try HATEOAS here, in the app I'm using:
-                /planters?organization_id=1&limit=4
+              example: /organizations?organization_id=66&limit=20&offset=0
             species:
               type: string
-              description: |-
-                Try HATEOAS here, in the app I'm using:
-                /species?organization_id=1
+              example: /species?organization_id=66&limit=20&offset=0
+    organizationSingle:
+      title: 'Organization (single)'
+      description: 'Single organization object with extended information.'
+      type: object
+      x-examples: {}
+      properties:
+        id:
+          type: number
+          format: int32
+          example: 66
+        type:
+          $ref: '#/components/schemas/organizationType'
+        name:
+          type: string
+          example: hannahM
+        first_name:
+          type: string
+          example: Hannah
+        last_name:
+          type: string
+          example: Montana
+        email:
+          type: string
+          format: email
+          example: hannah.montana@singer.com
+        phone:
+          type: string
+          example: 1234567890
+        pwd_reset_required:
+          type: boolean
+          default: false
+          example: false
+        website:
+          type: string
+          format: url
+          example: https://www.hannahwebsite.com
+        wallet:
+          type: string
+          example: hannahWallet
+        password:
+          type: string
+          example: b3525a0ac58125a808bf5b7fbb98bef229f904245126934d092c3dc3b5b98da727c1cc36afb1f9b7d9e72a367ff868480640fe78e5456bc15315d5bec02de794
+        salt:
+          type: string
+          example: A1kKHf46W1prukNCJpjJkyAqfQ08uutZ
+        active_contract_id:
+          type: integer
+          format: int32
+          example: null
+        offering_pay_to_plant:
+          type: boolean
+          default: false
+          example: false
+        tree_validation_contract_id:
+          type: integer
+          format: int32
+          example: null
+        logo_url:
+          type: string
+          format: url
+          example: https://treetracker-xxx.xxxx.com/logo.jpg
+        map_name:
+          type: string
+          example: null
+        stakeholder_uuid:
+          type: string
+          format: uuid
+          example: 9d0f962a-efc8-4a11-a5fd-0bdb814143f5
+        country_id:
+          type: integer
+          format: int32
+          example: 6632703
+        country_name:
+          type: string
+          example: Uganda
+        continent_id:
+          type: integer
+          format: int32
+          example: 6632636
+        continent_name:
+          type: string
+          example: Africa
+        links:
+          description: 'HATEOAS links to content related to the organization object'
+          type: object
+          properties:
+            featured_trees:
+              type: string
+              example: /trees?organization_id=66&limit=20&offset=0
+            associated_planters:
+              type: string
+              example: /organizations?organization_id=66&limit=20&offset=0
+            species:
+              type: string
+              example: /species?organization_id=66&limit=20&offset=0
+    organizationType:
+      title: 'Organization Type'
+      description: 'Type of entity - person or organization'
+      type: string
+      enum:
+        - o
+        - p
+        - O
+        - P
+      example: p
+    organizationV2:
+      title: 'Organization (v2)'
+      description: 'Single organization object'
+      type: object
+      x-examples: {}
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+        type:
+          $ref: '#/components/schemas/organizationTypeV2'
+        org_name:
+          type: string
+          example: HannahOrg
+        first_name:
+          type: string
+          example: Hannah
+        last_name:
+          type: string
+          example: Montana
+        email:
+          type: string
+          format: email
+          example: hannah.montana@singer.com
+        phone:
+          type: string
+          example: 1234567890
+        website:
+          type: string
+          format: url
+          example: https://www.hannahwebsite.com
+        logo_url:
+          type: string
+          format: url
+          example: https://treetracker-xxx.xxxx.com/logo.jpg
+        map:
+          type: string
+          example: hannahorg
+        created_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        active:
+          type: boolean
+          default: true
+          example: true
+        entity_id:
+          type: integer
+          format: int32
+          example: 210
+        links:
+          description: 'HATEOAS links to content related to the organization object'
+          type: object
+          properties:
+            featured_trees:
+              type: string
+              example: /trees?organization_id=048c1c45-1c7b-4a4d-aaea-d127ce9545ea&limit=20&offset=0
+            associated_planters:
+              type: string
+              example: /organizations?organization_id=048c1c45-1c7b-4a4d-aaea-d127ce9545ea&limit=20&offset=0
+            species:
+              type: string
+              example: /species?organization_id=048c1c45-1c7b-4a4d-aaea-d127ce9545ea&limit=20&offset=0
+    organizationTypeV2:
+      title: 'Organization Type (v2)'
+      description: 'Type of entity - person or organization'
+      type: string
+      enum:
+        - Person
+        - Organization
+      example: Organization
     species:
       title: species
       type: object
@@ -2953,7 +3410,7 @@ components:
           example:
             code: 415
             message: 'Invalid content type. API only supports application/json'
-    InvalidQueryParameters:
+    InvalidQueryParametersDate:
       description: 'Invalid query parameters'
       content:
         application/json:
@@ -2962,6 +3419,16 @@ components:
           example:
             code: 422
             message: '"startDate" with value "2023-09-xy" fails to match the required pattern: /^\\d{4}-\\d{2}-\\d{2}$/'
+    InvalidQueryParametersLimit:
+      description: 'Invalid query parameters'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+          example:
+            code: 422
+            message: '"limit" must be a number'
+
   examples:
     tree933042:
       value:
