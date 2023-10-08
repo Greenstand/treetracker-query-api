@@ -1741,7 +1741,7 @@ paths:
           required: true
       responses:
         '200':
-          description: OK
+          description: 'Successfully return the specified organization.'
           content:
             application/json:
               schema:
@@ -1778,13 +1778,67 @@ paths:
 
   '/species':
     get:
-      summary: get species list by filter/parameters
       tags:
         - Species
       operationId: get-species
+      deprecated: false
+      summary: 'Get species list by filter/parameters'
+      description: 'Display the list of species matching the query parameters.'
+      parameters:
+        - schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+            example: 0
+          in: query
+          style: form
+          explode: true
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 1000
+            default: 20
+          in: query
+          style: form
+          explode: true
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 66
+          in: query
+          style: form
+          explode: true
+          name: planter_id
+          description: 'Filter by planter ID'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 32
+          in: query
+          style: form
+          explode: true
+          name: organization_id
+          description: 'Filter by organization ID'
+        - schema:
+            type: string
+            format: uuid
+            example: b9947ef1-c4b3-4d5d-9f76-40fcd89a22bf
+          in: query
+          style: form
+          explode: true
+          name: wallet_id
+          description: 'Filter by wallet ID'
       responses:
         '200':
-          description: OK
+          description: 'Successfully retrieve list of species matching the query parameters.'
           content:
             application/json:
               schema:
@@ -1792,54 +1846,118 @@ paths:
                 properties:
                   total:
                     type: integer
+                    format: int32
+                    example: 1
                   offset:
                     type: integer
+                    format: int32
+                    example: 0
                   limit:
                     type: integer
+                    format: int32
+                    example: 20
                   species:
                     type: array
                     items:
                       $ref: '#/components/schemas/species'
-      parameters:
-        - schema:
-            type: integer
-          in: query
-          name: offset
-          description: 'The start offset of the list, if missing, default is 0'
-        - schema:
-            type: integer
-            minimum: -15
-            maximum: 1000
-          in: query
-          name: limit
-          description: 'The limit length of the return list, if missing, default is 20'
-        - schema:
-            type: integer
-          in: query
-          name: organization_id
-          description: Filter by org id
-        - schema:
-            type: string
-          in: query
-          name: grower_account_id
-          description: Filter by planter id
-      description: "mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don't know if it is too resource consumming to query DB"
+        '422':
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
   '/species/{speciesId}':
     get:
       tags:
         - Species
       operationId: species-speciesId
       deprecated: false
+      summary: 'Get species by ID'
+      description: 'Get species by ID.'
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+            example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+          name: speciesId
+          description: 'Search for species using the species ID.'
+          style: simple
+          explode: true
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 'Successfully return the specified species.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/species'
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 404
+                message: 'Can not found tree_species by id:3243'
+        '422':
+          description: 'Invalid request parameter'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 422
+                message: '"value" must be a number'
 
   '/v2/species':
     get:
-      summary: get species list by filter/parameters
       tags:
         - Species v2
       operationId: get-species-v2
+      deprecated: false
+      summary: 'Get species list by filter/parameters'
+      description: 'Display the list of species matching the query parameters.'
+      parameters:
+        - schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+            example: 0
+          in: query
+          style: form
+          explode: true
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 1000
+            default: 20
+          in: query
+          style: form
+          explode: true
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: string
+            example: testword
+          in: query
+          style: form
+          explode: true
+          name: keyword
+          description: 'Filter by keyword'
+        - schema:
+            type: string
+            format: uuid
+            example: b9947ef1-c4b3-4d5d-9f76-40fcd89a22bf
+          in: query
+          style: form
+          explode: true
+          name: id
+          description: 'Filter by ID'
       responses:
         '200':
-          description: OK
+          description: 'Successfully retrieve list of species matching the query parameters.'
           content:
             application/json:
               schema:
@@ -1847,55 +1965,119 @@ paths:
                 properties:
                   total:
                     type: integer
+                    format: int32
+                    example: 1
                   offset:
                     type: integer
+                    format: int32
+                    example: 0
                   limit:
                     type: integer
+                    format: int32
+                    example: 20
                   species:
                     type: array
                     items:
                       $ref: '#/components/schemas/species'
-      parameters:
-        - schema:
-            type: integer
-          in: query
-          name: offset
-          description: 'The start offset of the list, if missing, default is 0'
-        - schema:
-            type: integer
-            minimum: -15
-            maximum: 1000
-          in: query
-          name: limit
-          description: 'The limit length of the return list, if missing, default is 20'
-        - schema:
-            type: integer
-          in: query
-          name: organization_id
-          description: Filter by org id
-        - schema:
-            type: string
-          in: query
-          name: grower_account_id
-          description: Filter by planter id
-      description: "mainly if we can provide this endpoint, then we can display a species list on org or planter page, but I don't know if it is too resource consumming to query DB"
+        '422':
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
   '/v2/species/{speciesId}':
     get:
       tags:
         - Species v2
       operationId: species-speciesId-v2
       deprecated: false
+      summary: 'Get species by ID'
+      description: 'Get species by ID.'
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+            example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+          name: speciesId
+          description: 'Search for species using the species ID.'
+          style: simple
+          explode: true
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 'Successfully return the specified species.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/speciesV2'
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 404
+                message: 'Can not found herbarium.species by id:c836f264-c2f6-4a0d-8119-87bda69619a8'
+        '422':
+          description: 'Invalid request parameter'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 422
+                message: '"value" must be a valid GUID'
 
   '/transactions':
     get:
-      summary: get token transaction list by filter/parameters
       tags:
         - Transactions
       operationId: get-transactions
-      description: "about returning wallet name, it is a pretty common use case that we need to display the wallet name in the frontend, so we'd better join and return the name of wallet"
+      deprecated: false
+      summary: 'Get token transaction list by filter/parameters'
+      description: 'Get the list of transactions matching the query parameters.'
+      parameters:
+        - schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+            example: 0
+          in: query
+          style: form
+          explode: true
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 1000
+            default: 20
+          in: query
+          style: form
+          explode: true
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: string
+            format: uuid
+            example: d21384a4-e3ff-4b15-bb75-3bfa742efed1
+          in: query
+          style: form
+          explode: true
+          name: token_id
+          description: 'Filter by token ID'
+        - schema:
+            type: string
+            format: uuid
+            example: b9947ef1-c4b3-4d5d-9f76-40fcd89a22bf
+          in: query
+          style: form
+          explode: true
+          name: wallet_id
+          description: 'Filter by wallet ID'
       responses:
         '200':
-          description: OK
+          description: 'Successfully retrieve list of transactions matching the query parameters.'
           content:
             application/json:
               schema:
@@ -1903,37 +2085,22 @@ paths:
                 properties:
                   total:
                     type: integer
+                    format: int32
+                    example: 1
                   offset:
                     type: integer
+                    format: int32
+                    example: 0
                   limit:
                     type: integer
+                    format: int32
+                    example: 20
                   transactions:
                     type: array
                     items:
                       $ref: '#/components/schemas/transaction'
-      parameters:
-        - schema:
-            type: integer
-          in: query
-          name: offset
-          description: 'The start offset of the list, if missing, default is 0'
-        - schema:
-            type: integer
-            minimum: -15
-            maximum: 1000
-          in: query
-          name: limit
-          description: 'The limit length of the return list, if missing, default is 20'
-        - schema:
-            type: string
-          in: query
-          name: token_id
-          description: Filter by token id
-        - schema:
-            type: string
-          in: query
-          name: wallet_id
-          description: Filter by wallet id
+        '422':
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
 
   '/tokens':
     get:
@@ -2141,98 +2308,755 @@ paths:
         - Growers v2
       operationId: get-growers-v2
       deprecated: false
+      summary: 'Get growers by query parameters'
+      description: 'Get the list of growers matching the query parameters.'
+      parameters:
+        - schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+            example: 0
+          in: query
+          style: form
+          explode: true
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 1000
+            default: 20
+          in: query
+          style: form
+          explode: true
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 6612
+          in: query
+          style: form
+          explode: true
+          name: reference_id
+          description: 'Filter by reference ID'
+        - schema:
+            type: string
+            format: uuid
+            example: b9947ef1-c4b3-4d5d-9f76-40fcd89a22bf
+          in: query
+          style: form
+          explode: true
+          name: organization_id
+          description: 'Filter by organization ID'
+        - schema:
+            type: string
+            example: testword
+          in: query
+          style: form
+          explode: true
+          name: keyword
+          description: 'Filter by keyword'
+        - schema:
+            type: string
+            example: 48b123d175ceeb4c
+          style: form
+          explode: true
+          in: query
+          name: device_identifier
+          description: 'Filter by `device_identifier`'
+        - schema:
+            type: string
+            example: testwallet
+          style: form
+          explode: true
+          in: query
+          name: wallet
+          description: 'Filter by wallet name'
+        - schema:
+            type: string
+            format: uuid
+            example: 9322cfb3-c0e7-4186-b5c2-812c3ee066a7
+          style: form
+          explode: true
+          in: query
+          name: id
+          description: 'Filter by ID'
+        - schema:
+            type: string
+            format: uuid
+            example: b2853e17-de6c-4a1d-aef9-89e7407a4d94
+          style: form
+          explode: true
+          in: query
+          name: person_id
+          description: 'Filter by person ID'
+        - name: first_name
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by first name'
+          schema:
+            type: string
+            example: Richard
+        - name: last_name
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by last name'
+          schema:
+            type: string
+            example: Wagner
+        - name: email
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by email address'
+          schema:
+            type: string
+            format: url
+            example: ride@valkyries.com
+        - name: phone
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by phone number'
+          schema:
+            type: string
+            example: 1234567890
+        - name: captures_amount_min
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by minimum number of captures'
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 10
+        - name: captures_amount_max
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by maximum number of captures'
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 50
+        - name: whereNulls
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields that should be null'
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['phone', 'wallet_name']
+        - name: whereNotNulls
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields that should not be null'
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['phone', 'wallet_name']
+        - name: whereIns
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields whose value must be in a specified list of values'
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                field:
+                  type: string
+                  example: wallet
+                values:
+                  type: array
+                  items:
+                    type: string
+            example:
+              [{ 'field': 'wallet', 'values': ['wallet15', 'wallet10@test'] }]
+      responses:
+        '200':
+          description: 'Successfully retrieve list of growers matching the query parameters.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    format: int32
+                    example: 1
+                  offset:
+                    type: integer
+                    format: int32
+                    example: 0
+                  limit:
+                    type: integer
+                    format: int32
+                    example: 20
+                  grower_accounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/grower'
+        '422':
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
   '/v2/growers/{growerId}':
     get:
       tags:
         - Growers v2
       operationId: get-growers-growerId-v2
       deprecated: false
+      summary: 'Get grower account by ID'
+      description: 'Get grower account by ID.'
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+            example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+          name: growerId
+          description: 'Search for grower account using the grower account ID.'
+          style: simple
+          explode: true
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 'Successfully return the specified grower.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/grower'
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 404
+                message: 'Can not find treetracker.grower_account by id:000e5a88-90a1-4d98-9290-115dc8774b76'
+        '422':
+          description: 'Invalid request parameter'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 422
+                message: '"value" must be a valid GUID'
   '/v2/growers/{growerId}/selfies':
     get:
       tags:
         - Growers v2
       operationId: get-growerId-selfies-v2
       deprecated: false
+      summary: 'Get grower account selfies by ID'
+      description: 'Get grower account selfies by ID.'
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+            example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+          name: growerId
+          description: 'Search for grower account selfies using the grower account ID.'
+          style: simple
+          explode: true
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 'Successfully return the specified grower selfies.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  selfies:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      [
+                        'https://example.com/selfie1.jpg',
+                        'https://example.com/selfie2.jpg',
+                      ]
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 404
+                message: 'Can not find treetracker.grower_account by id:000e5a88-90a1-4d98-9290-115dc8774b76'
+        '422':
+          description: 'Invalid request parameter'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 422
+                message: '"value" must be a valid GUID'
   '/v2/growers/wallets':
     get:
       tags:
         - Growers v2
       operationId: get-growers-wallets-v2
       deprecated: false
+      summary: 'Get wallet list associated with growers by filter/parameters'
+      description: 'Display the list of grower associated wallets matching the query parameters.'
+      parameters:
+        - schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+            example: 0
+          in: query
+          style: form
+          explode: true
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 1000
+            default: 20
+          in: query
+          style: form
+          explode: true
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: string
+            example: testwallet
+          in: query
+          style: form
+          explode: true
+          name: wallet
+          description: 'Filter by wallet name'
+      responses:
+        '200':
+          description: 'Successfully retrieve list of wallets matching the query parameters.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    format: int32
+                    example: 2
+                  offset:
+                    type: integer
+                    format: int32
+                    example: 0
+                  limit:
+                    type: integer
+                    format: int32
+                    example: 20
+                  wallets:
+                    type: array
+                    items:
+                      type: string
+                    example: ['walletA', 'walletB']
+        '422':
+          $ref: '#/components/responses/InvalidQueryParametersLimit'
   '/v2/growers/count':
     get:
       tags:
         - Growers v2
       operationId: get-growers-count-v2
       deprecated: false
+      summary: 'Get count of growers'
+      description: 'Get count of growers matching the query parameters.'
+      parameters:
+        - schema:
+            type: integer
+            format: int32
+            default: 0
+            minimum: 0
+            example: 0
+          in: query
+          style: form
+          explode: true
+          name: offset
+          description: 'The start offset of the list, if missing, default is 0'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 1000
+            default: 20
+          in: query
+          style: form
+          explode: true
+          name: limit
+          description: 'The limit length of the return list, if missing, default is 20'
+        - schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 6612
+          in: query
+          style: form
+          explode: true
+          name: reference_id
+          description: 'Filter by reference ID'
+        - schema:
+            type: string
+            format: uuid
+            example: b9947ef1-c4b3-4d5d-9f76-40fcd89a22bf
+          in: query
+          style: form
+          explode: true
+          name: organization_id
+          description: 'Filter by organization ID'
+        - schema:
+            type: string
+            example: testword
+          in: query
+          style: form
+          explode: true
+          name: keyword
+          description: 'Filter by keyword'
+        - schema:
+            type: string
+            example: 48b123d175ceeb4c
+          style: form
+          explode: true
+          in: query
+          name: device_identifier
+          description: 'Filter by `device_identifier`'
+        - schema:
+            type: string
+            example: testwallet
+          style: form
+          explode: true
+          in: query
+          name: wallet
+          description: 'Filter by wallet name'
+        - schema:
+            type: string
+            format: uuid
+            example: 9322cfb3-c0e7-4186-b5c2-812c3ee066a7
+          style: form
+          explode: true
+          in: query
+          name: id
+          description: 'Filter by ID'
+        - schema:
+            type: string
+            format: uuid
+            example: b2853e17-de6c-4a1d-aef9-89e7407a4d94
+          style: form
+          explode: true
+          in: query
+          name: person_id
+          description: 'Filter by person ID'
+        - name: first_name
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by first name'
+          schema:
+            type: string
+            example: Richard
+        - name: last_name
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by last name'
+          schema:
+            type: string
+            example: Wagner
+        - name: email
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by email address'
+          schema:
+            type: string
+            format: url
+            example: ride@valkyries.com
+        - name: phone
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by phone number'
+          schema:
+            type: string
+            example: 1234567890
+        - name: captures_amount_min
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by minimum number of captures'
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 10
+        - name: captures_amount_max
+          in: query
+          style: form
+          explode: true
+          description: 'Filter by maximum number of captures'
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 50
+        - name: whereNulls
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields that should be null'
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['phone', 'wallet_name']
+        - name: whereNotNulls
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields that should not be null'
+          schema:
+            type: array
+            items:
+              type: string
+            example: ['phone', 'wallet_name']
+        - name: whereIns
+          in: query
+          style: form
+          explode: true
+          description: 'Specify fields whose value must be in a specified list of values'
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                field:
+                  type: string
+                  example: wallet
+                values:
+                  type: array
+                  items:
+                    type: string
+            example:
+              [{ 'field': 'wallet', 'values': ['wallet15', 'wallet10@test'] }]
+      responses:
+        '200':
+          description: 'Successfully get count of growers matching the query parameters.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    format: int32
+                    example: 23624
+        '422':
+          description: 'Invalid query parameters'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 422
+                message: '"id" must be a valid GUID'
   '/v2/growers/featured':
     get:
       tags:
         - Growers v2
       operationId: get-growers-featured-v2
       deprecated: false
+      summary: 'Get featured growers list'
+      description: 'Get the list of featured growers.'
+      responses:
+        '200':
+          description: 'Successfully return list of featured growers.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  grower_accounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/growerSingle'
 
   '/gis/location/nearest':
     get:
-      summary: get nearest gis location by filter/parameters
       tags:
         - GIS
       operationId: get-gis-location-nearest
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/location'
+      deprecated: false
+      summary: 'Get nearest GIS location by filter/parameters'
+      description: 'Get the nearest GIS location matching the query parameters.'
       parameters:
         - schema:
             type: integer
-            minimum: 1
-            maximum: 18
+            minimum: 0
+            example: 10
           in: query
-          name: zoomlevel
-          description: the map zoomlevel
+          style: form
+          explode: true
+          required: true
+          name: zoom_level
+          description: 'The map zoom level'
         - schema:
-            type: float
+            type: number
+            format: float
+            minimum: -90
+            maximum: 90
+            example: 56.78
           in: query
+          style: form
+          explode: true
+          required: true
           name: lat
-          description: the latitude
+          description: 'The latitude'
         - schema:
-            type: float
+            type: number
+            format: float
+            minimum: -180
+            maximum: 180
+            example: 12.34
           in: query
-          name: lon
-          description: the longitude
-  '/bounds':
-    get:
-      summary: get gis bounds by filter/parameters, e.g. give a planter id, get a bounds which contains all the trees in the planter
-      tags:
-        - GIS
-      operationId: get-gis-bounds
+          style: form
+          explode: true
+          required: true
+          name: lng
+          description: 'The longitude'
+        - schema:
+            type: string
+            format: uuid
+            example: b9947ef1-c4b3-4d5d-9f76-40fcd89a22bf
+          in: query
+          style: form
+          explode: true
+          name: wallet_id
+          description: 'Filter by wallet ID'
+        - schema:
+            type: integer
+            format: int32
+            example: 9947
+          in: query
+          style: form
+          explode: true
+          name: planter_id
+          description: 'Filter by planter ID'
+        - schema:
+            type: integer
+            format: int32
+            example: 1234
+          in: query
+          style: form
+          explode: true
+          name: organization_id
+          description: 'Filter by organization ID'
+        - schema:
+            type: string
+            example: freetown
+          in: query
+          style: form
+          explode: true
+          name: map_name
+          description: 'Filter by map name'
       responses:
         '200':
-          description: OK
+          description: 'Successfully retrieve the GeoJSON Point object  matching the query parameters.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bounds'
+                type: object
+                properties:
+                  nearest:
+                    $ref: '#/components/schemas/location'
+        '422':
+          description: 'Invalid query parameters'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 422
+                message: '"zoom_level" must be a number'
+  '/bounds':
+    get:
+      tags:
+        - GIS
+      operationId: get-gis-bounds
+      deprecated: false
+      summary: 'Get GIS bounds by filter/parameters'
+      description: 'Get GIS bounds by query parameters, e.g. give a planter id, get a bounds which contains all the trees in the planter.'
       parameters:
         - schema:
-            type: string
+            type: integer
+            format: int32
+            minimum: 0
+            example: 9947
           in: query
-          name: planter
-          description: get the bounds by the planter id
+          style: form
+          explode: true
+          name: planter_id
+          description: 'Get the bounds by the planter ID'
         - schema:
-            type: string
+            type: integer
+            format: int32
+            minimum: 0
+            example: 6754
           in: query
-          name: wallet
-          description: get the bounds by the wallet id or name
+          style: form
+          explode: true
+          name: wallet_id
+          description: 'Get the bounds by the wallet ID'
         - schema:
-            type: string
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1234
           in: query
-          name: organization
-          description: get the bounds by the organization id
-
+          style: form
+          explode: true
+          name: organization_id
+          description: 'Get the bounds by the organization ID'
+      responses:
+        '200':
+          description: 'Successfully get the GIS bounds matching the query parameters.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bounds:
+                    $ref: '#/components/schemas/bounds'
+        '422':
+          description: 'Invalid query parameters'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
+              example:
+                code: 422
+                message: '"planter_id" must be a number'
 components:
   parameters:
     contentTypeJsonHeader:
@@ -2571,28 +3395,47 @@ components:
               'FID_sle_st': 0,
             }
     location:
-      description: A location point
+      description: 'A GeoJSON location point'
       type: object
       properties:
-        centroid:
-          type: GeoJSON
-          description: The center of the location
-        'type':
-          type: enum
-          description: The type of location
+        type:
+          type: string
+          description: 'The type of location'
           enum:
-            - tree
-            - cluster
-        count:
-          type: integer
-          description: The number of trees in the location, just available for clusters
+            - Point
+          example: Point
+        coordinates:
+          type: array
+          description: 'Coordinates - longitude and latitude'
+          items:
+            type: number
+            format: float
+          minItems: 2
+          maxItems: 2
+          example: [12.34, 56.78]
     bounds:
-      description: A bounding box
+      title: 'Bound'
+      description: 'A bounding box'
       type: object
       properties:
-        bounds:
+        ne:
+          description: 'The northeast corner of the bounding region'
           type: array
-          description: 2 points defining the bounding box
+          items:
+            type: number
+            format: float
+          minItems: 2
+          maxItems: 2
+          example: [-89.70967, -161.19059]
+        se:
+          description: 'The southeast corner of the bounding region'
+          type: array
+          items:
+            type: number
+            format: float
+          minItems: 2
+          maxItems: 2
+          example: [87.9277, 176.3775]
     tree:
       description: 'A single tree object'
       type: object
@@ -3291,49 +4134,99 @@ components:
         - Organization
       example: Organization
     species:
-      title: species
+      title: 'Species'
+      description: 'Species object'
+      x-examples: {}
       type: object
       properties:
         id:
           type: integer
+          format: int32
+          example: 10
         name:
           type: string
-        count:
+          example: Markhamia lutea
+        desc:
+          type: string
+          example: 'Nile tulip'
+        active:
+          type: boolean
+          default: true
+          example: true
+        value_factor:
           type: integer
-          description: "It would be great if we can display how many trees in this species has been planted by org or planter, but I don't know if it is too resource consumming to query DB"
-    transaction:
-      description: ''
+          format: int32
+          example: 0
+        uuid:
+          type: string
+          format: uuid
+          example: b2853e17-de6c-4a1d-aef9-89e7407a4d94
+    speciesV2:
+      title: 'Species (v2)'
+      description: 'Species object'
+      x-examples: {}
       type: object
-      x-examples:
-        example-1:
-          id: 1
-          token_id: 1
-          source_wallet_id: 1
-          destination_wallet_id: 2
-          source_wallet_name: apple
-          destination_wallet_name: orange
-          processed_at: '2018-02-28'
       properties:
         id:
           type: string
+          format: uuid
+          example: d21384a4-e3ff-4b15-bb75-3bfa742efed1
+        scientific_name:
+          type: string
+          example: Salix babylonica alba
+        description:
+          type: string
+          example: White weeping willow
+        morphology:
+          type: string
+          example: null
+        range:
+          type: string
+          example: null
+        created_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+    transaction:
+      title: 'Transaction'
+      description: 'Single transaction object'
+      type: object
+      x-examples: {}
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 59d2bb2a-2ea0-4e01-9038-48cd9ffb5d0f
         token_id:
           type: string
+          format: uuid
+          example: 9bc19e67-6209-426e-928b-e858249a48cf
         source_wallet_id:
           type: string
+          format: uuid
+          example: f2efda0e-8cc1-4aa6-8a72-b99048d8f6d5
         destination_wallet_id:
           type: string
+          format: uuid
+          example: 032120ef-c772-44bd-af97-724a8563423d
         source_wallet_name:
           type: string
-          description: "it is a pretty common use case that we need to display the wallet name in the frontend, so we'd better join and return the name of wallet"
+          example: walletA
         destination_wallet_name:
           type: string
+          example: walletB
         processed_at:
           type: string
-        claim:
-          type: boolean
-          description: if possible
-        transfer_id:
+          format: date-time
+          example: 2023-09-14T02:30:37.294Z
+        source_wallet_logo_url:
           type: string
+          format: url
+          example: https://treetracker-xxx.xxxx.com/logo.jpg
     token:
       description: ''
       type: object
@@ -3384,7 +4277,263 @@ components:
         photo_url:
           type: string
           description: it would be great if we can set a wallet avatar and show it on the wallet page
-
+    grower:
+      title: 'Grower Account'
+      description: 'A grower account object'
+      type: object
+      x-examples: {}
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+        wallet:
+          type: string
+          example: wallet10@test
+        person_id:
+          type: string
+          format: uuid
+          example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+        organization_id:
+          type: string
+          format: uuid
+          example: 000e5a88-90a1-4d98-9290-115d12345678
+        first_name:
+          type: string
+          example: Thomas
+        email:
+          type: string
+          format: email
+          example: thomas.tank@engine.com
+        phone:
+          type: string
+          example: 1234567890
+        image_url:
+          type: string
+          format: url
+          example: http://dummyimage.com/111x100.png/5fa2dd/ffffff
+        image_rotation:
+          $ref: '#/components/schemas/planterImageRotation'
+        status:
+          $ref: '#/components/schemas/treeStatusTypeV2'
+        first_registration_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        created_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        last_name:
+          type: string
+          example: D'Engine
+        location:
+          description: 'Geospatial location of type `geography` used by PostGIS.'
+          type: string
+          example: 0101000020E6100000A22AA6D24FB84240DE3829CC7B9C0AC
+        lon:
+          type: number
+          example: 27.439936
+        lat:
+          type: number
+          example: -3.326408
+        bulk_pack_file_name:
+          type: string
+          example: 2022-12-10-18-41-16_731590cc-ba54-4d16-a6b3-d51ab4511a4a_c75a4982f890154f0074fd9645c21701.json
+        gender:
+          type: string
+          example: male
+        about:
+          type: string
+          example: test about text
+        reference_id:
+          type: integer
+          format: int32
+          example: 112345
+        show_in_map:
+          type: boolean
+          default: false
+          example: true
+        organization:
+          type: string
+          example: FCCABC
+        devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/device'
+        regions:
+          type: array
+          items:
+            type: string
+          example: ['Hida', 'Regent-Grafton']
+        captures:
+          type: string
+          example: 500
+        links:
+          description: 'HATEOAS links to content related to the grower object'
+          type: object
+          properties:
+            featured_trees:
+              type: string
+              example: /trees?planter_id=048c1c45-1c7b-4a4d-aaea-d127ce9545ea&limit=20&offset=0
+            associated_organizations:
+              type: string
+              example: /organizations?planter_id=048c1c45-1c7b-4a4d-aaea-d127ce9545ea&limit=20&offset=0
+            species:
+              type: string
+              example: /species?planter_id=048c1c45-1c7b-4a4d-aaea-d127ce9545ea&limit=20&offset=0
+    growerSingle:
+      title: 'Grower Account (single)'
+      description: 'Single grower account object'
+      type: object
+      x-examples: {}
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+        wallet:
+          type: string
+          example: wallet10@test
+        person_id:
+          type: string
+          format: uuid
+          example: 048c1c45-1c7b-4a4d-aaea-d127ce9545ea
+        organization_id:
+          type: string
+          format: uuid
+          example: 000e5a88-90a1-4d98-9290-115d12345678
+        first_name:
+          type: string
+          example: Thomas
+        email:
+          type: string
+          format: email
+          example: thomas.tank@engine.com
+        phone:
+          type: string
+          example: 1234567890
+        image_url:
+          type: string
+          format: url
+          example: http://dummyimage.com/111x100.png/5fa2dd/ffffff
+        image_rotation:
+          $ref: '#/components/schemas/planterImageRotation'
+        status:
+          $ref: '#/components/schemas/treeStatusTypeV2'
+        first_registration_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        created_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        last_name:
+          type: string
+          example: D'Engine
+        location:
+          description: 'Geospatial location of type `geography` used by PostGIS.'
+          type: string
+          example: 0101000020E6100000A22AA6D24FB84240DE3829CC7B9C0AC
+        lon:
+          type: number
+          example: 27.439936
+        lat:
+          type: number
+          example: -3.326408
+        bulk_pack_file_name:
+          type: string
+          example: 2022-12-10-18-41-16_731590cc-ba54-4d16-a6b3-d51ab4511a4a_c75a4982f890154f0074fd9645c21701.json
+        gender:
+          type: string
+          example: male
+        about:
+          type: string
+          example: test about text
+        reference_id:
+          type: integer
+          format: int32
+          example: 112345
+        show_in_map:
+          type: boolean
+          default: false
+          example: true
+        links:
+          description: 'HATEOAS links to content related to the grower object'
+          type: object
+          properties:
+            featured_trees:
+              type: string
+              example: /trees?planter_id=048c1c45-1c7b-4a4d-aaea-d127ce9545ea&limit=20&offset=0
+            associated_organizations:
+              type: string
+              example: /organizations?planter_id=048c1c45-1c7b-4a4d-aaea-d127ce9545ea&limit=20&offset=0
+            species:
+              type: string
+              example: /species?planter_id=048c1c45-1c7b-4a4d-aaea-d127ce9545ea&limit=20&offset=0
+    device:
+      title: 'Device Configuration'
+      description: 'Details about the device used to create a capture.'
+      x-examples: {}
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 048c1234-1c7b-4a4d-aaea-d127ce951234
+        device_identifier:
+          type: string
+          example: 48b123d175ceeb4c
+        brand:
+          type: string
+          example: samsung
+        model:
+          type: string
+          example: SM-G920F
+        device:
+          type: string
+          example: zeroflte
+        serial:
+          type: string
+          example: 041604d543a63102
+        hardware:
+          type: string
+          example: samsungexynos7420
+        manufacturer:
+          type: string
+          example: samsung
+        app_build:
+          type: string
+          example: 45
+        app_version:
+          type: string
+          example: 1.2.3
+        os_version:
+          type: string
+          example: 7.0
+        sdk_version:
+          type: string
+          example: 24
+        logged_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        created_at:
+          type: string
+          format: date-time
+          example: 2023-08-01T02:52:25.166Z
+        bulk_pack_file_name:
+          type: string
+          example: 2022-12-10-18-41-16_731590cc-ba54-4d16-a6b3-d51ab4511a4a_c75a4982f890154f0074fd9645c21701.json
     errorResponse:
       title: 'Error Response'
       type: object
@@ -3428,45 +4577,3 @@ components:
           example:
             code: 422
             message: '"limit" must be a number'
-
-  examples:
-    tree933042:
-      value:
-        id: 933042
-        photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.19.09.49.19_-4.881696978000001_38.37997515399998_47fc629b-27e9-4b58-b31a-3a35e5bbc3f0_IMG_20210518_121452_1024002290.jpg'
-        verified: true
-        token_id: d4bb294b-8c75-4e0f-af43-1cd9a35e1033
-        impact_manager_id: 8599f832-145e-11ec-82a8-0242ac130003
-        impact_producer_id: a0b6b70e-145e-11ec-82a8-0242ac130003
-        created_at: '5/18/2021, 5:14:48 PM'
-        lat: -4.881696978000001
-        lon: 38.37997515399998
-        species: Markhamia lutea
-        planter_id: 5
-    tree932946:
-      value:
-        id: 932946
-        photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg'
-        verified: true
-        token_id: c488301f-1117-48c3-8866-3c38f28d3f25
-        created_at: '5/17/2021, 9:31:17 PM'
-        lat: -4.882294219999999
-        lon: 38.380733454
-        species: eucalyptus
-        planter_id: 5
-        organization_id: 1
-    planter5:
-      value:
-        id: 5
-        photo_url: 'https://treetracker-production-images.s3.eu-central-1.amazonaws.com/2021.05.11.18.37.00_-4.91963284_38.52757506_adc35f9c-b76e-4798-b587-70f5fba06b89_IMG_20210511_101502_-1595081185.jpg'
-        name: Issa H
-    org1:
-      value:
-        id: 1
-        name: 180Earth
-        photo_url: 'https://180.earth/wp-content/uploads/2020/01/Asset-1.png'
-        area: Shirimatunda
-        country: Tanzania
-        created_at: 'November 11, 2019'
-        about: 'Greenway is a Youth-Driven Environmental Protection Organization providing alternative solutions to single-use plastic and planting carbon-sucking trees for socio-economic development and reducing climate crisis. Our social work includes reforestation, landscape restoration, climate education, awareness campaign, conducting research, outreach activities, and collaborating with key stakeholders to implement sustainable solutions.'
-        mission: 'To combat climate change, desertification, land degradation, carbon emission by inspiring healthier communities affected by severe climate disorder and modestly reducing pollution by 2050.'
