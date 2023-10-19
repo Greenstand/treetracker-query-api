@@ -7,7 +7,7 @@ interface GrowerAccountFilter extends DbModel {
   limit?: number;
   offset?: number;
   keyword?: string;
-  organization_id?: string;
+  organization_id?: string[] | string;
   person_id?: string;
   device_identifier?: string;
   wallet?: string;
