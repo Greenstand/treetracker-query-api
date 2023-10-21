@@ -47,7 +47,9 @@ export default class BoundsRepository {
     return BoundsRepository.convertStringToBounds(bounds);
   }
 
-  async filterByOrganisation(organisationId: string): Promise<Bounds> {
+  async filterByOrganisation(
+    organisationId: string[] | string,
+  ): Promise<Bounds> {
     const organisationBoundsSql = `
 			select  
 				ST_EXTENT(ST_GeomFromText('POINT(' || t.lon || ' ' || t.lat || ')', 4326)) as bounds

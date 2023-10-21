@@ -5,7 +5,7 @@ import Bounds from 'interfaces/Bounds';
 type BoundsFilter = Partial<{
   planter_id: string;
   wallet_id: string;
-  organisation_id: string;
+  organisation_id: string[] | string;
 }>;
 
 function getByFilter(
