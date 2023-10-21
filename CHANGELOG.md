@@ -1,3 +1,9 @@
+## [1.70.7](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.6...v1.70.7) (2023-10-21)
+
+### Bug Fixes
+
+- added new type allowance for organization_id ([494e17b](https://github.com/Greenstand/treetracker-query-api/commit/494e17b8d694ee0489e96bf047e38164639a2e59))
+
 ## [1.70.6](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.5...v1.70.6) (2023-10-04)
 
 ### Bug Fixes
