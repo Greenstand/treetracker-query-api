@@ -15,6 +15,7 @@ type Filter = Partial<{
   tag: string;
   wallet_id: string;
   active: true;
+  view_range?: string;
 }>;
 
 router.get(
@@ -30,12 +31,23 @@ router.get(
   }),
 );
 
+// router.get('/view_range',
+// handlerWrapper(async (req,res)=>{
+//   const repo = new TreeRepository(new Session());
+//   const {range} = req.query;
+//   console.log(req.query);
+//   if (!range) {
+//     throw new HttpError(404, `Invalid params`);
+//   }
+
+// }))
+
 router.get(
   '/:val',
   handlerWrapper(async (req, res) => {
     const repo = new TreeRepository(new Session());
     let result;
-    if (isNaN(Number(req.params.val))) {
+    if (Number.isNaN(Number(req.params.val))) {
       Joi.assert(req.params.val, Joi.string().guid().required());
       const exe = TreeModel.getByUUID(repo);
       result = await exe(req.params.val);
@@ -60,6 +72,7 @@ router.get(
     Joi.assert(
       req.query,
       Joi.object().keys({
+        view_range: Joi.string(),
         planter_id: Joi.number().integer().min(0),
         organization_id: Joi.number().integer().min(0),
         wallet_id: Joi.string().uuid(),
@@ -73,6 +86,7 @@ router.get(
       }),
     );
     const {
+      view_range,
       limit = 20,
       offset = 0,
       order_by,
@@ -105,6 +119,8 @@ router.get(
       filter.tag = tag;
     } else if (wallet_id) {
       filter.wallet_id = wallet_id;
+    } else if (view_range) {
+      filter.view_range = view_range;
     }
 
     const result = await TreeModel.getByFilter(repo)(filter, options);

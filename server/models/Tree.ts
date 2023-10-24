@@ -8,6 +8,7 @@ type Filter = Partial<{
   organization_id: number;
   date_range: { startDate: string; endDate: string };
   tag: string;
+  view_range?: string;
   wallet_id: string;
 }>;
 
@@ -15,6 +16,14 @@ function getByFilter(
   treeRepository: TreeRepository,
 ): (filter: Filter, options: FilterOptions) => Promise<Tree[]> {
   return async function (filter: Filter, options: FilterOptions) {
+    if (filter.view_range) {
+      log.warn('using view range filter...');
+      const trees = await treeRepository.getByViewsRange(filter.view_range, {
+        ...options,
+      });
+      return trees;
+    }
+
     if (filter.organization_id) {
       log.warn('using org filter...');
       const trees = await treeRepository.getByOrganization(
@@ -51,6 +60,15 @@ function countByFilter(
   treeRepository: TreeRepository,
 ): (filter: Filter, options: FilterOptions) => Promise<number> {
   return async function (filter: Filter, options: FilterOptions) {
+    if (filter.view_range) {
+      log.warn('using view range filter...');
+      const total = await treeRepository.getByViewsRange(
+        filter.view_range,
+        options,
+        true,
+      );
+      return total;
+    }
     if (filter.organization_id) {
       log.warn('using org filter...');
       const total = await treeRepository.getByOrganization(
@@ -119,4 +137,5 @@ export default {
   getByFilter,
   getFeaturedTree: delegateRepository<TreeRepository, Tree>('getFeaturedTree'),
   countByFilter,
+  getByViewsRange: delegateRepository<TreeRepository, Tree>('getByViewsRange'),
 };
