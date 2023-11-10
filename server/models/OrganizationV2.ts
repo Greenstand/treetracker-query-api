@@ -1,13 +1,17 @@
 import log from 'loglevel';
+import OrganizationRepositoryV2 from 'infra/database/OrganizationRepositoryV2';
 import FilterOptions from 'interfaces/FilterOptions';
 import Organization from 'interfaces/Organization';
 import { delegateRepository } from '../infra/database/delegateRepository';
-import OrganizationRepository from '../infra/database/OrganizationRepository';
 
-type Filter = Partial<{ planter_id: number; organization_id: number }>;
+type Filter = Partial<{
+  planter_id: number;
+  organization_id: number;
+  grower_id: string;
+}>;
 
 function getByFilter(
-  organizationRepository: OrganizationRepository,
+  organizationRepository: OrganizationRepositoryV2,
 ): (filter: Filter, options: FilterOptions) => Promise<Organization[]> {
   return async function (filter: Filter, options: FilterOptions) {
     if (filter.planter_id) {
@@ -18,7 +22,14 @@ function getByFilter(
       );
       return trees;
     }
-
+    if (filter.grower_id) {
+      log.warn('using grower filter...');
+      const trees = await organizationRepository.getByGrower(
+        filter.grower_id,
+        options,
+      );
+      return trees;
+    }
     const trees = await organizationRepository.getByFilter(filter, options);
     return trees;
   };
@@ -34,14 +45,16 @@ function getOrganizationLinks(organization) {
 }
 
 export default {
-  getById: delegateRepository<OrganizationRepository, Organization>('getById'),
-  getByMapName: delegateRepository<OrganizationRepository, Organization>(
+  getById: delegateRepository<OrganizationRepositoryV2, Organization>(
+    'getById',
+  ),
+  getByMapName: delegateRepository<OrganizationRepositoryV2, Organization>(
     'getByMapName',
   ),
   getByFilter,
   getOrganizationLinks,
   getFeaturedOrganizations: delegateRepository<
-    OrganizationRepository,
+    OrganizationRepositoryV2,
     Organization
   >('getFeaturedOrganizations'),
 };

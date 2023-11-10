@@ -40,6 +40,15 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
       delete filterObject.id;
     }
 
+    if (filterObject.reference_id) {
+      result.where(
+        `${this.tableName}.reference_id`,
+        '=',
+        filterObject.reference_id,
+      );
+      delete filterObject.reference_id;
+    }
+
     if (filterObject.first_name) {
       result.where(
         `${this.tableName}.first_name`,
@@ -91,9 +100,11 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     }
 
     if (filterObject.organization_id) {
-      result.where(`${this.tableName}.organization_id`, 'in', [
-        ...filterObject.organization_id,
-      ]);
+      result.where(
+        `${this.tableName}.organization_id`,
+        '=',
+        `${filterObject.organization_id}`,
+      );
       delete filterObject.organization_id;
     }
 
@@ -357,7 +368,7 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
       .select(
         knex.raw(`
         COUNT(${this.tableName}.id) AS count
-        FROM ${this.tableName}        
+        FROM ${this.tableName}
     `),
       )
       .where((builder) => this.filterWhereBuilder(filter, builder))

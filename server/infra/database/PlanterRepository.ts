@@ -23,6 +23,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
         planter_registrations.created_at as created_at
         from planter
         left join planter_registrations on planter.id = planter_registrations.planter_id
+        AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations as planter_reg where planter_reg.planter_id=planter.id)
         LEFT JOIN webmap.planter_location l ON l.id = planter.id
       `),
       )
@@ -52,14 +53,12 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
+           AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations as planter_reg where planter_reg.planter_id=planter.id)
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
-      WHERE planter.organization_id = ${organization_id}
+      WHERE planter.organization_id in (select entity_id from getEntityRelationshipChildren(${organization_id}))
       ${
         options.orderBy
-          ? `order by ${ 
-            options.orderBy.column 
-            } ${ 
-            options.orderBy.direction}`
+          ? `order by ${options.orderBy.column} ${options.orderBy.direction}`
           : ''
       }
       LIMIT ${limit}
@@ -88,7 +87,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       SELECT
         COUNT(*)
       FROM planter
-      WHERE planter.organization_id = ${organization_id}
+      WHERE planter.organization_id in (select entity_id from getEntityRelationshipChildren(${organization_id}))
     `;
     const total = await this.session.getDB().raw(totalSql);
     return parseInt(total.rows[0].count.toString());
@@ -104,13 +103,11 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
+           AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations as planter_reg where planter_reg.planter_id=planter.id)
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
       ${
         options.orderBy
-          ? `order by ${ 
-            options.orderBy.column 
-            } ${ 
-            options.orderBy.direction}`
+          ? `order by ${options.orderBy.column} ${options.orderBy.direction}`
           : ''
       }
       LIMIT ${limit}
@@ -130,7 +127,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       FROM planter
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
-      LEFT JOIN webmap.planter_location l ON l.id = planter.id
+           AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations as planter_reg where planter_reg.planter_id=planter.id)      LEFT JOIN webmap.planter_location l ON l.id = planter.id
       WHERE planter.first_name LIKE '${keyword}%' OR planter.last_name LIKE '${keyword}%'
       ORDER BY planter.first_name, planter.last_name
       LIMIT ${limit}

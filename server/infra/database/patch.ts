@@ -43,6 +43,9 @@ async function patch(object: any, patchType: PATCH_TYPE, session: Session) {
         object.forEach((o) => {
           const extra = res.rows.find((r) => r.ref_id === o.id);
           if (extra) {
+            if (patchType === PATCH_TYPE.EXTRA_WALLET) {
+              delete extra.data?.about;
+            }
             result.push({ ...o, ...extra.data });
           } else {
             result.push(o);
@@ -57,7 +60,11 @@ async function patch(object: any, patchType: PATCH_TYPE, session: Session) {
 
     if (res.rows.length === 1) {
       log.debug('found result, patch');
-      result = { ...object, ...res.rows[0].data };
+      const patchData = res.rows[0];
+      if (patchType === PATCH_TYPE.EXTRA_WALLET) {
+        delete patchData.data?.about;
+      }
+      result = { ...object, ...patchData.data };
     }
   }
 

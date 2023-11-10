@@ -64,9 +64,8 @@ const queryFormatter = (req) => {
     whereIns: whereIns?.length ? JSON.parse(whereIns) : [],
     ...others,
   };
-
-  if (organization_id) {
-    query.organization_id = JSON.parse(organization_id);
+  if (req.query.organization_id) {
+    query.organization_id = JSON.parse(req.query.organization_id);
   }
 
   if (req.query.captures_amount_min) {

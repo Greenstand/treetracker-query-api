@@ -1,11 +1,11 @@
 import express from 'express';
 import Joi from 'joi';
 import FilterOptions from 'interfaces/FilterOptions';
-import Tree from 'interfaces/Tree';
 import { handlerWrapper } from './utils';
 import Session from '../infra/database/Session';
 import TreeRepository from '../infra/database/TreeRepository';
 import TreeModel from '../models/Tree';
+import HttpError from '../utils/HttpError';
 
 const router = express.Router();
 type Filter = Partial<{
@@ -14,6 +14,7 @@ type Filter = Partial<{
   date_range: { startDate: string; endDate: string };
   tag: string;
   wallet_id: string;
+  active: true;
 }>;
 
 router.get(
@@ -30,12 +31,24 @@ router.get(
 );
 
 router.get(
-  '/:id',
+  '/:val',
   handlerWrapper(async (req, res) => {
-    Joi.assert(req.params.id, Joi.number().required());
     const repo = new TreeRepository(new Session());
-    const exe = TreeModel.getById(repo);
-    const result = await exe(req.params.id);
+    let result;
+    if (isNaN(Number(req.params.val))) {
+      Joi.assert(req.params.val, Joi.string().guid().required());
+      const exe = TreeModel.getByUUID(repo);
+      result = await exe(req.params.val);
+    } else {
+      Joi.assert(req.params.val, Joi.number().required());
+      const exe = TreeModel.getById(repo);
+      result = await exe(req.params.val);
+    }
+
+    if (result.active === false) {
+      throw new HttpError(404, `Can not find trees by id:${result.id}`);
+    }
+
     res.send(result);
     res.end();
   }),
@@ -72,7 +85,7 @@ router.get(
       wallet_id,
     } = req.query;
     const repo = new TreeRepository(new Session());
-    const filter: Filter = {};
+    const filter: Filter = { active: true };
     const options: FilterOptions = {
       limit,
       offset,

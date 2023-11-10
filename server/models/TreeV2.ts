@@ -2,7 +2,7 @@ import log from 'loglevel';
 import FilterOptions from 'interfaces/FilterOptions';
 import Tree from 'interfaces/Tree';
 import { delegateRepository } from '../infra/database/delegateRepository';
-import TreeRepository from '../infra/database/TreeRepository';
+import TreeRepositoryV2 from '../infra/database/TreeRepositoryV2';
 
 type Filter = Partial<{
   organization_id: number;
@@ -12,7 +12,7 @@ type Filter = Partial<{
 }>;
 
 function getByFilter(
-  treeRepository: TreeRepository,
+  treeRepository: TreeRepositoryV2,
 ): (filter: Filter, options: FilterOptions) => Promise<Tree[]> {
   return async function (filter: Filter, options: FilterOptions) {
     if (filter.organization_id) {
@@ -48,7 +48,7 @@ function getByFilter(
 }
 
 function countByFilter(
-  treeRepository: TreeRepository,
+  treeRepository: TreeRepositoryV2,
 ): (filter: Filter, options: FilterOptions) => Promise<number> {
   return async function (filter: Filter, options: FilterOptions) {
     if (filter.organization_id) {
@@ -93,7 +93,7 @@ function countByFilter(
  featured tree, some highlighted tree, for a tempororily solution
  we just put the newest, verified tree
  */
-function getFeaturedTreeDepricated(treeRepository: TreeRepository) {
+function getFeaturedTreeDepricated(treeRepository: TreeRepositoryV2) {
   return async () => {
     // const trees = await treeRepository.getByFilter(
     //  {
@@ -114,9 +114,10 @@ function getFeaturedTreeDepricated(treeRepository: TreeRepository) {
 }
 
 export default {
-  getById: delegateRepository<TreeRepository, Tree>('getById'),
-  getByUUID: delegateRepository<TreeRepository, Tree>('getByUUID'),
+  getById: delegateRepository<TreeRepositoryV2, Tree>('getById'),
   getByFilter,
-  getFeaturedTree: delegateRepository<TreeRepository, Tree>('getFeaturedTree'),
+  getFeaturedTree: delegateRepository<TreeRepositoryV2, Tree>(
+    'getFeaturedTree',
+  ),
   countByFilter,
 };

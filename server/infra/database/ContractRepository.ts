@@ -157,7 +157,7 @@ export default class ContractRepository extends BaseRepository<Contract> {
     return result[0].count;
   }
 
-  async getById(id: string | number) {
+  async getById(id: string) {
     const object = await this.session
       .getDB()
       .select(

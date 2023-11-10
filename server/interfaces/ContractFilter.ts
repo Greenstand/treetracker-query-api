@@ -1,9 +1,9 @@
 import DbModel from './DbModel';
 
 interface ContractFilter extends DbModel {
-  id?: number | undefined;
-  agreement_id?: number | undefined;
-  worker_id?: number | undefined;
+  id?: string | undefined;
+  agreement_id?: string | undefined;
+  worker_id?: string | undefined;
   status?: string | undefined;
   notes?: string | undefined;
   created_at?: string | undefined;
