@@ -8,6 +8,7 @@ type Filter = Partial<{
   planter_id: number;
   organization_id: number;
   grower_id: string;
+  ids: Array<string>;
 }>;
 
 function getByFilter(
@@ -28,6 +29,11 @@ function getByFilter(
         filter.grower_id,
         options,
       );
+      return trees;
+    }
+    if (filter?.ids?.length) {
+      log.warn('using ids filter...');
+      const trees = await organizationRepository.getByIds(filter.ids, options);
       return trees;
     }
     const trees = await organizationRepository.getByFilter(filter, options);

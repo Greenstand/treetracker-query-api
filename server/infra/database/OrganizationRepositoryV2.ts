@@ -73,6 +73,20 @@ export default class OrganizationRepositoryV2 extends BaseRepository<Organizatio
     return objectPatched;
   }
 
+  async getByIds(ids: Array<string>, options: FilterOptions) {
+    const { limit = 20, offset = 0 } = options;
+
+    const result = await this.session
+      .getDB()
+      .select('*')
+      .from(this.tableName)
+      .whereIn('id', ids)
+      .offset(offset)
+      .limit(limit);
+
+    return result;
+  }
+
   // async getByGrowerId(id: string | number) {
   //   const object = await this.session
   //     .getDB()
