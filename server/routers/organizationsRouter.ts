@@ -58,7 +58,7 @@ router.get(
       query,
       Joi.object().keys({
         planter_id: Joi.number().integer().min(0),
-        ids: Joi.array(),
+        ids: Joi.array().items(Joi.number()),
         stakeholder_uuid: Joi.string().uuid(),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
