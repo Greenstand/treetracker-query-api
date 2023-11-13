@@ -5,7 +5,11 @@ import OrganizationRepositoryV2 from '../infra/database/OrganizationRepositoryV2
 import Session from '../infra/database/Session';
 import OrganizationModel from '../models/OrganizationV2';
 
-type Filter = Partial<{ planter_id: number; organization_id: number, grower_id:string }>;
+type Filter = Partial<{
+  planter_id: number;
+  organization_id: number;
+  grower_id: string;
+}>;
 
 const router = express.Router();
 
@@ -51,7 +55,7 @@ router.get(
       req.query,
       Joi.object().keys({
         planter_id: Joi.number().integer().min(0),
-        grower_id:Joi.string().guid(),
+        grower_id: Joi.string().guid(),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
       }),
@@ -61,7 +65,7 @@ router.get(
     const filter: Filter = {};
     if (planter_id) {
       filter.planter_id = planter_id;
-    } else if(grower_id){
+    } else if (grower_id) {
       filter.grower_id = grower_id;
     }
     const result = await OrganizationModel.getByFilter(repo)(filter, {

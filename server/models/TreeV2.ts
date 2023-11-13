@@ -116,6 +116,8 @@ function getFeaturedTreeDepricated(treeRepository: TreeRepositoryV2) {
 export default {
   getById: delegateRepository<TreeRepositoryV2, Tree>('getById'),
   getByFilter,
-  getFeaturedTree: delegateRepository<TreeRepositoryV2, Tree>('getFeaturedTree'),
+  getFeaturedTree: delegateRepository<TreeRepositoryV2, Tree>(
+    'getFeaturedTree',
+  ),
   countByFilter,
 };

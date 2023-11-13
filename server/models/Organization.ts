@@ -4,7 +4,7 @@ import Organization from 'interfaces/Organization';
 import { delegateRepository } from '../infra/database/delegateRepository';
 import OrganizationRepository from '../infra/database/OrganizationRepository';
 
-type Filter = Partial<{ planter_id: number; organization_id: number}>;
+type Filter = Partial<{ planter_id: number; organization_id: number }>;
 
 function getByFilter(
   organizationRepository: OrganizationRepository,

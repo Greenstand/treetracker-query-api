@@ -4,7 +4,11 @@ import FilterOptions from 'interfaces/FilterOptions';
 import Organization from 'interfaces/Organization';
 import { delegateRepository } from '../infra/database/delegateRepository';
 
-type Filter = Partial<{ planter_id: number; organization_id: number, grower_id:string }>;
+type Filter = Partial<{
+  planter_id: number;
+  organization_id: number;
+  grower_id: string;
+}>;
 
 function getByFilter(
   organizationRepository: OrganizationRepositoryV2,
@@ -18,7 +22,7 @@ function getByFilter(
       );
       return trees;
     }
-    if (filter.grower_id){
+    if (filter.grower_id) {
       log.warn('using grower filter...');
       const trees = await organizationRepository.getByGrower(
         filter.grower_id,
@@ -41,14 +45,16 @@ function getOrganizationLinks(organization) {
 }
 
 export default {
-  getById: delegateRepository<OrganizationRepositoryV2, Organization>('getById'),
+  getById: delegateRepository<OrganizationRepositoryV2, Organization>(
+    'getById',
+  ),
   getByMapName: delegateRepository<OrganizationRepositoryV2, Organization>(
     'getByMapName',
   ),
   getByFilter,
   getOrganizationLinks,
   getFeaturedOrganizations: delegateRepository<
-  OrganizationRepositoryV2,
+    OrganizationRepositoryV2,
     Organization
   >('getFeaturedOrganizations'),
 };

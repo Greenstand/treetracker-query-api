@@ -86,11 +86,13 @@ export default class TreeRepository extends BaseRepository<Tree> {
       .first();
 
     if (!object) {
-      throw new HttpError(404, `Can not find ${this.tableName} by uuid:${uuid}`);
+      throw new HttpError(
+        404,
+        `Can not find ${this.tableName} by uuid:${uuid}`,
+      );
     }
     return object;
   }
-
 
   async getByOrganization(
     organization_id: number,
