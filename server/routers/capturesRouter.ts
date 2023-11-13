@@ -74,6 +74,7 @@ router.get(
         grower_account_id: Joi.string().uuid(),
         grower_reference_id: Joi.number(),
         organization_id: Joi.array(),
+        session_id: Joi.string(),
         limit: Joi.number().integer().min(1).max(20000),
         offset: Joi.number().integer().min(0),
         startDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),

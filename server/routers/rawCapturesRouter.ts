@@ -83,6 +83,7 @@ router.get(
         endDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
         id: Joi.string().uuid(),
         reference_id: Joi.string(),
+        session_id: Joi.string(),
         tree_id: Joi.string().uuid(),
         species_id: Joi.string().uuid(),
         tag_id: Joi.string().uuid(),

@@ -107,6 +107,15 @@ export default class CaptureRepository extends BaseRepository<Capture> {
       delete filterObject.organization_id;
     }
 
+    if (filterObject.session_id) {
+      result.where(
+        `${this.tableName}.session_id`,
+        '=',
+        filterObject.session_id,
+      );
+      delete filterObject.session_id;
+    }
+
     result.where(filterObject);
   }
 
