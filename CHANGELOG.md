@@ -1,3 +1,17 @@
+# [1.71.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.7...v1.71.0) (2023-11-13)
+
+### Bug Fixes
+
+- contract ids to be type string ([43b4a69](https://github.com/Greenstand/treetracker-query-api/commit/43b4a69779897690a9390eaf0bbad167133de11e))
+- ids should be strings ([a54e2b9](https://github.com/Greenstand/treetracker-query-api/commit/a54e2b9da1bc6c20c692e1e23f581df5207b7781))
+
+### Features
+
+- add contract query ([95e3dea](https://github.com/Greenstand/treetracker-query-api/commit/95e3dea32f6b55fb3ce6374bd53536bea028893a))
+- add contract query ([3d59b8d](https://github.com/Greenstand/treetracker-query-api/commit/3d59b8da5be5723794fceabc95a00a9e3a269aff))
+- update contract query result format ([7f264ed](https://github.com/Greenstand/treetracker-query-api/commit/7f264edc8c2b16c7560e52bc7b34494e3c8872d9))
+- update contract query result format ([272ec97](https://github.com/Greenstand/treetracker-query-api/commit/272ec9740ed07b703646d9846f70bc4be3313af6))
+
 ## [1.70.7](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.6...v1.70.7) (2023-10-21)
 
 ### Bug Fixes
