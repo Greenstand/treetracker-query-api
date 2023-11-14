@@ -1,3 +1,11 @@
+# [1.72.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.71.0...v1.72.0) (2023-11-14)
+
+### Features
+
+- add more detail to Joi validatin of organization ids ([7c1dabb](https://github.com/Greenstand/treetracker-query-api/commit/7c1dabb99a8832cbd24081fe2df77f6644f694ef))
+- add more detail to Joi validation of organization_id array ([5e1f29c](https://github.com/Greenstand/treetracker-query-api/commit/5e1f29c2b690acde16e329955d1666928a2e25f4))
+- fix merge errors ([f5516ed](https://github.com/Greenstand/treetracker-query-api/commit/f5516edfb819962ab23cbe1cf973c9b2092ddd42))
+
 # [1.71.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.70.7...v1.71.0) (2023-11-13)
 
 ### Bug Fixes
