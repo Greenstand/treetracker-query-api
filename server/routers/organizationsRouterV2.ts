@@ -9,6 +9,7 @@ type Filter = Partial<{
   planter_id: number;
   organization_id: number;
   grower_id: string;
+  ids: Array<string>;
 }>;
 
 const router = express.Router();
@@ -51,22 +52,28 @@ router.get(
 router.get(
   '/',
   handlerWrapper(async (req, res) => {
+    const query = { ...req.query };
+    query.ids = JSON.parse(req.query.ids);
     Joi.assert(
-      req.query,
+      query,
       Joi.object().keys({
         planter_id: Joi.number().integer().min(0),
         grower_id: Joi.string().guid(),
+        ids: Joi.array().items(Joi.string().uuid()),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
       }),
     );
-    const { limit = 20, offset = 0, planter_id, grower_id } = req.query;
+    const { limit = 20, offset = 0, planter_id, grower_id, ids = [] } = query;
     const repo = new OrganizationRepositoryV2(new Session());
     const filter: Filter = {};
     if (planter_id) {
       filter.planter_id = planter_id;
     } else if (grower_id) {
       filter.grower_id = grower_id;
+    }
+    if (ids.length) {
+      filter.ids = ids;
     }
     const result = await OrganizationModel.getByFilter(repo)(filter, {
       limit,

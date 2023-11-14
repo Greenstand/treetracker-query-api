@@ -5,7 +5,12 @@ import OrganizationRepository from '../infra/database/OrganizationRepository';
 import Session from '../infra/database/Session';
 import OrganizationModel from '../models/Organization';
 
-type Filter = Partial<{ planter_id: number; organization_id: number }>;
+type Filter = Partial<{
+  planter_id: number;
+  organization_id: number;
+  ids: Array<number>;
+  stakeholder_uuid: string;
+}>;
 
 const router = express.Router();
 
@@ -47,19 +52,35 @@ router.get(
 router.get(
   '/',
   handlerWrapper(async (req, res) => {
+    const query = { ...req.query };
+    query.ids = JSON.parse(req.query.ids);
     Joi.assert(
-      req.query,
+      query,
       Joi.object().keys({
         planter_id: Joi.number().integer().min(0),
+        ids: Joi.array().items(Joi.number()),
+        stakeholder_uuid: Joi.string().uuid(),
         limit: Joi.number().integer().min(1).max(1000),
         offset: Joi.number().integer().min(0),
       }),
     );
-    const { limit = 20, offset = 0, planter_id } = req.query;
+    const {
+      limit = 20,
+      offset = 0,
+      planter_id,
+      ids = [],
+      stakeholder_uuid,
+    } = query;
     const repo = new OrganizationRepository(new Session());
     const filter: Filter = {};
     if (planter_id) {
       filter.planter_id = planter_id;
+    }
+    if (stakeholder_uuid) {
+      filter.stakeholder_uuid = stakeholder_uuid;
+    }
+    if (ids.length) {
+      filter.ids = ids;
     }
     const result = await OrganizationModel.getByFilter(repo)(filter, {
       limit,

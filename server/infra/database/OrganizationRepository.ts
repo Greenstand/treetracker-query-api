@@ -107,4 +107,18 @@ export default class OrganizationRepository extends BaseRepository<Organization>
     );
     return objectPatched;
   }
+
+  async getByIds(ids: Array<number>, options: FilterOptions) {
+    const { limit, offset } = options;
+    const sql = `
+      SELECT
+        *
+      FROM entity
+      WHERE id IN (${ids})
+      LIMIT ${limit}
+      OFFSET ${offset}
+    `;
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
 }
