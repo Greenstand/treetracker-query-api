@@ -100,10 +100,9 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     }
 
     if (filterObject.organization_id) {
-      result.where(
+      result.whereIn(
         `${this.tableName}.organization_id`,
-        '=',
-        `${filterObject.organization_id}`,
+        filterObject.organization_id,
       );
       delete filterObject.organization_id;
     }
