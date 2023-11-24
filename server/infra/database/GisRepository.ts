@@ -93,4 +93,32 @@ export default class GisRepository {
       ? JSON.parse(result.rows[0].st_asgeojson)
       : null;
   }
+
+  async getPointsInsidePolygone(params): Promise<unknown> {
+    const { polygone } = params;
+    let polygonePoints = `${polygone[0].lon} ${polygone[0].lat}`;
+    for (let i = 1; i < polygone.length; i++) {
+      polygonePoints += `, ${polygone[i].lon} ${polygone[i].lat}`;
+    }
+    const sql = `SELECT * 
+    FROM trees 
+    WHERE trees.active = true AND ST_Contains(ST_MakePolygon(ST_GeomFromText('LINESTRING(${polygonePoints})')), ST_MakePoint(trees.lon,trees.lat))
+    `;
+    const result = await this.session.getDB().raw(sql);
+    return result.rows.length > 0 ? result.rows : null;
+  }
+  // async getPointsInsidePolygone(params):Promise<unknown>{
+  //   let {polygone} = params;
+  //   let polygonePoints = polygone[0].lon+' '+polygone[0].lat;
+  //   for(let i=1;i<polygone.length;i++){
+  //     polygonePoints+=', '+polygone[i].lon+' '+polygone[i].lat;
+  //   }
+  //   console.log(polygonePoints);
+  //   const sql = `SELECT *
+  //   FROM trees
+  //   WHERE trees.active = true AND ST_Contains(ST_MakePolygon(ST_GeomFromText('LINESTRING(${polygonePoints})',4326)), trees.estimated_geometric_location)
+  //   `
+  //   const result = await this.session.getDB().raw(sql);
+  //   return result.rows;
+  // }
 }

@@ -149,52 +149,6 @@ export default class TreeRepository extends BaseRepository<Tree> {
     return object.rows;
   }
 
-  async getByViewsRange(
-    view_range: string,
-    options: FilterOptions,
-    totalCount = false,
-  ) {
-    const coordinates = view_range.split(',');
-    // check if view_range is valid
-    if (coordinates.length !== 4) {
-      throw new HttpError(404, 'Invalid view_range');
-    }
-    coordinates.forEach((value) => {
-      // check if it a number      //in case empty string is also include
-      if (Number.isNaN(value) || Number.isNaN(parseFloat(value))) {
-        throw new HttpError(404, 'Invalid numbers');
-      }
-    });
-    const topLeft = {
-      lat: coordinates[0],
-      lon: coordinates[1],
-    };
-    const bottomRight = {
-      lat: coordinates[2],
-      lon: coordinates[3],
-    };
-    if (topLeft.lat <= bottomRight.lat && topLeft.lon >= bottomRight.lon) {
-      throw new HttpError(404, 'Invalid range');
-    }
-
-    const { limit, offset } = options;
-    let sql = `
-      SELECT
-      ${totalCount ? 'COUNT(*)' : '*'}
-      FROM trees
-      WHERE
-      trees.lat <= ${topLeft.lat}
-      AND trees.lat >= ${bottomRight.lat}
-      AND trees.lon >= ${topLeft.lon}
-      AND trees.lon <= ${bottomRight.lon}
-      AND trees.active = true 
-    `;
-    if (!totalCount && limit !== -1) sql += ` LIMIT ${limit}`;
-    if (!totalCount && offset) sql += ` OFFSET ${offset}`;
-    const object = await this.session.getDB().raw(sql);
-    return totalCount ? parseInt(object.rows[0].count.toString()) : object.rows;
-  }
-
   async getByDateRange(
     date_range: { startDate: string; endDate: string },
     options: FilterOptions,
