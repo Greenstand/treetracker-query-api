@@ -6,7 +6,7 @@ import GisRepository from '../infra/database/GisRepository';
 
 export default {
   getNearest: delegateRepository<GisRepository, unknown>('getNearest'),
-  getPointsInsidePolygone: delegateRepository<GisRepository, unknown>(
-    'getPointsInsidePolygone',
+  getPointsInsidePolygon: delegateRepository<GisRepository, unknown>(
+    'getPointsInsidePolygon',
   ),
 };

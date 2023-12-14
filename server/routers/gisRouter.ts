@@ -34,11 +34,11 @@ router.get(
 router.post(
   '/',
   handlerWrapper(async (req: Request, res: Response) => {
-    console.log('Reached');
+    // console.log('Reached');
     Joi.assert(
       req.body,
       Joi.object().keys({
-        polygone: Joi.array()
+        polygon: Joi.array()
           .items(
             Joi.object({
               lat: Joi.number().required(),
@@ -50,7 +50,7 @@ router.post(
       }),
     );
     const repo = new GisRepository(new Session());
-    const result = await GisModel.getPointsInsidePolygone(repo)(req.body);
+    const result = await GisModel.getPointsInsidePolygon(repo)(req.body);
     res.send({
       trees: result,
     });

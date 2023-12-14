@@ -94,31 +94,30 @@ export default class GisRepository {
       : null;
   }
 
-  async getPointsInsidePolygone(params): Promise<unknown> {
-    const { polygone } = params;
-    let polygonePoints = `${polygone[0].lon} ${polygone[0].lat}`;
-    for (let i = 1; i < polygone.length; i++) {
-      polygonePoints += `, ${polygone[i].lon} ${polygone[i].lat}`;
+  async getPointsInsidePolygon(params): Promise<unknown> {
+    const { polygon } = params;
+    // change the lon that is out of bound
+    // const polygonPointInBound = polygon.map(({lon,lat})=>{
+    //   const mult = Math.round(lon/360);
+    //   const result = lon - 360 * mult;
+    //   return {lon: result,lat};
+    // })
+    let polygonPoints = `${polygon[0].lon} ${polygon[0].lat}`;
+    for (let i = 1; i < polygon.length; i++) {
+      polygonPoints += `, ${polygon[i].lon} ${polygon[i].lat}`;
     }
-    const sql = `SELECT * 
-    FROM trees 
-    WHERE trees.active = true AND ST_Contains(ST_MakePolygon(ST_GeomFromText('LINESTRING(${polygonePoints})')), ST_MakePoint(trees.lon,trees.lat))
+    const sql = `
+    SELECT id, time_created,planter_id,image_url,lat,lon,active,verified,uuid,approved,species_id,token_issued,token_id
+    FROM trees
+    WHERE ST_Contains(ST_MakePolygon(ST_GeomFromText('LINESTRING(${polygonPoints})')), ST_MakePoint(lon,lat))
     `;
+    // using spatial indexes
+    // const sql = `
+    // SELECT id, time_created,planter_id,image_url,lat,lon,active,verified,uuid,approved,species_id,token_issued,token_id
+    // FROM trees
+    // WHERE ST_Contains(ST_MakePolygon(ST_GeomFromText('LINESTRING(${polygonPoints})',4326)), estimated_geometric_location)
+    // `;
     const result = await this.session.getDB().raw(sql);
-    return result.rows.length > 0 ? result.rows : null;
+    return result.rows;
   }
-  // async getPointsInsidePolygone(params):Promise<unknown>{
-  //   let {polygone} = params;
-  //   let polygonePoints = polygone[0].lon+' '+polygone[0].lat;
-  //   for(let i=1;i<polygone.length;i++){
-  //     polygonePoints+=', '+polygone[i].lon+' '+polygone[i].lat;
-  //   }
-  //   console.log(polygonePoints);
-  //   const sql = `SELECT *
-  //   FROM trees
-  //   WHERE trees.active = true AND ST_Contains(ST_MakePolygon(ST_GeomFromText('LINESTRING(${polygonePoints})',4326)), trees.estimated_geometric_location)
-  //   `
-  //   const result = await this.session.getDB().raw(sql);
-  //   return result.rows;
-  // }
 }

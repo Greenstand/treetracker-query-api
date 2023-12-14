@@ -120,5 +120,4 @@ export default {
   getByFilter,
   getFeaturedTree: delegateRepository<TreeRepository, Tree>('getFeaturedTree'),
   countByFilter,
-  getByViewsRange: delegateRepository<TreeRepository, Tree>('getByViewsRange'),
 };
