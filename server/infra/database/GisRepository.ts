@@ -93,4 +93,31 @@ export default class GisRepository {
       ? JSON.parse(result.rows[0].st_asgeojson)
       : null;
   }
+
+  async getPointsInsidePolygon(params): Promise<unknown> {
+    const { polygon } = params;
+    // change the lon that is out of bound
+    // const polygonPointInBound = polygon.map(({lon,lat})=>{
+    //   const mult = Math.round(lon/360);
+    //   const result = lon - 360 * mult;
+    //   return {lon: result,lat};
+    // })
+    let polygonPoints = `${polygon[0].lon} ${polygon[0].lat}`;
+    for (let i = 1; i < polygon.length; i++) {
+      polygonPoints += `, ${polygon[i].lon} ${polygon[i].lat}`;
+    }
+    const sql = `
+    SELECT id, time_created,planter_id,image_url,lat,lon,active,verified,uuid,approved,species_id,token_issued,token_id
+    FROM trees
+    WHERE ST_Contains(ST_MakePolygon(ST_GeomFromText('LINESTRING(${polygonPoints})')), ST_MakePoint(lon,lat))
+    `;
+    // using spatial indexes
+    // const sql = `
+    // SELECT id, time_created,planter_id,image_url,lat,lon,active,verified,uuid,approved,species_id,token_issued,token_id
+    // FROM trees
+    // WHERE ST_Contains(ST_MakePolygon(ST_GeomFromText('LINESTRING(${polygonPoints})',4326)), estimated_geometric_location)
+    // `;
+    const result = await this.session.getDB().raw(sql);
+    return result.rows;
+  }
 }
