@@ -96,12 +96,6 @@ export default class GisRepository {
 
   async getPointsInsidePolygon(params): Promise<unknown> {
     const { polygon } = params;
-    // change the lon that is out of bound
-    // const polygonPointInBound = polygon.map(({lon,lat})=>{
-    //   const mult = Math.round(lon/360);
-    //   const result = lon - 360 * mult;
-    //   return {lon: result,lat};
-    // })
     let polygonPoints = `${polygon[0].lon} ${polygon[0].lat}`;
     for (let i = 1; i < polygon.length; i++) {
       polygonPoints += `, ${polygon[i].lon} ${polygon[i].lat}`;
