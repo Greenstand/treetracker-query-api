@@ -1,3 +1,10 @@
+# [1.73.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.72.0...v1.73.0) (2024-01-10)
+
+### Features
+
+- added session id filter for capture and raw capture ([96b67f8](https://github.com/Greenstand/treetracker-query-api/commit/96b67f86045bf8991eaad02a04765cabc7f65c02))
+- improve Joi validation for session_id on /v2/captures and /raw-captures ([c616f52](https://github.com/Greenstand/treetracker-query-api/commit/c616f5228a9ed9c046122191e199ae5e6d19f7e3))
+
 # [1.72.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.71.0...v1.72.0) (2023-11-14)
 
 ### Features
