@@ -270,6 +270,18 @@ paths:
                     description: the captures of a tree
                     items:
                       $ref: '#/components/schemas/capture'
+  /v2/stakeholder/{stakeholder_id}:
+    parameters: []
+    get:
+      summary: get stakeholder info
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stakeholder'
   '/raw_captures/{rawCaptureId}.':
     parameters:
       - schema:
