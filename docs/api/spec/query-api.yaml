@@ -240,6 +240,36 @@ paths:
           in: query
           name: sort
           description: Sort by order and order_by values
+  /v2/trees/{tree_id}:
+    parameters: []
+    get:
+      summary: get tree
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tree'
+  /v2/trees/{tree_id}/captures:
+    parameters: []
+    get:
+      summary: get capture
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  captures:
+                    type: array
+                    description: the captures of a tree
+                    items:
+                      $ref: '#/components/schemas/capture'
   '/raw_captures/{rawCaptureId}.':
     parameters:
       - schema:
