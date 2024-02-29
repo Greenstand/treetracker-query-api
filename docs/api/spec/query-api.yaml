@@ -240,6 +240,18 @@ paths:
           in: query
           name: sort
           description: Sort by order and order_by values
+  /v2/grower_accounts/{grower_account_id}:
+    parameters: []
+    get:
+      summary: get grower account info
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/grower_account'
   /v2/trees/{tree_id}:
     parameters: []
     get:
