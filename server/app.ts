@@ -35,7 +35,7 @@ app.use(
 );
 
 // app allow cors
-app.use(cors());
+app.use(cors());//111
 
 /*
  * Check request
