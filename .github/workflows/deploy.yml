@@ -5,7 +5,7 @@ on:
     branches: '**'
 
 env:
-  node_version: 12
+  node_version: '18.x'
   project-directory: ./
 
 jobs:
