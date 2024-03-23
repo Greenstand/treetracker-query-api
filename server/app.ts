@@ -14,6 +14,7 @@ import plantersRouter from './routers/plantersRouter';
 import rawCapturesRouter from './routers/rawCapturesRouter';
 import speciesRouter from './routers/speciesRouter';
 import speciesRouterV2 from './routers/speciesRouterV2';
+import stakeholderRouterV2 from './routers/stakeholderRouterV2';
 import tokensRouter from './routers/tokensRouter';
 import transactionsRouter from './routers/transactionsRouter';
 import treesRouter from './routers/treesRouter';
@@ -82,6 +83,7 @@ app.use('/v2/trees', treesRouterV2);
 app.use('/bounds', boundsRouter);
 app.use('/gis', gisRouter);
 app.use('/contract', contractsRouter);
+app.use('/v2/stakeholder', stakeholderRouterV2);
 // Global error handler
 app.use(errorHandler);
 
