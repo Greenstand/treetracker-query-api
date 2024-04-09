@@ -1541,7 +1541,6 @@ components:
     stakeholder:
       description: ''
       type: object
-
       properties:
         id:
           type: number
@@ -1557,6 +1556,20 @@ components:
           type: string
         phone:
           type: string
+        website:
+          type: string
+        logo_url:
+          type: string
+        map:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        active:
+          type: boolean
+        entity_id:
+          type: number
 
     capture:
       description: ''
