@@ -108,8 +108,9 @@ router.get(
     }
 
     const result = await TreeModel.getByFilter(repo)(filter, options);
+    const countResult = await TreeModel.countByFilter(repo)(filter, options);
     res.send({
-      total: await TreeModel.countByFilter(repo)(filter, options),
+      total: countResult,
       offset,
       limit,
       trees: result,

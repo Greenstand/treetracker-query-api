@@ -6,7 +6,7 @@ import Session from './Session';
 
 export default class TreeRepository extends BaseRepository<Tree> {
   constructor(session: Session) {
-    super('trees', session);
+    super('denormalized.trees_denormalized', session);
   }
 
   async getById(id: number) {
@@ -14,34 +14,22 @@ export default class TreeRepository extends BaseRepository<Tree> {
       .getDB()
       .select(
         this.session.getDB().raw(`
-          trees.*,
-          tree_species.id as species_id,
-          tree_species.name as species_name,
-          tree_species.desc as species_desc,
-          region.name as country_name,
-          region.id as country_id,
-          entity.id as organization_id,
-          entity.name as organization_name,
-          wallet.wallet.id as wallet_id,
-          wallet.wallet.name as wallet_name,
-          wallet.token.id as token_id
-          from trees
-            left JOIN planter 
-              on trees.planter_id = planter.id
-            left JOIN entity 
-              on entity.id = planter.organization_id
-            left JOIN tree_species 
-              on trees.species_id = tree_species.id 
-            left JOIN region
-              on ST_WITHIN(trees.estimated_geometric_location, region.geom)
-              and region.type_id in (select id from region_type where type = 'country')
-            left JOIN wallet.token
-              on wallet.token.capture_id::text = trees.uuid::text
-            left JOIN wallet.wallet
-              on wallet.token.wallet_id = wallet.wallet.id
+        td.*, td.planting_organization_id as organization_id, td.species as species_name,
+        o."name" as organization_name, r."name" as country_name, ts."desc" as species_desc, w."name" as wallet_name  
+        FROM
+         denormalized.trees_denormalized td 
+        LEFT JOIN public.organizations o 
+          on td.planting_organization_id = o.id 
+        LEFT JOIN public.region r 
+          on  td.country_id = cast(r."metadata" ->>'id' as integer)
+        LEFT JOIN public.tree_species ts 
+          on ts.id = td.species_id
+        LEFT JOIN wallet.wallet w
+          on w.id = td.wallet_id
       `),
       )
-      .where('trees.id', id)
+      .where('r.type_id', 6)
+      .where('td.id', id)
       .first();
 
     if (!object) {
@@ -55,34 +43,22 @@ export default class TreeRepository extends BaseRepository<Tree> {
       .getDB()
       .select(
         this.session.getDB().raw(`
-          trees.*,
-          tree_species.id as species_id,
-          tree_species.name as species_name,
-          tree_species.desc as species_desc,
-          region.name as country_name,
-          region.id as country_id,
-          entity.id as organization_id,
-          entity.name as organization_name,
-          wallet.wallet.id as wallet_id,
-          wallet.wallet.name as wallet_name,
-          wallet.token.id as token_id
-          from trees
-            left JOIN planter 
-              on trees.planter_id = planter.id
-            left JOIN entity 
-              on entity.id = planter.organization_id
-            left JOIN tree_species 
-              on trees.species_id = tree_species.id 
-            left JOIN region
-              on ST_WITHIN(trees.estimated_geometric_location, region.geom)
-              and region.type_id in (select id from region_type where type = 'country')
-            left JOIN wallet.token
-              on wallet.token.capture_id::text = trees.uuid::text
-            left JOIN wallet.wallet
-              on wallet.token.wallet_id = wallet.wallet.id
+        td.*, td.planting_organization_id as organization_id, td.species as species_name,
+        o."name" as organization_name, r."name" as country_name, ts."desc" as species_desc, w."name" as wallet_name  
+        FROM
+         denormalized.trees_denormalized td 
+        LEFT JOIN public.organizations o 
+          on td.planting_organization_id = o.id 
+        LEFT JOIN public.region r 
+          on  td.country_id = cast(r."metadata" ->>'id' as integer)
+        LEFT JOIN public.tree_species ts 
+          on ts.id = td.species_id
+        LEFT JOIN wallet.wallet w
+          on w.id = td.wallet_id
       `),
       )
-      .where('trees.uuid', uuid)
+      .where('r.type_id', 6)
+      .where('td.uuid', uuid)
       .first();
 
     if (!object) {
@@ -103,45 +79,36 @@ export default class TreeRepository extends BaseRepository<Tree> {
 
     if (totalCount) {
       const totalSql = `
-        SELECT
-          COUNT(*)
-        FROM trees
-        LEFT JOIN planter ON trees.planter_id = planter.id
-        WHERE
-          (
-            planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
-          OR
-            trees.planting_organization_id = ${organization_id}
-          ) and trees.active = true
+      SELECT  
+        count(*) 
+      FROM 
+        denormalized.trees_denormalized td 
+      WHERE 
+        td.active = true
+        and td.planting_organization_id = ${organization_id} 
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
     }
 
     const sql = `
-      SELECT
-      trees.*,
-      tree_species.id as species_id,
-      tree_species.name as species_name,
-      region.id as country_id,
-      region.name as country_name,
-      entity.id as organization_id,
-      entity.name as organization_name
-      FROM trees
-      LEFT JOIN planter ON trees.planter_id = planter.id
-      LEFT JOIN entity ON entity.id = planter.organization_id
-      LEFT JOIN tree_species 
-        on trees.species_id = tree_species.id 
-      LEFT JOIN region
-        on ST_WITHIN(trees.estimated_geometric_location, region.geom)
-        and region.type_id in (select id from region_type where type = 'country')
-      WHERE
-        (
-          planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
-        OR
-          trees.planting_organization_id = ${organization_id}
-        )
-        and trees.active = true
+    SELECT 
+      td.*, td.planting_organization_id as organization_id, td.species as species_name,
+      o."name" as organization_name, r."name" as country_name, ts."desc" as species_desc, w."name" as wallet_name 
+    FROM
+     denormalized.trees_denormalized td 
+    LEFT JOIN public.organizations o 
+      on td.planting_organization_id = o.id 
+    LEFT JOIN public.region r 
+      on  td.country_id = cast(r."metadata" ->>'id' as integer) 
+    LEFT JOIN public.tree_species ts
+      on ts.id = td.species_id
+    LEFT JOIN wallet.wallet w
+      on w.id = td.wallet_id
+    WHERE 
+      r.type_id = 6 
+      and td.planting_organization_id = ${organization_id}
+      and td.active = true 
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -162,39 +129,39 @@ export default class TreeRepository extends BaseRepository<Tree> {
 
     if (totalCount) {
       const totalSql = `
-        SELECT
-        COUNT(*)
-        FROM trees
-        WHERE time_created >= '${startDateISO}'::timestamp
-        AND time_created < '${endDateISO}'::timestamp
-        and trees.active = true
+      SELECT  
+        COUNT(*) 
+      FROM denormalized.trees_denormalized td
+      WHERE 
+        td.time_created >= '${startDateISO}'::timestamp
+        and td.time_created < '${endDateISO}'::timestamp
+        and td.active = true
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
     }
 
     const sql = `
-      SELECT
-      trees.*,
-      tree_species.id as species_id,
-      tree_species.name as species_name,
-      region.id as country_id,
-      region.name as country_name,
-      entity.id as organization_id,
-      entity.name as organization_name
-      FROM trees
-      LEFT JOIN planter ON trees.planter_id = planter.id
-      LEFT JOIN entity ON entity.id = planter.organization_id
-      LEFT JOIN tree_species 
-        on trees.species_id = tree_species.id 
-      LEFT JOIN region
-        on ST_WITHIN(trees.estimated_geometric_location, region.geom)
-        and region.type_id in (select id from region_type where type = 'country')
-      WHERE time_created >= '${startDateISO}'::timestamp
-      AND time_created < '${endDateISO}'::timestamp
-      and trees.active = true
-      LIMIT ${limit}
-      OFFSET ${offset}
+    SELECT 
+      td.*, td.planting_organization_id as organization_id, td.species as species_name,
+      o."name" as organization_name, r."name" as country_name, ts."desc" as species_desc, w."name" as wallet_name 
+    FROM
+     denormalized.trees_denormalized td 
+    LEFT JOIN public.organizations o 
+      on td.planting_organization_id = o.id 
+    LEFT JOIN public.region r 
+      on  td.country_id = cast(r."metadata" ->>'id' as integer) 
+    LEFT JOIN public.tree_species ts
+      on ts.id = td.species_id
+    LEFT JOIN wallet.wallet w
+      on w.id = td.wallet_id
+    WHERE 
+      r.type_id = 6 
+      and td.time_created >= '${startDateISO}'::timestamp
+      and td.time_created < '${endDateISO}'::timestamp
+      and td.active = true
+    LIMIT ${limit} 
+    OFFSET ${offset}
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;
@@ -207,42 +174,39 @@ export default class TreeRepository extends BaseRepository<Tree> {
       const totalSql = `
       SELECT 
         COUNT(*)
-      FROM trees
-      INNER JOIN tree_tag 
-        on tree_tag.tree_id = trees.id
-      INNER JOIN tag 
-        on tree_tag.tag_id = tag.id
+      FROM denormalized.trees_denormalized td
+      INNER JOIN public.tree_tag tt
+        on tt.tree_id = td.id
+      INNER JOIN tag t
+        on tt.tag_id = t.id
       WHERE 
-        tag.tag_name in ('${tag}')
-        and trees.active = true
+        t.tag_name in ('${tag}')
+        and td.active = true
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
     }
     const sql = `
     SELECT 
-    trees.*,
-    tree_species.id as species_id,
-    tree_species.name as species_name,
-    region.id as country_id,
-    region.name as country_name,
-    entity.id as organization_id,
-    entity.name as organization_name
-    FROM trees
-    LEFT JOIN planter ON trees.planter_id = planter.id
-    LEFT JOIN entity ON entity.id = planter.organization_id
-    LEFT JOIN tree_species 
-      on trees.species_id = tree_species.id 
-    LEFT JOIN region
-      on ST_WITHIN(trees.estimated_geometric_location, region.geom)
-      and region.type_id in (select id from region_type where type = 'country')
-    INNER JOIN tree_tag 
-      on tree_tag.tree_id = trees.id
-    INNER JOIN tag 
-      on tree_tag.tag_id = tag.id
+      td.*, td.planting_organization_id as organization_id, td.species as species_name,
+      o."name" as organization_name, r."name" as country_name, ts."desc" as species_desc, w."name" as wallet_name 
+    FROM
+     denormalized.trees_denormalized td 
+    LEFT JOIN public.organizations o 
+      on td.planting_organization_id = o.id 
+    LEFT JOIN public.region r 
+      on  td.country_id = cast(r."metadata" ->>'id' as integer) 
+    LEFT JOIN public.tree_species ts
+      on ts.id = td.species_id
+    LEFT JOIN wallet.wallet w
+      on w.id = td.wallet_id
+    INNER JOIN tree_tag tt 
+      on tt.tree_id = td.id
+    INNER JOIN tag t 
+      on tt.tag_id = t.id
     WHERE 
-      tag.tag_name in ('${tag}')
-      and trees.active = true
+      t.tag_name in ('${tag}')
+      and td.active = true
     LIMIT ${limit}
     OFFSET ${offset}
     `;
@@ -252,20 +216,27 @@ export default class TreeRepository extends BaseRepository<Tree> {
 
   async getFeaturedTree() {
     const sql = `
-      SELECT trees.* ,tree_species.name as species_name,
-      country.id as country_id, country.name as country_name
-      FROM trees 
-      join (
+    SELECT 
+    td.*, td.planting_organization_id as organization_id, td.species as species_name,
+    o."name" as organization_name, r."name" as country_name, ts."desc" as species_desc, w."name" as wallet_name 
+    FROM
+    denormalized.trees_denormalized td 
+    LEFT JOIN public.organizations o 
+      on td.planting_organization_id = o.id 
+    LEFT JOIN public.region r 
+      on  td.country_id = cast(r."metadata" ->>'id' as integer) 
+    LEFT JOIN public.tree_species ts
+      on ts.id = td.species_id
+    LEFT JOIN wallet.wallet w
+      on w.id = td.wallet_id
+    JOIN (
       --- convert json array to row
       SELECT json_array_elements(data -> 'trees') AS tree_id FROM webmap.config WHERE name = 'featured-tree'
       ) AS t ON 
       --- cast json type t.tree_id to integer
-      t.tree_id::text::integer = trees.id
-      LEFT JOIN tree_species 
-      ON trees.species_id = tree_species.id
-      LEFT JOIN region as country ON ST_WITHIN(trees.estimated_geometric_location, country.geom)
-            and country.type_id in
-              (SELECT id FROM region_type WHERE type = 'country')
+      t.tree_id::text::integer = td.id
+      WHERE
+        r.type_id = 6
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;
@@ -280,24 +251,35 @@ export default class TreeRepository extends BaseRepository<Tree> {
 
     if (totalCount) {
       const totalSql = `
-        SELECT
-          COUNT(*)
-        FROM trees
-        LEFT JOIN wallet.token ON token.capture_id::text = trees.uuid
-        WHERE wallet.token.wallet_id = '${wallet_id}'
-        and trees.active = true
+      SELECT  
+        COUNT(*) 
+        FROM denormalized.trees_denormalized td
+        WHERE 
+          td.wallet_id = '${wallet_id}'
+          and td.active = true
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
     }
 
     const sql = `
-      SELECT
-      trees.*
-      FROM trees
-      LEFT JOIN wallet.token ON token.capture_id::text = trees.uuid
-      WHERE wallet.token.wallet_id = '${wallet_id}'
-      and trees.active = true
+    SELECT 
+    td.*, td.planting_organization_id as organization_id, td.species as species_name,
+    o."name" as organization_name, r."name" as country_name, ts."desc" as species_desc, w."name" as wallet_name 
+    FROM
+    denormalized.trees_denormalized td 
+    LEFT JOIN public.organizations o 
+      on td.planting_organization_id = o.id 
+    LEFT JOIN public.region r 
+      on  td.country_id = cast(r."metadata" ->>'id' as integer) 
+    LEFT JOIN public.tree_species ts
+      on ts.id = td.species_id
+    LEFT JOIN wallet.wallet w
+      on w.id = td.wallet_id
+    WHERE 
+      r.type_id = 6 
+      and td.wallet_id = '${wallet_id}'
+      and td.active = true
       LIMIT ${limit}
       OFFSET ${offset}
     `;
