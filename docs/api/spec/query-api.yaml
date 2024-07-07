@@ -1302,43 +1302,46 @@ components:
           maxItems: 2
           description: 2 points defining the bounding box
     tree:
-      description: a single tree object
+      description: A single tree object
       type: object
       x-examples: {}
       title: ''
       properties:
         id:
           type: number
-        photo_url:
-          type: string
-        verified:
-          type: boolean
-        token_id:
-          type: string
-        created_at:
+        latest_capture_id:
+          type: number
+        image_url:
           type: string
         lat:
           type: number
         lon:
           type: number
-        species_id:
-          type: number
-        planter_id:
-          type: number
+        estimated_geometric_location:
+          type: string
         gps_accuracy:
           type: number
-        capture_id:
-          type: string
-          description: "In the public.trees table, it's the uuid column"
-        capture_approval_tag:
-          type: string
-        domain_specific_data:
-          type: object
         morphology:
           type: string
-        rejection_reason:
-          type: string
         age:
+          type: number
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        estimated_geographic_location:
+          type: string
+        status:
+          type: string
+        attributes:
+          type: string
+        species_id:
+          type: number
+        species_name:
+          type: string
+        species_description:
+          type: string
+        country_name:
           type: string
     country:
       description: ''
@@ -1556,7 +1559,7 @@ components:
         phone:
           type: string
     capture:
-      description: ''
+      description: A tree photo capture and its associated data package, representing a tree at a given moment in time
       type: object
       properties:
         id:
@@ -1568,6 +1571,18 @@ components:
         time_created:
           type: string
         image_url:
+          type: string
+        grower_id:
+          type: number
+        growing_organization_id:
+          type: number
+        token_id:
+          type: number
+        approved:
+          type: boolean
+        wallet_id:
+          type: number
+        wallet_name:
           type: string
     grower_account:
       description: ''
