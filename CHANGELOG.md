@@ -1,3 +1,17 @@
+# [1.74.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.73.0...v1.74.0) (2024-10-10)
+
+### Bug Fixes
+
+- fixed YAML grammar errors ([1f5d28e](https://github.com/Greenstand/treetracker-query-api/commit/1f5d28ef60ea69237eeff4fb9059497913502fba))
+- update Node.js version to 20.8.1 for semantic-release ([53bae3a](https://github.com/Greenstand/treetracker-query-api/commit/53bae3ab1248041bedb21937f57516b719ce25fb))
+
+### Features
+
+- add Node v20 to pull request CI ([#381](https://github.com/Greenstand/treetracker-query-api/issues/381)) ([168d9e1](https://github.com/Greenstand/treetracker-query-api/commit/168d9e1f6d169c5d7471c81021c50a689268933d))
+- added /stakeholder/stakeholder_id endpoint ([9f2625b](https://github.com/Greenstand/treetracker-query-api/commit/9f2625b8b499bed3bd07c098829febcaa8435192))
+- update api documentation yaml (tree and capture response objects) ([0abe26f](https://github.com/Greenstand/treetracker-query-api/commit/0abe26ffd34d3c945a4b721d7b579c52cf310ea5))
+- update openapi documentation for grower_account endpoint ([e282e8f](https://github.com/Greenstand/treetracker-query-api/commit/e282e8f12ba4fd81cd88cefdd58f6dbdfa4a5892))
+
 # [1.73.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.72.0...v1.73.0) (2024-01-10)
 
 ### Features
