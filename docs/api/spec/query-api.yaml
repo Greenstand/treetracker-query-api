@@ -93,6 +93,11 @@ paths:
             type: string
           in: query
           name: order_by
+        - schema:
+            type: string
+          in: query
+          name: area
+          description: Filter by geojson area
   /trees/featured:
     get:
       summary: get featured tree list
