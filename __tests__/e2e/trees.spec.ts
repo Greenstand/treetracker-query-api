@@ -135,4 +135,16 @@ describe('trees', () => {
     },
     1000 * 30,
   );
+
+  it(
+    'trees?lat=39.0619&lon=-122.6064&lat=38.1519&lon=-123.3139&lat=37.8879&lon=-121.1001',
+    async () => {
+      const response = await supertest(app).get(
+        '/trees?lat=39.0619&lon=-122.6064&lat=38.1519&lon=-123.3139&lat=37.8879&lon=-121.1001',
+      );
+      expect(response.status).toBe(200);
+      expect(response.body.trees.length).toBe(145);
+    },
+    1000 * 30,
+  );
 });

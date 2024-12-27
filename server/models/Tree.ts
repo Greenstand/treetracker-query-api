@@ -9,6 +9,7 @@ type Filter = Partial<{
   date_range: { startDate: string; endDate: string };
   tag: string;
   wallet_id: string;
+  geometry: { lat: Array<number>; lon: Array<number> };
 }>;
 
 function getByFilter(
@@ -39,6 +40,11 @@ function getByFilter(
     if (filter.wallet_id) {
       log.warn('using wallet filter...');
       const trees = await treeRepository.getByWallet(filter.wallet_id, options);
+      return trees;
+    }
+    if (filter.geometry) {
+      log.warn('using geometry filter...');
+      const trees = await treeRepository.getByGeometry(filter.geometry);
       return trees;
     }
 
@@ -84,6 +90,11 @@ function countByFilter(
       return total;
     }
 
+    if (filter.geometry) {
+      log.warn('using geometry filter...');
+      const total = await treeRepository.getByGeometry(filter.geometry, true);
+      return total;
+    }
     const total = await treeRepository.countByFilter(filter);
     return total;
   };
