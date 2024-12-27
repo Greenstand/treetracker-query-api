@@ -15,6 +15,7 @@ type Filter = Partial<{
   tag: string;
   wallet_id: string;
   active: true;
+  geometry: { lat: Array<number>; lon: Array<number> };
 }>;
 
 router.get(
@@ -70,6 +71,8 @@ router.get(
         offset: Joi.number().integer().min(0),
         startDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
         endDate: Joi.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        lat: Joi.array().items(Joi.number()),
+        lon: Joi.array().items(Joi.number()),
       }),
     );
     const {
@@ -83,6 +86,8 @@ router.get(
       endDate,
       tag,
       wallet_id,
+      lat,
+      lon,
     } = req.query;
     const repo = new TreeRepository(new Session());
     const filter: Filter = { active: true };
@@ -105,6 +110,8 @@ router.get(
       filter.tag = tag;
     } else if (wallet_id) {
       filter.wallet_id = wallet_id;
+    } else if (lat && lon) {
+      filter.geometry = { lat, lon };
     }
 
     const result = await TreeModel.getByFilter(repo)(filter, options);

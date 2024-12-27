@@ -304,4 +304,41 @@ export default class TreeRepository extends BaseRepository<Tree> {
     const object = await this.session.getDB().raw(sql);
     return object.rows;
   }
+
+  async getByGeometry(
+    geometry: { lat: Array<number>; lon: Array<number> },
+    totalCount = false,
+  ) {
+    const pointArray = geometry.lon.map((item, i) => `ST_MakePoint(${item}, ${geometry.lat[i]})`);
+    pointArray.push(`ST_MakePoint(${geometry.lon[0]}, ${geometry.lat[0]})`);
+
+    if (totalCount) {
+      const totalSql = `
+        SELECT
+      COUNT(*)
+      FROM trees t
+      WHERE
+      ST_CONTAINS(
+      ST_SETSRID(ST_CONVEXHULL(ST_MAKELINE(ARRAY[${pointArray.toString()}])), 4326),
+      ST_SETSRID(ST_POINT(t.lon, t.lat), 4326)
+      )
+      `;
+      const total = await this.session.getDB().raw(totalSql);
+      return parseInt(total.rows[0].count.toString());
+    }
+
+    const sql = `
+      SELECT
+      *
+      FROM trees t
+      WHERE
+      ST_CONTAINS(
+      ST_SETSRID(ST_CONVEXHULL(ST_MAKELINE(ARRAY[${pointArray.toString()}])), 4326),
+      ST_SETSRID(ST_POINT(t.lon, t.lat), 4326)
+      )
+      `;
+
+    const object = await this.session.getDB().raw(sql);
+    return object.rows;
+  }
 }
