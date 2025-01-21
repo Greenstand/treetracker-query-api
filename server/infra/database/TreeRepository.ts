@@ -4,6 +4,12 @@ import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 
+type GeoJson = Partial<{
+  geometry: {
+    coordinates: number[];
+  };
+}>;
+
 export default class TreeRepository extends BaseRepository<Tree> {
   constructor(session: Session) {
     super('trees', session);
@@ -305,13 +311,14 @@ export default class TreeRepository extends BaseRepository<Tree> {
     return object.rows;
   }
 
-  async getByGeometry(
-    geometry: { lat: Array<number>; lon: Array<number> },
-    totalCount = false,
-  ) {
-    const pointArray = geometry.lon.map((item, i) => `ST_MakePoint(${item}, ${geometry.lat[i]})`);
-    pointArray.push(`ST_MakePoint(${geometry.lon[0]}, ${geometry.lat[0]})`);
-
+  async getByGeometry(geoJsonArr: GeoJson[], totalCount = false) {
+    const pointArray = geoJsonArr.map(
+      (item) =>
+        `ST_MakePoint(${item.geometry?.coordinates[0]}, ${item.geometry?.coordinates[1]})`,
+    );
+    pointArray.push(
+      `ST_MakePoint(${geoJsonArr[0].geometry?.coordinates[0]}, ${geoJsonArr[0].geometry?.coordinates[1]})`,
+    );
     if (totalCount) {
       const totalSql = `
         SELECT
