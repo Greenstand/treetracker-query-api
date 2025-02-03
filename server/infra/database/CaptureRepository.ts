@@ -13,12 +13,14 @@ export default class CaptureRepository extends BaseRepository<Capture> {
 
   filterWhereBuilder(object, builder) {
     const result = builder;
-    const {
-      whereNulls = [],
-      whereNotNulls = [],
-      whereIns = [],
-      ...parameters
-    } = object;
+    const { ...parameters } = object;
+
+    // parse the nested values, if there
+    const whereNulls = object.whereNulls ? JSON.parse(object.whereNulls) : [];
+    const whereNotNulls = object.whereNotNulls
+      ? JSON.parse(object.whereNotNulls)
+      : [];
+    const whereIns = object.whereIns ? JSON.parse(object.whereIns) : [];
 
     if (parameters.tokenized === 'true') {
       whereNotNulls.push('wallet.token.id');
@@ -28,6 +30,7 @@ export default class CaptureRepository extends BaseRepository<Capture> {
     delete parameters.tokenized;
 
     result.whereNot(`${this.tableName}.status`, 'deleted');
+
     whereNotNulls.forEach((whereNot) => {
       // to map table names to fields for query
       switch (true) {
@@ -245,7 +248,8 @@ export default class CaptureRepository extends BaseRepository<Capture> {
         `,
         ),
       )
-      .where((builder) => this.filterWhereBuilder(filter, builder));
+      .where((builder) => this.filterWhereBuilder(filter, builder))
+      .distinct();
 
     return result[0].count;
   }
