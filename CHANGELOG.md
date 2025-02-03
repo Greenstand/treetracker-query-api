@@ -1,3 +1,9 @@
+## [1.74.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.74.0...v1.74.1) (2025-02-03)
+
+### Bug Fixes
+
+- lint error ([b6be004](https://github.com/Greenstand/treetracker-query-api/commit/b6be00408626695ba568558599a1033038bcf49d))
+
 # [1.74.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.73.0...v1.74.0) (2024-10-10)
 
 ### Bug Fixes
