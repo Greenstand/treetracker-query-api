@@ -1,3 +1,4 @@
+import exp from 'constants';
 import supertest from 'supertest';
 import app from '../../server/app';
 
@@ -164,6 +165,7 @@ describe('trees', () => {
       );
       expect(response.status).toBe(200);
       expect(response.body.trees.length).toBe(145);
+      expect(response.body.total).toBe(145);
     },
     1000 * 30,
   );
