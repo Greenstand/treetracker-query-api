@@ -49,7 +49,10 @@ function getByFilter(
     }
     if (filter.geoJsonArr) {
       log.warn('using geometry filter...');
-      const trees = await treeRepository.getByGeometry(filter.geoJsonArr);
+      const trees = await treeRepository.getByGeometry(filter.geoJsonArr, {
+        ...options,
+        limit: 500,
+      });
       return trees;
     }
 
@@ -97,7 +100,11 @@ function countByFilter(
 
     if (filter.geoJsonArr) {
       log.warn('using geometry filter...');
-      const total = await treeRepository.getByGeometry(filter.geoJsonArr, true);
+      const total = await treeRepository.getByGeometry(
+        filter.geoJsonArr,
+        options,
+        true,
+      );
       return total;
     }
     const total = await treeRepository.countByFilter(filter);

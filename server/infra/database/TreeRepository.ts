@@ -311,7 +311,12 @@ export default class TreeRepository extends BaseRepository<Tree> {
     return object.rows;
   }
 
-  async getByGeometry(geoJsonArr: GeoJson[], totalCount = false) {
+  async getByGeometry(
+    geoJsonArr: GeoJson[],
+    options: FilterOptions,
+    totalCount = false,
+  ) {
+    const { limit } = options;
     const pointArray = geoJsonArr.map(
       (item) =>
         `ST_MakePoint(${item.geometry?.coordinates[0]}, ${item.geometry?.coordinates[1]})`,
@@ -343,6 +348,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
       ST_SETSRID(ST_CONVEXHULL(ST_MAKELINE(ARRAY[${pointArray.toString()}])), 4326),
       ST_SETSRID(ST_POINT(t.lon, t.lat), 4326)
       )
+      LIMIT ${limit}
       `;
 
     const object = await this.session.getDB().raw(sql);
