@@ -1,3 +1,14 @@
+# [1.75.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.74.1...v1.75.0) (2025-02-24)
+
+### Bug Fixes
+
+- add limit to tree query by geometry ([70926eb](https://github.com/Greenstand/treetracker-query-api/commit/70926eb7644d1e9ff5687afdbebe16031557eb55))
+- change geometry input format to geojson array ([fd50334](https://github.com/Greenstand/treetracker-query-api/commit/fd5033457a09a6ce43e3a6c5f9078352b31b29a2))
+
+### Features
+
+- add filter by geom for trees route ([97f583e](https://github.com/Greenstand/treetracker-query-api/commit/97f583ef0143e8284f748848fecb68b56f197125))
+
 ## [1.74.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.74.0...v1.74.1) (2025-02-03)
 
 ### Bug Fixes
