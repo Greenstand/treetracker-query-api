@@ -1,0 +1,11 @@
+﻿apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgrest-config
+  namespace: webmap
+data:
+  postgrest.conf: |
+    db-uri = "$(PGRST_DB_URI)"
+    db-schema = "public"
+    db-anon-role = "readonly_user"
+    server-port = 3000
