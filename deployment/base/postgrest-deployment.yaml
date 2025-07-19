@@ -1,0 +1,32 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgrest
+  namespace: webmap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgrest
+  template:
+    metadata:
+      labels:
+        app: postgrest
+    spec:
+      containers:
+      - name: postgrest
+        image: postgrest/postgrest:v12.0.2
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PGRST_DB_URI
+          valueFrom:
+            secretKeyRef:
+              name: query-api-database-connection
+              key: db
+        - name: PGRST_DB_SCHEMA
+          value: "public"
+        - name: PGRST_DB_ANON_ROLE
+          value: "readonly_user"
+        - name: PGRST_SERVER_PORT
+          value: "3000"

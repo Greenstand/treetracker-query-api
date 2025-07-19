@@ -1,5 +1,12 @@
+﻿apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 resources:
+  - namespace.yaml
   - deployment.yaml
-  - mapping.yaml
   - service.yaml
   - database-connection-sealed-secret.yaml
+  - postgrest-config.yaml
+  - postgrest-deployment.yaml
+  - postgrest-service.yaml
+  - postgrest-ingress.yaml
+
