@@ -53,7 +53,7 @@ router.get(
   '/',
   handlerWrapper(async (req, res) => {
     const query = { ...req.query };
-    query.ids = JSON.parse(req.query.ids);
+    query.ids = JSON.parse(req.query.ids || '[]');
     Joi.assert(
       query,
       Joi.object().keys({
