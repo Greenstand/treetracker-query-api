@@ -28,6 +28,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       `),
       )
       .where('planter.id', id)
+      .andWhere('planter.show_in_map', true)
       .first();
 
     if (!object) {
@@ -186,8 +187,9 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
       join (
       SELECT json_array_elements(data -> 'planters') AS planter_id FROM webmap.config WHERE name = 'featured-planter'
-      ) AS t ON 
-      t.planter_id::text::integer = planter.id;
+      ) AS t ON
+      t.planter_id::text::integer = planter.id
+      WHERE planter.show_in_map = true
     `;
     const object = await this.session.getDB().raw(sql);
 
