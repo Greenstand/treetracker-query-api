@@ -29,10 +29,10 @@ export default class WalletsRepository extends BaseRepository<Wallets> {
 
     const object = await this.session.getDB().raw(sql);
 
-    if (!object && object.rows.length !== 1) {
+    if (!object?.rows || object.rows.length !== 1) {
       throw new HttpError(
         404,
-        `Can not found ${this.tableName} by id:${walletIdOrName} name:${walletIdOrName}`,
+        `Can not find ${this.tableName} by id:${walletIdOrName} name:${walletIdOrName}`,
       );
     }
     const objectPatched = await patch(
