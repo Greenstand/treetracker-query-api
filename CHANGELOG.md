@@ -1,3 +1,9 @@
+## [1.75.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.0...v1.75.1) (2026-06-22)
+
+### Bug Fixes
+
+- improve null check for wallet retrieval in WalletsRepository ([2a45c09](https://github.com/Greenstand/treetracker-query-api/commit/2a45c09a7165d806d5aca86ce397ef82611d4167))
+
 # [1.75.0](https://github.com/Greenstand/treetracker-query-api/compare/v1.74.1...v1.75.0) (2025-02-24)
 
 ### Bug Fixes
