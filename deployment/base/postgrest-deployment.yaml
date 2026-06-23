@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treetracker-postgrest
+  labels:
+    app: treetracker-postgrest
+  namespace: webmap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treetracker-postgrest
+  template:
+    metadata:
+      labels:
+        app: treetracker-postgrest
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: doks.digitalocean.com/node-pool
+                    operator: In
+                    values:
+                      - microservices-node-pool
+      containers:
+        - name: postgrest
+          image: postgrest/postgrest:v12.0.2
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PGRST_DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: query-api-database-connection
+                  key: db
+            - name: PGRST_DB_SCHEMAS
+              value: "public"
+            - name: PGRST_DB_ANON_ROLE
+              value: "s_query"
+            - name: PGRST_OPENAPI_SERVER_PROXY_URI
+              value: "https://dev-k8s.treetracker.org/query-postgrest"
+            - name: PGRST_DB_EXTRA_SEARCH_PATH
+              value: "public"
+            - name: PGRST_SERVER_PORT
+              value: "3000"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
