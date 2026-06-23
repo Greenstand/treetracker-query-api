@@ -28,6 +28,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       `),
       )
       .where('planter.id', id)
+      .andWhere('planter.show_in_map', true)
       .first();
 
     if (!object) {
@@ -56,6 +57,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
            AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations as planter_reg where planter_reg.planter_id=planter.id)
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
       WHERE planter.organization_id in (select entity_id from getEntityRelationshipChildren(${organization_id}))
+      AND planter.show_in_map = true
       ${
         options.orderBy
           ? `order by ${options.orderBy.column} ${options.orderBy.direction}`
@@ -88,6 +90,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
         COUNT(*)
       FROM planter
       WHERE planter.organization_id in (select entity_id from getEntityRelationshipChildren(${organization_id}))
+      AND planter.show_in_map = true
     `;
     const total = await this.session.getDB().raw(totalSql);
     return parseInt(total.rows[0].count.toString());
@@ -105,6 +108,7 @@ export default class PlanterRepository extends BaseRepository<Planter> {
            ON planter.id = planter_registrations.planter_id
            AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations as planter_reg where planter_reg.planter_id=planter.id)
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
+      WHERE planter.show_in_map = true
       ${
         options.orderBy
           ? `order by ${options.orderBy.column} ${options.orderBy.direction}`
@@ -115,6 +119,16 @@ export default class PlanterRepository extends BaseRepository<Planter> {
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;
+  }
+
+  async countByFilter(filter: Filter) {
+    const totalSql = `
+      SELECT COUNT(*)
+      FROM planter
+      WHERE planter.show_in_map = true
+    `;
+    const total = await this.session.getDB().raw(totalSql);
+    return parseInt(total.rows[0].count.toString());
   }
 
   async getByName(keyword: string, options: FilterOptions) {
@@ -128,7 +142,8 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       LEFT JOIN planter_registrations
            ON planter.id = planter_registrations.planter_id
            AND planter_registrations.created_at = (Select Min(created_at) from planter_registrations as planter_reg where planter_reg.planter_id=planter.id)      LEFT JOIN webmap.planter_location l ON l.id = planter.id
-      WHERE planter.first_name LIKE '${keyword}%' OR planter.last_name LIKE '${keyword}%'
+      WHERE (planter.first_name LIKE '${keyword}%' OR planter.last_name LIKE '${keyword}%')
+      AND planter.show_in_map = true
       ORDER BY planter.first_name, planter.last_name
       LIMIT ${limit}
       OFFSET ${offset}
@@ -155,7 +170,8 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       SELECT
       COUNT(*)
       FROM planter
-      WHERE planter.first_name LIKE '${keyword}%' OR planter.last_name LIKE '${keyword}%'
+      WHERE (planter.first_name LIKE '${keyword}%' OR planter.last_name LIKE '${keyword}%')
+      AND planter.show_in_map = true
     `;
     const total = await this.session.getDB().raw(totalSql);
     return parseInt(total.rows[0].count.toString());
@@ -171,8 +187,9 @@ export default class PlanterRepository extends BaseRepository<Planter> {
       LEFT JOIN webmap.planter_location l ON l.id = planter.id
       join (
       SELECT json_array_elements(data -> 'planters') AS planter_id FROM webmap.config WHERE name = 'featured-planter'
-      ) AS t ON 
-      t.planter_id::text::integer = planter.id;
+      ) AS t ON
+      t.planter_id::text::integer = planter.id
+      WHERE planter.show_in_map = true
     `;
     const object = await this.session.getDB().raw(sql);
 

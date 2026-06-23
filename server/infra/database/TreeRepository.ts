@@ -118,7 +118,9 @@ export default class TreeRepository extends BaseRepository<Tree> {
             planter.organization_id in ( SELECT entity_id from getEntityRelationshipChildren(${organization_id}))
           OR
             trees.planting_organization_id = ${organization_id}
-          ) and trees.active = true
+          )
+          AND trees.active = true
+          AND planter.show_in_map = true
       `;
       const total = await this.session.getDB().raw(totalSql);
       return parseInt(total.rows[0].count.toString());
@@ -136,8 +138,8 @@ export default class TreeRepository extends BaseRepository<Tree> {
       FROM trees
       LEFT JOIN planter ON trees.planter_id = planter.id
       LEFT JOIN entity ON entity.id = planter.organization_id
-      LEFT JOIN tree_species 
-        on trees.species_id = tree_species.id 
+      LEFT JOIN tree_species
+        on trees.species_id = tree_species.id
       LEFT JOIN region
         on ST_WITHIN(trees.estimated_geometric_location, region.geom)
         and region.type_id in (select id from region_type where type = 'country')
@@ -147,7 +149,8 @@ export default class TreeRepository extends BaseRepository<Tree> {
         OR
           trees.planting_organization_id = ${organization_id}
         )
-        and trees.active = true
+        AND trees.active = true
+        AND planter.show_in_map = true
       LIMIT ${limit}
       OFFSET ${offset}
     `;
@@ -260,18 +263,21 @@ export default class TreeRepository extends BaseRepository<Tree> {
     const sql = `
       SELECT trees.* ,tree_species.name as species_name,
       country.id as country_id, country.name as country_name
-      FROM trees 
+      FROM trees
       join (
       --- convert json array to row
       SELECT json_array_elements(data -> 'trees') AS tree_id FROM webmap.config WHERE name = 'featured-tree'
-      ) AS t ON 
+      ) AS t ON
       --- cast json type t.tree_id to integer
       t.tree_id::text::integer = trees.id
-      LEFT JOIN tree_species 
+      JOIN planter
+      ON trees.planter_id = planter.id
+      LEFT JOIN tree_species
       ON trees.species_id = tree_species.id
       LEFT JOIN region as country ON ST_WITHIN(trees.estimated_geometric_location, country.geom)
             and country.type_id in
               (SELECT id FROM region_type WHERE type = 'country')
+      WHERE planter.show_in_map = true
     `;
     const object = await this.session.getDB().raw(sql);
     return object.rows;
