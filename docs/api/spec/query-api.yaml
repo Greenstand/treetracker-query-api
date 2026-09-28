@@ -968,6 +968,32 @@ paths:
           in: query
           name: organization
           description: get the bounds by the organization id
+  /bounds/initial:
+    get:
+      summary: get an entity's initial map bounds and suggested zoom
+      operationId: get-initial-entity-bounds
+      parameters:
+        - in: query
+          name: planter_id
+          schema: { type: string }
+        - in: query
+          name: wallet_id
+          schema: { type: string }
+        - in: query
+          name: organisation_id
+          schema: { type: string }
+      responses:
+        '200':
+          description: Bounding geometry, or null when the entity has no trees
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bounds:
+                    nullable: true
+                    allOf:
+                      - $ref: '#/components/schemas/entityBoundsResult'
   /mock/trees/query/planter_id=940&limit=4:
     get:
       responses:
@@ -1306,6 +1332,26 @@ components:
           minItems: 2
           maxItems: 2
           description: 2 points defining the bounding box
+    entityBoundsResult:
+      type: object
+      required: [bounds, center, suggestedZoom, totalTrees, crossesAntimeridian]
+      properties:
+        bounds:
+          type: object
+          required: [southWest, northEast]
+          properties:
+            southWest: { $ref: '#/components/schemas/geoPoint' }
+            northEast: { $ref: '#/components/schemas/geoPoint' }
+        center: { $ref: '#/components/schemas/geoPoint' }
+        suggestedZoom: { type: integer, minimum: 2, maximum: 17 }
+        totalTrees: { type: integer, minimum: 0 }
+        crossesAntimeridian: { type: boolean }
+    geoPoint:
+      type: object
+      required: [lat, lon]
+      properties:
+        lat: { type: number, minimum: -90, maximum: 90 }
+        lon: { type: number, minimum: -180, maximum: 180 }
     tree:
       description: A single tree object
       type: object

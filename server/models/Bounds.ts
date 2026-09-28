@@ -1,6 +1,7 @@
 import log from 'loglevel';
 import BoundsRepository from 'infra/database/BoundsRepository';
-import Bounds from 'interfaces/Bounds';
+import Bounds, { InitialBoundsFilter } from 'interfaces/Bounds';
+import { calculateEntityBounds, EntityBoundsResult } from 'utils/boundingGeometry';
 
 type BoundsFilter = Partial<{
   planter_id: string;
@@ -38,5 +39,12 @@ function getByFilter(
 }
 
 export default {
+  async getInitialBounds(
+    boundsRepository: BoundsRepository,
+    filter: InitialBoundsFilter,
+  ): Promise<EntityBoundsResult | null> {
+    const points = await boundsRepository.getInitialBoundsPoints(filter);
+    return calculateEntityBounds(points);
+  },
   getByFilter,
 };

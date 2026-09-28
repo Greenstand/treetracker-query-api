@@ -1,4 +1,7 @@
-import Bounds from 'interfaces/Bounds';
+import Bounds, {
+  BoundsCoordinate,
+  InitialBoundsFilter,
+} from 'interfaces/Bounds';
 import HttpError from 'utils/HttpError';
 import Session from './Session';
 
@@ -7,6 +10,30 @@ export default class BoundsRepository {
 
   constructor(session: Session) {
     this.session = session;
+  }
+
+  async getInitialBoundsPoints(
+    filter: InitialBoundsFilter,
+  ): Promise<BoundsCoordinate[]> {
+    let sql: string;
+    let value: string;
+    if (filter.planter_id) {
+      sql = `SELECT t.lat, t.lon FROM public.trees t WHERE t.planter_id = ? AND t.lat IS NOT NULL AND t.lon IS NOT NULL`;
+      value = filter.planter_id;
+    } else if (filter.wallet_id) {
+      sql = `SELECT t.lat, t.lon FROM public.trees t INNER JOIN wallet.token tk ON tk.capture_id::text = t.uuid::text WHERE tk.wallet_id::text = ? AND t.lat IS NOT NULL AND t.lon IS NOT NULL`;
+      value = filter.wallet_id;
+    } else if (filter.organisation_id) {
+      sql = `SELECT t.lat, t.lon FROM public.trees t INNER JOIN public.planter p ON p.id = t.planter_id WHERE p.organization_id = ? AND t.lat IS NOT NULL AND t.lon IS NOT NULL`;
+      value = filter.organisation_id;
+    } else {
+      throw new HttpError(422, 'One bounds filter is required');
+    }
+    const result = await this.session.getDB().raw(sql, [value]);
+    return result.rows.map((row: { lat: number | string; lon: number | string }) => ({
+      lat: Number(row.lat),
+      lon: Number(row.lon),
+    }));
   }
 
   async filterByPlanter(planterId: string): Promise<Bounds> {
