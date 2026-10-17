@@ -1,3 +1,9 @@
+## [1.75.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.1...v1.75.2) (2026-10-17)
+
+### Bug Fixes
+
+- **organizations:** parse ids only when the caller sends it ([89268eb](https://github.com/Greenstand/treetracker-query-api/commit/89268ebf4a97ef418e27523d569ad351df1c7b5b))
+
 ## [1.75.1](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.0...v1.75.1) (2026-06-22)
 
 ### Bug Fixes
