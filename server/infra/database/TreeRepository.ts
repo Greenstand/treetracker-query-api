@@ -4,6 +4,13 @@ import HttpError from 'utils/HttpError';
 import BaseRepository from './BaseRepository';
 import Session from './Session';
 
+// capture_id is uuid and trees.uuid is text: cast the text side, or the index
+// on capture_id is lost. Legacy rows are not uuids, hence the guard.
+const UUID_PATTERN =
+  '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$';
+const asUuid = (column: string) =>
+  `(CASE WHEN ${column} ~* '${UUID_PATTERN}' THEN ${column}::uuid END)`;
+
 type GeoJson = Partial<{
   geometry: {
     coordinates: number[];
@@ -42,7 +49,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
               on ST_WITHIN(trees.estimated_geometric_location, region.geom)
               and region.type_id in (select id from region_type where type = 'country')
             left JOIN wallet.token
-              on wallet.token.capture_id::text = trees.uuid::text
+              on wallet.token.capture_id = ${asUuid('trees.uuid')}
             left JOIN wallet.wallet
               on wallet.token.wallet_id = wallet.wallet.id
       `),
@@ -83,7 +90,7 @@ export default class TreeRepository extends BaseRepository<Tree> {
               on ST_WITHIN(trees.estimated_geometric_location, region.geom)
               and region.type_id in (select id from region_type where type = 'country')
             left JOIN wallet.token
-              on wallet.token.capture_id::text = trees.uuid::text
+              on wallet.token.capture_id = ${asUuid('trees.uuid')}
             left JOIN wallet.wallet
               on wallet.token.wallet_id = wallet.wallet.id
       `),
