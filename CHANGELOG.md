@@ -1,3 +1,9 @@
+## [1.75.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.2...v1.75.3) (2026-10-19)
+
+### Bug Fixes
+
+- **trees:** let the token index work on tree lookups ([c5e858f](https://github.com/Greenstand/treetracker-query-api/commit/c5e858f3d451535bf253157f11a09c1058e60099)), closes [#404](https://github.com/Greenstand/treetracker-query-api/issues/404)
+
 ## [1.75.2](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.1...v1.75.2) (2026-10-17)
 
 ### Bug Fixes
