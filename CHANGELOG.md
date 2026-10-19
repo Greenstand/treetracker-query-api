@@ -1,3 +1,9 @@
+## [1.75.4](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.3...v1.75.4) (2026-10-19)
+
+### Bug Fixes
+
+- **deploy:** give the prod query API 20 database connections and resource limits ([8a57532](https://github.com/Greenstand/treetracker-query-api/commit/8a5753287a62d3fd8f1f8554190ebb2f0b1fabc5))
+
 ## [1.75.3](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.2...v1.75.3) (2026-10-19)
 
 ### Bug Fixes
