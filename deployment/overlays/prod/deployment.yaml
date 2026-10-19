@@ -33,4 +33,11 @@ spec:
                   name: dbconnection
                   key: database
             - name: DATABASE_POOL_MAX
-              value: '5'
+              value: '20'
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi
