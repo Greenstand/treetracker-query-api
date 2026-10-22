@@ -33,7 +33,7 @@ spec:
                   name: dbconnection
                   key: database
             - name: DATABASE_POOL_MAX
-              value: '20'
+              value: '5'
           resources:
             requests:
               cpu: 100m
