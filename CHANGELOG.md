@@ -1,3 +1,9 @@
+## [1.75.5](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.4...v1.75.5) (2026-10-23)
+
+### Bug Fixes
+
+- **deploy:** set the prod query API database pool back to 5 ([81eff2b](https://github.com/Greenstand/treetracker-query-api/commit/81eff2b3544e436f7533286d4baf1f9fc6d7eb49))
+
 ## [1.75.4](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.3...v1.75.4) (2026-10-19)
 
 ### Bug Fixes
