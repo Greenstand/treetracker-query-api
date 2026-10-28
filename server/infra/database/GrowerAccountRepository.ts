@@ -1,3 +1,4 @@
+import { Knex } from 'knex';
 import FilterOptions from 'interfaces/FilterOptions';
 import GrowerAccount from 'interfaces/GrowerAccount';
 import HttpError from 'utils/HttpError';
@@ -13,6 +14,7 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
 
   filterWhereBuilder(object, builder) {
     const result = builder;
+    const { tableName } = this;
     const {
       whereNulls = [],
       whereNotNulls = [],
@@ -91,11 +93,22 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     }
 
     if (filterObject.device_identifier) {
-      result.where(
-        `field_data.device_configuration.device_identifier`,
-        'ilike',
-        `%${filterObject.device_identifier}%`,
-      );
+      const deviceIdentifier = filterObject.device_identifier;
+      result.whereExists(function deviceFilterBuilder(this: Knex.QueryBuilder) {
+        this.select(1)
+          .from('treetracker.capture as tc_filter')
+          .join(
+            'field_data.device_configuration as dc_filter',
+            'dc_filter.id',
+            'tc_filter.device_configuration_id',
+          )
+          .whereRaw('tc_filter.grower_account_id = ??', [`${tableName}.id`])
+          .where(
+            'dc_filter.device_identifier',
+            'ilike',
+            `%${deviceIdentifier}%`,
+          );
+      });
       delete filterObject.device_identifier;
     }
 
@@ -109,7 +122,13 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
 
     // if 'captures_amount_max' === 0, 'captures_amount_min' can be only 0.
     if (filterObject.captures_amount_max === 0) {
-      result.whereNull('c.captures_count');
+      result.whereNotExists(function noCaptureFilterBuilder(
+        this: Knex.QueryBuilder,
+      ) {
+        this.select(1)
+          .from('treetracker.capture as tc_filter')
+          .whereRaw('tc_filter.grower_account_id = ??', [`${tableName}.id`]);
+      });
       delete filterObject.captures_amount_min;
       delete filterObject.captures_amount_max;
     }
@@ -124,19 +143,19 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     }
 
     if (filterObject.captures_amount_min) {
-      result.where(
-        `c.captures_count`,
-        '>=',
-        `${filterObject.captures_amount_min}`,
+      result.whereRaw(
+        `(SELECT COUNT(*) FROM treetracker.capture AS tc_filter ` +
+          'WHERE tc_filter.grower_account_id = ??) >= ?',
+        [`${tableName}.id`, filterObject.captures_amount_min],
       );
       delete filterObject.captures_amount_min;
     }
 
     if (filterObject.captures_amount_max) {
-      result.where(
-        `c.captures_count`,
-        '<=',
-        `${filterObject.captures_amount_max}`,
+      result.whereRaw(
+        `(SELECT COUNT(*) FROM treetracker.capture AS tc_filter ` +
+          'WHERE tc_filter.grower_account_id = ??) <= ?',
+        [`${tableName}.id`, filterObject.captures_amount_max],
       );
       delete filterObject.captures_amount_max;
     }
@@ -159,21 +178,8 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
     const result = await knex
       .select(
         knex.raw(`
-        COUNT(DISTINCT(${this.tableName}.id)) AS count
+        COUNT(*) AS count
         FROM ${this.tableName}
-        LEFT JOIN treetracker.capture AS tc
-          ON ${this.tableName}.id = tc.grower_account_id
-        LEFT JOIN field_data.device_configuration
-          ON field_data.device_configuration.id = tc.device_configuration_id
-        LEFT JOIN stakeholder.stakeholder AS s
-          ON s.id = ${this.tableName}.organization_id
-        LEFT JOIN messaging.author AS author
-          ON author.handle = ${this.tableName}.wallet
-        LEFT JOIN (
-          SELECT grower_account_id, COUNT(*) AS captures_count
-          FROM treetracker.capture
-          GROUP BY grower_account_id
-        ) c ON ${this.tableName}.id = c.grower_account_id
     `),
       )
       .where((builder) => this.filterWhereBuilder(filter, builder))
@@ -288,21 +294,15 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
         r.regions AS regions,
         COALESCE(c.captures_count, 0) AS captures
         FROM ${this.tableName}
-        LEFT JOIN treetracker.capture AS tc
-          ON ${this.tableName}.id = tc.grower_account_id
-        LEFT JOIN field_data.device_configuration
-          ON field_data.device_configuration.id = tc.device_configuration_id
         LEFT JOIN (
           SELECT tc.grower_account_id, ARRAY_AGG(DISTINCT(r.name)) AS regions
           FROM treetracker.capture AS tc
           JOIN regions.region AS r
             ON ST_WITHIN(tc.estimated_geometric_location, r.shape)
           GROUP BY tc.grower_account_id
-          ) r ON ${this.tableName}.id = tc.grower_account_id
+          ) r ON ${this.tableName}.id = r.grower_account_id
         LEFT JOIN stakeholder.stakeholder AS s
           ON s.id = ${this.tableName}.organization_id
-        LEFT JOIN messaging.author AS author
-          ON author.handle = ${this.tableName}.wallet
         LEFT JOIN (
           SELECT grower_account_id, COUNT(*) AS captures_count
           FROM treetracker.capture
@@ -314,12 +314,10 @@ export default class GrowerAccountRepository extends BaseRepository<GrowerAccoun
           JOIN field_data.device_configuration AS dc
             ON dc.id = tc.device_configuration_id
           GROUP BY tc.grower_account_id
-        ) d ON ${this.tableName}.id = tc.grower_account_id
+          ) d ON ${this.tableName}.id = d.grower_account_id
     `),
       )
-      .where((builder) => this.filterWhereBuilder(filter, builder))
-      .distinctOn(`${this.tableName}.id`);
-
+      .where((builder) => this.filterWhereBuilder(filter, builder));
     const { limit, offset } = options;
     if (limit) {
       promise = promise.limit(limit);
