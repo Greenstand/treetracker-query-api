@@ -79,7 +79,7 @@
     "eslint-config-airbnb-typescript": "^16.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
-    "husky": "^7.0.4",
+    "husky": "^8.0.0",
     "is-ci": "^3.0.1",
     "jest": "^27.4.7",
     "lint-staged": "^11.2.6",
