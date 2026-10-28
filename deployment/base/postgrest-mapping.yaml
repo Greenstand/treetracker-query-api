@@ -1,0 +1,11 @@
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: treetracker-postgrest
+  namespace: webmap
+spec:
+  prefix: /query-postgrest/
+  service: treetracker-postgrest
+  rewrite: /
+  timeout_ms: 0
+

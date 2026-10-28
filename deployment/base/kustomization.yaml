@@ -3,3 +3,6 @@ resources:
   - mapping.yaml
   - service.yaml
   - database-connection-sealed-secret.yaml
+  - postgrest-deployment.yaml
+  - postgrest-service.yaml
+  - postgrest-mapping.yaml
