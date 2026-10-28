@@ -3,4 +3,12 @@ type Bounds = {
   se: [lat: number, lon: number];
 };
 
+export type BoundsCoordinate = { lat: number; lon: number };
+
+export type InitialBoundsFilter = {
+  planter_id?: string;
+  wallet_id?: string;
+  organisation_id?: string;
+};
+
 export default Bounds;
