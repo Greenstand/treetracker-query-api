@@ -1,3 +1,9 @@
+## [1.75.6](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.5...v1.75.6) (2026-11-19)
+
+### Bug Fixes
+
+- **database:** turn on TCP keepalive for the database connections ([e44c311](https://github.com/Greenstand/treetracker-query-api/commit/e44c311b9aceb8ca0d3d0b7844e0fea38c61accb)), closes [#415](https://github.com/Greenstand/treetracker-query-api/issues/415)
+
 ## [1.75.5](https://github.com/Greenstand/treetracker-query-api/compare/v1.75.4...v1.75.5) (2026-10-23)
 
 ### Bug Fixes
