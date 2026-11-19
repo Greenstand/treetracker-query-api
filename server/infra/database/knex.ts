@@ -14,7 +14,13 @@ const knexConfig: Knex.Config = {
   client: 'pg',
   // debug: process.env.NODE_LOG_LEVEL === 'debug',
   debug: true,
-  connection,
+  connection: {
+    connectionString: connection,
+    // TCP keepalive: without it, a connection whose database side is gone
+    // stays in the pool forever, and the pool fills with dead connections.
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10000,
+  },
   pool: { min: 0, max },
 };
 
